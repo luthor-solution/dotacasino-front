@@ -15,7 +15,7 @@ export default function SignIn() {
         backgroundPosition: "center",
       }}
     >
-      {/* Overlay */}
+      {/* Overlayy */}
       <div className="fixed inset-0 bg-[#2e0327] opacity-80 z-0 pointer-events-none"></div>
 
       {/* Contenido */}
