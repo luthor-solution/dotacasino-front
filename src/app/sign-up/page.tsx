@@ -9,7 +9,7 @@ import CountryPhoneInput from "@/components/CountryPhoneInput";
 export default function SignUp() {
   return (
     <div
-      className="flex items-center justify-center px-4 py-12 xl:px-12 w-screen min-h-[100dvh] relative"
+      className="flex items-center justify-center px-4 pb-12 pt-32 xl:px-12 w-screen min-h-[100dvh] relative"
       style={{
         backgroundImage: "url('/background/bg.jpg')",
         backgroundSize: "cover",
