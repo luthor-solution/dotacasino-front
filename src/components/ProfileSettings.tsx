@@ -27,7 +27,7 @@ const ProfileSettings: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-y-[32px] w-full md:w-fit">
+    <div className="flex flex-col gap-y-[32px] w-full md:w-fit md:border md:border-dotted md:border-gray-400/40 md:p-8 md:rounded-md">
       <div className="flex items-center gap-x-[12px] w-fit">
         <Image
           src={"/avatar.png"}

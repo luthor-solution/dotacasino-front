@@ -15,7 +15,7 @@ const Banner: React.FC<BannerProps> = ({ title, subtitle }) => (
       priority
     />
     <div className="absolute inset-0 bg-[#2e0327bb]"></div>
-    <div className="relative z-10 flex flex-col items-center">
+    <div className="relative z-10 flex flex-col items-center px-4 md:px-0">
       <h1 className="text-white text-6xl font-bold mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)] text-center">
         {title}
       </h1>
