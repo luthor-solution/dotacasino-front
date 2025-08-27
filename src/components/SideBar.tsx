@@ -1,12 +1,20 @@
 import React from "react";
 import UserActions from "@/components/UserActions";
+import { UserMenuValue } from "./UserMenu";
 
 interface SidebarProps {
   open: boolean;
   onClose: () => void;
+  active: UserMenuValue;
+  onSelect: (value: UserMenuValue) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  open,
+  onClose,
+  active,
+  onSelect,
+}) => {
   return (
     <>
       {/* Overlay */}
@@ -32,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
           ×
         </button>
         <div className="flex flex-col items-center z-10 w-[320px]">
-          <UserActions full />
+          <UserActions full active={active} onSelect={onSelect} />
         </div>
       </aside>
     </>

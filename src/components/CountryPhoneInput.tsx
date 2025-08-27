@@ -46,7 +46,7 @@ const CountryPhoneInput: React.FC<CountryPhoneInputProps> = ({ onChange }) => {
   };
 
   return (
-    <div className="flex items-center rounded-[6px] border border-[#a97bbf33] w-full h-[48px] pr-2 group focus-within:shadow-[0_0_16px_2px_#ff9c19] transition-shadow bg-[#2d0b2f99]">
+    <div className="flex items-center rounded-[6px] border border-[#a97bbf33] w-full h-[48px] pr-2 group focus-within:shadow-[0_0_16px_2px_#ff9c19] transition-shadow ">
       <div
         ref={ref}
         className="relative flex items-center justify-center w-24 h-full text-[#e2a94f] bg-[#ffc8271a] cursor-pointer select-none"

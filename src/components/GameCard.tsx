@@ -22,7 +22,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, img, limit }) => (
 
     {/* Círculo decorativo hueco */}
     <div
-      className="absolute left-[0px] bottom-0 z-10  transition-transform duration-500 group-hover:scale-120"
+      className="absolute left-[0px] bottom-0 z-10  transition-transform duration-500 group-hover:scale-150"
       style={{
         width: "32px",
         height: "32px",

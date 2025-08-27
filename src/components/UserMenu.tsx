@@ -1,21 +1,37 @@
-const menuItems = [
-  { label: "Dashboard", active: true },
-  { label: "Historial de Depósitos" },
-  { label: "Historial de Transacciones" },
-  { label: "Historial de Depósitos" },
-  { label: "Account Settings" },
-  { label: "Cerrar Sesión" },
+import React from "react";
+
+export type UserMenuValue =
+  | "balance"
+  | "deposits"
+  | "transaction"
+  | "settings"
+  | "logout";
+
+const menuItems: { label: string; value: UserMenuValue }[] = [
+  { label: "Dashboard", value: "balance" },
+  { label: "Historial de Depósitos", value: "deposits" },
+  { label: "Historial de Transacciones", value: "transaction" },
+  { label: "Account Settings", value: "settings" },
+  { label: "Cerrar Sesión", value: "logout" },
 ];
 
-const UserMenu: React.FC = () => (
+interface UserMenuProps {
+  active: UserMenuValue;
+  onSelect: (value: UserMenuValue) => void;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ active, onSelect }) => (
   <div className="flex flex-col md:w-[400px]">
     {menuItems.map((item, idx) => (
       <span
-        key={item.label + idx}
-        className={`py-3 w-full pl-8 text-[18px] tracking-wide font-[500] border-dotted border-gray-400/40
-          ${idx === 0 ? "bg-[#FFC827] text-black border-t" : "text-white"}
+        key={item.value}
+        className={`py-3 w-full pl-8 text-[18px] tracking-wide font-[500] border-b border-dotted border-gray-400/40 hover:bg-[#FFA221] hover:text-black cursor-pointer
           ${idx === menuItems.length - 1 ? "border-b" : ""}
+          ${item.value === active ? "bg-[#FFC827] text-black" : "text-white"}
+          ${idx === 0 ? " border-t" : ""}
+          
         `}
+        onClick={() => onSelect(item.value)}
       >
         {item.label}
       </span>

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -19,6 +20,7 @@ const Header: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => {
@@ -81,7 +83,9 @@ const Header: React.FC = () => {
             <Link
               key={link.href}
               href={link.href}
-              className="text-white hover:text-[#FFC827] transition-colors font-medium select-none"
+              className={`text-white hover:text-[#FFC827] transition-colors font-medium select-none pb-1
+                ${pathname === link.href ? "border-b-2 border-[#FFC827]" : ""}
+              `}
             >
               {link.label}
             </Link>
@@ -189,7 +193,9 @@ const Header: React.FC = () => {
             <Link
               key={link.href}
               href={link.href}
-              className="text-white hover:text-[#FFC827] transition-colors font-medium"
+              className={`text-white hover:text-[#FFC827] transition-colors font-medium pb-1
+                ${pathname === link.href ? "border-b-2 border-[#FFC827]" : ""}
+              `}
               onClick={() => setOpen(false)}
             >
               {link.label}
