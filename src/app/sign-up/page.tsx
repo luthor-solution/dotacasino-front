@@ -2,11 +2,75 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FiLock, FiMail, FiUser } from "react-icons/fi";
+import { FiCode, FiFlag, FiLock, FiMail } from "react-icons/fi";
 import FancyInput from "@/components/FancyInput";
 import FancyButton from "@/components/FancyButton";
-import CountryPhoneInput from "@/components/CountryPhoneInput";
+import { useState } from "react";
+import { userService } from "@/services/userService";
+import SuccessNotification from "@/components/SuccessNotification";
+
 export default function SignUp() {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    country: "ES",
+    acceptTerms: false,
+    referralCode: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
+
+  const handleChange = (name: string, value: string | boolean) => {
+    setForm((prev) => ({ ...prev, [name]: value }));
+    setFieldErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    setMsg(null);
+    setFieldErrors({});
+    try {
+      await userService.register(form);
+      setSuccess(true);
+      setMsg("¡Registro exitoso! Ahora puedes iniciar sesión.");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (Array.isArray(err.response?.data?.message)) {
+        const errors: { [key: string]: string } = {};
+        err.response.data.message.forEach((msg: string) => {
+          if (msg.toLowerCase().includes("email")) errors.email = msg;
+          else if (msg.toLowerCase().includes("contraseña"))
+            errors.password = msg;
+          else if (msg.toLowerCase().includes("country")) errors.country = msg;
+          else if (msg.toLowerCase().includes("referral"))
+            errors.referralCode = msg;
+          else errors.general = msg;
+        });
+        setFieldErrors(errors);
+      } else {
+        setMsg(
+          err.response?.data?.message ||
+            err.message ||
+            "Ocurrió un error al registrarse."
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Junta todos los errores en un array para mostrar juntos
+  const allErrors = [
+    fieldErrors.email,
+    fieldErrors.password,
+    fieldErrors.country,
+    fieldErrors.referralCode,
+    fieldErrors.general,
+    !success && msg && !fieldErrors.general ? msg : null,
+  ].filter(Boolean);
+
   return (
     <div
       className="flex items-center justify-center px-4 pb-12 pt-32 xl:px-12 w-screen min-h-[100dvh] relative"
@@ -26,59 +90,86 @@ export default function SignUp() {
             <Image src={"/logo.svg"} width={250} height={100} alt="" />
           </div>
           <div className="flex flex-col space-y-[24px] xl:w-[700px] w-full">
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 w-full">
-              <FancyInput
-                placeholder="First Name"
-                name="firstname"
-                icon={<FiUser />}
-                onChange={(val) => console.log("firstname:", val)}
+            {success ? (
+              <SuccessNotification
+                message={msg}
+                linkHref="/sign-in"
+                linkText="Ir a iniciar sesión"
               />
+            ) : (
+              <>
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 w-full">
+                  <FancyInput
+                    placeholder="Email"
+                    name="email"
+                    icon={<FiMail />}
+                    onChange={(val) => handleChange("email", val)}
+                  />
+                  <FancyInput
+                    placeholder="Password"
+                    name="password"
+                    icon={<FiLock />}
+                    type="password"
+                    onChange={(val) => handleChange("password", val)}
+                  />
+                  <FancyInput
+                    placeholder="Country (ej: ES)"
+                    name="country"
+                    icon={<FiFlag />}
+                    onChange={(val) => handleChange("country", val)}
+                  />
+                  <FancyInput
+                    placeholder="Referral Code (opcional)"
+                    name="referralCode"
+                    icon={<FiCode />}
+                    onChange={(val) => handleChange("referralCode", val)}
+                  />
+                </div>
 
-              <FancyInput
-                placeholder="Last Name"
-                name="lastname"
-                icon={<FiUser />}
-                onChange={(val) => console.log("lastname:", val)}
-              />
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="acceptTerms"
+                    checked={form.acceptTerms}
+                    onChange={(e) =>
+                      handleChange("acceptTerms", e.target.checked)
+                    }
+                    className="accent-[#FFC827] w-5 h-5"
+                  />
+                  <label htmlFor="acceptTerms" className="text-white text-sm">
+                    Acepto los{" "}
+                    <a href="#" className="underline text-[#FFC827]">
+                      términos y condiciones
+                    </a>
+                  </label>
+                </div>
 
-              <CountryPhoneInput
-                onChange={(val) => console.log("phone:", val)}
-              />
+                {/* Todos los errores juntos aquí */}
+                {allErrors.length > 0 && (
+                  <div className="flex flex-col gap-1 mt-2">
+                    {allErrors.map((err, idx) => (
+                      <div
+                        key={idx}
+                        className="text-red-400 text-xs text-center"
+                      >
+                        {err}
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-              <FancyInput
-                placeholder="Email"
-                name="email"
-                icon={<FiMail />}
-                onChange={(val) => console.log("email:", val)}
-              />
-
-              <FancyInput
-                placeholder="Username"
-                name="username"
-                icon={<FiUser />}
-                onChange={(val) => console.log("Username:", val)}
-              />
-
-              <FancyInput
-                placeholder="Password"
-                name="password"
-                icon={<FiLock />}
-                type="password"
-                onChange={(val) => console.log("password:", val)}
-              />
-
-              <FancyInput
-                placeholder="Confirm Password"
-                name="confirmpassword"
-                icon={<FiLock />}
-                type="password"
-                onChange={(val) => console.log("confirmpassword:", val)}
-              />
-            </div>
-
-            <FancyButton onClick={() => alert("¡Iniciar sesión!")}>
-              Registrarse
-            </FancyButton>
+                <FancyButton
+                  onClick={handleSubmit}
+                  className={`${
+                    loading
+                      ? "opacity-60 cursor-not-allowed pointer-events-none"
+                      : ""
+                  }`}
+                >
+                  {loading ? "Registrando..." : "Registrarse"}
+                </FancyButton>
+              </>
+            )}
           </div>
         </div>
 

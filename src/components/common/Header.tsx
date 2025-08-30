@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
+import { userService } from "@/services/userService";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -21,6 +23,8 @@ const Header: React.FC = () => {
   const [userMenu, setUserMenu] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
 
   useEffect(() => {
     const onScroll = () => {
@@ -58,6 +62,20 @@ const Header: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [userMenu]);
+
+  async function tryRefresh() {
+    const { token, refreshToken, user, login } = useAuthStore.getState();
+    console.log("token, refreshToken", token, refreshToken);
+    if (!token || !refreshToken) return;
+
+    try {
+      const data = await userService.refreshToken();
+      // Si tu API retorna un nuevo access_token y refresh_token:
+      login(user!, data.access_token, data.refresh_token);
+    } catch (e) {
+      // El logout ya se maneja automáticamente en userService si es 401
+    }
+  }
 
   return (
     <header
@@ -107,7 +125,9 @@ const Header: React.FC = () => {
                 height={40}
                 className="rounded-full border-2 border-[#FFC827] bg-white"
               />
-              <span className="text-white font-medium">Usuario</span>
+              <span className="text-white font-medium">
+                {user?.email || "Usuario"}
+              </span>
               <svg
                 className={`w-4 h-4 text-[#FFC827] transition-transform ${
                   userMenu ? "rotate-180" : ""
@@ -131,9 +151,12 @@ const Header: React.FC = () => {
                   Mi perfil
                 </Link>
                 <Link
-                  href="/history"
+                  href=""
                   className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
-                  onClick={() => setUserMenu(false)}
+                  onClick={() => {
+                    setUserMenu(false);
+                    tryRefresh();
+                  }}
                 >
                   Historial
                 </Link>
@@ -141,7 +164,7 @@ const Header: React.FC = () => {
                   className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
                   onClick={() => {
                     setUserMenu(false);
-                    // Aquí va tu lógica de logout
+                    logout();
                   }}
                 >
                   Cerrar sesión
@@ -217,7 +240,9 @@ const Header: React.FC = () => {
                   height={36}
                   className="rounded-full border-2 border-[#FFC827] bg-white"
                 />
-                <span className="text-white font-medium">Usuario</span>
+                <span className="text-white font-medium">
+                  {user?.email || "Usuario"}
+                </span>
                 <svg
                   className={`w-4 h-4 text-[#FFC827] transition-transform ${
                     userMenu ? "rotate-180" : ""
@@ -244,11 +269,12 @@ const Header: React.FC = () => {
                     Mi perfil
                   </Link>
                   <Link
-                    href="/history"
+                    href=""
                     className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
                     onClick={() => {
                       setUserMenu(false);
                       setOpen(false);
+                      tryRefresh();
                     }}
                   >
                     Historial
@@ -258,7 +284,7 @@ const Header: React.FC = () => {
                     onClick={() => {
                       setUserMenu(false);
                       setOpen(false);
-                      // Aquí va tu lógica de logout
+                      logout();
                     }}
                   >
                     Cerrar sesión

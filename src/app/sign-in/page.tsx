@@ -5,7 +5,43 @@ import Link from "next/link";
 import { FiLock, FiUser } from "react-icons/fi";
 import FancyInput from "@/components/FancyInput";
 import FancyButton from "@/components/FancyButton";
+import { useState } from "react";
+import { userService } from "@/services/userService";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
+
 export default function SignIn() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
+  const login = useAuthStore((state) => state.login);
+  const router = useRouter();
+
+  const handleChange = (name: string, value: string) => {
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    setMsg(null);
+    try {
+      const res = await userService.login(form);
+      // Guarda solo user, token y refreshToken
+      login(res.user, res.access_token, res.refresh_token);
+      setMsg("¡Inicio de sesión exitoso!");
+      router.push("/");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      setMsg(
+        err.response?.data?.message ||
+          err.message ||
+          "Ocurrió un error al iniciar sesión."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className="flex items-center justify-center px-4 py-12 xl:px-12 w-screen min-h-[100dvh] relative"
@@ -15,7 +51,7 @@ export default function SignIn() {
         backgroundPosition: "center",
       }}
     >
-      {/* Overlayy */}
+      {/* Overlay */}
       <div className="fixed inset-0 bg-[#2e0327] opacity-80 z-0 pointer-events-none"></div>
 
       {/* Contenido */}
@@ -26,21 +62,38 @@ export default function SignIn() {
           </div>
           <div className="flex flex-col space-y-[24px] xl:w-[400px] w-full">
             <FancyInput
-              placeholder="Username"
-              name="username"
+              placeholder="email"
+              name="email"
               icon={<FiUser />}
-              onChange={(val) => console.log("Username:", val)}
+              onChange={(val) => handleChange("email", val)}
             />
             <FancyInput
               placeholder="Password"
               name="password"
               icon={<FiLock />}
               type="password"
-              onChange={(val) => console.log("Password:", val)}
+              onChange={(val) => handleChange("password", val)}
             />
 
-            <FancyButton onClick={() => alert("¡Iniciar sesión!")}>
-              Iniciar Sesión
+            {msg && (
+              <div
+                className={`text-sm ${
+                  msg.includes("exitoso") ? "text-green-400" : "text-[#FFC827]"
+                } font-semibold`}
+              >
+                {msg}
+              </div>
+            )}
+
+            <FancyButton
+              onClick={handleSubmit}
+              className={`${
+                loading
+                  ? "opacity-60 cursor-not-allowed pointer-events-none"
+                  : ""
+              }`}
+            >
+              {loading ? "Iniciando..." : "Iniciar Sesión"}
             </FancyButton>
           </div>
           <div className="w-full flex justify-end">
