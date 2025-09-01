@@ -14,9 +14,7 @@ export interface RegisterPayload {
 
 export interface RegisterResponse {
   message: string;
-  // Otros campos si tu API los retorna
 }
-// services/userService.ts
 export interface LoginPayload {
   email: string;
   password: string;
@@ -32,6 +30,18 @@ export interface LoginResponse {
   };
   access_token: string;
   refresh_token: string;
+}
+
+export interface ProfileResponse {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  country: string;
+  language: string;
+  refCode: string;
+  kycStatus: string;
+  createdAt: string;
 }
 
 export const userService = {
@@ -107,5 +117,18 @@ export const userService = {
       }
       throw error;
     }
+  },
+
+  async getProfile(): Promise<ProfileResponse> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    const response = await axios.get(`${API_BASE_URL}/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
   },
 };
