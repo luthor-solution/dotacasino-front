@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
     (pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up"))
   ) {
     const url = request.nextUrl.clone();
-    url.pathname = "/profile";
+    url.pathname = "/";
     return NextResponse.redirect(url);
   }
 
