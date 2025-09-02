@@ -21,7 +21,7 @@ interface AuthState {
   refreshToken: string | null;
   login: (user: User, token: string, refreshToken: string) => void;
   logout: () => Promise<void>;
-  setUser: (user: User) => void;
+  setUser: (user: Partial<User>) => void; // <-- así debe quedar
 }
 
 function removeAuthCookie() {
@@ -78,7 +78,7 @@ export const useAuthStore = create<AuthState>()(
           // Puedes manejar el error si lo deseas, pero igual limpia el estado
         }
       },
-      setUser: (user) => set({ user: normalizeUser(user) }),
+      setUser: (user: Partial<User>) => set({ user: normalizeUser(user) }),
     }),
     {
       name: "auth",

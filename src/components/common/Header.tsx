@@ -146,7 +146,7 @@ const Header: React.FC = () => {
                 >
                   Mi perfil
                 </Link>
-                <Link
+                {/*                 <Link
                   href=""
                   className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
                   onClick={() => {
@@ -154,9 +154,9 @@ const Header: React.FC = () => {
                   }}
                 >
                   Historial
-                </Link>
+                </Link> */}
                 <button
-                  className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
+                  className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors cursor-pointer"
                   onClick={() => {
                     setUserMenu(false);
                     logout();
@@ -263,7 +263,7 @@ const Header: React.FC = () => {
                   >
                     Mi perfil
                   </Link>
-                  <Link
+                  {/*    <Link
                     href=""
                     className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
                     onClick={() => {
@@ -272,7 +272,7 @@ const Header: React.FC = () => {
                     }}
                   >
                     Historial
-                  </Link>
+                  </Link> */}
                   <button
                     className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
                     onClick={() => {

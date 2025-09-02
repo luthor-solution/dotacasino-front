@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FiUser, FiMail, FiLock } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 import FancyInput from "./FancyInput";
 import CountryPhoneInput from "./CountryPhoneInput";
 import FancyButton from "./FancyButton";
 import Image from "next/image";
 import { userService } from "@/services/userService";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore, User } from "@/store/useAuthStore";
 
 const ProfileSettings: React.FC = () => {
   const [form, setForm] = useState({
@@ -17,7 +17,6 @@ const ProfileSettings: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  const setUser = useAuthStore((state) => state.setUser);
   const user = useAuthStore((state) => state.user);
   const handleChange = (name: string, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -32,6 +31,7 @@ const ProfileSettings: React.FC = () => {
         phone: user.phone || "",
         language: user.language || "es",
       });
+      console.log(user);
     }
   }, [user]);
 
@@ -39,10 +39,11 @@ const ProfileSettings: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log(form);
       const updatedProfile = await userService.updateProfile(form);
+      useAuthStore.getState().setUser(updatedProfile as Partial<User>);
       alert("¡Perfil actualizado!");
     } catch (err) {
+      console.log(err);
       alert("Error al actualizar el perfil");
     } finally {
       setLoading(false);

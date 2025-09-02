@@ -31,14 +31,16 @@ const CountryPhoneInput: React.FC<CountryPhoneInputProps> = ({
 
   // Sincroniza país y número si cambia value desde el padre
   useEffect(() => {
+    console.log(value);
     if (isInternalChange.current) {
       isInternalChange.current = false;
       return; // No actualices el estado si el cambio vino del input
     }
-    const match = value.match(/^(\+\d+)(\d{0,})$/);
-    const prefix = match ? match[1] : "+52";
-    const number = match ? match[2] : "";
+    const number = value.slice(-10); // últimos 10 dígitos
+    const prefix = value.slice(0, value.length - 10) || "+52"; // el resto, o "+52" por default
 
+    console.log("prefix:", prefix); // "+52"
+    console.log("number:", number); // "6691618430"
     if (country.code !== prefix) {
       const nextCountry =
         countries.find((c) => c.code === prefix) ||
