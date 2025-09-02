@@ -1,5 +1,6 @@
 import UserMenu, { UserMenuValue } from "./UserMenu";
 import UserOptions from "./UserOptions";
+import { useAuthStore } from "@/store/useAuthStore"; // Ajusta la ruta según tu proyecto
 
 interface Props {
   hide?: boolean;
@@ -9,13 +10,18 @@ interface Props {
 }
 
 export default function UserActions({ hide, full, active, onSelect }: Props) {
+  const user = useAuthStore((state) => state.user);
+
   return (
     <div
       className={`bg-[#2e0327] flex-col ${full ? "w-full" : "w-fit"} ${
         hide ? "hidden" : ""
       } md:flex`}
     >
-      <UserOptions avatar="/avatar.png" username="Marcos Leva" />
+      <UserOptions
+        avatar="/avatar.png"
+        username={user ? `${user.displayName ?? ""}`.trim() : "Usuario"}
+      />
       <UserMenu active={active} onSelect={onSelect} />
     </div>
   );

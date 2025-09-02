@@ -7,6 +7,7 @@ interface InputProps {
   icon: ReactNode;
   type?: string;
   onChange?: (value: string) => void;
+  value?: string; // <-- NUEVO
 }
 
 const FancyInput: React.FC<InputProps> = ({
@@ -15,11 +16,15 @@ const FancyInput: React.FC<InputProps> = ({
   icon,
   type = "text",
   onChange,
+  value: propValue, // <-- NUEVO
 }) => {
-  const [value, setValue] = useState("");
+  const [internalValue, setInternalValue] = useState("");
+
+  const isControlled = propValue !== undefined;
+  const value = isControlled ? propValue : internalValue;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    if (!isControlled) setInternalValue(e.target.value);
     if (onChange) onChange(e.target.value);
   };
 

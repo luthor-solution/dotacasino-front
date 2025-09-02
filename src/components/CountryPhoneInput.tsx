@@ -2,17 +2,55 @@ import React, { useState, useRef, useEffect } from "react";
 import { countries } from "@/utils/countries";
 
 interface CountryPhoneInputProps {
+  value: string; // Ejemplo: "+521234567890"
   onChange?: (fullPhone: string) => void;
 }
 
-const CountryPhoneInput: React.FC<CountryPhoneInputProps> = ({ onChange }) => {
-  const defaultCountry =
-    countries.find((c) => c.code === "+52") || countries[0];
-  const [country, setCountry] = useState(defaultCountry);
-  const [phone, setPhone] = useState("");
+const CountryPhoneInput: React.FC<CountryPhoneInputProps> = ({
+  value,
+  onChange,
+}) => {
+  // Extrae prefijo y número
+  const match = value.match(/^(\+\d+)(\d{0,})$/);
+  const initialPrefix = match ? match[1] : "+52";
+  const initialNumber = match ? match[2] : "";
+
+  // Estado para país y número
+  const [country, setCountry] = useState(
+    countries.find((c) => c.code === initialPrefix) ||
+      countries.find((c) => c.code === "+52") ||
+      countries[0]
+  );
+  const [phone, setPhone] = useState(initialNumber);
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const ref = useRef<HTMLDivElement>(null);
+
+  // Bandera para saber si el cambio viene del input
+  const isInternalChange = useRef(false);
+
+  // Sincroniza país y número si cambia value desde el padre
+  useEffect(() => {
+    if (isInternalChange.current) {
+      isInternalChange.current = false;
+      return; // No actualices el estado si el cambio vino del input
+    }
+    const match = value.match(/^(\+\d+)(\d{0,})$/);
+    const prefix = match ? match[1] : "+52";
+    const number = match ? match[2] : "";
+
+    if (country.code !== prefix) {
+      const nextCountry =
+        countries.find((c) => c.code === prefix) ||
+        countries.find((c) => c.code === "+52") ||
+        countries[0];
+      setCountry(nextCountry);
+    }
+    if (phone !== number) {
+      setPhone(number);
+    }
+    // eslint-disable-next-line
+  }, [value]);
 
   // Cerrar el menú si se hace click fuera
   useEffect(() => {
@@ -37,12 +75,15 @@ const CountryPhoneInput: React.FC<CountryPhoneInputProps> = ({ onChange }) => {
     setCountry(c);
     setOpen(false);
     setSearch("");
+    isInternalChange.current = true;
     if (onChange) onChange(`${c.code}${phone}`);
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
-    if (onChange) onChange(`${country.code}${e.target.value}`);
+    const inputValue = e.target.value.replace(/\D/g, "");
+    setPhone(inputValue);
+    isInternalChange.current = true;
+    onChange?.(`${country.code}${inputValue}`);
   };
 
   return (
@@ -103,11 +144,15 @@ const CountryPhoneInput: React.FC<CountryPhoneInputProps> = ({ onChange }) => {
         )}
       </div>
       <input
-        type="number"
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
         placeholder="Teléfono"
         className="bg-transparent outline-none text-white placeholder:text-gray-300 w-full h-full pl-2"
         value={phone}
         onChange={handlePhoneChange}
+        autoComplete="off"
+        maxLength={10}
       />
     </div>
   );

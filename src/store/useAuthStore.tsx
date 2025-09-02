@@ -9,8 +9,12 @@ export interface User {
   country: string;
   createdAt: string;
   roles: string[];
+  firstName?: string;
+  lastName?: string;
+  displayName: string;
+  phone: string;
+  language: string;
 }
-
 interface AuthState {
   user: User | null;
   token: string | null;
@@ -24,6 +28,21 @@ function removeAuthCookie() {
   document.cookie = "auth_token=; path=/; max-age=0";
 }
 
+function normalizeUser(user: Partial<User>): User {
+  return {
+    id: user.id ?? "",
+    email: user.email ?? "",
+    country: user.country ?? "",
+    createdAt: user.createdAt ?? "",
+    roles: user.roles ?? [],
+    firstName: user.firstName ?? "", // Si no existe, queda vacío
+    lastName: user.lastName ?? "",
+    displayName: user.displayName ?? "",
+    phone: user.phone ?? "",
+    language: user.language ?? "",
+  };
+}
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
@@ -31,7 +50,11 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       refreshToken: null,
       login: (user, token, refreshToken) => {
-        set({ user, token, refreshToken });
+        set({
+          user: normalizeUser(user),
+          token,
+          refreshToken,
+        });
         if (typeof window !== "undefined") {
           document.cookie = `auth_token=${token}; path=/; max-age=${
             60 * 60 * 24 * 7
@@ -48,13 +71,14 @@ export const useAuthStore = create<AuthState>()(
             if (typeof window !== "undefined") {
               localStorage.removeItem("auth");
               removeAuthCookie();
+              window.location.href = "/";
             }
           }
         } catch (e) {
           // Puedes manejar el error si lo deseas, pero igual limpia el estado
         }
       },
-      setUser: (user) => set({ user }),
+      setUser: (user) => set({ user: normalizeUser(user) }),
     }),
     {
       name: "auth",

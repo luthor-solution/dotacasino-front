@@ -1,7 +1,9 @@
 "use client";
+import { useEffect, useState, useRef } from "react";
 import GameCard from "@/components/GameCard";
-
+import { FiLogOut, FiDollarSign, FiTrendingUp } from "react-icons/fi";
 import BalanceCard from "@/components/BalanceCard";
+import { walletService } from "@/services/walletService";
 
 const games = [
   {
@@ -20,13 +22,53 @@ const games = [
     limit: "$10.49 - $1,000",
   },
 ];
+
 export default function Balance() {
+  const [balance, setBalance] = useState<string>("$0");
+  const [currency, setCurrency] = useState<string>("---");
+  const [loading, setLoading] = useState<boolean>(false);
+  const didFetch = useRef(false);
+
+  useEffect(() => {
+    if (didFetch.current) return;
+    didFetch.current = true;
+    setLoading(true);
+    walletService
+      .getWallet()
+      .then((data) => {
+        setBalance(`$${data.balance}`);
+        setCurrency(`${data.currency}`);
+      })
+      .catch(() => {
+        setBalance("$0");
+        setCurrency("");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
   return (
     <div className="flex flex-col gap-y-[48px] w-full md:w-fit">
       <div className="flex md:gap-x-[24px] md:gap-y-0 gap-y-[24px] flex-col md:flex-row md:px-0">
-        <BalanceCard amount="$3500" label="TOTAL BALANCE" />
-        <BalanceCard amount="$3500" label="TOTAL BALANCE" />
-        <BalanceCard amount="$3500" label="TOTAL BALANCE" />
+        <BalanceCard
+          amount={balance}
+          label="TOTAL BALANCE"
+          icon={<FiDollarSign />}
+          currency={currency}
+          loading={loading}
+        />
+        <BalanceCard
+          amount="$3500"
+          label="WINNINGS"
+          icon={<FiTrendingUp />}
+          loading={loading}
+        />
+        <BalanceCard
+          amount="$3500"
+          label="CASHOUT"
+          icon={<FiLogOut />}
+          loading={loading}
+        />
       </div>
 
       <div className="flex gap-x-[24px] flex-col md:flex-row md:gap-y-0 gap-y-[24px]">

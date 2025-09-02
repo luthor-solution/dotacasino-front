@@ -44,6 +44,24 @@ export interface ProfileResponse {
   createdAt: string;
 }
 
+export interface UpdateProfilePayload {
+  firstName: string;
+  lastName: string;
+  displayName?: string;
+  phone?: string;
+  language?: string;
+}
+export interface UserProfile {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  country: string;
+  language: string;
+  refCode: string;
+  kycStatus: string;
+  createdAt: string;
+}
 export const userService = {
   async register(payload: RegisterPayload): Promise<RegisterResponse> {
     const response = await axios.post(
@@ -119,16 +137,66 @@ export const userService = {
     }
   },
 
-  async getProfile(): Promise<ProfileResponse> {
+  async getProfile(retry = true): Promise<ProfileResponse> {
     const { token } = useAuthStore.getState();
     if (!token) throw new Error("No token available");
 
-    const response = await axios.get(`${API_BASE_URL}/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-    return response.data;
+    try {
+      const response = await axios.get(`${API_BASE_URL}/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data as ProfileResponse;
+    } catch (error) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        // Intenta refrescar el token
+        try {
+          await userService.refreshToken();
+          // Vuelve a intentar obtener el perfil (solo una vez)
+          return await userService.getProfile(false);
+        } catch {
+          // El logout ya se maneja en refreshToken si falla
+        }
+      }
+      throw error;
+    }
+  },
+
+  async updateProfile(
+    payload: UpdateProfilePayload,
+    retry = true
+  ): Promise<UserProfile> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const response = await axios.patch(`${API_BASE_URL}/profile`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        // Intenta refrescar token y reintenta una vez
+        const { refreshToken } = useAuthStore.getState();
+        if (refreshToken) {
+          await userService.refreshToken();
+          return userService.updateProfile(payload, false);
+        }
+      }
+      throw error;
+    }
   },
 };

@@ -1,171 +1,101 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
+import { walletService, TopupHistoryItem } from "@/services/walletService";
+import TopupHistoryTable from "./TopupHistoryTable";
+import TopupHistoryCardList from "./TopupHistoryCardList";
+import TopupHistorySkeleton from "./TopupHistorySkeleton";
 
-const transactions = [
-  {
-    id: "#481XV93NCKD0",
-    type: "Deposit",
-    date: "12 Mar, 21 at 12:30 AM",
-    amount: "$150.50",
-  },
-  {
-    id: "#V93N481XCKD0",
-    type: "Deposit",
-    date: "12 Mar, 21 at 12:30 AM",
-    amount: "$500.50",
-  },
-  {
-    id: "#1XCKD0V93N48",
-    type: "Deposit",
-    date: "12 Mar, 21 at 12:30 AM",
-    amount: "$350.50",
-  },
-  {
-    id: "#V981XCKD03N4",
-    type: "Deposit",
-    date: "12 Mar, 21 at 12:30 AM",
-    amount: "$250.50",
-  },
-  {
-    id: "#481XV93NCKD0",
-    type: "Deposit",
-    date: "12 Mar, 21 at 12:30 AM",
-    amount: "$150.50",
-  },
-  {
-    id: "#V93N481XCKD0",
-    type: "Deposit",
-    date: "12 Mar, 21 at 12:30 AM",
-    amount: "$500.50",
-  },
-  {
-    id: "#1XCKD0V93N48",
-    type: "Deposit",
-    date: "12 Mar, 21 at 12:30 AM",
-    amount: "$350.50",
-  },
-  {
-    id: "#V981XCKD03N4",
-    type: "Deposit",
-    date: "12 Mar, 21 at 12:30 AM",
-    amount: "$250.50",
-  },
-];
+const PAGE_SIZE = 20;
 
-const TransactionTable: React.FC = () => (
-  <div className="w-full max-w-6xl">
-    {/* Tabla para desktop */}
-    <div className="hidden md:block overflow-x-auto">
-      <table className="w-full border-separate border-spacing-0">
-        <thead>
-          <tr>
-            <th
-              className="py-3 px-4 text-left font-medium text-[20px] tracking-wide"
-              style={{
-                background: "linear-gradient(90deg, #FFC827 0%, #FF9C19 100%)",
-                color: "#2e0327",
-                borderTopLeftRadius: "4px",
-                borderBottom: "2px solid #FF9C19",
-              }}
-            >
-              Transaction ID
-            </th>
-            <th
-              className="py-3 px-4 text-left font-medium text-[20px] tracking-wide"
-              style={{
-                background: "linear-gradient(90deg, #FFC827 0%, #FF9C19 100%)",
-                color: "#2e0327",
-                borderBottom: "2px solid #FF9C19",
-              }}
-            >
-              Transaction Type
-            </th>
-            <th
-              className="py-3 px-4 text-left font-medium text-[20px] tracking-wide"
-              style={{
-                background: "linear-gradient(90deg, #FFC827 0%, #FF9C19 100%)",
-                color: "#2e0327",
-                borderBottom: "2px solid #FF9C19",
-              }}
-            >
-              Date
-            </th>
-            <th
-              className="py-3 px-4 text-left font-medium text-[20px] tracking-wide"
-              style={{
-                background: "linear-gradient(90deg, #FFC827 0%, #FF9C19 100%)",
-                color: "#2e0327",
-                borderTopRightRadius: "4px",
-                borderBottom: "2px solid #FF9C19",
-              }}
-            >
-              Amount
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((tx, idx) => (
-            <tr
-              key={idx}
-              className="border-b border-[#4b2342] last:border-b-0"
-              style={{
-                background: "#2e0327",
-              }}
-            >
-              <td className="py-3 px-4 text-white text-[17px] border-r border-[#4b2342]">
-                {tx.id}
-              </td>
-              <td className="py-3 px-4 text-white text-[17px] border-r border-[#4b2342]">
-                {tx.type}
-              </td>
-              <td className="py-3 px-4 text-white text-[17px] border-r border-[#4b2342]">
-                {tx.date}
-              </td>
-              <td
-                className="py-3 px-4 text-[17px] font-semibold"
-                style={{ color: "#FF9C19" }}
-              >
-                {tx.amount}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+const TopupHistorySection: React.FC = () => {
+  const [transactions, setTransactions] = useState<TopupHistoryItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [total, setTotal] = useState<number>(0);
 
-    {/* Tarjetas para mobile */}
-    <div className="block md:hidden space-y-4">
-      {transactions.map((tx, idx) => (
-        <div
-          key={idx}
-          className="rounded-lg shadow-lg bg-[#2e0327] border border-[#4b2342] px-4 py-3 flex flex-col gap-2"
-        >
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[#FFC827] font-semibold">
-              Transaction ID
-            </span>
-            <span className="text-white text-sm">{tx.id}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[#FFC827] font-semibold">Type</span>
-            <span className="text-white text-sm">{tx.type}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[#FFC827] font-semibold">Date</span>
-            <span className="text-white text-sm">{tx.date}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[#FFC827] font-semibold">Amount</span>
-            <span
-              className="text-[17px] font-semibold"
-              style={{ color: "#FF9C19" }}
-            >
-              {tx.amount}
-            </span>
-          </div>
+  // Detecta si es móvil
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    walletService
+      .getTopupHistory(page, PAGE_SIZE)
+      .then((data) => {
+        setTotal(data.total);
+        if (isMobile && page > 1) {
+          // Acumula en móvil
+          setTransactions((prev) => [...prev, ...data.items]);
+        } else {
+          // Reemplaza en desktop o en la primera carga
+          setTransactions(data.items);
+        }
+      })
+      .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, isMobile]);
+
+  const totalPages = Math.ceil(total / PAGE_SIZE);
+
+  return (
+    <div className="w-full max-w-6xl">
+      {/* Desktop Table */}
+      <div className="hidden md:block overflow-x-auto">
+        {loading ? (
+          <TopupHistorySkeleton rows={5} />
+        ) : (
+          <TopupHistoryTable transactions={transactions} />
+        )}
+        {/* Paginación Desktop */}
+        <div className="flex justify-end gap-2 mt-4">
+          <button
+            className="px-4 py-2 rounded bg-[#FFC827] text-[#2e0327] font-semibold disabled:opacity-50"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1 || loading}
+          >
+            Anterior
+          </button>
+          <button
+            className="px-4 py-2 rounded bg-[#FF9C19] text-white font-semibold disabled:opacity-50"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages || loading || totalPages === 0}
+          >
+            Siguiente
+          </button>
+          <span className="ml-4 text-sm text-white self-center">
+            Página {page} de {totalPages || 1}
+          </span>
         </div>
-      ))}
+      </div>
+      {/* Mobile Cards */}
+      <div className="block md:hidden space-y-4">
+        {loading && page === 1 ? (
+          <TopupHistorySkeleton rows={5} mobile />
+        ) : (
+          <>
+            <TopupHistoryCardList transactions={transactions} />
+            {/* Botón Ver más solo si hay más páginas */}
+            {page < totalPages && (
+              <button
+                className="w-full mt-4 px-4 py-3 rounded bg-[#FF9C19] text-white font-semibold"
+                onClick={() => setPage((p) => p + 1)}
+                disabled={loading}
+              >
+                {loading ? "Cargando..." : "Ver más"}
+              </button>
+            )}
+          </>
+        )}
+        {/* Skeleton para loading de más páginas */}
+        {loading && page > 1 && <TopupHistorySkeleton rows={3} mobile />}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-export default TransactionTable;
+export default TopupHistorySection;

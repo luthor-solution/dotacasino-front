@@ -7,14 +7,18 @@ import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { userService } from "@/services/userService";
 
-const navLinks = [
-  { href: "/", label: "Inicio" },
-  { href: "/sign-in", label: "Iniciar Sesión" },
-  { href: "/sign-up", label: "Regístrate" },
-];
+type NavLink = {
+  href: string;
+  label: string;
+  showWhenLogged?: boolean; // true: solo logueado, false: solo no logueado, undefined: siempre
+};
 
-// Simula si el usuario está autenticado
-const isAuthenticated = true;
+const navLinks: NavLink[] = [
+  { href: "/", label: "Inicio" },
+  { href: "/sign-in", label: "Iniciar Sesión", showWhenLogged: false },
+  { href: "/sign-up", label: "Regístrate", showWhenLogged: false },
+  { href: "/recharge", label: "Recargar", showWhenLogged: true },
+];
 
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -63,19 +67,11 @@ const Header: React.FC = () => {
     };
   }, [userMenu]);
 
-  async function tryRefresh() {
-    const { token, refreshToken, user, login } = useAuthStore.getState();
-    console.log("token, refreshToken", token, refreshToken);
-    if (!token || !refreshToken) return;
-
-    try {
-      const data = await userService.refreshToken();
-      // Si tu API retorna un nuevo access_token y refresh_token:
-      login(user!, data.access_token, data.refresh_token);
-    } catch (e) {
-      // El logout ya se maneja automáticamente en userService si es 401
-    }
-  }
+  // Filtra los links según el estado de login
+  const filteredNavLinks = navLinks.filter((link) => {
+    if (link.showWhenLogged === undefined) return true;
+    return user ? link.showWhenLogged : !link.showWhenLogged;
+  });
 
   return (
     <header
@@ -97,7 +93,7 @@ const Header: React.FC = () => {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex gap-8 items-center uppercase">
-          {navLinks.map((link) => (
+          {filteredNavLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -111,7 +107,7 @@ const Header: React.FC = () => {
         </nav>
 
         {/* User menu (desktop) */}
-        {isAuthenticated && (
+        {user && (
           <div className="hidden md:block relative ml-4" ref={userMenuRef}>
             <button
               className="flex items-center gap-2 focus:outline-none cursor-pointer"
@@ -126,7 +122,7 @@ const Header: React.FC = () => {
                 className="rounded-full border-2 border-[#FFC827] bg-white"
               />
               <span className="text-white font-medium">
-                {user?.email || "Usuario"}
+                {user?.displayName || "Usuario"}
               </span>
               <svg
                 className={`w-4 h-4 text-[#FFC827] transition-transform ${
@@ -155,7 +151,6 @@ const Header: React.FC = () => {
                   className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
                   onClick={() => {
                     setUserMenu(false);
-                    tryRefresh();
                   }}
                 >
                   Historial
@@ -212,7 +207,7 @@ const Header: React.FC = () => {
           `}
           style={{ willChange: "transform, opacity" }}
         >
-          {navLinks.map((link) => (
+          {filteredNavLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -226,7 +221,7 @@ const Header: React.FC = () => {
           ))}
 
           {/* User menu (mobile) */}
-          {isAuthenticated && (
+          {user && (
             <div className="relative mt-2" ref={userMenuRef}>
               <button
                 className="flex items-center gap-2 focus:outline-none w-full"
@@ -241,7 +236,7 @@ const Header: React.FC = () => {
                   className="rounded-full border-2 border-[#FFC827] bg-white"
                 />
                 <span className="text-white font-medium">
-                  {user?.email || "Usuario"}
+                  {user?.displayName || "Usuario"}
                 </span>
                 <svg
                   className={`w-4 h-4 text-[#FFC827] transition-transform ${
@@ -274,7 +269,6 @@ const Header: React.FC = () => {
                     onClick={() => {
                       setUserMenu(false);
                       setOpen(false);
-                      tryRefresh();
                     }}
                   >
                     Historial
