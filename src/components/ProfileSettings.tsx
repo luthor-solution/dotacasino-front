@@ -7,6 +7,7 @@ import Image from "next/image";
 import { userService } from "@/services/userService";
 import { useAuthStore, User } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 const ProfileSettings: React.FC = () => {
   const [form, setForm] = useState({
@@ -17,7 +18,7 @@ const ProfileSettings: React.FC = () => {
     language: "es",
   });
   const [loading, setLoading] = useState(false);
-
+  const [showModal, setShowModal] = useState(false);
   const user = useAuthStore((state) => state.user);
   const handleChange = (name: string, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -64,6 +65,10 @@ const ProfileSettings: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-y-[32px] w-full md:w-fit md:border md:border-dotted md:border-gray-400/40 md:p-8 md:rounded-md">
+      <ChangePasswordModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+      />
       <div className="flex items-center gap-x-[12px] w-fit">
         <Image
           src={"/avatar.png"}
@@ -121,6 +126,14 @@ const ProfileSettings: React.FC = () => {
           />
 
           {/* Puedes agregar un selector de idioma si lo necesitas */}
+        </div>
+        <div className="w-full flex justify-end">
+          <span
+            className="text-[14px] text-[#FFC827] underline cursor-pointer"
+            onClick={() => setShowModal(true)}
+          >
+            Cambiar contraseña
+          </span>
         </div>
 
         <FancyButton

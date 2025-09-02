@@ -199,4 +199,40 @@ export const userService = {
       throw error;
     }
   },
+
+  async changePassword(
+    payload: { currentPassword: string; newPassword: string },
+    retry = true
+  ): Promise<{ message: string }> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const response = await axios.patch(
+        `${API_BASE_URL}/profile/password`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        // Intenta refrescar token y reintenta una vez
+        const { refreshToken } = useAuthStore.getState();
+        if (refreshToken) {
+          await userService.refreshToken();
+          return userService.changePassword(payload, false);
+        }
+      }
+      throw error;
+    }
+  },
 };
