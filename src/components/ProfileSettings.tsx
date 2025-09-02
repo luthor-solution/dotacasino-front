@@ -6,6 +6,7 @@ import FancyButton from "./FancyButton";
 import Image from "next/image";
 import { userService } from "@/services/userService";
 import { useAuthStore, User } from "@/store/useAuthStore";
+import { toast } from "react-toastify";
 
 const ProfileSettings: React.FC = () => {
   const [form, setForm] = useState({
@@ -41,10 +42,10 @@ const ProfileSettings: React.FC = () => {
     try {
       const updatedProfile = await userService.updateProfile(form);
       useAuthStore.getState().setUser(updatedProfile as Partial<User>);
-      alert("¡Perfil actualizado!");
+      toast.success("Perfil actualizado");
     } catch (err) {
       console.log(err);
-      alert("Error al actualizar el perfil");
+      toast.error("Error al actualizar perfil");
     } finally {
       setLoading(false);
     }
