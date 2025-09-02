@@ -43,9 +43,20 @@ const ProfileSettings: React.FC = () => {
       const updatedProfile = await userService.updateProfile(form);
       useAuthStore.getState().setUser(updatedProfile as Partial<User>);
       toast.success("Perfil actualizado");
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      // Si el error viene de una respuesta de API con mensajes
+      if (err?.response?.data?.message) {
+        const messages = err.response.data.message;
+        if (Array.isArray(messages)) {
+          messages.forEach((msg: string) => toast.error(msg));
+        } else {
+          toast.error(messages);
+        }
+      } else {
+        toast.error("Error al actualizar perfil");
+      }
       console.log(err);
-      toast.error("Error al actualizar perfil");
     } finally {
       setLoading(false);
     }
