@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/common/Header";
 import VerifyToken from "@/components/VerifyToken";
 import { ToastContainer } from "react-toastify";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
         <Header />
         <VerifyToken />
         {children}
+        <ScrollToTopButton />
       </body>
     </html>
   );

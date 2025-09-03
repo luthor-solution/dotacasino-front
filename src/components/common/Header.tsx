@@ -17,6 +17,7 @@ const navLinks: NavLink[] = [
   { href: "/", label: "Inicio" },
   { href: "/sign-in", label: "Iniciar Sesión", showWhenLogged: false },
   { href: "/sign-up", label: "Regístrate", showWhenLogged: false },
+  { href: "/games", label: "Juegos", showWhenLogged: true },
   { href: "/recharge", label: "Recargar", showWhenLogged: true },
 ];
 

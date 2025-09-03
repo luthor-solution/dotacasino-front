@@ -1,18 +1,16 @@
 import GameCard from "./GameCard";
-
-interface Game {
-  title: string;
-  img: string;
-  limit: string;
-}
+import { Game } from "@/services/gamesService";
 
 interface GamesGridProps {
   games: Game[];
+  top: boolean;
 }
 
-const GamesGrid: React.FC<GamesGridProps> = ({ games }) => (
+const GamesGrid: React.FC<GamesGridProps> = ({ games, top }) => (
   <section
-    className="relative w-full flex-1 flex items-center py-16 px-[2"
+    className={`relative w-full flex-1 flex items-center ${
+      !top ? "pt-16 pb-4" : "py-4"
+    }`}
     style={{
       backgroundImage: "url('/background/bg2.jpg')",
       backgroundSize: "150%",

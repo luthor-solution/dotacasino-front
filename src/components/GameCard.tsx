@@ -1,12 +1,7 @@
 import Image from "next/image";
+import { Game } from "@/services/gamesService";
 
-interface GameCardProps {
-  title: string;
-  img: string;
-  limit: string;
-}
-
-const GameCard: React.FC<GameCardProps> = ({ title, img, limit }) => (
+const GameCard: React.FC<Game> = ({ title, thumbnailUrl, category }) => (
   <div
     className="relative rounded-xl p-6 flex flex-col items-center shadow-lg overflow-hidden group hover:shadow-[0_0_16px_2px_#ff9c19] transition-shadow w-full"
     style={{
@@ -37,7 +32,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, img, limit }) => (
     <div className="relative z-10 flex flex-col items-center w-full gap-y-[16px]">
       <div className="w-fit h-fit p-4 flex items-center justify-center bg-[#2e0327] bg-opacity-80 rounded-lg border border-[#ffffff2b]">
         <Image
-          src={img}
+          src={thumbnailUrl}
           alt={title}
           width={220}
           height={120}
@@ -45,11 +40,9 @@ const GameCard: React.FC<GameCardProps> = ({ title, img, limit }) => (
         />
       </div>
       <h2 className="text-white text-xl font-semibold mb-2">{title}</h2>
-      <div>
-        <div className="text-[#FFC827] text-sm mb-1 font-medium">
-          INVEST LIMIT
-        </div>
-        <div className="text-white text-sm mb-4">{limit}</div>
+      <div className="text-center">
+        <div className="text-[#FFC827] text-sm mb-1 font-medium">CATEGORY</div>
+        <div className="text-white text-sm mb-4 uppercase">{category}</div>
       </div>
       <button className="mt-auto bg-gradient-to-b from-[#FFC827] to-[#ff9c19] text-[#2e0327] font-bold px-6 py-2 rounded-md shadow hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 cursor-pointer">
         Play Now
