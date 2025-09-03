@@ -16,6 +16,8 @@ const GamePage: FC<Props> = async ({ params }) => {
     )
     .then((r) => r.data);
 
+  console.log(gameInfo);
+
   const { ok } = reponseOpenGame(gameInfo);
 
   if (!ok) {
@@ -24,10 +26,7 @@ const GamePage: FC<Props> = async ({ params }) => {
 
   return (
     <div className="mt-20">
-      {JSON.stringify(gameId)}
-      <br />
-      <br />
-      {JSON.stringify(gameInfo)}
+      <iframe height={500} width={"100%"} src={gameInfo.content.game.url} />
     </div>
   );
 };
