@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { Game } from "@/services/gamesService";
 
 const GameCard: React.FC<Game> = ({ title, thumbnailUrl, category }) => (
@@ -31,7 +31,7 @@ const GameCard: React.FC<Game> = ({ title, thumbnailUrl, category }) => (
     {/* Contenido */}
     <div className="relative z-10 flex flex-col items-center w-full gap-y-[16px]">
       <div className="w-fit h-fit p-4 flex items-center justify-center bg-[#2e0327] bg-opacity-80 rounded-lg border border-[#ffffff2b]">
-        <Image
+        <img
           src={thumbnailUrl}
           alt={title}
           width={220}
