@@ -11,9 +11,9 @@ export interface User {
   roles: string[];
   firstName?: string;
   lastName?: string;
-  displayName: string;
-  phone: string;
-  language: string;
+  displayName?: string;
+  phone?: string;
+  language?: string;
 }
 interface AuthState {
   user: User | null;

@@ -73,9 +73,9 @@ export default function Home() {
       <Banner title="Juegos" subtitle="Elige una opción para continuar" />
 
       {/* Desktop: paginación arriba si page >= 2 */}
-      {!isMobile && page >= 2 && Pagination}
+      {!isMobile && Pagination}
 
-      <GamesGrid games={games} top={!isMobile && page >= 2} />
+      <GamesGrid games={games} loading={loading} />
 
       {/* Paginación abajo (siempre en mobile, siempre en desktop) */}
       {Pagination}
