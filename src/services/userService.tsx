@@ -1,6 +1,7 @@
 // src/services/userService.ts
 import axios from "axios";
 import { useAuthStore } from "@/store/useAuthStore";
+import { toast } from "react-toastify";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
@@ -86,16 +87,26 @@ export const userService = {
   },
 
   async logout(token: string, refreshToken: string) {
-    await axios.post(
-      `${API_BASE_URL}/auth/logout`,
-      { refresh_token: refreshToken }, // <-- Aquí va el refresh_token
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+    try {
+      await axios.post(
+        `${API_BASE_URL}/auth/logout`,
+        { refresh_token: refreshToken },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 500) {
+        // Logout local
+        const logout = useAuthStore.getState().logout;
+        logout();
+        toast.error("Hubo un error en el servidor. Has sido desconectado.");
       }
-    );
+      // Puedes manejar otros errores si lo deseas
+    }
   },
 
   async refreshToken() {
@@ -130,9 +141,16 @@ export const userService = {
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
-        const logout = useAuthStore.getState().logout;
-        logout();
+        toast.error("Tu sesión ha terminado");
       }
+
+      if (axios.isAxiosError(error) && error.response?.status === 500) {
+        toast.error("Ha ocurrido un error");
+      }
+
+      const logout = useAuthStore.getState().logout;
+      logout();
+
       throw error;
     }
   },

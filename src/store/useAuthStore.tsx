@@ -1,4 +1,4 @@
-// store/useAuthStore.ts
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { userService } from "@/services/userService";
@@ -74,7 +74,8 @@ export const useAuthStore = create<AuthState>()(
               window.location.href = "/";
             }
           }
-        } catch (e) {
+        } catch (e: any) {
+          console.log(e);
           // Puedes manejar el error si lo deseas, pero igual limpia el estado
         }
       },
