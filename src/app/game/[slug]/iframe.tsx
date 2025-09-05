@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useGameCloseListener } from "@/hooks/useGameCloseListener";
+import { useGameRefreshListener } from "@/hooks/useGameRefreshListener";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FC, useEffect, useRef } from "react";
@@ -29,32 +30,11 @@ const Iframe: FC<Props> = ({ url, sessionId }) => {
     },
   });
 
-  useEffect(() => {
-    const handleMessageFromIframe = async (event: any) => {
-      // Always verify the origin
-      if (event.origin === "https://static.cdneu-stat.com") {
-        if (isValidJSON(event.data)) {
-          const parsed = JSON.parse(event.data) as
-            | WiningAnimationState
-            | FinishEvent
-            | SessionEvent;
-
-          if ((parsed as FinishEvent).event.name == "BeforeGamble") {
-            // refrescar el backend
-            await axios.post(
-              `http://localhost:3001/v1/games/refresh/${sessionId}`
-            );
-          }
-        }
-      }
-    };
-
-    window.addEventListener("message", handleMessageFromIframe);
-
-    return () => {
-      window.removeEventListener("message", handleMessageFromIframe);
-    };
-  }, []);
+  useGameRefreshListener({
+    onRefresh: () => {
+      axios.post(`http://localhost:3001/v1/games/refresh/${sessionId}`);
+    },
+  });
 
   return <iframe height={500} width={"100%"} src={url} ref={iframeRef} />;
 };

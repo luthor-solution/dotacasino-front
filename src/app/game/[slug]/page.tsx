@@ -1,6 +1,6 @@
 import axios from "axios";
 import { FC } from "react";
-import { OpenGameApiResponse, reponseOpenGame } from "./utils";
+import { OpenGameApiResponse } from "./utils";
 import Iframe from "./iframe";
 
 type Props = {
