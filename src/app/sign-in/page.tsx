@@ -44,7 +44,7 @@ export default function SignIn() {
 
   return (
     <div
-      className="flex items-center justify-center px-4 py-12 xl:px-12 w-screen min-h-[100dvh] relative"
+      className="flex items-center justify-center px-[32px] py-12 xl:px-12 w-screen min-h-[100dvh] relative"
       style={{
         backgroundImage: "url('/background/bg.jpg')",
         backgroundSize: "cover",

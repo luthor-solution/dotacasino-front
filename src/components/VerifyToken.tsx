@@ -1,15 +1,26 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { userService } from "@/services/userService";
 
-export default function VerifyToken() {
+export default function VerifyToken({
+  onLoadingChange,
+}: {
+  onLoadingChange?: (loading: boolean) => void;
+}) {
   const token = useAuthStore((state) => state.token);
+  const [loading, setLoading] = useState(!!token);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token) {
+      setLoading(false);
+      onLoadingChange?.(false);
+      return;
+    }
 
     let cancelled = false;
+    setLoading(true);
+    onLoadingChange?.(true);
 
     async function fetchProfile() {
       try {
@@ -28,6 +39,11 @@ export default function VerifyToken() {
             // El logout ya se maneja en refreshToken si falla
           }
         }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+          onLoadingChange?.(false);
+        }
       }
     }
 
@@ -36,7 +52,8 @@ export default function VerifyToken() {
     return () => {
       cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
-  return null;
+  return loading;
 }
