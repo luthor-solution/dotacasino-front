@@ -42,3 +42,7 @@ body {
 .add-action {
   display: none;
 }
+
+.svg-wrapper>svg {
+  margin: 0px auto;
+}
