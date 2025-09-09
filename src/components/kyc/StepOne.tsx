@@ -82,7 +82,7 @@ const StepOne: React.FC = () => {
         </div>
         {/* Face */}
         {/* SIGNATIRE */}
-        <div className="flex gap-x-[24px]">
+        {/*  <div className="flex gap-x-[24px]">
           <div className="flex flex-col border border-[#a97bbf33] p-[32px] justify-start text-start space-y-4 rounded-[12px] w-full max-w-2xl bg-[#2e0327]">
             <span className="font-[700]">ID document</span>
             <span>
@@ -90,7 +90,6 @@ const StepOne: React.FC = () => {
               <br /> yout contact
             </span>
             <div className="flex flex-row gap-4 items-center justify-center w-full">
-              {/* BACK SIDE */}
               <div className="flex flex-col items-center border-2 rounded-lg p-4 w-[220px] h-[220px]">
                 <div className="flex flex-col gap-y-6 w-full flex-1">
                   <div className="flex flex-col gap-y-2">
@@ -105,7 +104,7 @@ const StepOne: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* SIGNATIRE */}
       </div>
     </div>

@@ -39,6 +39,12 @@ export interface GamesResponse {
   pageSize: number;
 }
 
+export type GameCategory = string;
+
+export interface GameCategoriesResponse {
+  categories: GameCategory[];
+}
+
 export const gamesService = {
   async getGames(
     params: GamesQuery = {},
@@ -66,6 +72,35 @@ export const gamesService = {
         if (refreshToken) {
           await userService.refreshToken();
           return gamesService.getGames(params, false);
+        }
+      }
+      throw error;
+    }
+  },
+
+  async getCategories(retry = true): Promise<GameCategoriesResponse> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const response = await axios.get(`${API_BASE_URL}/games/categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      // La respuesta es un array de strings, así que la adaptamos:
+      return { categories: response.data as GameCategory[] };
+    } catch (error) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        const { refreshToken } = useAuthStore.getState();
+        if (refreshToken) {
+          await userService.refreshToken();
+          return gamesService.getCategories(false);
         }
       }
       throw error;

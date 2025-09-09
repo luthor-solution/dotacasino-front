@@ -1,21 +1,22 @@
 import React from "react";
 import FancySelect from "@/components/FancySelect";
-import { CiFaceSmile } from "react-icons/ci";
 import { MdPublic } from "react-icons/md";
-
+import IdSideBox from "./IdSideBox";
+import { useKycStore } from "@/store/useKYCStore";
 const StepThree: React.FC = () => {
-  // Puedes conectar estos estados a tu lógica de formulario
-  const [form, setForm] = React.useState({
-    name: "",
-    email: "",
-    identityId: "",
-    country: "",
-    state: "",
-    city: "",
-  });
+  const setDocument = useKycStore((s) => s.setDocument);
+  const setField = useKycStore((s) => s.setField);
+  const typeDocument = useKycStore((s) => s.typeDocument);
+  const documents = useKycStore((s) => s.documents);
+  // Opcional: handlers para subir/tomar foto
+  const handleFileSelect = (side: "front" | "back" | "face", file: File) => {
+    setDocument(side, file); // guarda en el store global
+    // tu lógica local, no la quites
+  };
 
-  const handleChange = (field: string, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+  // Handler para el select de tipo de documento
+  const handleTypeDocumentChange = (value: string) => {
+    setField("typeDocument", value);
   };
 
   return (
@@ -26,55 +27,42 @@ const StepThree: React.FC = () => {
       <div className="flex md:gap-x-4 gap-y-4 md:gap-y-0 items-center w-full max-w-xl flex-col md:flex-row ">
         <span className="min-w-fit">Select the type of document</span>
         <FancySelect
-          name="country"
+          name="typeDocument" // Cambiado aquí
           icon={<MdPublic size={22} />}
-          value={form.country}
-          onChange={(v) => handleChange("country", v)}
+          value={typeDocument} // Lee del store
+          onChange={handleTypeDocumentChange} // Actualiza el store
           options={[
-            { value: "Mexico", label: "Mexico" },
-            { value: "USA", label: "USA" },
-            { value: "Canada", label: "Canada" },
+            { value: "ID_CARD", label: "National ID" },
+            { value: "DRIVER_LICENSE", label: "Driver's license" },
+            { value: "PASSPORT", label: "Passport" },
+            { value: "ADDRESS_PROOF", label: "Address Proof" },
           ]}
-          placeholder="Country"
+          placeholder="Type document"
         />
       </div>
 
-      <div className="flex gap-x-[24px] w-full">
+      <div className="flex gap-x-[24px] w-full flex-col md:flex-row">
         <div className="flex flex-col border border-[#a97bbf33] p-[32px] justify-start text-start space-y-4 rounded-[12px] w-full bg-[#2e0327]">
           <span className="font-[700]">ID document</span>
           <span>
             You must capture both sides of the ID with clear quality and <br />{" "}
             good lighting
           </span>
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-center w-full">
-            {/* FRONT SIDE */}
-            <div className="flex flex-col items-center border-2 border-[#b3b3b3] rounded-lg p-4 w-full h-[220px] md:text-[150px] text-[100px]">
-              <div className="flex gap-x-2 text-[#b3b3b3] items-center flex-1 w-full justify-center">
-                <CiFaceSmile className="w-full" />
-                <div className="flex flex-col gap-y-1 w-full">
-                  <div className="h-[14px] bg-[#b3b3b3] w-[80%] rounded-[4px]" />
-                  <div className="h-[14px] bg-[#b3b3b3] w-[90%] rounded-[4px]" />
-                  <div className="h-[14px] bg-[#b3b3b3] w-[90%] rounded-[4px]" />
-                </div>
-              </div>
-              <span className="mt-4 text-center text-[#b3b3b3] font-semibold text-sm">
-                FRONT SIDE OF THE IDENTIFICATION
-              </span>
-            </div>
-
-            {/* BACK SIDE */}
-            <div className="flex flex-col items-center border-2 rounded-lg p-4  w-full h-[220px]">
-              <div className="flex flex-col gap-y-6 w-full flex-1">
-                <div className="h-[25px] bg-[#b3b3b3] w-full rounded-[4px]" />
-                <div className="flex flex-col gap-y-2">
-                  <div className="h-[10px] bg-[#b3b3b3] w-[90%] rounded-[4px]" />
-                  <div className="h-[10px] bg-[#b3b3b3] w-full rounded-[4px]" />
-                  <div className="h-[10px] bg-[#b3b3b3] w-full rounded-[4px]" />
-                </div>
-              </div>
-              <span className="mt-4 text-center text-[#b3b3b3] font-semibold text-sm">
-                BACK SIDE OF THE IDENTIFICATION
-              </span>
+          <span>Posiciona el cursor encima de cada opción para empezar</span>
+          <div className="flex flex-col items-center gap-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+              <IdSideBox
+                type="front"
+                label="FRONT SIDE OF THE IDENTIFICATION"
+                onFileSelect={(file) => handleFileSelect("front", file)}
+                value={documents.front}
+              />
+              <IdSideBox
+                type="back"
+                label="BACK SIDE OF THE IDENTIFICATION"
+                onFileSelect={(file) => handleFileSelect("back", file)}
+                value={documents.back}
+              />
             </div>
           </div>
         </div>

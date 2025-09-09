@@ -2,9 +2,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import Banner from "@/components/Banner";
 import GamesGrid from "@/components/GamesGrid";
-import GameFilters from "@/components/GameFilters"; // <-- importa el filtro
+import GameFilters from "@/components/GameFilters";
 import { gamesService, Game, GamesResponse } from "@/services/gamesService";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
+import CategoriesMenu from "@/components/CategoriesMenu";
+import GamesCarousel from "@/components/GamesCarousel";
 
 export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
@@ -57,6 +59,10 @@ export default function Home() {
 
   const totalPages = Math.ceil(total / pageSize);
 
+  useEffect(() => {
+    console.log("FILTERS", filters);
+  }, [filters]);
+
   // Componente de paginación
   const Pagination = (
     <div
@@ -85,32 +91,77 @@ export default function Home() {
   );
 
   // Cuando cambian los filtros, regresa a la página 1
-  const handleFiltersChange = (newFilters: Partial<typeof filters>) => {
+  /*   const handleFiltersChange = (newFilters: Partial<typeof filters>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
     setPage(1);
   };
-
+ */
   return (
     <main ref={mainRef} className="bg-[#2e0327] min-h-screen flex flex-col">
       <Banner title="Juegos" subtitle="Elige una opción para continuar" />
 
       <div className="w-full max-w-6xl mx-auto px-4 mt-8">
-        <GameFilters
+        {/*  <GameFilters
           filters={filters}
           onChange={handleFiltersChange}
           isMobile={isMobile}
+        /> */}
+
+        <CategoriesMenu
+          selected={filters.category}
+          onSelect={(cat) => {
+            setFilters((prev) => ({ ...prev, category: cat || "" }));
+            setPage(1);
+          }}
         />
       </div>
 
-      {/* Desktop: paginación arriba si page >= 2 */}
-      {!isMobile && games.length > 0 && Pagination}
+      {filters.category && filters.category !== "todos" && (
+        <>
+          {/* Desktop: paginación arriba si page >= 2 */}
+          {!isMobile && games.length > 0 && Pagination}
 
-      <GamesGrid games={games} loading={loading} />
+          <GamesGrid games={games} loading={loading} />
 
-      {/* Paginación abajo (siempre en mobile, siempre en desktop) */}
-      {games.length > 0 && Pagination}
+          {/* Paginación abajo (siempre en mobile, siempre en desktop) */}
+          {games.length > 0 && Pagination}
+        </>
+      )}
+      {!filters.category && (
+        <>
+          <GamesCarousel
+            title="Arcade"
+            category="arcade"
+            onShowMore={() => {
+              /* tu lógica para mostrar más */
+            }}
+          />
 
-      <ScrollToTopButton />
+          <GamesCarousel
+            title="Crash games"
+            category="crash_games"
+            onShowMore={() => {
+              /* tu lógica para mostrar más */
+            }}
+          />
+
+          <GamesCarousel
+            title="Lottery"
+            category="lottery"
+            onShowMore={() => {
+              /* tu lógica para mostrar más */
+            }}
+          />
+
+          <GamesCarousel
+            title="Live dealers"
+            category="live_dealers"
+            onShowMore={() => {
+              /* tu lógica para mostrar más */
+            }}
+          />
+        </>
+      )}
 
       {games.length === 0 && !loading && (
         <div className="flex flex-col items-center justify-center flex-1 py-16">

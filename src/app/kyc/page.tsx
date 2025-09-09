@@ -1,19 +1,91 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import StepOne from "@/components/kyc/StepOne";
 import StepTwo from "@/components/kyc/StepTwo";
 import StepThree from "@/components/kyc/StepThree";
 import ProgressBar from "@/components/ProgressBar";
+import StepFour from "@/components/kyc/StepFour";
+import { useEffect } from "react";
+import { useKycStore } from "@/store/useKYCStore";
+import { kycService } from "@/services/kycService";
 
-export default function SignIn() {
+export default function KYC() {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const kycState = useKycStore();
+  const documents = kycState.documents;
 
-  // Puedes ajustar los porcentajes y textos según tu flujo
+  // Utilidad para convertir File a base64
+  const fileToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+  // Mapea el tipo local al del backend
+  const getDocumentType = (type: string) => {
+    if (type === "face") return "SELFIE";
+    return kycState.typeDocument || "ID_CARD";
+  };
+
+  // Función principal de submit
+  const handleSubmit = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      // 1. Subir documentos y recolectar los IDs
+      const documentIds: string[] = [];
+      for (const [type, file] of Object.entries(documents)) {
+        if (!file) continue;
+        let base64 = "";
+        if (typeof file === "string") {
+          base64 = file;
+        } else {
+          base64 = await fileToBase64(file as File);
+        }
+        const payload = {
+          type: getDocumentType(type),
+          file: base64,
+        };
+        const res = await kycService.uploadDocument(payload);
+        documentIds.push(res.id);
+      }
+
+      // 2. Hacer submit con los datos y los IDs
+      const submitPayload = {
+        name: kycState.name,
+        last_name: kycState.last_name,
+        id: kycState.id,
+        country: kycState.country,
+        birthday: kycState.birthday,
+        documentIds,
+      };
+      await kycService.submitKyc(submitPayload);
+
+      // Aquí puedes mostrar un mensaje de éxito o redirigir
+      alert("¡Verificación enviada con éxito!");
+    } catch (err: any) {
+      setError(err.message || "Error al enviar la verificación");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const steps = [
-    { component: <StepOne />, percent: 33, label: "Paso 1" },
-    { component: <StepTwo />, percent: 66, label: "Paso 2" },
-    { component: <StepThree />, percent: 100, label: "Paso 3" },
+    { component: <StepOne />, percent: 25, label: "Paso 1" },
+    { component: <StepTwo />, percent: 50, label: "Paso 2" },
+    { component: <StepThree />, percent: 75, label: "Paso 3" },
+    { component: <StepFour />, percent: 100, label: "Paso 4" },
   ];
+
+  useEffect(() => {
+    // Esto se ejecuta cada vez que cualquier campo del store cambia
+    console.log("KYC store cambió:", kycState);
+  }, [kycState]);
 
   return (
     <div
@@ -42,6 +114,7 @@ export default function SignIn() {
                 <button
                   onClick={() => setStep((s) => s - 1)}
                   className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
+                  disabled={loading}
                 >
                   Anterior
                 </button>
@@ -50,15 +123,21 @@ export default function SignIn() {
                 <button
                   onClick={() => setStep((s) => s + 1)}
                   className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
+                  disabled={loading}
                 >
                   Siguiente
                 </button>
               ) : (
-                <button className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]">
-                  INICIAR VERIFICACION
+                <button
+                  className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                >
+                  {loading ? "Enviando..." : "INICIAR VERIFICACION"}
                 </button>
               )}
             </div>
+            {error && <div className="text-red-500">{error}</div>}
           </div>
         </div>
       </div>
