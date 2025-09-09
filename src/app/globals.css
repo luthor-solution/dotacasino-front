@@ -39,6 +39,13 @@ body {
   animation: fade-in 0.3s ease;
 }
 
+.add-action {
+  display: none;
+}
+
+.svg-wrapper>svg {
+  margin: 0px auto;
+}
 .dice-3d {
   perspective: 1600px;
 }
