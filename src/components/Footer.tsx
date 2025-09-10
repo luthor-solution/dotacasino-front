@@ -1,9 +1,35 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const Footer = () => (
-  <footer className="bg-[#2e0327] text-white pt-12 pb-8 px-4">
-    <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-8">
+  <footer
+    className="relative bg-[#2e0327] text-white pt-12 pb-8 px-4 overflow-x-visible"
+    style={{
+      backgroundImage: "url('/banner/banner1.jpg')",
+      backgroundSize: "160%",
+      backgroundPosition: "top",
+      backgroundRepeat: "no-repeat",
+    }}
+  >
+    <div className="absolute inset-0 bg-[#2e0327] opacity-[92%] pointer-events-none"></div>
+    {/* Overlay degradado solo arriba para que no se vea cortado */}
+    <div className="absolute left-0 top-0 w-full h-[30%] pointer-events-none bg-gradient-to-b from-[#2e0327] to-[#2e032700]"></div>
+
+    {/* Imagen decorativa sobresaliendo */}
+    <Image
+      src="/shape.png"
+      alt="Decoración"
+      className="hidden md:block absolute top-0 right-0 pointer-events-none"
+      style={{
+        transform: "translateX(-10%) translateY(-40%)",
+        zIndex: 20,
+      }}
+      height={100}
+      width={200}
+    />
+
+    <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-8">
       {/* Columnas principales */}
       <div className="flex flex-col md:flex-row gap-12 flex-1">
         {/* Compañía */}
@@ -90,7 +116,7 @@ const Footer = () => (
     </div>
 
     {/* Texto descriptivo */}
-    <div className="max-w-5xl mx-auto mt-8 text-center text-[#e0e0e0] text-sm leading-relaxed">
+    <div className="relative z-10 max-w-5xl mx-auto mt-8 text-center text-[#e0e0e0] text-sm leading-relaxed">
       dota.click casino criptográfico confiable de alta gama, con una variedad
       de juegos de tragamonedas, máquinas tragamonedas en línea únicas, apuestas
       deportivas, eventos de deportes electrónicos, juegos con crupier en vivo,
@@ -103,11 +129,11 @@ const Footer = () => (
       de un acceso rápido en cualquier momento conveniente.
     </div>
 
-    <div className="max-w-5xl mx-auto mt-8 text-center text-white text-lg font-bold">
+    <div className="relative z-10 max-w-5xl mx-auto mt-8 text-center text-white text-lg font-bold">
       Ventajas de jugar en vip crypto casino dota.click:
     </div>
 
-    <div className="max-w-5xl mx-auto mt-4 text-center text-[#e0e0e0] text-sm leading-relaxed">
+    <div className="relative z-10 max-w-5xl mx-auto mt-4 text-center text-[#e0e0e0] text-sm leading-relaxed">
       Nuestro casino en línea criptográfico premium dota.click admite altos
       estándares de seguridad para brindar una experiencia de jugador segura. La
       principal ventaja de nuestro casino dota.click es la gran selección de
@@ -133,7 +159,7 @@ const Footer = () => (
       casino en línea que en el formato de sitio al que está acostumbrado.
     </div>
 
-    <div className="max-w-5xl mx-auto mt-8 text-center text-white text-lg font-bold">
+    <div className="relative z-10 max-w-5xl mx-auto mt-8 text-center text-white text-lg font-bold">
       Quédese con nosotros y obtendrá un socio confiable en su entretenimiento
       en línea durante los próximos años. ¡Le deseamos todo lo mejor!
     </div>
