@@ -78,16 +78,12 @@ export const kycService = {
     if (!token) throw new Error("No token available");
 
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/v1/kyc/submit`,
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/kyc/submit`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
     } catch (error) {
       if (

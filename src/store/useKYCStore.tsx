@@ -5,9 +5,9 @@ type KycDocumentType = "front" | "back" | "face" | "signature";
 interface KycState {
   // Datos personales
   name: string;
-  last_name: string; // <-- AGREGADO
-  id: string; // <-- AGREGADO
-  birthday: string; // <-- AGREGADO
+  last_name: string;
+  id: string;
+  birthday: string;
   email: string;
   identityId: string;
   country: string;
@@ -15,10 +15,8 @@ interface KycState {
   city: string;
   typeDocument: string;
 
-  // Documentos
   documents: Partial<Record<KycDocumentType, string | File>>;
 
-  // Métodos para actualizar
   setField: (
     field: keyof Omit<
       KycState,
@@ -32,9 +30,9 @@ interface KycState {
 
 export const useKycStore = create<KycState>((set) => ({
   name: "",
-  last_name: "", // <-- AGREGADO
-  id: "", // <-- AGREGADO
-  birthday: "", // <-- AGREGADO
+  last_name: "",
+  id: "",
+  birthday: "",
   email: "",
   identityId: "",
   country: "",
@@ -50,9 +48,9 @@ export const useKycStore = create<KycState>((set) => ({
   resetKyc: () =>
     set({
       name: "",
-      last_name: "", // <-- AGREGADO
-      id: "", // <-- AGREGADO
-      birthday: "", // <-- AGREGADO
+      last_name: "",
+      id: "",
+      birthday: "",
       email: "",
       identityId: "",
       country: "",

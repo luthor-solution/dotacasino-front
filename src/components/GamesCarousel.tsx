@@ -80,7 +80,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
   };
 
   return (
-    <div className="w-full flex justify-center items-center py-6 px-2 md:px-0">
+    <div className="w-full flex justify-center items-center py-6  md:px-0">
       {/* Flecha izquierda (solo desktop/tablet) */}
       {responsive.showArrows && (
         <div
@@ -118,7 +118,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
           <h2 className="text-2xl font-semibold text-[#FFC827]">{title}</h2>
           {onShowMore && (
             <button
-              className="bg-[#FFC827] px-4 py-1 rounded-lg text-sm font-semibold hover:bg-[#FFC827] transition text-black"
+              className="border border-[#FFC827] px-4 py-1 rounded-lg text-sm font-semibold hover:bg-[#FFC827] text-white cursor-pointer transition-all duration-500"
               onClick={onShowMore}
             >
               Mostrar más

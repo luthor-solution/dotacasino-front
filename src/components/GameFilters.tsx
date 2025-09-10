@@ -50,7 +50,7 @@ const GameFilters: React.FC<GameFiltersProps> = ({
       onChange={(v) => onChange({ category: v })}
       options={categories}
     /> */}
-    <FancySelect
+    {/*   <FancySelect
       name="device"
       icon={<FaMobileAlt />}
       value={filters.device}
@@ -63,7 +63,7 @@ const GameFilters: React.FC<GameFiltersProps> = ({
       value={filters.sort}
       onChange={(v) => onChange({ sort: v })}
       options={sorts}
-    />
+    /> */}
   </form>
 );
 

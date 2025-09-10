@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useKYCStatusStore } from "@/store/useKYCStatusStore";
 
 type NavLink = {
   href: string;
@@ -29,6 +30,7 @@ const Header: React.FC = () => {
   const pathname = usePathname();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
+  const kycStatus = useKYCStatusStore((state) => state.kycStatus);
 
   useEffect(() => {
     const onScroll = () => {
@@ -141,22 +143,22 @@ const Header: React.FC = () => {
               <div className="absolute right-0 mt-2 w-44 bg-[#2e0327] border border-[#FFC827] rounded-lg shadow-lg py-2 z-50 animate-fade-down">
                 <Link
                   href="/profile"
-                  className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
+                  className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
                   onClick={() => setUserMenu(false)}
                 >
                   Mi perfil
                 </Link>
-                {/*                 <Link
-                  href=""
-                  className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
+                <Link
+                  href="/kyc"
+                  className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
                   onClick={() => {
                     setUserMenu(false);
                   }}
                 >
-                  Historial
-                </Link> */}
+                  Verificar identidad
+                </Link>
                 <button
-                  className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors cursor-pointer"
+                  className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors cursor-pointer capitalize"
                   onClick={() => {
                     setUserMenu(false);
                     logout();
@@ -255,7 +257,7 @@ const Header: React.FC = () => {
                 <div className="mt-2 w-full bg-[#2e0327] border border-[#FFC827] rounded-lg shadow-lg py-2 z-50 animate-fade-down">
                   <Link
                     href="/profile"
-                    className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
+                    className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
                     onClick={() => {
                       setUserMenu(false);
                       setOpen(false);
@@ -263,18 +265,18 @@ const Header: React.FC = () => {
                   >
                     Mi perfil
                   </Link>
-                  {/*    <Link
-                    href=""
-                    className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
+                  <Link
+                    href="/kyc"
+                    className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
                     onClick={() => {
                       setUserMenu(false);
                       setOpen(false);
                     }}
                   >
-                    Historial
-                  </Link> */}
+                    Verificar identidad
+                  </Link>
                   <button
-                    className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
+                    className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
                     onClick={() => {
                       setUserMenu(false);
                       setOpen(false);

@@ -4,9 +4,9 @@ import Banner from "@/components/Banner";
 import GamesGrid from "@/components/GamesGrid";
 import GameFilters from "@/components/GameFilters";
 import { gamesService, Game, GamesResponse } from "@/services/gamesService";
-import ScrollToTopButton from "@/components/ScrollToTopButton";
 import CategoriesMenu from "@/components/CategoriesMenu";
 import GamesCarousel from "@/components/GamesCarousel";
+import NoGames from "@/components/NoGames";
 
 export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
@@ -91,104 +91,99 @@ export default function Home() {
   );
 
   // Cuando cambian los filtros, regresa a la página 1
-  /*   const handleFiltersChange = (newFilters: Partial<typeof filters>) => {
+  const handleFiltersChange = (newFilters: Partial<typeof filters>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
     setPage(1);
   };
- */
+
   return (
-    <main ref={mainRef} className="bg-[#2e0327] min-h-screen flex flex-col">
-      <Banner title="Juegos" subtitle="Elige una opción para continuar" />
+    <main
+      ref={mainRef}
+      className="relative min-h-screen flex flex-col"
+      style={{
+        backgroundImage: "url('/background/bg2.jpg')",
+        backgroundSize: "150%",
+        backgroundPosition: "left",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      {/* Overlay sólido que cubre todo el fondo */}
+      <div className="absolute inset-0 bg-[#2e0327] opacity-[95%] pointer-events-none z-0"></div>
+      {/* Overlay degradado solo arriba */}
+      <div className="absolute left-0 top-0 w-full h-[30%] pointer-events-none bg-gradient-to-b from-[#2e0327] to-[#2e032700] z-0"></div>
+      {/* Overlay degradado solo abajo */}
+      <div className="absolute left-0 bottom-0 w-full h-[30%] pointer-events-none bg-gradient-to-t from-[#2e0327] to-[#2e032700] z-0"></div>
 
-      <div className="w-full max-w-6xl mx-auto px-4 mt-8">
-        {/*  <GameFilters
-          filters={filters}
-          onChange={handleFiltersChange}
-          isMobile={isMobile}
-        /> */}
+      {/* Contenido principal */}
+      <div className="relative z-10 flex flex-col flex-1">
+        <Banner title="Juegos" subtitle="Elige una opción para continuar" />
 
-        <CategoriesMenu
-          selected={filters.category}
-          onSelect={(cat) => {
-            setFilters((prev) => ({ ...prev, category: cat || "" }));
-            setPage(1);
-          }}
-        />
-      </div>
-
-      {filters.category && filters.category !== "todos" && (
-        <>
-          {/* Desktop: paginación arriba si page >= 2 */}
-          {!isMobile && games.length > 0 && Pagination}
-
-          <GamesGrid games={games} loading={loading} />
-
-          {/* Paginación abajo (siempre en mobile, siempre en desktop) */}
-          {games.length > 0 && Pagination}
-        </>
-      )}
-      {!filters.category && (
-        <>
-          <GamesCarousel
-            title="Arcade"
-            category="arcade"
-            onShowMore={() => {
-              /* tu lógica para mostrar más */
-            }}
+        <div className="w-full max-w-6xl mx-auto px-4 mt-8">
+          <GameFilters
+            filters={filters}
+            onChange={handleFiltersChange}
+            isMobile={isMobile}
           />
 
-          <GamesCarousel
-            title="Crash games"
-            category="crash_games"
-            onShowMore={() => {
-              /* tu lógica para mostrar más */
+          <CategoriesMenu
+            selected={filters.category}
+            onSelect={(cat) => {
+              setFilters((prev) => ({ ...prev, category: cat || "" }));
+              setPage(1);
             }}
           />
-
-          <GamesCarousel
-            title="Lottery"
-            category="lottery"
-            onShowMore={() => {
-              /* tu lógica para mostrar más */
-            }}
-          />
-
-          <GamesCarousel
-            title="Live dealers"
-            category="live_dealers"
-            onShowMore={() => {
-              /* tu lógica para mostrar más */
-            }}
-          />
-        </>
-      )}
-
-      {games.length === 0 && !loading && (
-        <div className="flex flex-col items-center justify-center flex-1 py-16">
-          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
-            <circle cx="60" cy="60" r="56" fill="#FFC827" opacity="0.15" />
-            <rect x="30" y="50" width="60" height="30" rx="8" fill="#FFC827" />
-            <circle cx="45" cy="65" r="5" fill="#2e0327" />
-            <circle cx="75" cy="65" r="5" fill="#2e0327" />
-            <rect x="55" y="70" width="10" height="5" rx="2" fill="#2e0327" />
-            <rect
-              x="50"
-              y="55"
-              width="20"
-              height="5"
-              rx="2"
-              fill="#2e0327"
-              opacity="0.3"
-            />
-          </svg>
-          <div className="mt-6 text-white text-xl font-semibold text-center">
-            No se encontraron resultados
-          </div>
-          <div className="mt-2 text-[#FFC827] text-base text-center">
-            Prueba con otros filtros o busca otro juego.
-          </div>
         </div>
-      )}
+
+        {filters.category && filters.category !== "todos" && (
+          <div>
+            {/* Desktop: paginación arriba si page >= 2 */}
+            {!isMobile && games.length > 0 && Pagination}
+
+            <GamesGrid games={games} loading={loading} />
+
+            {/* Paginación abajo (siempre en mobile, siempre en desktop) */}
+            {games.length > 0 && Pagination}
+          </div>
+        )}
+        {!filters.category && !filters.search && (
+          <>
+            <GamesCarousel
+              title="Arcade"
+              category="arcade"
+              onShowMore={() => {
+                setFilters((prev) => ({ ...prev, category: "arcade" }));
+              }}
+            />
+
+            <GamesCarousel
+              title="Crash games"
+              category="crash_games"
+              onShowMore={() => {
+                setFilters((prev) => ({ ...prev, category: "crash_games" }));
+              }}
+            />
+
+            <GamesCarousel
+              title="Lottery"
+              category="lottery"
+              onShowMore={() => {
+                setFilters((prev) => ({ ...prev, category: "lottery" }));
+              }}
+            />
+
+            <GamesCarousel
+              title="Live dealers"
+              category="live_dealers"
+              onShowMore={() => {
+                setFilters((prev) => ({ ...prev, category: "live_dealers" }));
+              }}
+            />
+          </>
+        )}
+
+        {games.length === 0 && !loading && <NoGames />}
+      </div>
     </main>
   );
 }

@@ -9,6 +9,7 @@ import StepFour from "@/components/kyc/StepFour";
 import { useEffect } from "react";
 import { useKycStore } from "@/store/useKYCStore";
 import { kycService } from "@/services/kycService";
+import { toast } from "react-toastify";
 
 export default function KYC() {
   const [step, setStep] = useState(1);
@@ -67,8 +68,10 @@ export default function KYC() {
       await kycService.submitKyc(submitPayload);
 
       // Aquí puedes mostrar un mensaje de éxito o redirigir
-      alert("¡Verificación enviada con éxito!");
+      toast.success("¡Verificación enviada con éxito!");
     } catch (err: any) {
+      console.log(err);
+      toast.error(err.response.data.message);
       setError(err.message || "Error al enviar la verificación");
     } finally {
       setLoading(false);
@@ -106,7 +109,7 @@ export default function KYC() {
           label={steps[step - 1].label}
         />
         <div className="flex flex-col xl:flex-row items-center justify-center w-full xl:space-x-16 space-y-[60px] xl:space-y-0  relative">
-          <div className="relative backdrop-blur-lg px-4 sm:px-8 xl:px-[40px] py-8 sm:py-12 xl:py-[60px] border border-[#a97bbf33] rounded-[25px] space-y-8 sm:space-y-10 xl:space-y-[50px] flex flex-col text-center  w-full md:w-[400px] xl:w-fit items-center md:items-end">
+          <div className="relative backdrop-blur-lg px-4 sm:px-8 xl:px-[40px] py-8 sm:py-12 xl:py-[60px] border border-[#a97bbf33] rounded-[25px] space-y-8 sm:space-y-10 xl:space-y-[50px] flex flex-col text-center  w-full md:w-fit items-center md:items-end">
             {steps[step - 1].component}
 
             <div className="flex gap-4 mt-4">

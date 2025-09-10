@@ -5,6 +5,7 @@ import Header from "@/components/common/Header";
 import { ToastContainer } from "react-toastify";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import AppShell from "@/components/AppShell";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
 
         <Header />
         <AppShell>{children}</AppShell>
+        <Footer />
         <ScrollToTopButton />
       </body>
     </html>

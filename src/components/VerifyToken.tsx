@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { userService } from "@/services/userService";
+import { useKYCStatusStore } from "@/store/useKYCStatusStore";
 
 export default function VerifyToken({
   onLoadingChange,
@@ -9,12 +10,14 @@ export default function VerifyToken({
   onLoadingChange?: (loading: boolean) => void;
 }) {
   const token = useAuthStore((state) => state.token);
+  const setKycStatus = useKYCStatusStore((state) => state.setKycStatus);
   const [loading, setLoading] = useState(!!token);
 
   useEffect(() => {
     if (!token) {
       setLoading(false);
       onLoadingChange?.(false);
+      setKycStatus(null); // Limpia el estado si no hay token
       return;
     }
 
@@ -24,7 +27,10 @@ export default function VerifyToken({
 
     async function fetchProfile() {
       try {
-        await userService.getProfile();
+        const profile = await userService.getProfile();
+        if (!cancelled) {
+          setKycStatus(profile.kycStatus ?? null);
+        }
       } catch (error) {
         if (
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,11 +39,15 @@ export default function VerifyToken({
           try {
             await userService.refreshToken();
             if (!cancelled) {
-              await userService.getProfile();
+              const profile = await userService.getProfile();
+              setKycStatus(profile.kycStatus ?? null);
             }
           } catch {
+            setKycStatus(null);
             // El logout ya se maneja en refreshToken si falla
           }
+        } else {
+          setKycStatus(null);
         }
       } finally {
         if (!cancelled) {
