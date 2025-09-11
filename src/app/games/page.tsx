@@ -7,6 +7,7 @@ import { gamesService, Game, GamesResponse } from "@/services/gamesService";
 import CategoriesMenu from "@/components/CategoriesMenu";
 import GamesCarousel from "@/components/GamesCarousel";
 import NoGames from "@/components/NoGames";
+import JackpotLevels from "@/components/JackpotLevels";
 
 export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
@@ -163,6 +164,8 @@ export default function Home() {
                 setFilters((prev) => ({ ...prev, category: "crash_games" }));
               }}
             />
+
+            <JackpotLevels />
 
             <GamesCarousel
               title="Lottery"

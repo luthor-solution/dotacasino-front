@@ -43,7 +43,7 @@ body {
   display: none;
 }
 
-.svg-wrapper>svg {
+.svg-wrapper > svg {
   margin: 0px auto;
 }
 .dice-3d {
@@ -111,4 +111,96 @@ body {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+@keyframes auraWave1 {
+  0% {
+    transform: scale(1) translateY(-10px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.15) translateY(10px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(-10px);
+    opacity: 0.7;
+  }
+}
+@keyframes auraWave2 {
+  0% {
+    transform: scale(1.1) translateX(-10px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.25) translateX(10px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.1) translateX(-10px);
+    opacity: 0.5;
+  }
+}
+@keyframes auraWave3 {
+  0% {
+    transform: scale(0.95) translate(-10px, 10px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1) translate(10px, -10px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(0.95) translate(-10px, 10px);
+    opacity: 0.6;
+  }
+}
+@keyframes auraPulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.08) rotate(8deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes auraPulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.08) rotate(8deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.7;
+  }
+}
+
+.aura-halo {
+  position: absolute;
+  width: 160%;
+  height: 220%;
+  left: -30%;
+  top: -60%;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    circle,
+    transparent 55%,
+    #ff5cf7 80%,
+    #7b2ff2 100%
+  );
+  filter: blur(40px);
+  opacity: 0.7;
+  animation: auraPulse 4s ease-in-out infinite;
 }
