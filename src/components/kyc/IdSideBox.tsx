@@ -78,7 +78,7 @@ const IdSideBox: React.FC<IdSideBoxProps> = ({
             className="object-contain w-full h-full rounded-lg"
           />
           <button
-            className="absolute top-2 right-2 bg-[#FFC827] text-[#2e0327] font-bold px-3 py-1 rounded shadow hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-300 text-xs"
+            className="absolute top-2 right-2 bg-[#FFC827] text-[#2e0327] font-bold px-3 py-1 rounded shadow hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-300 text-xs cursor-pointer"
             onClick={handleRemove}
             type="button"
           >
@@ -118,9 +118,9 @@ const IdSideBox: React.FC<IdSideBoxProps> = ({
           </span>
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-[#2e0327cc] flex flex-col items-center justify-center gap-4 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 z-10">
+          <div className="absolute inset-0 bg-[#2e0327cc] flex flex-col items-center justify-center gap-4  md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity duration-300 z-10">
             <button
-              className="bg-[#FFC827] text-[#2e0327] font-bold px-6 py-2 rounded-md shadow hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-300"
+              className="bg-[#FFC827] text-[#2e0327] font-bold px-6 py-2 rounded-md shadow hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-300 cursor-pointer"
               onClick={() => fileInputRef.current?.click()}
               type="button"
             >
@@ -134,7 +134,7 @@ const IdSideBox: React.FC<IdSideBoxProps> = ({
               onChange={handleFileChange}
             />
             <button
-              className="bg-[#FFC827] text-[#2e0327] font-bold px-6 py-2 rounded-md shadow hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-300"
+              className="bg-[#FFC827] text-[#2e0327] font-bold px-6 py-2 rounded-md shadow hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-300 cursor-pointer"
               onClick={() => setShowCamera(true)}
               type="button"
             >

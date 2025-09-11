@@ -92,7 +92,7 @@ export default function KYC() {
 
   return (
     <div
-      className="flex items-center justify-center px-[32px] pb-12 pt-32 xl:px-12 w-screen min-h-[100dvh] relative"
+      className="flex items-center justify-center px-[32px] pb-12 pt-32 xl:px-12 w-screen min-h-[100dvh] relative max-w-full"
       style={{
         backgroundImage: "url('/background/bg.jpg')",
         backgroundSize: "cover",
@@ -136,7 +136,7 @@ export default function KYC() {
                   onClick={handleSubmit}
                   disabled={loading}
                 >
-                  {loading ? "Enviando..." : "INICIAR VERIFICACION"}
+                  {loading ? "Enviando..." : "Iniciar verificación"}
                 </button>
               )}
             </div>

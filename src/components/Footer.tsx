@@ -110,7 +110,13 @@ const Footer = () => (
           <option value="en">🇬🇧 English</option>
           <option value="kr">🇰🇷 Korean</option>
         </select>
-        <img src="/logo.svg" alt="DOTA Logo" className="h-10 mt-2" />
+        <Image
+          src="/logo.svg"
+          alt="DOTA Logo"
+          width={180}
+          height={150}
+          className="mt-2"
+        />
         <span className="text-[#bdbdbd] text-sm mt-2">Dota.Click 2025™</span>
       </div>
     </div>

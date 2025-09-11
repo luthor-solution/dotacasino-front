@@ -14,7 +14,7 @@ const StepOne: React.FC = () => {
       <div className="flex md:gap-x-[48px] flex-col md:flex-row gap-y-[24px]">
         {/* ID */}
         <div className="flex gap-x-[24px]">
-          <div className="flex flex-col border border-[#a97bbf33] p-[32px] justify-start text-start space-y-4 rounded-[12px] w-full max-w-2xl bg-[#2e0327]">
+          <div className="flex flex-col border border-[#a97bbf33] md:p-[32px] p-[16px] justify-start text-start space-y-4 rounded-[12px] w-full max-w-2xl bg-[#2e0327]">
             <span className="font-[700]">ID document</span>
             <span>
               You must capture both sides of the ID with clear quality and{" "}

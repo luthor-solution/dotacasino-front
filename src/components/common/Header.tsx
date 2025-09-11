@@ -77,7 +77,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${
+      className={`w-full fixed top-0 left-0 z-40 transition-all duration-300 ${
         scrolled || open
           ? "bg-[#2e0327] bg-opacity-95 shadow-lg"
           : "bg-transparent"
@@ -140,7 +140,7 @@ const Header: React.FC = () => {
             </button>
             {/* Dropdown */}
             {userMenu && (
-              <div className="absolute right-0 mt-2 w-44 bg-[#2e0327] border border-[#FFC827] rounded-lg shadow-lg py-2 z-50 animate-fade-down">
+              <div className="absolute right-0 mt-2 w-44 bg-[#2e0327] border border-[#FFC827] rounded-lg shadow-lg py-2 z-40 animate-fade-down">
                 <Link
                   href="/profile"
                   className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
@@ -254,7 +254,7 @@ const Header: React.FC = () => {
               </button>
               {/* Dropdown */}
               {userMenu && (
-                <div className="mt-2 w-full bg-[#2e0327] border border-[#FFC827] rounded-lg shadow-lg py-2 z-50 animate-fade-down">
+                <div className="mt-2 w-full bg-[#2e0327] border border-[#FFC827] rounded-lg shadow-lg py-2 z-40 animate-fade-down">
                   <Link
                     href="/profile"
                     className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
