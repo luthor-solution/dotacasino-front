@@ -103,7 +103,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
           responsive.showArrows
             ? {
                 width: `${responsive.carouselWidth}px`,
-                minWidth: `${responsive.carouselWidth}px`,
+                /* minWidth: `${responsive.carouselWidth}px`, */
                 maxWidth: `${responsive.carouselWidth}px`,
                 overflow: "hidden",
               }

@@ -20,7 +20,7 @@ const Footer = () => (
     <Image
       src="/shape.png"
       alt="Decoración"
-      className="hidden md:block absolute top-0 right-0 pointer-events-none"
+      className="hidden xl:block  absolute top-0 right-0 pointer-events-none"
       style={{
         transform: "translateX(-10%) translateY(-40%)",
         zIndex: 20,

@@ -52,7 +52,7 @@ const CategoriesMenu: React.FC<{
       .finally(() => setCatLoading(false));
   }, []);
 
-  // Detecta si hay overflow en mobile
+  // Detecta si hay overflow
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollRef.current) return;
@@ -81,10 +81,10 @@ const CategoriesMenu: React.FC<{
   };
 
   return (
-    <div className="relative w-full">
-      {/* Flecha izquierda (solo mobile y si hay overflow) */}
+    <div className="relative w-full lg:w-fit">
+      {/* Flecha izquierda (solo si hay overflow) */}
       <div
-        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 md:hidden transition-opacity ${
+        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 transition-opacity ${
           showLeft ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -96,9 +96,9 @@ const CategoriesMenu: React.FC<{
           <FiChevronLeft size={24} />
         </button>
       </div>
-      {/* Flecha derecha (solo mobile y si hay overflow) */}
+      {/* Flecha derecha (solo si hay overflow) */}
       <div
-        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 md:hidden transition-opacity ${
+        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 transition-opacity ${
           showRight ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -115,21 +115,16 @@ const CategoriesMenu: React.FC<{
         className={`
           flex
           w-full
-          md:w-fit
           overflow-x-auto
-          md:overflow-x-visible
           gap-3
-          md:gap-6
           px-4
-          md:px-0
           py-3
-          md:py-4
-          md:justify-center
-          mx-auto
           mb-6
           rounded-full
           scrollbar-hide
           bg-transparent
+          transition-all
+          duration-500
         `}
         style={{
           backgroundPosition: "left",

@@ -120,7 +120,7 @@ export default function Home() {
       <div className="relative z-10 flex flex-col flex-1">
         <Banner title="Juegos" subtitle="Elige una opción para continuar" />
 
-        <div className="w-full max-w-6xl mx-auto px-4 mt-8">
+        <div className="w-full max-w-6xl mx-auto px-4 mt-8 justify-center items-center flex flex-col">
           <GameFilters
             filters={filters}
             onChange={handleFiltersChange}
