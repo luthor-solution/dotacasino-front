@@ -27,5 +27,5 @@ export function middleware(request: NextRequest) {
 
 // Opcional: define las rutas donde se aplica el middleware
 export const config = {
-  matcher: ["/profile", "/sign-in", "/sign-up"],
+  matcher: ["/profile", "/sign-in", "/sign-up", "/games"],
 };

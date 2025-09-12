@@ -51,7 +51,7 @@ export const gamesService = {
     retry = true
   ): Promise<GamesResponse> {
     const { token } = useAuthStore.getState();
-    if (!token) throw new Error("No token available");
+    /* if (!token) throw new Error("No token available"); */
 
     try {
       const response = await axios.get(`${API_BASE_URL}/games`, {
@@ -80,7 +80,7 @@ export const gamesService = {
 
   async getCategories(retry = true): Promise<GameCategoriesResponse> {
     const { token } = useAuthStore.getState();
-    if (!token) throw new Error("No token available");
+    /* if (!token) throw new Error("No token available"); */
 
     try {
       const response = await axios.get(`${API_BASE_URL}/games/categories`, {

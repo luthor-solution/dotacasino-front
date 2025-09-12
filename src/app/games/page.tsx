@@ -16,7 +16,7 @@ export default function Home() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const mainRef = useRef<HTMLDivElement>(null);
-
+  const didInitialLoad = useRef(true);
   // Filtros
   const [filters, setFilters] = useState({
     search: "",
@@ -53,10 +53,22 @@ export default function Home() {
   }, [page, pageSize, filters]);
 
   useEffect(() => {
-    if (!loading && mainRef.current) {
-      mainRef.current.scrollIntoView({ behavior: "smooth" });
+    // Si aún estamos en la primera descarga, cuando termine
+    // sólo marcamos el flag y salimos sin hacer scroll
+    if (didInitialLoad.current) {
+      if (!loading) {
+        didInitialLoad.current = false;
+      }
+      return;
     }
-  }, [games, loading]);
+
+    // En todas las descargas posteriores, al terminar loading → false,
+    // hacemos scroll hasta el elemento #gamesStart
+    if (!loading) {
+      const el = document.getElementById("gamesStart");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [loading]);
 
   const totalPages = Math.ceil(total / pageSize);
 
@@ -120,7 +132,10 @@ export default function Home() {
       <div className="relative z-10 flex flex-col flex-1">
         <Banner title="Juegos" subtitle="Elige una opción para continuar" />
 
-        <div className="w-full max-w-6xl mx-auto px-4 mt-8 justify-center items-center flex flex-col">
+        <div
+          className="w-full max-w-6xl mx-auto px-4 mt-8 justify-center items-center flex flex-col"
+          id="gamesStart"
+        >
           <GameFilters
             filters={filters}
             onChange={handleFiltersChange}
@@ -140,7 +155,6 @@ export default function Home() {
           <div>
             {/* Desktop: paginación arriba si page >= 2 */}
             {!isMobile && games.length > 0 && Pagination}
-
             <GamesGrid games={games} loading={loading} />
 
             {/* Paginación abajo (siempre en mobile, siempre en desktop) */}
