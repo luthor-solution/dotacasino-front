@@ -14,6 +14,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     }
   }, [loading]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  });
+
   return (
     <>
       <VerifyToken onLoadingChange={setLoading} />

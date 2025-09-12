@@ -66,7 +66,14 @@ export default function Home() {
     // hacemos scroll hasta el elemento #gamesStart
     if (!loading) {
       const el = document.getElementById("gamesStart");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+      if (el) {
+        // posición absoluta del elemento respecto al documento
+        const top = el.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({
+          top: top > 0 ? top : 0,
+          behavior: "smooth",
+        });
+      }
     }
   }, [loading]);
 
@@ -151,13 +158,13 @@ export default function Home() {
           />
         </div>
 
-        {filters.category && filters.category !== "todos" && (
+        {((filters.category !== "" && filters.category !== "todos") ||
+          filters.search.trim() !== "") && (
           <div>
             {/* Desktop: paginación arriba si page >= 2 */}
             {!isMobile && games.length > 0 && Pagination}
             <GamesGrid games={games} loading={loading} />
-
-            {/* Paginación abajo (siempre en mobile, siempre en desktop) */}
+            {/* Paginación abajo */}
             {games.length > 0 && Pagination}
           </div>
         )}
