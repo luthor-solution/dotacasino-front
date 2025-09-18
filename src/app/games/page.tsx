@@ -79,10 +79,6 @@ export default function Home() {
 
   const totalPages = Math.ceil(total / pageSize);
 
-  useEffect(() => {
-    console.log("FILTERS", filters);
-  }, [filters]);
-
   // Componente de paginación
   const Pagination = (
     <div
@@ -206,7 +202,10 @@ export default function Home() {
           </>
         )}
 
-        {games.length === 0 && !loading && <NoGames />}
+        {((filters.category !== "" && filters.category !== "todos") ||
+          filters.search.trim() !== "") &&
+          games.length === 0 &&
+          !loading && <NoGames />}
       </div>
     </main>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaSearch, FaMobileAlt, FaSortAlphaDown } from "react-icons/fa";
 import FancyInput from "@/components/FancyInput";
 import FancySelect from "@/components/FancySelect";
@@ -29,42 +29,62 @@ const GameFilters: React.FC<GameFiltersProps> = ({
   filters,
   onChange,
   isMobile,
-}) => (
-  <form
-    className={`w-full mb-6 grid gap-3 ${
-      isMobile ? "grid-cols-1" : "grid-cols-3"
-    }`}
-    onSubmit={(e) => e.preventDefault()}
-  >
-    <FancyInput
-      placeholder="Buscar juego..."
-      name="search"
-      icon={<FaSearch />}
-      value={filters.search}
-      onChange={(v) => onChange({ search: v })}
-    />
-    {/*     <FancySelect
-      name="category"
-      icon={<FaLayerGroup />}
-      value={filters.category}
-      onChange={(v) => onChange({ category: v })}
-      options={categories}
-    /> */}
-    {/*   <FancySelect
-      name="device"
-      icon={<FaMobileAlt />}
-      value={filters.device}
-      onChange={(v) => onChange({ device: v })}
-      options={devices}
-    />
-    <FancySelect
-      name="sort"
-      icon={<FaSortAlphaDown />}
-      value={filters.sort}
-      onChange={(v) => onChange({ sort: v })}
-      options={sorts}
-    /> */}
-  </form>
-);
+}) => {
+  // Estado local para el input de búsqueda
+  const [searchValue, setSearchValue] = useState(filters.search);
+
+  // Sincroniza el valor local si el filtro externo cambia (por ejemplo, al limpiar filtros)
+  useEffect(() => {
+    setSearchValue(filters.search);
+  }, [filters.search]);
+
+  // Debounce para el input de búsqueda
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (searchValue !== filters.search) {
+        onChange({ search: searchValue });
+      }
+    }, 400);
+    return () => clearTimeout(handler);
+  }, [searchValue]);
+
+  return (
+    <form
+      className={`w-full mb-6 grid gap-3 ${
+        isMobile ? "grid-cols-1" : "grid-cols-3"
+      }`}
+      onSubmit={(e) => e.preventDefault()}
+    >
+      <FancyInput
+        placeholder="Buscar juego..."
+        name="search"
+        icon={<FaSearch />}
+        value={searchValue}
+        onChange={setSearchValue}
+      />
+      {/*     <FancySelect
+        name="category"
+        icon={<FaLayerGroup />}
+        value={filters.category}
+        onChange={(v) => onChange({ category: v })}
+        options={categories}
+      /> */}
+      {/*   <FancySelect
+        name="device"
+        icon={<FaMobileAlt />}
+        value={filters.device}
+        onChange={(v) => onChange({ device: v })}
+        options={devices}
+      />
+      <FancySelect
+        name="sort"
+        icon={<FaSortAlphaDown />}
+        value={filters.sort}
+        onChange={(v) => onChange({ sort: v })}
+        options={sorts}
+      /> */}
+    </form>
+  );
+};
 
 export default GameFilters;
