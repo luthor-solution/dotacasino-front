@@ -12,7 +12,7 @@ export default function Home() {
     setLoading(true);
     serversService
       .getServers()
-      .then((res) => setServers(res)) // por si tu endpoint regresa array directo
+      .then((res) => setServers(res))
       .catch(() => setServers([]))
       .finally(() => setLoading(false));
   }, []);

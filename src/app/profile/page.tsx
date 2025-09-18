@@ -42,6 +42,7 @@ export default function Profile() {
         {option === "balance" && <Balance />}
         {option === "deposits" && <TransactionTable />}
         {option === "settings" && <ProfileSettings />}
+        {option === "referrals" && <ProfileSettings />}
       </section>
     </main>
   );

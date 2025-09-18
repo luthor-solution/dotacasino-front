@@ -5,14 +5,14 @@ export type UserMenuValue =
   | "deposits"
   | "transaction"
   | "settings"
-  | "logout";
+  | "referrals";
 
 const menuItems: { label: string; value: UserMenuValue }[] = [
   { label: "Dashboard", value: "balance" },
   { label: "Historial de Depósitos", value: "deposits" },
   { label: "Historial de Transacciones", value: "transaction" },
   { label: "Account Settings", value: "settings" },
-  { label: "Cerrar Sesión", value: "logout" },
+  { label: "Referidos", value: "referrals" },
 ];
 
 interface UserMenuProps {

@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import { useKycStore } from "@/store/useKYCStore";
 import { kycService } from "@/services/kycService";
 import { toast } from "react-toastify";
+import { useKYCStatusStore } from "@/store/useKYCStatusStore";
+import KycStatus from "@/components/kyc/KycStatus";
 
 export default function KYC() {
   const [step, setStep] = useState(1);
@@ -17,6 +19,7 @@ export default function KYC() {
   const [error, setError] = useState<string | null>(null);
   const kycState = useKycStore();
   const documents = kycState.documents;
+  const statusKYC = useKYCStatusStore((state) => state.kycStatus);
 
   // Utilidad para convertir File a base64
   const fileToBase64 = (file: File): Promise<string> =>
@@ -87,8 +90,8 @@ export default function KYC() {
 
   useEffect(() => {
     // Esto se ejecuta cada vez que cualquier campo del store cambia
-    console.log("KYC store cambió:", kycState);
-  }, [kycState]);
+    console.log("KYC store cambió:", statusKYC);
+  }, [statusKYC]);
 
   return (
     <div
@@ -104,45 +107,51 @@ export default function KYC() {
 
       {/* Contenido */}
       <div className="flex flex-col gap-y-8 z-10">
-        <ProgressBar
-          percent={steps[step - 1].percent}
-          label={steps[step - 1].label}
-        />
-        <div className="flex flex-col xl:flex-row items-center justify-center w-full xl:space-x-16 space-y-[60px] xl:space-y-0  relative">
-          <div className="relative backdrop-blur-lg px-4 sm:px-8 xl:px-[40px] py-8 sm:py-12 xl:py-[60px] border border-[#a97bbf33] rounded-[25px] space-y-8 sm:space-y-10 xl:space-y-[50px] flex flex-col text-center  w-full md:w-fit items-center md:items-end">
-            {steps[step - 1].component}
+        {statusKYC !== "PENDING" ? (
+          <KycStatus status={statusKYC || ""} />
+        ) : (
+          <>
+            <ProgressBar
+              percent={steps[step - 1].percent}
+              label={steps[step - 1].label}
+            />
+            <div className="flex flex-col xl:flex-row items-center justify-center w-full xl:space-x-16 space-y-[60px] xl:space-y-0  relative">
+              <div className="relative backdrop-blur-lg px-4 sm:px-8 xl:px-[40px] py-8 sm:py-12 xl:py-[60px] border border-[#a97bbf33] rounded-[25px] space-y-8 sm:space-y-10 xl:space-y-[50px] flex flex-col text-center  w-full md:w-fit items-center md:items-end">
+                {steps[step - 1].component}
 
-            <div className="flex gap-4 mt-4">
-              {step > 1 && (
-                <button
-                  onClick={() => setStep((s) => s - 1)}
-                  className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
-                  disabled={loading}
-                >
-                  Anterior
-                </button>
-              )}
-              {step < steps.length ? (
-                <button
-                  onClick={() => setStep((s) => s + 1)}
-                  className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
-                  disabled={loading}
-                >
-                  Siguiente
-                </button>
-              ) : (
-                <button
-                  className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
-                  onClick={handleSubmit}
-                  disabled={loading}
-                >
-                  {loading ? "Enviando..." : "Iniciar verificación"}
-                </button>
-              )}
+                <div className="flex gap-4 mt-4">
+                  {step > 1 && (
+                    <button
+                      onClick={() => setStep((s) => s - 1)}
+                      className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
+                      disabled={loading}
+                    >
+                      Anterior
+                    </button>
+                  )}
+                  {step < steps.length ? (
+                    <button
+                      onClick={() => setStep((s) => s + 1)}
+                      className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
+                      disabled={loading}
+                    >
+                      Siguiente
+                    </button>
+                  ) : (
+                    <button
+                      className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
+                      onClick={handleSubmit}
+                      disabled={loading}
+                    >
+                      {loading ? "Enviando..." : "Iniciar verificación"}
+                    </button>
+                  )}
+                </div>
+                {error && <div className="text-red-500">{error}</div>}
+              </div>
             </div>
-            {error && <div className="text-red-500">{error}</div>}
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -148,15 +148,17 @@ const Header: React.FC = () => {
                 >
                   Mi perfil
                 </Link>
-                <Link
-                  href="/kyc"
-                  className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
-                  onClick={() => {
-                    setUserMenu(false);
-                  }}
-                >
-                  Verificar identidad
-                </Link>
+                {kycStatus !== "APPROVED" && (
+                  <Link
+                    href="/kyc"
+                    className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
+                    onClick={() => {
+                      setUserMenu(false);
+                    }}
+                  >
+                    Verificar identidad
+                  </Link>
+                )}
                 <button
                   className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors cursor-pointer capitalize"
                   onClick={() => {
@@ -265,16 +267,19 @@ const Header: React.FC = () => {
                   >
                     Mi perfil
                   </Link>
-                  <Link
-                    href="/kyc"
-                    className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
-                    onClick={() => {
-                      setUserMenu(false);
-                      setOpen(false);
-                    }}
-                  >
-                    Verificar identidad
-                  </Link>
+
+                  {kycStatus !== "APPROVED" && (
+                    <Link
+                      href="/kyc"
+                      className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
+                      onClick={() => {
+                        setUserMenu(false);
+                        setOpen(false);
+                      }}
+                    >
+                      Verificar identidad
+                    </Link>
+                  )}
                   <button
                     className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
                     onClick={() => {
