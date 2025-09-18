@@ -8,6 +8,7 @@ import TransactionTable from "@/components/TransactionTable";
 import { UserMenuValue } from "@/components/UserMenu";
 import Sidebar from "@/components/SideBar";
 import ProfileSettings from "@/components/ProfileSettings";
+import Referrals from "@/components/Referrals";
 
 export default function Profile() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -42,7 +43,7 @@ export default function Profile() {
         {option === "balance" && <Balance />}
         {option === "deposits" && <TransactionTable />}
         {option === "settings" && <ProfileSettings />}
-        {option === "referrals" && <ProfileSettings />}
+        {option === "referrals" && <Referrals />}
       </section>
     </main>
   );
