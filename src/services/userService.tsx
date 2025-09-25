@@ -63,6 +63,26 @@ export interface UserProfile {
   kycStatus: string;
   createdAt: string;
 }
+
+export interface Membership {
+  current: number;
+  limit: number;
+}
+
+export interface Deposit {
+  current: number;
+}
+
+export interface CurrentMultiplierResponse {
+  membership: Membership;
+  deposit: Deposit;
+}
+
+export type MembershipPlan = "free";
+export interface CurrentMembershipResponse {
+  membership: MembershipPlan;
+}
+
 export const userService = {
   async register(payload: RegisterPayload): Promise<RegisterResponse> {
     const response = await axios.post(
@@ -249,6 +269,63 @@ export const userService = {
           await userService.refreshToken();
           return userService.changePassword(payload, false);
         }
+      }
+      throw error;
+    }
+  },
+
+  async getCurrentMultiplier(retry = true): Promise<CurrentMultiplierResponse> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const response = await axios.get<CurrentMultiplierResponse>(
+        `${API_BASE_URL}/users/current-multiplier`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error: unknown) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        await userService.refreshToken();
+        return userService.getCurrentMultiplier(false);
+      }
+      throw error;
+    }
+  },
+
+  async getCurrentMembership(retry = true): Promise<CurrentMembershipResponse> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const response = await axios.get<CurrentMembershipResponse>(
+        `${API_BASE_URL}/users/current-membership`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error: unknown) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        await userService.refreshToken();
+
+        return userService.getCurrentMembership(false);
       }
       throw error;
     }

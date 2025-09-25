@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReferralInput from "./ReferralInput";
 import DubaiTimeProgress from "./DubaiTimeProgress";
 import MultiplierBar from "./MultiplierBar";
 import VerticalTimeline from "./VerticalTimeline";
 import MembershipCard from "./MembershipCard";
 import { MembershipCardProps } from "./MembershipCard";
+import { userService } from "@/services/userService"; // Asegúrate de que la ruta sea correcta
+
 const Referrals: React.FC = () => {
+  useEffect(() => {
+    const fetchMultiplier = async () => {
+      try {
+        const data = await userService.getCurrentMembership(); // retorna any
+        console.log("current-multiplier data:", data);
+      } catch (err) {
+        console.error("Error fetching current-multiplier:", err);
+      }
+    };
+    fetchMultiplier();
+  }, []);
+
   const plans: MembershipCardProps[] = [
     {
       title: "Básico",
@@ -34,11 +48,12 @@ const Referrals: React.FC = () => {
       accent: "from-[#6c37b6] to-[#31185b]",
     },
   ];
+
   return (
     <div className="flex flex-col w-full md:max-w-5xl gap-y-[32px]">
       <ReferralInput />
       <DubaiTimeProgress progress={67} />
-      <MultiplierBar value={700} />
+      <MultiplierBar />
       <VerticalTimeline />
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-3 w-full max-w-4xl">
         {plans.map((p) => (
