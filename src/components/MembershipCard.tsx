@@ -2,6 +2,7 @@
 import React from "react";
 import { Membership } from "@/services/membershipsService";
 import { userService } from "@/services/userService";
+import QROverlay from "./QROverlay";
 
 export type MembershipCardProps = {
   membership: Membership;
@@ -193,70 +194,24 @@ const MembershipCard: React.FC<MembershipCardProps> = ({
 
       {/* Overlay modal para mostrar el QR */}
       {showOverlay && currentQR && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="bg-[#1a1a1a] text-white rounded-xl max-w-md w-full shadow-2xl border border-white/10">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-              <h4 className="text-lg font-semibold">
-                QR - {membership.name} ({membership.id})
-              </h4>
-              <button
-                className="text-white/80 hover:text-white cursor-pointer"
-                onClick={() => setShowOverlay(false)}
-                aria-label="Cerrar"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="p-5">
-              <div className="flex flex-col items-center">
-                <img
-                  src={currentQR.qrcode_url}
-                  alt={`QR ${membership.id}`}
-                  className="w-48 h-48 bg-white p-2 rounded-md"
-                />
-                <div className="mt-4 w-full text-sm space-y-1">
-                  <div className="flex justify-between">
-                    <span className="text-white/70">Status</span>
-                    <span className="font-medium">{currentQR.status}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/70">Amount</span>
-                    <span className="font-medium">
-                      ${currentQR.amount.toFixed(2)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/70">Expira</span>
-                    <span className="font-medium">
-                      {new Date(currentQR.expires_at).toLocaleString()}
-                    </span>
-                  </div>
-                  {currentQR.status_text && (
-                    <div className="text-white/80">{currentQR.status_text}</div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="px-4 py-3 border-t border-white/10 flex justify-end gap-2">
-              <button
-                className="px-3 py-2 rounded-md bg-white/10 hover:bg-white/20 cursor-pointer"
-                onClick={() => setShowOverlay(false)}
-              >
-                Cerrar
-              </button>
-              {/* Botón opcional para regenerar desde el modal */}
-              {/* <button
-                className="px-3 py-2 rounded-md bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60"
-                onClick={createNewQR}
-                disabled={creating}
-              >
-                {creating ? "Regenerando..." : "Regenerar QR"}
-              </button> */}
-            </div>
-          </div>
-        </div>
+        <QROverlay
+          title={`QR - ${membership.name} (${membership.id})`}
+          qrcodeUrl={currentQR.qrcode_url}
+          status={currentQR.status}
+          amount={currentQR.amount}
+          expiresAt={currentQR.expires_at}
+          statusText={currentQR.status_text ?? null}
+          onClose={() => setShowOverlay(false)}
+          footerActions={
+            <button
+              className="px-3 py-2 rounded-md bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 cursor-pointer"
+              onClick={createNewQR}
+              disabled={creating}
+            >
+              {creating ? "Regenerando..." : "Regenerar QR"}
+            </button>
+          }
+        />
       )}
     </div>
   );
