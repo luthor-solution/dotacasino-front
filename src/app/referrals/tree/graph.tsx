@@ -1,12 +1,14 @@
 import { referralsService } from "@/services/referralsService";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect, useState } from "react";
-import { Tree } from "tree-graph-react";
-import NodeMap from "tree-graph-react/dist/interfaces/NodeMap";
-import "tree-graph-react/dist/tree-graph-react.cjs.development.css";
+//import { Tree } from "tree-graph-react";
+//import NodeMap from "tree-graph-react/dist/interfaces/NodeMap";
+//import "tree-graph-react/dist/tree-graph-react.cjs.development.css";
 
 const Graph = () => {
-  const { user } = useAuthStore.getState();
+  return null
+
+  /*const { user } = useAuthStore.getState();
   const [nodes, setNodes] = useState<NodeMap>({});
 
   useEffect(() => {
@@ -40,7 +42,7 @@ const Graph = () => {
       disableShortcut
       disabled
     />
-  );
+  );*/
 };
 
 export default Graph;
