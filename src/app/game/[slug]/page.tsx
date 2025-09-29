@@ -2,6 +2,7 @@ import axios from "axios";
 import { FC } from "react";
 import { OpenGameApiResponse } from "./utils";
 import Iframe from "./iframe";
+import { cookies } from "next/headers";
 
 type Props = {
   params: Promise<{
@@ -15,15 +16,19 @@ type Props = {
  */
 const GamePage: FC<Props> = async ({ params }) => {
   const { slug = "" } = await params;
-
-  /**
-   * NOTE: Es importante que este endpoint se ejecute en back para que no se vea la peticion en network
-   */
+  const co = await cookies();
+  const token = co.get("auth_token")?.value;
 
   try {
     const gameInfo = await axios
       .post<OpenGameApiResponse>(
-        `http://localhost:3001/v1/games/openGame/${slug}`
+        `http://localhost:3001/v1/games/openGame/${slug}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
       .then((r) => r.data);
 

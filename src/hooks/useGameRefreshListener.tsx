@@ -15,6 +15,7 @@ type Props = {
 export function useGameRefreshListener({ onRefresh }: Props) {
   useEffect(() => {
     const handler = (event: any) => {
+      console.log("----", event.data)
       if (dataIndica(event.data)) onRefresh();
     };
     window.addEventListener("message", handler);
