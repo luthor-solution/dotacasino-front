@@ -3,6 +3,7 @@ import { FC } from "react";
 import { OpenGameApiResponse } from "./utils";
 import Iframe from "./iframe";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 type Props = {
   params: Promise<{
@@ -18,6 +19,10 @@ const GamePage: FC<Props> = async ({ params }) => {
   const { slug = "" } = await params;
   const co = await cookies();
   const token = co.get("auth_token")?.value;
+
+  if (!token) {
+    return redirect("/sign-up");
+  }
 
   try {
     const gameInfo = await axios
