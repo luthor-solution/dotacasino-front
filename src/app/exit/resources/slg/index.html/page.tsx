@@ -6,9 +6,9 @@ const ExitView = () => {
       </div>
       <style
         dangerouslySetInnerHTML={{
-          __html: `footer {
-        display: none;
-      }`,
+          __html: `footer, header {
+              display: none;
+          }`,
         }}
       />
     </>
