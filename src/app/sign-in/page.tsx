@@ -98,7 +98,7 @@ export default function SignIn() {
           </div>
           <div className="w-full flex justify-end">
             <Link
-              href=""
+              href="forgot-password"
               className="text-[15px] text-[#e2a94f] underline hover:scale-110 transition-all duration-500"
             >
               Olvidé mi contraseña
