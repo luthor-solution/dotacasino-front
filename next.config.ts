@@ -2,7 +2,7 @@ module.exports = {
   images: {
     domains: ["static.cdneu-stat.com"],
   },
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: '/resources/slg/index.html',
