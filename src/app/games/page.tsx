@@ -8,6 +8,7 @@ import CategoriesMenu from "@/components/CategoriesMenu";
 import GamesCarousel from "@/components/GamesCarousel";
 import NoGames from "@/components/NoGames";
 import JackpotLevels from "@/components/JackpotLevels";
+/* import { getCachedOrFetch, makeCacheKey } from "@/utils/cache"; */
 
 export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
