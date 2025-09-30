@@ -11,6 +11,7 @@ export interface RegisterPayload {
   country: string;
   acceptTerms: boolean;
   referralCode?: string;
+  side?: string;
 }
 
 export interface RegisterResponse {
@@ -95,6 +96,10 @@ export type MembershipQRResponse = {
   expires_at: string; // ISO
   qrcode_url: string;
   status_text: string | null;
+};
+
+export type UserByCodeResponse = {
+  displayName?: string | null;
 };
 
 export const userService = {
@@ -435,6 +440,32 @@ export const userService = {
           error.message ||
           "No se pudo iniciar la recuperación de contraseña.";
         throw new Error(msg);
+      }
+      throw error;
+    }
+  },
+
+  async getUserByCode(code: string, retry = true): Promise<UserByCodeResponse> {
+    if (!code) throw new Error("Code is required");
+
+    try {
+      const response = await axios.get<UserByCodeResponse>(
+        `${API_BASE_URL}/users/${encodeURIComponent(code)}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error: unknown) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        await userService.refreshToken();
+        return userService.getUserByCode(code, false);
       }
       throw error;
     }

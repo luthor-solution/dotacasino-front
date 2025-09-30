@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import { FaLink, FaCopy } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useRefCodesStore } from "@/store/useRefCodesStore";
+
 interface Props {
   text?: string; // si pasas un texto manual, tendrá prioridad
   hideButtons?: boolean;
@@ -20,18 +21,19 @@ const ReferralInput: React.FC<Props> = ({ text, hideButtons = false }) => {
     [side, refCodeL, refCodeR]
   );
 
+  // Nombre del parámetro según el side
+  const refParam = side === "left" ? "refCodeL" : "refCodeR";
+
   // Host dinámico y URL final
   const referralUrl = useMemo(() => {
     if (text) return text; // si te pasan el texto completo, úsalo tal cual
-    // window solo existe en el cliente
     if (typeof window === "undefined") return "";
-    const origin = window.location.origin; // e.g., http://localhost:3000 o https://tu-dominio.com
+    const origin = window.location.origin; // http://localhost:3000 o dominio prod
     const url = new URL("/sign-up", origin);
-    if (refCode) url.searchParams.set("refCode", refCode);
-    // si no hay refCode aún, igual devolvemos la base con refCode= vacío para que coincida con tu ejemplo
-    if (!refCode) url.searchParams.set("refCode", "");
+    // si hay código lo seteamos, si no, dejamos param vacío para que coincida con el ejemplo
+    url.searchParams.set(refParam, refCode || "");
     return url.toString();
-  }, [text, refCode]);
+  }, [text, refParam, refCode]);
 
   const handleCopy = async () => {
     if (!referralUrl) {
@@ -83,7 +85,7 @@ const ReferralInput: React.FC<Props> = ({ text, hideButtons = false }) => {
           type="text"
           readOnly
           value={referralUrl}
-          placeholder="http://localhost:3000/sign-up?refCode="
+          placeholder={`http://localhost:3000/sign-up?${refParam}=`}
           className="bg-transparent outline-none text-white placeholder:text-gray-300 w-full h-full pl-2 select-all"
         />
         <button
