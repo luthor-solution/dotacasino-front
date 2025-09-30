@@ -27,7 +27,7 @@ const GamePage: FC<Props> = async ({ params }) => {
   try {
     const gameInfo = await axios
       .post<OpenGameApiResponse>(
-        `http://localhost:3001/v1/games/openGame/${slug}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/games/openGame/${slug}`,
         {},
         {
           headers: {
@@ -46,7 +46,7 @@ const GamePage: FC<Props> = async ({ params }) => {
       </div>
     );
   } catch (err) {
-    console.error(err)
+    console.error(err);
     return <div className="mt-20">Algo salio mal, error</div>;
   }
 };
