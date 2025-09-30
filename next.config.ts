@@ -5,8 +5,8 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/resources',
-        destination: 'http://cdn.lvslot.net/resources',
+        source: '/resources/slg/index.html',
+        destination: 'http://cdn.lvslot.net/resources/slg/index.html',
       },
     ]
   },
