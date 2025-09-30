@@ -17,6 +17,7 @@ type Props = {
 export function useGameCloseListener({ onClose }: Props) {
   useEffect(() => {
     const handler = (event: any) => {
+      console.log("--- event listener ---", event);
       if (dataIndicaCerrar(event.data)) onClose();
     };
     window.addEventListener("message", handler);
