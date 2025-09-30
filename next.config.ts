@@ -7,6 +7,7 @@ module.exports = {
       {
         source: '/resources/slg/index.html',
         destination: 'http://cdn.lvslot.net/resources/slg/index.html',
+        permanent: false,
       },
     ]
   },
