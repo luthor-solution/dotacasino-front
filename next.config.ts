@@ -6,7 +6,7 @@ module.exports = {
     return [
       {
         source: '/resources/:path*',
-        destination: 'http://cdn.lvslot.net/resources/:path*',
+        destination: 'https://cdn.lvslot.net/resources/:path*',
       },
     ]
   },
