@@ -5,8 +5,8 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: '/resources/slg/index.html',
-        destination: 'http://cdn.lvslot.net/resources/slg/index.html',
+        source: '/resources/:path*',
+        destination: 'http://cdn.lvslot.net/resources/:path*',
         permanent: false,
       },
     ]
