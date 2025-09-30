@@ -37,8 +37,6 @@ const GamePage: FC<Props> = async ({ params }) => {
       )
       .then((r) => r.data);
 
-    console.log(gameInfo)
-
     return (
       <div className="mt-20">
         <Iframe
@@ -48,6 +46,7 @@ const GamePage: FC<Props> = async ({ params }) => {
       </div>
     );
   } catch (err) {
+    console.error(err)
     return <div className="mt-20">Algo salio mal, error</div>;
   }
 };
