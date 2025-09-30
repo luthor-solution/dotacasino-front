@@ -147,7 +147,7 @@ const Referrals: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full md:max-w-5xl gap-y-[32px]">
-      <ReferralInput text="" />
+      <ReferralInput />
       <DubaiTimeProgress progress={67} />
       <MultiplierBar />
       <VerticalTimeline />

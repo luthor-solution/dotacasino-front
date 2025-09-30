@@ -43,6 +43,8 @@ export interface ProfileResponse {
   refCode: string;
   kycStatus: string;
   createdAt: string;
+  refCodeL?: string;
+  refCodeR?: string;
 }
 
 export interface UpdateProfilePayload {
