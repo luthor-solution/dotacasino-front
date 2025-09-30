@@ -63,6 +63,38 @@ export interface UserProfile {
   kycStatus: string;
   createdAt: string;
 }
+
+export interface CurrentMembership {
+  current: number;
+  limit: number;
+}
+
+export interface Deposit {
+  current: number;
+}
+
+export interface CurrentMultiplierResponse {
+  membership: CurrentMembership;
+  deposit: Deposit;
+}
+
+export type MembershipPlan = "free";
+export interface CurrentMembershipResponse {
+  membership: MembershipPlan;
+}
+
+export type RecoveryInitResponse = { ok: boolean };
+
+export type MembershipQRResponse = {
+  address: string;
+  amount: number;
+  membership_type: string;
+  status: "pending" | "active" | "expired" | string;
+  expires_at: string; // ISO
+  qrcode_url: string;
+  status_text: string | null;
+};
+
 export const userService = {
   async register(payload: RegisterPayload): Promise<RegisterResponse> {
     const response = await axios.post(
@@ -249,6 +281,158 @@ export const userService = {
           await userService.refreshToken();
           return userService.changePassword(payload, false);
         }
+      }
+      throw error;
+    }
+  },
+
+  async getCurrentMultiplier(retry = true): Promise<CurrentMultiplierResponse> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const response = await axios.get<CurrentMultiplierResponse>(
+        `${API_BASE_URL}/users/current-multiplier`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error: unknown) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        await userService.refreshToken();
+        return userService.getCurrentMultiplier(false);
+      }
+      throw error;
+    }
+  },
+
+  async getCurrentMembership(retry = true): Promise<CurrentMembershipResponse> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const response = await axios.get<CurrentMembershipResponse>(
+        `${API_BASE_URL}/users/current-membership`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error: unknown) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        await userService.refreshToken();
+
+        return userService.getCurrentMembership(false);
+      }
+      throw error;
+    }
+  },
+
+  async getQRMembership(retry = true): Promise<MembershipQRResponse> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const response = await axios.get<MembershipQRResponse>(
+        `${API_BASE_URL}/users/qr-membership`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error: unknown) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        await userService.refreshToken();
+
+        return userService.getQRMembership(false);
+      }
+      throw error;
+    }
+  },
+
+  async createMembership(
+    params: {
+      membership_type: string;
+    },
+    retry = true
+  ): Promise<MembershipQRResponse> {
+    const { membership_type } = params;
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+    try {
+      const response = await axios.post<MembershipQRResponse>(
+        `${API_BASE_URL}/users/create-qr-membership`,
+        { membership_type },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data; // { ok: true }
+    } catch (error: unknown) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        await userService.refreshToken();
+
+        return userService.createMembership(
+          { membership_type: membership_type },
+          false
+        );
+      }
+      throw error;
+    }
+  },
+
+  async requestPasswordReset(params: {
+    email: string;
+  }): Promise<RecoveryInitResponse> {
+    const { email } = params;
+
+    try {
+      const response = await axios.post<RecoveryInitResponse>(
+        `${API_BASE_URL}/auth/recovery/init`,
+        { email },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data; // { ok: true }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const msg =
+          error.response?.data?.message ||
+          error.message ||
+          "No se pudo iniciar la recuperación de contraseña.";
+        throw new Error(msg);
       }
       throw error;
     }
