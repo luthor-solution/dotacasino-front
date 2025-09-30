@@ -30,12 +30,6 @@ const Iframe: FC<Props> = ({ url, sessionId }) => {
     },
   });
 
-  useGameRefreshListener({
-    onRefresh: () => {
-      axios.post(`http://localhost:3001/v1/games/refresh/${sessionId}`);
-    },
-  });
-
   return <iframe height={500} width={"100%"} src={url} ref={iframeRef} />;
 };
 
