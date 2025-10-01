@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
-"use client"
+"use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { depositService } from "@/services/depositsService";
 
 // --- Tipos auxiliares ---
 type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
@@ -16,7 +17,7 @@ type CreateDepositResponse = {
   address: string; // dirección donde enviar
   chain: Network;
   expiresAt: string; // ISO datetime
-  // Si tu backend ya genera un QR (data URL), puedes incluirlo aquí
+  amount: number;
   qrDataUrl?: string;
 };
 
@@ -41,8 +42,6 @@ function toMMSS(totalSeconds: number) {
   return `${m}:${s}`;
 }
 
-// Puedes cambiar este generador por el de tu backend si devuelves qrDataUrl
-// Aquí usamos un servicio de QR público para simplificar el ejemplo
 function makeQrUrl(data: string) {
   const encoded = encodeURIComponent(data);
   return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encoded}`;
@@ -50,27 +49,212 @@ function makeQrUrl(data: string) {
 
 // --- Componente principal ---
 export default function RecargaFichasPage() {
-  // En un caso real, obtén el balance del backend
   const [balance, setBalance] = useState<number>(1250);
   const [amount, setAmount] = useState<string>("");
   const [selectedNetwork, setSelectedNetwork] = useState<Network>("BSC");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>("");
+  const [uiMessage, setUiMessage] = useState<string>("");
 
-  // Estado de la orden de depósito
   const [deposit, setDeposit] = useState<CreateDepositResponse | null>(null);
 
-  // Contador regresivo
   const [seconds, setSeconds] = useState<number>(0);
   const timerRef = useRef<number | null>(null);
 
+  // Polling cada 5s mientras haya un QR activo
   useEffect(() => {
-    if (!deposit) return;
-    // Inicializa contador
+    if (!deposit?.address) return;
+
+    let intervalId: number | null = null;
+    let stopped = false;
+
+    const stop = () => {
+      if (stopped) return;
+      stopped = true;
+      if (intervalId) {
+        window.clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const handleOK = () => {
+      // Mostrar éxito y resetear a formulario tras 3s
+      setUiMessage("Depósito acreditado correctamente.");
+      stop();
+      setTimeout(() => {
+        setUiMessage("");
+        setDeposit(null);
+        setSeconds(0);
+        setAmount("");
+        setSelectedNetwork("BSC");
+        setError("");
+      }, 3000);
+    };
+
+    const tick = async () => {
+      try {
+        const res: any = await depositService.polling({
+          address: deposit.address,
+        });
+        console.log("[deposit polling]", res);
+
+        // La API devuelve "OK" o "NO"
+        const value = String(res).toUpperCase();
+
+        if (value === "OK") {
+          handleOK();
+          return;
+        }
+        if (value === "NO") {
+          // seguimos pollinando
+          return;
+        }
+
+        // Si por alguna razón llega un objeto con un campo, intentamos leerlo
+        const fallback = String(res?.status ?? res?.result ?? "").toUpperCase();
+        if (fallback === "OK") {
+          handleOK();
+          return;
+        }
+        // para cualquier otro valor, continuamos pollinando
+      } catch (e: any) {
+        console.warn(
+          "[deposit polling] error:",
+          e?.response?.data || e?.message || e
+        );
+        // continuamos pollinando a menos que quieras detener en error
+      }
+    };
+
+    // Disparo inicial e intervalo de 5s
+    tick();
+    intervalId = window.setInterval(tick, 5000);
+
+    return () => {
+      stop();
+    };
+  }, [deposit?.address]);
+
+  /*  useEffect(() => {
+    if (!deposit?.address) return;
+
+    let intervalId: number | null = null;
+    let stopped = false;
+    const attemptsRef = { current: 0 }; // contador de intentos
+
+    const stop = () => {
+      if (stopped) return;
+      stopped = true;
+      if (intervalId) {
+        window.clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const handleOK = () => {
+      setUiMessage("Depósito acreditado correctamente.");
+      stop();
+      setTimeout(() => {
+        setUiMessage("");
+        setDeposit(null);
+        setSeconds(0);
+        setAmount("");
+        setSelectedNetwork("BSC");
+        setError("");
+      }, 3000);
+    };
+
+    const tick = async () => {
+      try {
+        attemptsRef.current += 1;
+
+        // Forzado: a partir del 3er intento, simular "OK"
+        if (attemptsRef.current >= 3) {
+          const fake = "OK";
+          console.log(
+            "[deposit polling - FAKE]",
+            fake,
+            "attempt:",
+            attemptsRef.current
+          );
+          handleOK();
+          return;
+        }
+
+        // Antes de llegar al 3er intento, llama al backend normalmente
+        const res: any = await depositService.polling({
+          address: deposit.address,
+        });
+        console.log("[deposit polling]", res, "attempt:", attemptsRef.current);
+
+        const value = String(res).toUpperCase();
+
+        if (value === "OK") {
+          handleOK();
+          return;
+        }
+        // "NO" => continuar
+      } catch (e: any) {
+        console.warn(
+          "[deposit polling] error:",
+          e?.response?.data || e?.message || e
+        );
+        // continuamos pollinando
+      }
+    };
+
+    // Primer tick inmediato y luego cada 5s
+    tick();
+    intervalId = window.setInterval(tick, 5000);
+
+    return () => {
+      stop();
+    };
+  }, [deposit?.address]); */
+
+  // 1) Al montar, intenta recuperar el QR vigente desde el backend
+  useEffect(() => {
+    const loadCurrentQR = async () => {
+      try {
+        setError("");
+        const data: any = await depositService.getCurrentQR();
+        if (!data) return;
+
+        const address: string = data.address ?? data.wallet_address ?? "";
+        const chainRaw: string =
+          data.network ?? data.chain ?? data.blockchain ?? "";
+        const chain = chainRaw?.toUpperCase() as Network;
+        const expiresAt: string = data.expires_at ?? data.expiresAt ?? "";
+        const qrDataUrl: string | undefined =
+          data.qrcode_url ?? data.qrDataUrl ?? undefined;
+        const amt: number = typeof data.amount === "number" ? data.amount : 0;
+
+        if (address && chain && expiresAt) {
+          const normalized: CreateDepositResponse = {
+            depositId: data.id ?? data.depositId ?? crypto.randomUUID(),
+            address,
+            chain,
+            expiresAt,
+            amount: amt,
+            qrDataUrl,
+          };
+          setDeposit(normalized);
+        }
+      } catch (e: any) {
+        console.warn("No current QR or failed to fetch:", e?.message || e);
+      }
+    };
+
+    loadCurrentQR();
+  }, []);
+
+  // Manejo del temporizador
+  useEffect(() => {
+    if (!deposit?.expiresAt) return;
     setSeconds(secondsLeft(deposit.expiresAt));
 
-    timerRef.current && window.clearInterval(timerRef.current);
+    if (timerRef.current) window.clearInterval(timerRef.current);
     timerRef.current = window.setInterval(() => {
       setSeconds((prev) => {
         if (prev <= 1) {
@@ -91,6 +275,7 @@ export default function RecargaFichasPage() {
     return !isSubmitting && !deposit && !Number.isNaN(val) && val > 0;
   }, [amount, isSubmitting, deposit]);
 
+  // Crear depósito
   async function handleCreateDeposit() {
     try {
       setError("");
@@ -101,57 +286,69 @@ export default function RecargaFichasPage() {
         return;
       }
 
-      // Llama a tu endpoint real
-      // const res = await fetch("/api/deposits", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ amount: val, network: selectedNetwork } as CreateDepositRequest),
-      // });
-      // if (!res.ok) throw new Error("No se pudo crear el depósito");
-      // const data: CreateDepositResponse = await res.json();
+      const dataAny: any = await depositService.createQR({
+        amount: val,
+        network: selectedNetwork,
+      } as CreateDepositRequest);
 
-      // Mock de respuesta (15 minutos de ventana)
-      const now = Date.now();
-      const data: CreateDepositResponse = {
-        depositId: crypto.randomUUID(),
-        address:
-          selectedNetwork === "TRX"
-            ? "TUSDTkQ5o2hFaKE8qj1Rmk1vFQx1EXAMPLE"
-            : selectedNetwork === "ETH"
-            ? "0x9a7a3C1F9bE36f6d7aF8b6e3d3B2c4e9FEXAMPLe"
-            : selectedNetwork === "POLYGON"
-            ? "0xABcD1234EFe0921aaBBccD11223344EXAMPLE"
-            : "0xBSC1234abcdEFef9090abCdEe1122334455EXAMPLE",
-        chain: selectedNetwork,
-        expiresAt: new Date(now + 15 * 60 * 1000).toISOString(),
-        qrDataUrl: undefined, // si tu backend lo manda, úsalo abajo
+      const normalized: CreateDepositResponse = {
+        depositId: dataAny.id ?? dataAny.depositId ?? crypto.randomUUID(),
+        address: dataAny.address ?? dataAny.wallet_address ?? "",
+        chain: (
+          (dataAny.network ?? dataAny.chain) ||
+          selectedNetwork
+        ).toUpperCase(),
+        expiresAt:
+          dataAny.expires_at ??
+          dataAny.expiresAt ??
+          new Date(Date.now() + 15 * 60 * 1000).toISOString(),
+        amount: typeof dataAny.amount === "number" ? dataAny.amount : val,
+        qrDataUrl: dataAny.qrcode_url ?? dataAny.qrDataUrl ?? undefined,
       };
 
-      setDeposit(data);
+      if (!normalized.address) {
+        throw new Error("La API no devolvió una dirección de depósito");
+      }
+
+      setDeposit(normalized);
     } catch (e: any) {
-      setError(e?.message || "Ocurrió un error al crear el depósito");
+      setError(
+        e?.response?.data?.message ||
+          e?.message ||
+          "Ocurrió un error al crear el depósito"
+      );
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  function handleCancel() {
-    setDeposit(null);
-    setSeconds(0);
-    setAmount("");
-    setSelectedNetwork("BSC");
-    setError("");
+  async function handleCancel() {
+    try {
+      setError("");
+      await depositService.cancelCurrentQR();
+    } catch (e: any) {
+      setError(
+        e?.response?.data?.message || e?.message || "No se pudo cancelar el QR"
+      );
+    } finally {
+      setDeposit(null);
+      setSeconds(0);
+      setAmount("");
+      setSelectedNetwork("BSC");
+      setUiMessage("");
+    }
   }
 
   async function copyToClipboard(text: string) {
     try {
       await navigator.clipboard.writeText(text);
-      // Feedback simple, puedes reemplazar por un toast
       alert("Dirección copiada al portapapeles");
     } catch {
       alert("No se pudo copiar. Copia manualmente.");
     }
   }
+
+  const isOverlayActive = Boolean(uiMessage) || seconds === 0;
 
   return (
     <div className="bg-neutral-950 text-neutral-100 px-4 py-10 mt-20">
@@ -165,6 +362,12 @@ export default function RecargaFichasPage() {
             instante.
           </p>
         </header>
+
+        {uiMessage && (
+          <div className="mb-6 rounded-xl border border-emerald-800 bg-emerald-950/30 px-3 py-2 text-emerald-300 text-sm">
+            {uiMessage}
+          </div>
+        )}
 
         {/* Card: Balance */}
         <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5 mb-6">
@@ -265,6 +468,12 @@ export default function RecargaFichasPage() {
                     {deposit.chain}
                   </span>
                 </p>
+                <p className="text-sm text-neutral-400 mt-1">
+                  Monto:{" "}
+                  <span className="font-medium text-neutral-200">
+                    {formatCurrency(deposit.amount)}
+                  </span>
+                </p>
               </div>
               <div className="text-right">
                 <span className="text-sm text-neutral-400">Expira en</span>
@@ -279,12 +488,100 @@ export default function RecargaFichasPage() {
             </div>
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex items-center justify-center">
+              {/* Contenedor QR con overlay */}
+              {/* Contenedor QR con overlay */}
+              <div className="relative flex items-center justify-center">
+                {/* QR */}
                 <img
                   src={deposit.qrDataUrl || makeQrUrl(deposit.address)}
                   alt="QR de depósito"
                   className="w-64 h-64 rounded-2xl border border-neutral-800 bg-neutral-950 p-3"
                 />
+
+                {/* Overlay de éxito (tiene prioridad si existe uiMessage) */}
+                {uiMessage && (
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden flex items-center justify-center">
+                    <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-[2px]" />
+                    <div className="relative z-10 flex flex-col items-center text-center px-4">
+                      <div className="w-14 h-14 rounded-full bg-emerald-600/20 border border-emerald-600/50 flex items-center justify-center mb-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          className="w-7 h-7 text-emerald-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <p className="text-emerald-300 text-sm md:text-base font-medium">
+                        {uiMessage}
+                      </p>
+                      <p className="text-neutral-400 text-xs mt-1">
+                        Redirigiendo en unos segundos...
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Overlay de expiración (solo si no hay uiMessage y el tiempo llegó a 0) */}
+                {!uiMessage && seconds === 0 && (
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden flex items-center justify-center">
+                    <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-[2px]" />
+                    <div className="relative z-10 flex flex-col items-center text-center px-4">
+                      {/* Ícono de reloj/alerta */}
+                      <div className="w-14 h-14 rounded-full bg-red-600/20 border border-red-600/50 flex items-center justify-center mb-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="w-7 h-7 text-red-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z"
+                          />
+                        </svg>
+                      </div>
+                      <p className="text-red-300 text-sm md:text-base font-medium">
+                        El QR ha expirado.
+                      </p>
+                      <p className="text-neutral-400 text-xs mt-1">
+                        Genera uno nuevo para continuar.
+                      </p>
+
+                      <button
+                        onClick={async () => {
+                          try {
+                            // opcional: notificar al backend que se canceló
+                            await depositService
+                              .cancelCurrentQR()
+                              .catch(() => {});
+                          } finally {
+                            // reset local para poder crear otro
+                            setDeposit(null);
+                            setSeconds(0);
+                            setAmount("");
+                            setSelectedNetwork("BSC");
+                            setError("");
+                            setUiMessage("");
+                          }
+                        }}
+                        className="mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-neutral-200 text-sm"
+                      >
+                        Generar nuevo QR
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -295,12 +592,28 @@ export default function RecargaFichasPage() {
                   <input
                     readOnly
                     value={deposit.address}
-                    className="w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 font-mono text-sm"
+                    title={
+                      isOverlayActive
+                        ? "No disponible mientras el QR está completado o expirado"
+                        : "Dirección de wallet"
+                    }
+                    className={[
+                      "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 font-mono text-sm transition",
+                      isOverlayActive
+                        ? "opacity-60 blur-[1px] pointer-events-none select-none"
+                        : "",
+                    ].join(" ")}
                   />
                   <button
                     onClick={() => copyToClipboard(deposit.address)}
-                    className="shrink-0 rounded-xl px-3 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700"
-                    title="Copiar"
+                    disabled={isOverlayActive}
+                    title={isOverlayActive ? "Copiar deshabilitado" : "Copiar"}
+                    className={[
+                      "shrink-0 rounded-xl px-3 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 transition",
+                      isOverlayActive
+                        ? "opacity-60 blur-[1px] pointer-events-none"
+                        : "",
+                    ].join(" ")}
                   >
                     Copiar
                   </button>
