@@ -26,12 +26,16 @@ const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
+  const [isRecharge, setIsRecharge] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const kycStatus = useKYCStatusStore((state) => state.kycStatus);
-  const isRecharge = pathname === "/recharge";
+
+  useEffect(() => {
+    setIsRecharge(pathname === "/recharge");
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -145,7 +149,11 @@ const Header: React.FC = () => {
             </button>
             {/* Dropdown */}
             {userMenu && (
-              <div className="absolute right-0 mt-2 w-44 bg-[#2e0327] border border-[#FFC827] rounded-lg shadow-lg py-2 z-40 animate-fade-down">
+              <div
+                className={`absolute right-0 mt-2 w-44 ${
+                  isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
+                } border border-[#FFC827] rounded-lg shadow-lg py-2 z-40 animate-fade-down`}
+              >
                 <Link
                   href="/profile"
                   className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
@@ -206,7 +214,9 @@ const Header: React.FC = () => {
       {showMenu && (
         <nav
           className={`
-            md:hidden bg-[#2e0327] bg-opacity-95 px-4 pb-4 pt-2 flex flex-col gap-4 uppercase
+            md:hidden ${
+              isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
+            } bg-opacity-95 px-4 pb-4 pt-2 flex flex-col gap-4 uppercase
             transition-all duration-300
             ${
               open
@@ -261,7 +271,11 @@ const Header: React.FC = () => {
               </button>
               {/* Dropdown */}
               {userMenu && (
-                <div className="mt-2 w-full bg-[#2e0327] border border-[#FFC827] rounded-lg shadow-lg py-2 z-40 animate-fade-down">
+                <div
+                  className={`mt-2 w-full ${
+                    isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
+                  } border border-[#FFC827] rounded-lg shadow-lg py-2 z-40 animate-fade-down`}
+                >
                   <Link
                     href="/profile"
                     className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"

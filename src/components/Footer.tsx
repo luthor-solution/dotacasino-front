@@ -1,12 +1,16 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const Footer = () => {
   const pathname = usePathname();
-  const isRecharge = pathname === "/recharge";
+  const [isRecharge, setIsRecharge] = useState(false);
+  useEffect(() => {
+    setIsRecharge(pathname === "/recharge");
+  }, [pathname]);
+
   return (
     <footer
       className={`relative ${
