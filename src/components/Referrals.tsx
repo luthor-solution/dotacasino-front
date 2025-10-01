@@ -9,6 +9,7 @@ import MembershipCardSkeleton from "./MembershipCardSkeleton";
 import { userService, MembershipQRResponse } from "@/services/userService";
 import { membershisService, Membership } from "@/services/membershipsService";
 
+/* Tipos */
 type LocalQR = {
   address: string;
   amount: number;
@@ -17,6 +18,32 @@ type LocalQR = {
   qrcode_url: string;
   status_text: string | null;
   membership_type: string; // id de la membresía
+};
+
+type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
+
+/* Modal simple reutilizable */
+const Modal: React.FC<{
+  open: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}> = ({ open, onClose, children }) => {
+  if (!open) return null;
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-md rounded-lg bg-[#1c0f1c] p-5 border border-white/10 text-white"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+      </div>
+    </div>
+  );
 };
 
 const Referrals: React.FC = () => {
@@ -35,11 +62,22 @@ const Referrals: React.FC = () => {
     null
   );
 
+  // Estado del modal de network
+  const [networkModalOpen, setNetworkModalOpen] = useState(false);
+  const [pendingMembershipId, setPendingMembershipId] = useState<string | null>(
+    null
+  );
+  const [selectedNetwork, setSelectedNetwork] = useState<Network | null>(null);
+  const [actionMode, setActionMode] = useState<"create" | "regenerate" | null>(
+    null
+  );
+
   useEffect(() => {
     const fetchAll = async () => {
       try {
         const membership = await userService.getCurrentMembership();
         setCurrentMembership(membership.membership);
+
         const qr = await userService.getQRMembership();
         const mem = await membershisService.getMembeships();
 
@@ -81,47 +119,43 @@ const Referrals: React.FC = () => {
     return exp <= Date.now();
   };
 
-  const createOrShowQR = async (membershipId: string) => {
+  // Mostrar modal para elegir network antes de llamar la API
+  const promptNetworkAndRun = (
+    membershipId: string,
+    mode: "create" | "regenerate"
+  ) => {
     setGlobalError(null);
+    setPendingMembershipId(membershipId);
+    setSelectedNetwork(null);
+    setActionMode(mode);
+    setNetworkModalOpen(true);
+  };
 
-    if (activeQR?.membership_type === membershipId && !isQRExpired(activeQR)) {
+  // Confirmación del modal: llama a la API con network incluido
+  const handleConfirmNetwork = async () => {
+    if (!pendingMembershipId || !selectedNetwork) {
+      setGlobalError("Debes seleccionar un network: BSC, TRX, ETH o POLYGON.");
       return;
     }
 
-    setCreatingFor(membershipId);
-    try {
-      const data = await userService.createMembership({
-        membership_type: membershipId,
-      });
-      const normalized: LocalQR = {
-        address: data.address,
-        amount: data.amount,
-        status: data.status,
-        expires_at: data.expires_at,
-        qrcode_url: data.qrcode_url,
-        status_text: data.status_text ?? null,
-        membership_type: data.membership_type ?? membershipId,
-      };
-      setActiveQR(normalized); // reemplaza el anterior
-    } catch (err: any) {
-      console.error("Error creando QR membership:", err);
-      setGlobalError(
-        err?.response?.data?.message ||
-          err?.message ||
-          "No se pudo generar el QR. Intenta de nuevo."
-      );
-    } finally {
-      setCreatingFor(null);
-    }
-  };
+    const membershipId = pendingMembershipId;
+    const network = selectedNetwork;
 
-  const regenerateQR = async (membershipId: string) => {
-    setGlobalError(null);
+    setNetworkModalOpen(false);
     setCreatingFor(membershipId);
+
     try {
-      const data = await userService.createMembership({
+      // Ayuda a depurar
+      console.log("createMembership payload =>", {
         membership_type: membershipId,
+        network,
       });
+
+      const data = await userService.createMembershipQR({
+        membership_type: membershipId,
+        network, // <- requerido por el backend
+      });
+
       const normalized: LocalQR = {
         address: data.address,
         amount: data.amount,
@@ -133,21 +167,50 @@ const Referrals: React.FC = () => {
       };
       setActiveQR(normalized);
     } catch (err: any) {
-      console.error("Error regenerando QR membership:", err);
+      console.error(
+        `${
+          actionMode === "regenerate" ? "Error regenerando" : "Error creando"
+        } QR membership:`,
+        err
+      );
       setGlobalError(
         err?.response?.data?.message ||
           err?.message ||
-          "No se pudo regenerar el QR. Intenta de nuevo."
+          "No se pudo procesar el QR. Intenta de nuevo."
       );
     } finally {
       setCreatingFor(null);
+      setPendingMembershipId(null);
+      setActionMode(null);
+      setSelectedNetwork(null);
     }
+  };
+
+  // Estas funciones ahora siempre abren el modal (no llaman directo a la API)
+  const createOrShowQR = (membershipId: string) => {
+    setGlobalError(null);
+    // Si ya hay QR vigente para esa membresía, sólo se muestra; no abrimos modal ni llamamos.
+    if (activeQR?.membership_type === membershipId && !isQRExpired(activeQR)) {
+      return;
+    }
+    promptNetworkAndRun(membershipId, "create");
+  };
+
+  const regenerateQR = (membershipId: string) => {
+    setGlobalError(null);
+    promptNetworkAndRun(membershipId, "regenerate");
   };
 
   const matchedMembership: Membership | undefined = useMemo(() => {
     if (!qrMembership) return undefined;
     return memberships.find((m) => m.id === qrMembership.membership_type);
   }, [qrMembership, memberships]);
+
+  const networks: Network[] = ["BSC", "TRX", "ETH", "POLYGON"];
+
+  useEffect(() => {
+    console.log(selectedNetwork);
+  }, [selectedNetwork]);
 
   return (
     <div className="flex flex-col w-full md:max-w-5xl gap-y-[32px]">
@@ -199,6 +262,62 @@ const Referrals: React.FC = () => {
               );
             })}
       </div>
+
+      {/* Modal para elegir network */}
+      <Modal open={networkModalOpen} onClose={() => setNetworkModalOpen(false)}>
+        <h3 className="text-lg font-semibold mb-2">Selecciona la red</h3>
+        <p className="text-sm text-white/70 mb-4">
+          Debes elegir una red para generar el código de pago.
+        </p>
+
+        <div className="grid grid-cols-2 gap-3 mb-5">
+          {networks.map((net) => {
+            const selected = selectedNetwork === net;
+            return (
+              <button
+                key={net}
+                type="button"
+                onClick={() => setSelectedNetwork(net)}
+                className={`rounded border px-3 py-2 text-sm transition-colors
+                  ${
+                    selected
+                      ? "border-violet-400 bg-violet-500/20"
+                      : "border-white/15 bg-white/5 hover:bg-white/10"
+                  }`}
+              >
+                {net}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="flex items-center justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setNetworkModalOpen(false);
+              setPendingMembershipId(null);
+              setSelectedNetwork(null);
+              setActionMode(null);
+            }}
+            className="px-3 py-2 text-sm rounded border border-white/15 hover:bg-white/10"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            onClick={handleConfirmNetwork}
+            disabled={!selectedNetwork || !pendingMembershipId}
+            className={`px-3 py-2 text-sm rounded ${
+              !selectedNetwork || !pendingMembershipId
+                ? "bg-violet-600/50 cursor-not-allowed"
+                : "bg-violet-600 hover:bg-violet-700"
+            }`}
+          >
+            Confirmar
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
