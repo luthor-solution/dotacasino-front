@@ -379,19 +379,20 @@ export const userService = {
     }
   },
 
-  async createMembership(
+  async createMembershipQR(
     params: {
       membership_type: string;
+      network: string;
     },
     retry = true
   ): Promise<MembershipQRResponse> {
-    const { membership_type } = params;
+    const { membership_type, network } = params;
     const { token } = useAuthStore.getState();
     if (!token) throw new Error("No token available");
     try {
       const response = await axios.post<MembershipQRResponse>(
         `${API_BASE_URL}/users/create-qr-membership`,
-        { membership_type },
+        { membership_type, network },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -408,8 +409,8 @@ export const userService = {
       ) {
         await userService.refreshToken();
 
-        return userService.createMembership(
-          { membership_type: membership_type },
+        return userService.createMembershipQR(
+          { membership_type: membership_type, network: network },
           false
         );
       }
