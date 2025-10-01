@@ -11,8 +11,6 @@ import { userService } from "@/services/userService";
 import SuccessNotification from "@/components/SuccessNotification";
 import { useSearchParams } from "next/navigation";
 
-type Side = "left" | "right";
-
 type ReferredProfile = {
   displayName?: string | null;
 };
@@ -21,28 +19,10 @@ export default function SignUp() {
   const searchParams = useSearchParams();
 
   // Leemos ambos params soportados
-  const refCodeLFromUrl = useMemo(
-    () => searchParams.get("refCodeL") || "",
+  const refCode = useMemo(
+    () => searchParams.get("refCode") || "",
     [searchParams]
   );
-  const refCodeRFromUrl = useMemo(
-    () => searchParams.get("refCodeR") || "",
-    [searchParams]
-  );
-
-  // Deducción automática del side
-  const detectedSide: Side | null = useMemo(() => {
-    if (refCodeRFromUrl) return "right";
-    if (refCodeLFromUrl) return "left";
-    return null;
-  }, [refCodeLFromUrl, refCodeRFromUrl]);
-
-  // Código detectado automáticamente
-  const detectedReferral = useMemo(() => {
-    if (refCodeRFromUrl) return refCodeRFromUrl;
-    if (refCodeLFromUrl) return refCodeLFromUrl;
-    return "";
-  }, [refCodeLFromUrl, refCodeRFromUrl]);
 
   const [form, setForm] = useState({
     email: "",
@@ -59,11 +39,11 @@ export default function SignUp() {
 
   // Prefill del referralCode desde la URL (una vez)
   useEffect(() => {
-    if (detectedReferral && !form.referralCode) {
-      setForm((prev) => ({ ...prev, referralCode: detectedReferral }));
+    if (refCode && !form.referralCode) {
+      setForm((prev) => ({ ...prev, referralCode: refCode }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [detectedReferral]);
+  }, [refCode]);
 
   // Buscar datos del referido cuando haya referralCode
   useEffect(() => {
@@ -121,18 +101,11 @@ export default function SignUp() {
     setMsg(null);
     setFieldErrors({});
     try {
-      // Detectado desde la URL (refCodeL/refCodeR)
-      const sideDetected: Side | null = detectedSide;
 
       // Normaliza referralCode
       const trimmedReferral = (form.referralCode || "").trim();
       const hasReferral = trimmedReferral.length > 0;
 
-      // Reglas:
-      // - side siempre va: "left"/"right" si hay referralCode y se detectó side, en otro caso "".
-      // - referralCode debe ir, pero vacío si no hay valor.
-      const sideToSend: string =
-        hasReferral && sideDetected ? sideDetected : "";
       const referralToSend: string = hasReferral ? trimmedReferral : "";
 
       const payload: any = {
@@ -140,7 +113,6 @@ export default function SignUp() {
         password: form.password,
         country: form.country,
         acceptTerms: form.acceptTerms,
-        side: sideToSend,
         referralCode: referralToSend,
       };
 

@@ -185,7 +185,7 @@ const Referrals: React.FC = () => {
                 <MembershipCard
                   key={m.id}
                   membership={m}
-                  image={`/memberships/${m.name}.png`}
+                  image={`/memberships/${m.name.toLowerCase()}.png`}
                   price={"0"}
                   accent={accent}
                   currentQR={currentQR ?? undefined}
