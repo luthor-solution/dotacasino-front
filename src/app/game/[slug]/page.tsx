@@ -38,10 +38,11 @@ const GamePage: FC<Props> = async ({ params }) => {
       .then((r) => r.data);
 
     return (
-      <div className="mt-20">
+      <div className="mt-20 flex justify-center">
         <Iframe
           url={gameInfo.content.game.url}
           sessionId={gameInfo.content.gameRes.sessionId}
+          width={gameInfo.content.game.width}
         />
       </div>
     );
