@@ -31,6 +31,7 @@ const Header: React.FC = () => {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const kycStatus = useKYCStatusStore((state) => state.kycStatus);
+  const isRecharge = pathname === "/recharge";
 
   useEffect(() => {
     const onScroll = () => {
@@ -79,7 +80,11 @@ const Header: React.FC = () => {
     <header
       className={`w-full fixed top-0 left-0 z-40 transition-all duration-300 ${
         scrolled || open
-          ? "bg-[#2e0327] bg-opacity-95 shadow-lg"
+          ? `${
+              isRecharge
+                ? "bg-neutral-950 bg-opacity-95 shadow-lg"
+                : "bg-[#2e0327] bg-opacity-95 shadow-lg"
+            }`
           : "bg-transparent"
       }`}
     >
