@@ -3,6 +3,7 @@ import React from "react";
 import { Membership } from "@/services/membershipsService";
 import QROverlay from "./QROverlay";
 import ReferralInput from "./ReferralInput";
+import clsx from "clsx";
 
 export type MembershipCardProps = {
   membership: Membership;
@@ -24,6 +25,8 @@ export type MembershipCardProps = {
   onRegenerate: () => void;
 
   isSelectedByQR?: boolean;
+  enabled?: boolean;
+  currentActive?: string | null;
 };
 
 const formatDuration = (ms: number) => {
@@ -52,6 +55,8 @@ const MembershipCard: React.FC<MembershipCardProps> = ({
   creating = false,
   onCreateOrShow,
   onRegenerate,
+  enabled = true,
+  currentActive = "",
 }) => {
   const { name, benefits } = membership;
 
@@ -131,7 +136,13 @@ const MembershipCard: React.FC<MembershipCardProps> = ({
   };
 
   return (
-    <div className="bg-[#2e0327] rounded-2xl shadow-lg overflow-hidden w-full max-w-sm flex flex-col h-full border border-gray-400/20">
+    <div
+      className={clsx(
+        "bg-[#2e0327] rounded-2xl shadow-lg overflow-hidden w-full max-w-sm flex flex-col h-full border border-gray-400/20",
+        currentActive == membership.id &&
+          "border-2 border-solid border-green-400"
+      )}
+    >
       <div className="relative h-56">
         <img src={image} alt={name} className="w-full h-full object-cover" />
         <div
@@ -227,7 +238,7 @@ const MembershipCard: React.FC<MembershipCardProps> = ({
           className={`w-full py-2 rounded-lg text-white font-medium bg-gradient-to-r ${accent} shadow-md hover:opacity-95 mt-auto cursor-pointer hover:scale-105 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed`}
           type="button"
           onClick={handleCreateOrShow}
-          disabled={creating}
+          disabled={creating || !enabled}
         >
           {creating ? "Generando QR..." : "Elegir membresía"}
         </button>

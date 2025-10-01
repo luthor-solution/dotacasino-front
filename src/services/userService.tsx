@@ -81,7 +81,7 @@ export interface CurrentMultiplierResponse {
   deposit: Deposit;
 }
 
-export type MembershipPlan = "free";
+export type MembershipPlan = "free" | "p-100" | "p-500" | "p-1000";
 export interface CurrentMembershipResponse {
   membership: MembershipPlan;
 }

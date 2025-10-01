@@ -22,6 +22,9 @@ type LocalQR = {
 const Referrals: React.FC = () => {
   const [memberships, setMemberships] = useState<Membership[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentMembership, setCurrentMembership] = useState<string | null>(
+    null
+  );
 
   // Único QR activo global
   const [activeQR, setActiveQR] = useState<LocalQR | null>(null);
@@ -35,7 +38,8 @@ const Referrals: React.FC = () => {
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        await userService.getCurrentMembership();
+        const membership = await userService.getCurrentMembership();
+        setCurrentMembership(membership.membership);
         const qr = await userService.getQRMembership();
         const mem = await membershisService.getMembeships();
 
@@ -150,7 +154,7 @@ const Referrals: React.FC = () => {
       <ReferralInput />
       <DubaiTimeProgress progress={67} />
       <MultiplierBar />
-      <VerticalTimeline />
+      <VerticalTimeline membership={currentMembership} />
 
       {globalError && (
         <div className="text-red-300 text-sm mb-3 bg-red-400/10 border border-red-400/30 rounded px-3 py-2">
@@ -189,6 +193,8 @@ const Referrals: React.FC = () => {
                   onCreateOrShow={() => createOrShowQR(m.id)}
                   onRegenerate={() => regenerateQR(m.id)}
                   isSelectedByQR={isQR}
+                  enabled={m.active}
+                  currentActive={currentMembership}
                 />
               );
             })}

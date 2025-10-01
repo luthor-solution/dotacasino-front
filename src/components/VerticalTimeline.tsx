@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import Image from "next/image";
+import clsx from "clsx";
 import React from "react";
 
 // Íconos SVG (puedes cambiarlos si quieres)
@@ -62,44 +63,52 @@ const icons = [
 
 const timeline = [
   {
-    day: "Day 1",
-    title: "Arrival and movie night",
+    day: "Level 1",
+    title: "Gain 20% of your first level",
     color: "text-[#FFC827]",
     bg: "bg-lime-400",
     border: "border-[#FFC827]",
     icon: icons[0],
     percent: "/20.png",
+    enabled: ["free", "p-100", "p-500", "p-1000"],
   },
   {
-    day: "Day 2",
-    title: "Lectures, workshop, training and symposium",
+    day: "Level 2 (Basic)",
+    title: "Gain 7% of your second level",
     color: "text-[#FFC827]",
     bg: "bg-yellow-400",
     border: "border-[#FFC827]",
     icon: icons[1],
     percent: "/7.png",
+    enabled: ["p-100", "p-500", "p-1000"],
   },
   {
-    day: "Day 3",
-    title: "Visit to orphanage, alumni match and gala night",
+    day: "Level 3 (Advanced)",
+    title: "Gain 7% of your third level",
     color: "text-[#FFC827]",
     bg: "bg-orange-400",
     border: "border-[#FFC827]",
     icon: icons[2],
     percent: "/7.png",
+    enabled: ["p-500", "p-1000"],
   },
   {
-    day: "Day 4",
-    title: "Picnic and departure",
+    day: "Level 4 (Pro)",
+    title: "Gain 7% of your fourth level",
     color: "text-[#FFC827]",
     bg: "bg-fuchsia-500",
     border: "border-[#FFC827]",
     icon: icons[3],
     percent: "/7.png",
+    enabled: ["p-1000"],
   },
 ];
 
-const VerticalTimeline: React.FC = () => (
+type Props = {
+  membership: string | null;
+};
+
+const VerticalTimeline: React.FC<Props> = ({ membership }) => (
   <div className=" w-full flex flex-col items-center justify-start py-8">
     <h2 className="text-3xl font-bold mb-10 text-white">
       VERTICAL <span className="text-[#FFC827]">TIMELINE</span>
@@ -131,15 +140,23 @@ const VerticalTimeline: React.FC = () => (
             {/* Center circle and icon */}
             <div className="relative flex flex-col items-center">
               <div
-                className={`w-28 h-28 rounded-full border-8 ${item.border} bg-white flex items-center justify-center z-10`}
+                className={clsx(
+                  `w-28 h-28 rounded-full border-8 ${item.border} flex items-center justify-center z-10 transition-all`,
+                  item.enabled.includes(membership || "") && "bg-white",
+                  !item.enabled.includes(membership || "") && "bg-gray-400"
+                )}
               >
                 {/* <span className="fo font-bold text-black"> {item.percent}</span> */}
-                <Image
+                <img
                   src={item.percent}
                   height={100}
                   width={100}
                   alt=""
-                  className="p-2"
+                  className={clsx(
+                    "p-2 transition-all",
+                    !item.enabled.includes(membership || "") &&
+                      "opacity-70 brightness-50"
+                  )}
                 />
               </div>
               <div
