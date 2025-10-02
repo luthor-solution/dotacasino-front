@@ -3,7 +3,7 @@
 "use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { depositService } from "@/services/depositsService";
-
+import { walletService } from "@/services/walletService";
 // --- Tipos auxiliares ---
 type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
 
@@ -42,14 +42,9 @@ function toMMSS(totalSeconds: number) {
   return `${m}:${s}`;
 }
 
-function makeQrUrl(data: string) {
-  const encoded = encodeURIComponent(data);
-  return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encoded}`;
-}
-
 // --- Componente principal ---
 export default function RecargaFichasPage() {
-  const [balance, setBalance] = useState<number>(1250);
+  const [balance, setBalance] = useState<number>(1);
   const [amount, setAmount] = useState<string>("");
   const [selectedNetwork, setSelectedNetwork] = useState<Network>("BSC");
 
@@ -61,6 +56,26 @@ export default function RecargaFichasPage() {
 
   const [seconds, setSeconds] = useState<number>(0);
   const timerRef = useRef<number | null>(null);
+
+  // Carga inicial del balance al montar
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const wallet = await walletService.getWallet();
+        if (!mounted) return;
+        setBalance(wallet.balance);
+      } catch (e: any) {
+        console.warn(
+          "[wallet] error al obtener balance inicial:",
+          e?.message || e
+        );
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   // Polling cada 5s mientras haya un QR activo
   useEffect(() => {
@@ -78,9 +93,22 @@ export default function RecargaFichasPage() {
       }
     };
 
-    const handleOK = () => {
-      // Mostrar éxito y resetear a formulario tras 3s
+    // 5) Dentro del useEffect de polling, sustituye tu handleOK por este (refresca balance tras OK)
+    const handleOK = async () => {
       setUiMessage("Depósito acreditado correctamente.");
+
+      // Refrescar balance cuando se acredita
+      try {
+        const wallet = await walletService.getWallet();
+        setBalance(wallet.balance);
+      } catch (e: any) {
+        console.warn(
+          "[wallet] no se pudo refrescar el balance tras OK:",
+          e?.message || e
+        );
+      }
+
+      // Detener polling y resetear UI
       stop();
       setTimeout(() => {
         setUiMessage("");
@@ -152,8 +180,21 @@ export default function RecargaFichasPage() {
       }
     };
 
-    const handleOK = () => {
+   const handleOK = async () => {
       setUiMessage("Depósito acreditado correctamente.");
+
+      // Refrescar balance cuando se acredita
+      try {
+        const wallet = await walletService.getWallet();
+        setBalance(wallet.balance);
+      } catch (e: any) {
+        console.warn(
+          "[wallet] no se pudo refrescar el balance tras OK:",
+          e?.message || e
+        );
+      }
+
+      // Detener polling y resetear UI
       stop();
       setTimeout(() => {
         setUiMessage("");
@@ -164,7 +205,6 @@ export default function RecargaFichasPage() {
         setError("");
       }, 3000);
     };
-
     const tick = async () => {
       try {
         attemptsRef.current += 1;
@@ -493,7 +533,7 @@ export default function RecargaFichasPage() {
               <div className="relative flex items-center justify-center">
                 {/* QR */}
                 <img
-                  src={deposit.qrDataUrl || makeQrUrl(deposit.address)}
+                  src={deposit.qrDataUrl}
                   alt="QR de depósito"
                   className="w-64 h-64 rounded-2xl border border-neutral-800 bg-neutral-950 p-3"
                 />
