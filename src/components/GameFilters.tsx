@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { FaSearch, FaMobileAlt, FaSortAlphaDown } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import FancyInput from "@/components/FancyInput";
-import FancySelect from "@/components/FancySelect";
+import { useTranslation } from "react-i18next";
 
 interface GameFiltersProps {
   filters: {
@@ -14,7 +14,7 @@ interface GameFiltersProps {
   isMobile: boolean;
 }
 
-const devices = [
+/* const devices = [
   { value: "", label: "Dispositivo" },
   { value: "DESKTOP", label: "Escritorio" },
   { value: "MOBILE", label: "Móvil" },
@@ -23,7 +23,7 @@ const sorts = [
   { value: "order", label: "Por defecto" },
   { value: "alpha", label: "Alfabético" },
   { value: "recent", label: "Recientes" },
-];
+]; */
 
 const GameFilters: React.FC<GameFiltersProps> = ({
   filters,
@@ -32,6 +32,7 @@ const GameFilters: React.FC<GameFiltersProps> = ({
 }) => {
   // Estado local para el input de búsqueda
   const [searchValue, setSearchValue] = useState(filters.search);
+  const { t } = useTranslation();
 
   // Sincroniza el valor local si el filtro externo cambia (por ejemplo, al limpiar filtros)
   useEffect(() => {
@@ -56,7 +57,7 @@ const GameFilters: React.FC<GameFiltersProps> = ({
       onSubmit={(e) => e.preventDefault()}
     >
       <FancyInput
-        placeholder="Buscar juego..."
+        placeholder={t("searchGame")}
         name="search"
         icon={<FaSearch />}
         value={searchValue}

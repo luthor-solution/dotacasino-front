@@ -3,6 +3,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { gamesService, Game } from "@/services/gamesService";
+import { useTranslation } from "react-i18next";
 
 interface GamesCarouselProps {
   title: string;
@@ -52,6 +53,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [responsive, setResponsive] = useState(getResponsiveSettings());
+  const { t } = useTranslation();
 
   useEffect(() => {
     setLoading(true);
@@ -121,7 +123,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
               className="border border-[#FFC827] px-4 py-1 rounded-lg text-sm font-semibold hover:bg-[#FFC827] text-white cursor-pointer transition-all duration-500"
               onClick={onShowMore}
             >
-              Mostrar más
+              {t("showMore")}
             </button>
           )}
         </div>
@@ -149,9 +151,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
               </div>
             ))
           ) : games.length === 0 ? (
-            <div className="text-white py-12">
-              No hay juegos en esta categoría.
-            </div>
+            <div className="text-white py-12">{t("noGames")}</div>
           ) : (
             games.map((game, i) => (
               <div

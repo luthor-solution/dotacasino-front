@@ -56,5 +56,60 @@
       "title": "El QR ha expirado.",
       "subtitle": "Genera uno nuevo para continuar."
     }
-  }
+  },
+  "bankServersBanner": {
+    "title": "Banco de servidores",
+    "subtitle": "Elige una opción para continuar"
+  },
+  "goToServer": "Ir al servidor",
+  "footer": {
+    "company": {
+      "title": "Compañía",
+      "news": "Noticias",
+      "About": "Acerca de nosotros"
+    },
+    "games": {
+      "title": "Juegos",
+      "bonds": "Bonos",
+      "jackpots": "Jackpots"
+    },
+    "resources": {
+      "title": "Recursos",
+      "termsAndConditions": "Términos Y Condiciones",
+      "antiSpamPolicy": "Política Antispam",
+      "refundPolicy": "Política De Reembolso"
+    },
+    "rows": {
+      "one": "dota.click casino criptográfico confiable de alta gama, con una variedad de juegos de tragamonedas, máquinas tragamonedas en línea únicas, apuestas deportivas, eventos de deportes electrónicos, juegos con crupier en vivo, torneos de póquer y juegos populares de peces. Nuestra selección de juegos artesanales no dejará indiferentes a todos los jugadores. Nuestro casino en línea criptográfico dota.click posee la mejor selección de tragamonedas en línea para hoy con diferentes temas y estilos, todos sus juegos favoritos se pueden encontrar fácilmente en la sección de proveedores de juegos y agregarlos a su lista personal de juegos Favoritos para disfrutar de un acceso rápido en cualquier momento conveniente.",
+      "two": "Ventajas de jugar en vip crypto casino dota.click:",
+      "three": "Nuestro casino en línea criptográfico premium dota.click admite altos estándares de seguridad para brindar una experiencia de jugador segura. La principal ventaja de nuestro casino dota.click es la gran selección de juegos de tragamonedas en asociación con los principales fabricantes de productos de juego. El proceso de registro rápido y sencillo, sin verificación innecesaria, le permitirá iniciar rápidamente la mejor sesión de juego. Pero lo más importante, estará encantado con el proceso instantáneo de depositar y retirar sus fondos, tanto en las principales criptomonedas como en monedas estables. Esto le da la oportunidad de estar siempre de buen humor y estar en línea con una emoción agradable. Toda la información proporcionada por los usuarios es confidencial y anónima. Puede estar absolutamente seguro de que protegemos sus fondos de forma fiable y garantizamos la seguridad de su saldo. Nuestro casino en línea está protegido de manera confiable contra cualquier ataque de piratas informáticos, siempre estamos en línea 24/7/365",
+      "four": "Hemos hecho todo lo posible por su conveniente juego, no solo en computadoras personales, sino también en teléfonos y tabletas. Nuestra versión móvil del casino en línea dota.click es muy fácil de usar y se mejora constantemente. La aplicación móvil para jugar tragamonedas en el teléfono es increíblemente rápida y tiene las mismas funciones de un casino en línea que en el formato de sitio al que está acostumbrado.",
+      "five": "Quédese con nosotros y obtendrá un socio confiable en su entretenimiento en línea durante los próximos años. ¡Le deseamos todo lo mejor!"
+    }
+  },
+  "header": {
+    "home": "Inicio",
+    "games": "Juegos",
+    "recharge": "Recargar",
+    "signIn": "Iniciar sesión",
+    "signUp": "Regístrate",
+    "myProfile": "Mi perfil",
+    "verifyIdentity": "Verificar identidad",
+    "logout": "Cerrar Sesión"
+  },
+  "gamesBanner": {
+    "title": "Juegos",
+    "subtitle": "Elige una opción para continuar"
+  },
+  "loading": "Cargando...",
+  "showMore": "Ver más",
+  "page": "Página",
+  "of": "de",
+  "next": "Siguiente",
+  "previous": "Anterior",
+  "searchGame": "Buscar juego...",
+  "noGames": "No hay juegos en esta categoría.",
+  "hide": "Ocultar",
+  "category": "Categoría",
+  "playNow": "Jugar Ahora"
 }

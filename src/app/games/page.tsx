@@ -9,6 +9,7 @@ import GamesCarousel from "@/components/GamesCarousel";
 import NoGames from "@/components/NoGames";
 import JackpotLevels from "@/components/JackpotLevels";
 /* import { getCachedOrFetch, makeCacheKey } from "@/utils/cache"; */
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const [games, setGames] = useState<Game[]>([]);
@@ -18,6 +19,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const mainRef = useRef<HTMLDivElement>(null);
   const didInitialLoad = useRef(true);
+  const { t } = useTranslation();
+
   // Filtros
   const [filters, setFilters] = useState({
     search: "",
@@ -92,17 +95,17 @@ export default function Home() {
         onClick={() => setPage((p) => Math.max(1, p - 1))}
         disabled={page === 1 || loading}
       >
-        Anterior
+        {t("previous")}
       </button>
       <span className="text-white mx-2">
-        Página {page} de {totalPages}
+        {t("page")} {page} {t("of")} {totalPages}
       </span>
       <button
         className="px-4 py-2 mx-2 rounded bg-[#FFC827] text-[#2e0327] font-semibold disabled:opacity-50 cursor-pointer"
         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
         disabled={page === totalPages || loading}
       >
-        Siguiente
+        {t("next")}
       </button>
     </div>
   );
@@ -134,7 +137,10 @@ export default function Home() {
 
       {/* Contenido principal */}
       <div className="relative z-10 flex flex-col flex-1">
-        <Banner title="Juegos" subtitle="Elige una opción para continuar" />
+        <Banner
+          title={t("gamesBanner.title")}
+          subtitle={t("gamesBanner.subtitle")}
+        />
 
         <div
           className="w-full max-w-6xl mx-auto px-4 mt-8 justify-center items-center flex flex-col"

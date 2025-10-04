@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import Banner from "@/components/Banner";
 import { serversService, Server } from "@/services/serversService";
 import ServersGrid from "@/components/ServersGrid";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const [servers, setServers] = useState<Server[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setLoading(true);
@@ -20,8 +22,8 @@ export default function Home() {
   return (
     <main className="bg-[#2e0327] min-h-screen flex flex-col">
       <Banner
-        title="Banco de servidores"
-        subtitle="Elige una opción para continuar"
+        title={t("bankServersBanner.title")}
+        subtitle={t("bankServersBanner.subtitle")}
       />
       <ServersGrid servers={servers} loading={loading} />
     </main>

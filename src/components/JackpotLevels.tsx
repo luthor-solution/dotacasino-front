@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const levels = [
   {
@@ -48,6 +49,7 @@ const levels = [
 const JackpotLevels = () => {
   const [showLevels, setShowLevels] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const { t } = useTranslation();
 
   // Maneja la animación de ocultar/mostrar
   const handleToggleLevels = () => {
@@ -102,12 +104,12 @@ const JackpotLevels = () => {
           >
             {showLevels ? (
               <>
-                Ocultar
+                {t("hide")}
                 <span className="text-lg">▼</span>
               </>
             ) : (
               <>
-                Mostrar
+                {t("showMore")}
                 <span className="text-lg">▲</span>
               </>
             )}
@@ -152,7 +154,11 @@ const JackpotLevels = () => {
                   {level.name}
                 </span>
                 <span className="mt-8 text-2xl font-bold text-white">
-                  {level.value.toFixed(2)}
+                  $
+                  {level.value.toLocaleString("en", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </span>
               </div>
             </div>
