@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { countries } from "@/utils/countries";
+import { useTranslation } from "react-i18next";
 
 interface CountryPhoneInputProps {
   value: string; // Ejemplo: "+521234567890"
@@ -25,6 +26,7 @@ const CountryPhoneInput: React.FC<CountryPhoneInputProps> = ({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const ref = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   // Bandera para saber si el cambio viene del input
   const isInternalChange = useRef(false);
@@ -126,7 +128,7 @@ const CountryPhoneInput: React.FC<CountryPhoneInputProps> = ({
             />
             <ul className="max-h-48 overflow-auto">
               {filteredCountries.length === 0 && (
-                <li className="px-2 py-2 text-gray-400">No encontrado</li>
+                <li className="px-2 py-2 text-gray-400">{t("notFound")}</li>
               )}
               {filteredCountries.map((c) => (
                 <li
@@ -149,7 +151,7 @@ const CountryPhoneInput: React.FC<CountryPhoneInputProps> = ({
         type="text"
         inputMode="numeric"
         pattern="[0-9]*"
-        placeholder="Teléfono"
+        placeholder={t("phone")}
         className="bg-transparent outline-none text-white placeholder:text-gray-300 w-full h-full pl-2"
         value={phone}
         onChange={handlePhoneChange}

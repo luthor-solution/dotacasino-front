@@ -6,6 +6,7 @@ import BalanceCard from "@/components/BalanceCard";
 import { walletService } from "@/services/walletService";
 import { gamesService, Game, GamesResponse } from "@/services/gamesService";
 import GameCardSkeleton from "./GameCardSkeleton";
+import { useTranslation } from "react-i18next";
 
 export default function Balance() {
   const [balance, setBalance] = useState<string>("$0");
@@ -14,6 +15,7 @@ export default function Balance() {
   const [loadingGames, setLoadingGames] = useState<boolean>(true);
   const didFetch = useRef(false);
   const [games, setGames] = useState<Game[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (didFetch.current) return;
@@ -52,20 +54,20 @@ export default function Balance() {
       <div className="flex md:gap-x-[24px] md:gap-y-0 gap-y-[24px] flex-col md:flex-row md:px-0">
         <BalanceCard
           amount={balance}
-          label="TOTAL BALANCE"
+          label={t("totalBalance")}
           icon={<FiDollarSign />}
           currency={currency}
           loading={loading}
         />
         <BalanceCard
-          amount="$3500"
-          label="WINNINGS"
+          amount="$---"
+          label={t("winnings")}
           icon={<FiTrendingUp />}
           loading={loading}
         />
         <BalanceCard
-          amount="$3500"
-          label="CASHOUT"
+          amount="$---"
+          label={t("cashout")}
           icon={<FiLogOut />}
           loading={loading}
         />
