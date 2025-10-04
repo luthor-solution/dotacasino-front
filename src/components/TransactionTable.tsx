@@ -4,6 +4,7 @@ import { walletService, TopupHistoryItem } from "@/services/walletService";
 import TopupHistoryTable from "./TopupHistoryTable";
 import TopupHistoryCardList from "./TopupHistoryCardList";
 import TopupHistorySkeleton from "./TopupHistorySkeleton";
+import { useTranslation } from "react-i18next";
 
 const PAGE_SIZE = 20;
 
@@ -12,6 +13,7 @@ const TopupHistorySection: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
+  const { t } = useTranslation();
 
   // Detecta si es móvil
   const [isMobile, setIsMobile] = useState(false);
@@ -58,17 +60,17 @@ const TopupHistorySection: React.FC = () => {
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1 || loading}
           >
-            Anterior
+            {t("previous")}
           </button>
           <button
             className="px-4 py-2 rounded bg-[#FF9C19] text-white font-semibold disabled:opacity-50"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages || loading || totalPages === 0}
           >
-            Siguiente
+            {t("next")}
           </button>
           <span className="ml-4 text-sm text-white self-center">
-            Página {page} de {totalPages || 1}
+            {t("page")} {page} {t("of")} {totalPages || 1}
           </span>
         </div>
       </div>
@@ -86,7 +88,7 @@ const TopupHistorySection: React.FC = () => {
                 onClick={() => setPage((p) => p + 1)}
                 disabled={loading}
               >
-                {loading ? "Cargando..." : "Ver más"}
+                {loading ? t("loading") : t("showMore")}
               </button>
             )}
           </>

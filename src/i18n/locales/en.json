@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "Reload chips",
-    "subtitle": "Deposit with USDT on your favorite network and credit your chips instantly."
+    "title": "Reload tokens",
+    "subtitle": "Deposit with USDT on your favorite network and credit your tokens instantly."
   },
   "alerts": {
     "info": "{{message}}"
@@ -15,7 +15,7 @@
   "form": {
     "title": "Generate deposit order",
     "amountLabel": "Amount to deposit (USD)",
-    "amountPlaceholder": "Ex. 25",
+    "amountPlaceholder": "Eg. 25",
     "networkLabel": "Network (USDT)",
     "networks": {
       "BSC": "BSC · BEP20",
@@ -41,7 +41,7 @@
     "copyDisabled": "Copy disabled",
     "notes": {
       "onlyUsdt": "Send only <strong>USDT</strong> on the indicated network.",
-      "expiresAtZero": "The order expires when reaching 00:00.",
+      "expiresAtZero": "The order expires when it reaches 00:00.",
       "autoCredit": "It will be credited automatically after 1–3 confirmations."
     },
     "cancel": "Cancel transaction",
@@ -56,5 +56,102 @@
       "title": "The QR has expired.",
       "subtitle": "Generate a new one to continue."
     }
-  }
+  },
+  "bankServersBanner": {
+    "title": "Server bank",
+    "subtitle": "Choose an option to continue"
+  },
+  "goToServer": "Go to server",
+  "footer": {
+    "company": {
+      "title": "Company",
+      "news": "News",
+      "About": "About us"
+    },
+    "games": {
+      "title": "Games",
+      "bonds": "Bonuses",
+      "jackpots": "Jackpots"
+    },
+    "resources": {
+      "title": "Resources",
+      "termsAndConditions": "Terms and Conditions",
+      "antiSpamPolicy": "Anti-Spam Policy",
+      "refundPolicy": "Refund Policy"
+    },
+    "rows": {
+      "one": "dota.click is a high-end, trusted crypto casino with a variety of slot games, unique online slot machines, sports betting, esports events, live dealer games, poker tournaments and popular fish games. Our selection of handcrafted games will leave no player indifferent. Our crypto online casino dota.click offers the best selection of online slots today with different themes and styles; all your favorite games can be easily found in the game providers section and added to your personal Favorites list for quick access at any convenient time.",
+      "two": "Advantages of playing at vip crypto casino dota.click:",
+      "three": "Our premium crypto online casino dota.click supports high security standards to provide a safe player experience. The main advantage of our casino dota.click is the large selection of slot games in partnership with leading game manufacturers. The quick and simple registration process, without unnecessary verification, allows you to start your best gaming session quickly. Most importantly, you will be pleased with the instant process of depositing and withdrawing your funds, both in major cryptocurrencies and in stablecoins. This gives you the opportunity to always stay in a good mood and enjoy a pleasant thrill. All information provided by users is confidential and anonymous. You can be absolutely sure that we reliably protect your funds and guarantee the safety of your balance. Our online casino is securely protected against any hacker attacks; we are always online 24/7/365.",
+      "four": "We have done our best to ensure convenient play not only on personal computers but also on phones and tablets. Our mobile version of the dota.click online casino is very user-friendly and is constantly being improved. The mobile app for playing slots on your phone is incredibly fast and offers the same features as the online casino site format you are used to.",
+      "five": "Stay with us and you'll gain a reliable partner in your online entertainment for years to come. We wish you all the best!"
+    }
+  },
+  "header": {
+    "home": "Home",
+    "games": "Games",
+    "recharge": "Recharge",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "myProfile": "My profile",
+    "verifyIdentity": "Verify identity",
+    "logout": "Log out"
+  },
+  "gamesBanner": {
+    "title": "Games",
+    "subtitle": "Choose an option to continue"
+  },
+  "loading": "Loading...",
+  "showMore": "Show more",
+  "page": "Page",
+  "of": "of",
+  "next": "Next",
+  "previous": "Previous",
+  "searchGame": "Search game...",
+  "noGames": "There are no games in this category.",
+  "hide": "Hide",
+  "category": "Category",
+  "playNow": "Play Now",
+  "profileBanner": {
+    "title": "User panel",
+    "subtitle": "Choose an option to continue"
+  },
+  "userDashboard": "User panel",
+  "showMenu": "Show menu",
+  "totalBalance": "TOTAL BALANCE",
+  "winnings": "WINNINGS",
+  "cashout": "CASHOUT",
+  "showAll": "Show all",
+  "transactionID": "Transaction ID",
+  "amount": "Amount",
+  "status": "Status",
+  "date": "Date",
+  "profileUpdated": "Profile updated",
+  "profileUpdatedError": "Error updating profile",
+  "changePhoto": "Change photo",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "displayName": "Display name",
+  "phone": "Phone",
+  "notFound": "Not found",
+  "changePassword": "Change password",
+  "updating": "Updating...",
+  "updateProfile": "Update profile",
+  "welcome": "Welcome",
+  "dashboard": "Dashboard",
+  "depositHistory": "Deposit history",
+  "transactionHistory": "Transaction history",
+  "accountSettings": "Account settings",
+  "referrals": "Referrals",
+  "allInputsRequired": "All fields are required",
+  "atLeast8": "The new password must be at least 8 characters",
+  "passwordsMismatch": "Passwords do not match",
+  "passwordDiff": "The new password must be different from the current one",
+  "passwordUpdated": "Password updated successfully",
+  "passwordUpdatedError": "Error updating password",
+  "currentPassword": "Current password",
+  "newPassword": "New password",
+  "confirmPassword": "Confirm password",
+  "cancel": "Cancel",
+  "update": "Update"
 }

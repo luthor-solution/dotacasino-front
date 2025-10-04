@@ -1,12 +1,12 @@
-'use client'
+"use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/Header";
 import { ToastContainer } from "react-toastify";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import AppShell from "@/components/AppShell";
-import Footer from "@/components/Footer";
-import '@/i18n/index'
+import Footer from "@/components/common/Footer";
+import "@/i18n/index";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased select-none overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <ToastContainer />
 

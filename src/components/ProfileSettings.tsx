@@ -8,6 +8,7 @@ import { userService } from "@/services/userService";
 import { useAuthStore, User } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
 import ChangePasswordModal from "./ChangePasswordModal";
+import { useTranslation } from "react-i18next";
 
 const ProfileSettings: React.FC = () => {
   const [form, setForm] = useState({
@@ -23,6 +24,7 @@ const ProfileSettings: React.FC = () => {
   const handleChange = (name: string, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (user) {
@@ -43,7 +45,7 @@ const ProfileSettings: React.FC = () => {
     try {
       const updatedProfile = await userService.updateProfile(form);
       useAuthStore.getState().setUser(updatedProfile as Partial<User>);
-      toast.success("Perfil actualizado");
+      toast.success(t("profileUpdated"));
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       // Si el error viene de una respuesta de API con mensajes
@@ -55,7 +57,7 @@ const ProfileSettings: React.FC = () => {
           toast.error(messages);
         }
       } else {
-        toast.error("Error al actualizar perfil");
+        toast.error(t("profileUpdatedError"));
       }
       console.log(err);
     } finally {
@@ -78,7 +80,7 @@ const ProfileSettings: React.FC = () => {
           className="rounded-full border-2 border-[#FFC827] bg-white"
         />
         <div className="bg-gradient-to-b from-[#FFC827] to-[#ff9c19] text-[#2e0327] font-bold px-6 py-2 rounded-md shadow hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 cursor-pointer">
-          Cambiar imagen
+          {t("changePhoto")}
         </div>
       </div>
       <form
@@ -87,7 +89,7 @@ const ProfileSettings: React.FC = () => {
       >
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 w-full">
           <FancyInput
-            placeholder="First Name"
+            placeholder={t("firstName")}
             name="firstName"
             icon={<FiUser />}
             value={form.firstName}
@@ -95,7 +97,7 @@ const ProfileSettings: React.FC = () => {
           />
 
           <FancyInput
-            placeholder="Last Name"
+            placeholder={t("lastName")}
             name="lastName"
             icon={<FiUser />}
             value={form.lastName}
@@ -103,7 +105,7 @@ const ProfileSettings: React.FC = () => {
           />
 
           <FancyInput
-            placeholder="Display Name"
+            placeholder={t("displayName")}
             name="displayName"
             icon={<FiUser />}
             value={form.displayName}
@@ -132,7 +134,7 @@ const ProfileSettings: React.FC = () => {
             className="text-[14px] text-[#FFC827] underline cursor-pointer"
             onClick={() => setShowModal(true)}
           >
-            Cambiar contraseña
+            {t("changePassword")}
           </span>
         </div>
 
@@ -142,7 +144,7 @@ const ProfileSettings: React.FC = () => {
             loading ? "opacity-60 cursor-not-allowed pointer-events-none" : ""
           }`}
         >
-          {loading ? "Actualizando..." : "Actualizar Perfil"}
+          {loading ? t("updating") : t("updateProfile")}
         </FancyButton>
       </form>
     </div>

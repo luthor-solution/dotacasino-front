@@ -3,10 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const pathname = usePathname();
   const [isRecharge, setIsRecharge] = useState(false);
+  const { t } = useTranslation();
+
   useEffect(() => {
     setIsRecharge(pathname === "/recharge");
   }, [pathname]);
@@ -53,43 +56,43 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row gap-12 flex-1">
           {/* Compañía */}
           <div>
-            <h3 className="font-bold mb-3">Compañía</h3>
+            <h3 className="font-bold mb-3">{t("footer.company.title")}</h3>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="hover:text-[#FFC827] transition">
-                  Noticias
+                  {t("footer.company.news")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-[#FFC827] transition">
-                  Acerca De Nosotros
+                  {t("footer.company.about")}
                 </a>
               </li>
             </ul>
           </div>
           {/* Juegos */}
           <div>
-            <h3 className="font-bold mb-3">Juegos</h3>
+            <h3 className="font-bold mb-3">{t("footer.games.title")}</h3>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="hover:text-[#FFC827] transition">
-                  Bonos
+                  {t("footer.games.bonds")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-[#FFC827] transition">
-                  Jackpots
+                  {t("footer.games.jackpots")}
                 </a>
               </li>
             </ul>
           </div>
           {/* Recursos */}
           <div>
-            <h3 className="font-bold mb-3">Recursos</h3>
+            <h3 className="font-bold mb-3">{t("footer.resources.title")}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/terms" className="hover:text-[#FFC827] transition">
-                  Términos Y Condiciones
+                  {t("footer.resources.termsAndConditions")}
                 </Link>
               </li>
               <li>
@@ -97,7 +100,7 @@ const Footer = () => {
                   href="/antispam"
                   className="hover:text-[#FFC827] transition"
                 >
-                  Política Antispam
+                  {t("footer.resources.antiSpamPolicy")}
                 </Link>
               </li>
               <li>
@@ -105,7 +108,7 @@ const Footer = () => {
                   href="/refund-policy"
                   className="hover:text-[#FFC827] transition"
                 >
-                  Política De Reembolso
+                  {t("footer.resources.refundPolicy")}
                 </Link>
               </li>
               <li>
@@ -144,52 +147,22 @@ const Footer = () => {
 
       {/* Texto descriptivo */}
       <div className="relative z-10 max-w-5xl mx-auto mt-8 text-center text-[#e0e0e0] text-sm leading-relaxed">
-        dota.click casino criptográfico confiable de alta gama, con una variedad
-        de juegos de tragamonedas, máquinas tragamonedas en línea únicas,
-        apuestas deportivas, eventos de deportes electrónicos, juegos con
-        crupier en vivo, torneos de póquer y juegos populares de peces. Nuestra
-        selección de juegos artesanales no dejará indiferentes a todos los
-        jugadores. Nuestro casino en línea criptográfico dota.click posee la
-        mejor selección de tragamonedas en línea para hoy con diferentes temas y
-        estilos, todos sus juegos favoritos se pueden encontrar fácilmente en la
-        sección de proveedores de juegos y agregarlos a su lista personal de
-        juegos Favoritos para disfrutar de un acceso rápido en cualquier momento
-        conveniente.
+        {t("footer.rows.one")}
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto mt-8 text-center text-white text-lg font-bold">
-        Ventajas de jugar en vip crypto casino dota.click:
+        {t("footer.rows.two")}
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto mt-4 text-center text-[#e0e0e0] text-sm leading-relaxed">
-        Nuestro casino en línea criptográfico premium dota.click admite altos
-        estándares de seguridad para brindar una experiencia de jugador segura.
-        La principal ventaja de nuestro casino dota.click es la gran selección
-        de juegos de tragamonedas en asociación con los principales fabricantes
-        de productos de juego. El proceso de registro rápido y sencillo, sin
-        verificación innecesaria, le permitirá iniciar rápidamente la mejor
-        sesión de juego. Pero lo más importante, estará encantado con el proceso
-        instantáneo de depositar y retirar sus fondos, tanto en las principales
-        criptomonedas como en monedas estables. Esto le da la oportunidad de
-        estar siempre de buen humor y estar en línea con una emoción agradable.
-        Toda la información proporcionada por los usuarios es confidencial y
-        anónima. Puede estar absolutamente seguro de que protegemos sus fondos
-        de forma fiable y garantizamos la seguridad de su saldo. Nuestro casino
-        en línea está protegido de manera confiable contra cualquier ataque de
-        piratas informáticos, siempre estamos en línea 24/7/365
+        {t("footer.rows.three")}
         <br />
         <br />
-        Hemos hecho todo lo posible por su conveniente juego, no solo en
-        computadoras personales, sino también en teléfonos y tabletas. Nuestra
-        versión móvil del casino en línea dota.click es muy fácil de usar y se
-        mejora constantemente. La aplicación móvil para jugar tragamonedas en el
-        teléfono es increíblemente rápida y tiene las mismas funciones de un
-        casino en línea que en el formato de sitio al que está acostumbrado.
+        {t("footer.rows.four")}
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto mt-8 text-center text-white text-lg font-bold">
-        Quédese con nosotros y obtendrá un socio confiable en su entretenimiento
-        en línea durante los próximos años. ¡Le deseamos todo lo mejor!
+        {t("footer.rows.five")}
       </div>
     </footer>
   );

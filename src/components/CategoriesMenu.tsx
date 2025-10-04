@@ -15,6 +15,7 @@ import {
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 const categoryIcons: Record<string, React.ReactNode> = {
   fast_games: <FiZap size={28} />,
@@ -44,6 +45,7 @@ const CategoriesMenu: React.FC<{
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     gamesService
@@ -134,7 +136,7 @@ const CategoriesMenu: React.FC<{
         }}
       >
         {catLoading ? (
-          <span className="text-white">Cargando...</span>
+          <span className="text-white">{t("loading")}</span>
         ) : (
           ["todos", ...categories].map((cat) => {
             const isSelected =

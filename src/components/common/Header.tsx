@@ -6,20 +6,13 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useKYCStatusStore } from "@/store/useKYCStatusStore";
+import { useTranslation } from "react-i18next";
 
 type NavLink = {
   href: string;
   label: string;
   showWhenLogged?: boolean; // true: solo logueado, false: solo no logueado, undefined: siempre
 };
-
-const navLinks: NavLink[] = [
-  { href: "/", label: "Inicio" },
-  { href: "/games", label: "Juegos" },
-  { href: "/recharge", label: "Recargar", showWhenLogged: true },
-  { href: "/sign-in", label: "Iniciar Sesión", showWhenLogged: false },
-  { href: "/sign-up", label: "Regístrate", showWhenLogged: false },
-];
 
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -32,6 +25,15 @@ const Header: React.FC = () => {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const kycStatus = useKYCStatusStore((state) => state.kycStatus);
+  const { t } = useTranslation();
+
+  const navLinks: NavLink[] = [
+    { href: "/", label: t("header.home") },
+    { href: "/games", label: t("header.games") },
+    { href: "/recharge", label: t("header.recharge"), showWhenLogged: true },
+    { href: "/sign-in", label: t("header.signIn"), showWhenLogged: false },
+    { href: "/sign-up", label: t("header.signUp"), showWhenLogged: false },
+  ];
 
   useEffect(() => {
     setIsRecharge(pathname === "/recharge");
@@ -159,7 +161,7 @@ const Header: React.FC = () => {
                   className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
                   onClick={() => setUserMenu(false)}
                 >
-                  Mi perfil
+                  {t("header.myProfile")}
                 </Link>
                 {kycStatus !== "APPROVED" && (
                   <Link
@@ -169,7 +171,7 @@ const Header: React.FC = () => {
                       setUserMenu(false);
                     }}
                   >
-                    Verificar identidad
+                    {t("header.verifyIdentity")}
                   </Link>
                 )}
                 <button
@@ -179,7 +181,7 @@ const Header: React.FC = () => {
                     logout();
                   }}
                 >
-                  Cerrar sesión
+                  {t("header.logout")}
                 </button>
               </div>
             )}
@@ -284,7 +286,7 @@ const Header: React.FC = () => {
                       setOpen(false);
                     }}
                   >
-                    Mi perfil
+                    {t("header.myProfile")}
                   </Link>
 
                   {kycStatus !== "APPROVED" && (

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { userService } from "@/services/userService";
 import FancyInput from "./FancyInput";
 import { FiLock } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 interface ChangePasswordModalProps {
   open: boolean;
@@ -19,6 +20,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
     confirmPassword: "",
   });
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleChange = (name: string, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -26,19 +28,19 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
 
   const validate = () => {
     if (!form.currentPassword || !form.newPassword || !form.confirmPassword) {
-      toast.error("Todos los campos son obligatorios");
+      toast.error(t("allInputsRequired"));
       return false;
     }
     if (form.newPassword.length < 8) {
-      toast.error("La nueva contraseña debe tener al menos 8 caracteres");
+      toast.error(t("atLeast8"));
       return false;
     }
     if (form.newPassword !== form.confirmPassword) {
-      toast.error("Las contraseñas no coinciden");
+      toast.error(t("passwordsMismatch"));
       return false;
     }
     if (form.currentPassword === form.newPassword) {
-      toast.error("La nueva contraseña debe ser diferente a la actual");
+      toast.error(t("passwordDiff"));
       return false;
     }
     return true;
@@ -53,7 +55,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         currentPassword: form.currentPassword,
         newPassword: form.newPassword,
       });
-      toast.success("Contraseña actualizada correctamente");
+      toast.success(t("passwordUpdated"));
       setForm({ currentPassword: "", newPassword: "", confirmPassword: "" });
       onClose();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,7 +65,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         if (Array.isArray(msg)) msg.forEach((m: string) => toast.error(m));
         else toast.error(msg);
       } else {
-        toast.error("Error al actualizar la contraseña");
+        toast.error(t("passwordUpdatedError"));
       }
     } finally {
       setLoading(false);
@@ -87,31 +89,31 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         `}
       >
         <h2 className="text-xl font-bold mb-6 text-[#2e0327]">
-          Cambiar contraseña
+          {t("changePassword")}
         </h2>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <FancyInput
             type="password"
             name="currentPassword"
             icon={<FiLock />}
-            placeholder="Contraseña actual"
+            placeholder={t("currentPassword")}
             value={form.currentPassword}
             onChange={(val) => handleChange("currentPassword", val)}
           />
           <FancyInput
             type="password"
-            name="currentPassword"
+            name="newPassword"
             icon={<FiLock />}
-            placeholder="Nueva contraseña"
+            placeholder={t("newPassword")}
             value={form.newPassword}
             onChange={(val) => handleChange("newPassword", val)}
           />
 
           <FancyInput
             type="password"
-            name="currentPassword"
+            name="confirmPassword"
             icon={<FiLock />}
-            placeholder="Repetir contraseña"
+            placeholder={t("confirmPassword")}
             value={form.confirmPassword}
             onChange={(val) => handleChange("confirmPassword", val)}
           />
@@ -122,7 +124,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
               onClick={onClose}
               disabled={loading}
             >
-              Cancelar
+              {t("cancel")}
             </button>
             <button
               type="submit"
@@ -131,7 +133,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
               }`}
               disabled={loading}
             >
-              {loading ? "Actualizando..." : "Actualizar"}
+              {loading ? t("updating") : t("update")}
             </button>
           </div>
         </form>

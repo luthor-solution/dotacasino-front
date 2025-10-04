@@ -46,7 +46,7 @@ function toMMSS(totalSeconds: number) {
 
 // --- Componente principal ---
 export default function RecargaFichasPage() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const [balance, setBalance] = useState<number>(1);
   const [amount, setAmount] = useState<string>("");
@@ -129,7 +129,6 @@ export default function RecargaFichasPage() {
         const res: any = await depositService.polling({
           address: deposit.address,
         });
-        console.log("[deposit polling]", res);
 
         // La API devuelve "OK" o "NO"
         const value = String(res).toUpperCase();
