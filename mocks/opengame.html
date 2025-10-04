@@ -8,48 +8,48 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
   </head>
-  <body class="antialiased bg-neutral-950 text-neutral-100 selection:bg-white/10" style="font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji;">
+  <body class="antialiased text-white selection:bg-white/10" style="font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji; --bg-primary:#350b2d; --bg-card:#2e0327; --text-primary:#fff; --accent:#ffc827; --accent-text:#000; background-color: var(--bg-primary); color: var(--text-primary);">
     <div class="relative min-h-dvh overflow-hidden">
       <!-- Dynamic Background Layers -->
       <div class="pointer-events-none absolute inset-0">
         <!-- Gradient glows -->
-        <div id="bg-glow-1" class="absolute -top-40 -left-40 h-[480px] w-[480px] rounded-full blur-3xl opacity-40" style="background: radial-gradient(closest-side, rgba(16,185,129,0.35), transparent 70%); will-change: transform;"></div>
-        <div id="bg-glow-2" class="absolute -bottom-40 -right-32 h-[520px] w-[520px] rounded-full blur-3xl opacity-40" style="background: radial-gradient(closest-side, rgba(34,211,238,0.35), transparent 70%); will-change: transform;"></div>
+        <div id="bg-glow-1" class="absolute -top-40 -left-40 h-[480px] w-[480px] rounded-full blur-3xl opacity-40" style="background: radial-gradient(closest-side, rgba(255,200,39,0.25), transparent 70%); will-change: transform;"></div>
+        <div id="bg-glow-2" class="absolute -bottom-40 -right-32 h-[520px] w-[520px] rounded-full blur-3xl opacity-40" style="background: radial-gradient(closest-side, rgba(255,200,39,0.25), transparent 70%); will-change: transform;"></div>
         <!-- Subtle noise overlay -->
         <div class="absolute inset-0 opacity-[0.06] mix-blend-screen" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22><rect width=%2240%22 height=%2240%22 fill=%22black%22/><g fill=%22white%22 opacity=%220.18%22><circle cx=%222%22 cy=%222%22 r=%221%22/><circle cx=%2220%22 cy=%2211%22 r=%220.6%22/><circle cx=%2215%22 cy=%2229%22 r=%220.8%22/><circle cx=%2234%22 cy=%2218%22 r=%220.7%22/></g></svg>');"></div>
         <!-- Parallax tokens/cards -->
         <div id="parallax" class="absolute inset-0">
           <!-- Chip -->
-          <div class="absolute top-[12%] left-[8%] h-16 w-16 rounded-full ring-2 ring-white/30 bg-gradient-to-br from-emerald-400/40 to-emerald-600/40 shadow-[0_0_30px_rgba(16,185,129,0.35)]" data-depth="0.05" style="backdrop-filter: blur(0px); will-change: transform;"></div>
+          <div class="absolute top-[12%] left-[8%] h-16 w-16 rounded-full ring-2 ring-white/30 bg-gradient-to-br from-emerald-400/40 to-emerald-600/40 shadow-[0_0_30px_rgba(16,185,129,0.35)]" data-depth="0.05" style="background: radial-gradient(circle at 30% 30%, rgba(255,200,39,0.40), rgba(255,200,39,0.20)); box-shadow: 0 0 30px rgba(255,200,39,0.30); backdrop-filter: blur(0px); will-change: transform;"></div>
           <!-- Card -->
           <div class="absolute top-[22%] right-[12%] h-24 w-16 rounded-lg bg-white/5 ring-1 ring-white/15 shadow-[0_0_24px_rgba(255,255,255,0.08)] rotate-12" data-depth="0.04" style="backdrop-filter: blur(2px); will-change: transform;"></div>
           <!-- Roulette ring -->
-          <div class="absolute bottom-[14%] left-[20%] h-24 w-24 rounded-full ring-4 ring-cyan-400/40 shadow-[0_0_36px_rgba(34,211,238,0.35)]" data-depth="0.03" style="will-change: transform;"></div>
+          <div class="absolute bottom-[14%] left-[20%] h-24 w-24 rounded-full ring-4 ring-cyan-400/40 shadow-[0_0_36px_rgba(34,211,238,0.35)]" data-depth="0.03" style="box-shadow: 0 0 0 4px rgba(255,200,39,0.40), 0 0 36px rgba(255,200,39,0.35); will-change: transform;"></div>
           <!-- Chip -->
-          <div class="absolute bottom-[10%] right-[10%] h-12 w-12 rounded-full ring-2 ring-white/25 bg-gradient-to-br from-cyan-300/40 to-cyan-500/40 shadow-[0_0_28px_rgba(34,211,238,0.35)] -rotate-6" data-depth="0.06" style="will-change: transform;"></div>
+          <div class="absolute bottom-[10%] right-[10%] h-12 w-12 rounded-full ring-2 ring-white/25 bg-gradient-to-br from-cyan-300/40 to-cyan-500/40 shadow-[0_0_28px_rgba(34,211,238,0.35)] -rotate-6" data-depth="0.06" style="background: radial-gradient(circle at 30% 30%, rgba(255,200,39,0.40), rgba(255,200,39,0.20)); box-shadow: 0 0 28px rgba(255,200,39,0.30); will-change: transform;"></div>
         </div>
         <!-- Floating particles -->
         <div id="particles" class="absolute inset-0 pointer-events-none"></div>
       </div>
 
       <!-- Header -->
-      <header class="relative z-20 border-b border-white/10 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/40">
+      <header class="relative z-20 border-b border-white/10 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/40" style="background-color: rgba(53,11,45,0.6);">
         <div class="mx-auto max-w-7xl px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
           <div class="flex items-center gap-3">
             <div class="h-10 w-10 rounded-xl ring-1 ring-white/10 bg-white/5 flex items-center justify-center">
-              <i data-lucide="sparkles" class="h-5 w-5 text-emerald-400"></i>
+              <i data-lucide="sparkles" class="h-5 w-5" style="color: var(--accent);"></i>
             </div>
             <div class="flex flex-col">
               <h1 class="text-2xl md:text-3xl tracking-tight font-semibold text-white">Open Game</h1>
-              <p class="text-xs text-neutral-400">Casino Online · Sala de juego</p>
+              <p class="text-xs text-neutral-300">Casino Online · Sala de juego</p>
             </div>
           </div>
           <div class="flex items-center gap-2 sm:gap-3">
-            <div class="hidden md:flex items-center gap-2 rounded-lg ring-1 ring-white/10 bg-white/5 px-2.5 py-1.5">
-              <i data-lucide="wallet" class="h-4 w-4 text-cyan-300"></i>
+            <div class="hidden md:flex items-center gap-2 rounded-lg ring-1 ring-white/10 px-2.5 py-1.5" style="background-color: var(--bg-card);">
+              <i data-lucide="wallet" class="h-4 w-4" style="color: var(--accent);"></i>
               <span id="balance" class="text-sm font-medium">Saldo: $1,250.00</span>
             </div>
-            <button id="deposit-btn" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium bg-emerald-500 text-white hover:bg-emerald-400 ring-1 ring-emerald-300/20 shadow-[0_0_24px_rgba(16,185,129,0.35)]">
+            <button id="deposit-btn" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ring-1 ring-emerald-300/20" style="background-color: var(--accent); color: var(--accent-text); box-shadow: 0 0 24px rgba(255,200,39,0.35);">
               <i data-lucide="credit-card" class="h-4 w-4"></i>
               Depositar
             </button>
@@ -64,7 +64,7 @@
                 <i data-lucide="help-circle" class="h-4 w-4"></i>
               </button>
             </div>
-            <button id="panel-toggle" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ring-1 ring-white/10 bg-white/5 hover:bg-white/10">
+            <button id="panel-toggle" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ring-1 ring-white/10" style="background-color: var(--bg-card);">
               <i data-lucide="message-square" class="h-4 w-4"></i>
               <span class="hidden sm:inline">Panel</span>
             </button>
@@ -74,7 +74,7 @@
         <div class="border-t border-white/10">
           <div class="relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-transparent pointer-events-none"></div>
-            <div id="ticker" class="whitespace-nowrap flex items-center gap-8 py-2 text-sm text-neutral-300">
+            <div id="ticker" class="whitespace-nowrap flex items-center gap-8 py-2 text-sm text-neutral-200">
               <div id="ticker-track" class="flex gap-8 will-change-transform px-6 lg:px-8"></div>
             </div>
           </div>
@@ -89,22 +89,22 @@
             <!-- Frame wrapper with animated outline/glow -->
             <div class="relative mx-auto max-w-6xl">
               <!-- Gradient border frame -->
-              <div class="relative p-[2px] rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-400 to-emerald-500 shadow-[0_0_60px_rgba(16,185,129,0.2)]">
-                <div id="game-shell" class="relative rounded-2xl bg-neutral-950 ring-1 ring-white/10 overflow-hidden">
+              <div class="relative p-[2px] rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-400 to-emerald-500 shadow-[0_0_60px_rgba(16,185,129,0.2)]" style="background: linear-gradient(90deg, #ffc827 0%, #ffcf4a 50%, #ffc827 100%); box-shadow: 0 0 60px rgba(255,200,39,0.18);">
+                <div id="game-shell" class="relative rounded-2xl ring-1 ring-white/10 overflow-hidden" style="background-color: var(--bg-card);">
                   <!-- Aspect wrapper -->
                   <div id="game-aspect" class="aspect-[16/9] w-full">
                     <!-- Replace this with your <iframe> or <canvas> -->
-                    <div class="h-full w-full bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.08),rgba(0,0,0,0.6))] flex items-center justify-center relative">
+                    <div class="h-full w-full flex items-center justify-center relative" style="background: radial-gradient(ellipse at center, rgba(255,200,39,0.08), rgba(0,0,0,0.35));">
                       <div class="text-center">
-                        <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/40 mb-3 shadow-[0_0_26px_rgba(16,185,129,0.35)]">
-                          <i data-lucide="joystick" class="h-7 w-7 text-emerald-400"></i>
+                        <div class="inline-flex items-center justify-center h-16 w-16 rounded-full ring-1 mb-3" style="background-color: rgba(255,200,39,0.20); border-color: rgba(255,200,39,0.40); box-shadow: 0 0 26px rgba(255,200,39,0.35);">
+                          <i data-lucide="joystick" class="h-7 w-7" style="color: var(--accent);"></i>
                         </div>
                         <h2 class="text-xl md:text-2xl tracking-tight font-semibold">Tu juego aquí</h2>
-                        <p class="text-sm text-neutral-400">Inserta un iframe o canvas dentro de este contenedor.</p>
+                        <p class="text-sm text-neutral-200">Inserta un iframe o canvas dentro de este contenedor.</p>
                       </div>
 
                       <!-- Shine sweep -->
-                      <div id="shine" class="pointer-events-none absolute -left-1/3 top-0 h-full w-1/3 rotate-6 opacity-0" style="background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(34,211,238,0.12) 45%, rgba(16,185,129,0.14) 55%, rgba(255,255,255,0) 100%);"></div>
+                      <div id="shine" class="pointer-events-none absolute -left-1/3 top-0 h-full w-1/3 rotate-6 opacity-0" style="background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,200,39,0.18) 45%, rgba(255,200,39,0.22) 55%, rgba(255,255,255,0) 100%);"></div>
                     </div>
                   </div>
 
@@ -113,7 +113,7 @@
                     <!-- Top bar controls -->
                     <div class="pointer-events-auto absolute top-3 right-3 flex items-center gap-2">
                       <!-- Aspect toggle (custom segmented) -->
-                      <div class="inline-flex items-center rounded-lg ring-1 ring-white/10 bg-white/5 overflow-hidden">
+                      <div class="inline-flex items-center rounded-lg ring-1 ring-white/10" style="background-color: var(--bg-card);">
                         <button id="btn-16-9" class="px-2.5 py-1.5 text-xs font-medium hover:bg-white/10">16:9</button>
                         <button id="btn-3-4" class="px-2.5 py-1.5 text-xs font-medium hover:bg-white/10">3:4</button>
                       </div>
@@ -129,7 +129,7 @@
                     </div>
                     <!-- Bottom center Play -->
                     <div class="pointer-events-auto absolute bottom-4 left-1/2 -translate-x-1/2">
-                      <button id="btn-play" class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium bg-emerald-500 text-white hover:bg-emerald-400 ring-1 ring-emerald-300/20 shadow-[0_0_28px_rgba(16,185,129,0.35)]">
+                      <button id="btn-play" class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ring-1 ring-emerald-300/20" style="background-color: var(--accent); color: var(--accent-text); box-shadow: 0 0 28px rgba(255,200,39,0.35);">
                         <i data-lucide="play" class="h-4 w-4"></i>
                         Jugar
                       </button>
@@ -143,18 +143,18 @@
           </div>
 
           <!-- Helper row under game -->
-          <div class="mt-4 flex items-center justify-between gap-3 text-xs text-neutral-400">
+          <div class="mt-4 flex items-center justify-between gap-3 text-xs text-neutral-200">
             <div class="flex items-center gap-2">
-              <i data-lucide="shield-check" class="h-4 w-4 text-emerald-400"></i>
+              <i data-lucide="shield-check" class="h-4 w-4" style="color: var(--accent);"></i>
               Conexión segura · RTP certificado
             </div>
             <div class="hidden sm:flex items-center gap-3">
               <div class="flex items-center gap-2">
-                <i data-lucide="cpu" class="h-4 w-4 text-cyan-300"></i>
+                <i data-lucide="cpu" class="h-4 w-4" style="color: var(--accent);"></i>
                 Animaciones optimizadas
               </div>
               <div class="flex items-center gap-2">
-                <i data-lucide="zap" class="h-4 w-4 text-emerald-400"></i>
+                <i data-lucide="zap" class="h-4 w-4" style="color: var(--accent);"></i>
                 Baja latencia
               </div>
             </div>
@@ -165,10 +165,10 @@
       <!-- Collapsible Side Panel (desktop) / Modal (mobile) -->
       <div id="sidepanel-overlay" class="fixed inset-0 z-40 bg-black/40 opacity-0 pointer-events-none transition-opacity"></div>
       <aside id="sidepanel" class="fixed right-0 top-0 z-50 h-full w-full sm:w-[480px] max-w-full translate-x-full transition-transform">
-        <div class="h-full flex flex-col bg-neutral-950/95 backdrop-blur ring-1 ring-white/10">
+        <div class="h-full flex flex-col backdrop-blur ring-1 ring-white/10" style="background-color: var(--bg-card);">
           <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
             <div class="flex items-center gap-2">
-              <i data-lucide="panel-right" class="h-5 w-5 text-cyan-300"></i>
+              <i data-lucide="panel-right" class="h-5 w-5" style="color: var(--accent);"></i>
               <span class="text-sm font-medium">Panel de juego</span>
             </div>
             <button id="panel-close" class="rounded-lg p-2 ring-1 ring-white/10 bg-white/5 hover:bg-white/10">
@@ -177,7 +177,7 @@
           </div>
           <!-- Tabs -->
           <div class="px-4 pt-3">
-            <div class="inline-flex items-center rounded-lg ring-1 ring-white/10 bg-white/5 overflow-hidden">
+            <div class="inline-flex items-center rounded-lg ring-1 ring-white/10" style="background-color: var(--bg-card);">
               <button data-tab="chat" class="px-3 py-1.5 text-sm font-medium tab-btn bg-white/0 hover:bg-white/10">Chat</button>
               <button data-tab="history" class="px-3 py-1.5 text-sm font-medium tab-btn hover:bg-white/10">Historial</button>
               <button data-tab="rules" class="px-3 py-1.5 text-sm font-medium tab-btn hover:bg-white/10">Reglas</button>
@@ -188,14 +188,14 @@
           <div class="flex-1 overflow-y-auto px-5 py-4 space-y-6">
             <!-- Chat -->
             <div id="tab-chat" class="space-y-3">
-              <div class="text-sm text-neutral-400">Bienvenido al chat. Respeta las normas.</div>
+              <div class="text-sm text-neutral-200">Bienvenido al chat. Respeta las normas.</div>
               <div class="space-y-2">
                 <div class="flex items-start gap-2">
                   <div class="h-7 w-7 rounded-full bg-white/10 ring-1 ring-white/10 flex items-center justify-center">
                     <i data-lucide="user" class="h-4 w-4 text-neutral-300"></i>
                   </div>
                   <div>
-                    <div class="text-xs text-neutral-400">Dealer · ahora</div>
+                    <div class="text-xs text-neutral-300">Dealer · ahora</div>
                     <div class="text-sm">¡Suerte en la mesa!</div>
                   </div>
                 </div>
@@ -204,7 +204,7 @@
                     <i data-lucide="user" class="h-4 w-4 text-neutral-300"></i>
                   </div>
                   <div>
-                    <div class="text-xs text-neutral-400">Tú · hace 1m</div>
+                    <div class="text-xs text-neutral-300">Tú · hace 1m</div>
                     <div class="text-sm">Vamos con todo.</div>
                   </div>
                 </div>
@@ -212,35 +212,35 @@
             </div>
             <!-- History -->
             <div id="tab-history" class="hidden">
-              <div class="text-sm text-neutral-300 mb-2">Últimas jugadas</div>
+              <div class="text-sm text-neutral-200 mb-2">Últimas jugadas</div>
               <div class="divide-y divide-white/5 ring-1 ring-white/10 rounded-lg overflow-hidden">
-                <div class="flex items-center justify-between px-3 py-2 bg-white/5">
+                <div class="flex items-center justify-between px-3 py-2" style="background-color: rgba(255,255,255,0.04);">
                   <div class="flex items-center gap-2">
-                    <i data-lucide="clock" class="h-4 w-4 text-neutral-400"></i>
+                    <i data-lucide="clock" class="h-4 w-4 text-neutral-300"></i>
                     <span class="text-sm">12:31</span>
                   </div>
-                  <div class="text-sm text-emerald-400">+$25</div>
+                  <div class="text-sm font-medium" style="color: var(--accent);">+$25</div>
                 </div>
                 <div class="flex items-center justify-between px-3 py-2">
                   <div class="flex items-center gap-2">
-                    <i data-lucide="clock" class="h-4 w-4 text-neutral-400"></i>
+                    <i data-lucide="clock" class="h-4 w-4 text-neutral-300"></i>
                     <span class="text-sm">12:28</span>
                   </div>
                   <div class="text-sm text-red-400">-$10</div>
                 </div>
-                <div class="flex items-center justify-between px-3 py-2 bg-white/5">
+                <div class="flex items-center justify-between px-3 py-2" style="background-color: rgba(255,255,255,0.04);">
                   <div class="flex items-center gap-2">
-                    <i data-lucide="clock" class="h-4 w-4 text-neutral-400"></i>
+                    <i data-lucide="clock" class="h-4 w-4 text-neutral-300"></i>
                     <span class="text-sm">12:24</span>
                   </div>
-                  <div class="text-sm text-emerald-400">+$120</div>
+                  <div class="text-sm font-medium" style="color: var(--accent);">+$120</div>
                 </div>
               </div>
             </div>
             <!-- Rules -->
             <div id="tab-rules" class="hidden">
-              <div class="text-sm text-neutral-300 mb-2">Reglas del juego</div>
-              <ul class="space-y-2 text-sm text-neutral-300">
+              <div class="text-sm text-neutral-200 mb-2">Reglas del juego</div>
+              <ul class="space-y-2 text-sm text-neutral-200">
                 <li class="flex gap-2"><i data-lucide="dot" class="h-4 w-4 text-neutral-500"></i> El objetivo es alcanzar la mejor mano.</li>
                 <li class="flex gap-2"><i data-lucide="dot" class="h-4 w-4 text-neutral-500"></i> Mínimo de apuesta: $1. Máximo depende de la mesa.</li>
                 <li class="flex gap-2"><i data-lucide="dot" class="h-4 w-4 text-neutral-500"></i> Pagos según la tabla de premios.</li>
@@ -248,23 +248,23 @@
             </div>
             <!-- Payouts -->
             <div id="tab-payouts" class="hidden">
-              <div class="text-sm text-neutral-300 mb-2">Tabla de pagos</div>
+              <div class="text-sm text-neutral-200 mb-2">Tabla de pagos</div>
               <div class="grid grid-cols-2 gap-2 text-sm">
-                <div class="rounded-lg ring-1 ring-white/10 bg-white/5 p-3">
-                  <div class="text-neutral-400">Par</div>
-                  <div class="text-emerald-400 font-medium">1:1</div>
+                <div class="rounded-lg ring-1 ring-white/10 p-3" style="background-color: rgba(255,255,255,0.04);">
+                  <div class="text-neutral-300">Par</div>
+                  <div class="font-medium" style="color: var(--accent);">1:1</div>
                 </div>
-                <div class="rounded-lg ring-1 ring-white/10 bg-white/5 p-3">
-                  <div class="text-neutral-400">Color</div>
-                  <div class="text-emerald-400 font-medium">2:1</div>
+                <div class="rounded-lg ring-1 ring-white/10 p-3" style="background-color: rgba(255,255,255,0.04);">
+                  <div class="text-neutral-300">Color</div>
+                  <div class="font-medium" style="color: var(--accent);">2:1</div>
                 </div>
-                <div class="rounded-lg ring-1 ring-white/10 bg-white/5 p-3">
-                  <div class="text-neutral-400">Escalera</div>
-                  <div class="text-emerald-400 font-medium">5:1</div>
+                <div class="rounded-lg ring-1 ring-white/10 p-3" style="background-color: rgba(255,255,255,0.04);">
+                  <div class="text-neutral-300">Escalera</div>
+                  <div class="font-medium" style="color: var(--accent);">5:1</div>
                 </div>
-                <div class="rounded-lg ring-1 ring-white/10 bg-white/5 p-3">
-                  <div class="text-neutral-400">Full</div>
-                  <div class="text-emerald-400 font-medium">8:1</div>
+                <div class="rounded-lg ring-1 ring-white/10 p-3" style="background-color: rgba(255,255,255,0.04);">
+                  <div class="text-neutral-300">Full</div>
+                  <div class="font-medium" style="color: var(--accent);">8:1</div>
                 </div>
               </div>
             </div>
@@ -272,8 +272,8 @@
           <!-- Input for chat -->
           <div class="px-5 py-4 border-t border-white/10">
             <div class="flex items-center gap-2">
-              <input type="text" placeholder="Escribe un mensaje..." class="flex-1 rounded-lg bg-white/5 ring-1 ring-white/10 px-3 py-2.5 text-sm focus:outline-none placeholder:text-neutral-500">
-              <button class="rounded-lg px-3 py-2 text-sm font-medium bg-cyan-500 text-white hover:bg-cyan-400 ring-1 ring-cyan-300/20">
+              <input type="text" placeholder="Escribe un mensaje..." class="flex-1 rounded-lg bg-white/5 ring-1 ring-white/10 px-3 py-2.5 text-sm focus:outline-none placeholder:text-neutral-400">
+              <button class="rounded-lg px-3 py-2 text-sm font-medium" style="background-color: var(--accent); color: var(--accent-text);">
                 <i data-lucide="send" class="h-4 w-4"></i>
               </button>
             </div>
@@ -283,21 +283,21 @@
 
       <!-- Footer -->
       <footer class="relative z-10 mt-8 border-t border-white/10">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-300">
           <div class="flex items-center gap-3">
-            <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 ring-1 ring-white/10 bg-white/5">
-              <i data-lucide="circle-alert" class="h-3.5 w-3.5 text-emerald-400"></i>
+            <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 ring-1 ring-white/10" style="background-color: rgba(255,255,255,0.04);">
+              <i data-lucide="circle-alert" class="h-3.5 w-3.5" style="color: var(--accent);"></i>
               18+
             </span>
-            <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 ring-1 ring-white/10 bg-white/5">
-              <i data-lucide="heart-handshake" class="h-3.5 w-3.5 text-cyan-300"></i>
+            <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 ring-1 ring-white/10" style="background-color: rgba(255,255,255,0.04);">
+              <i data-lucide="heart-handshake" class="h-3.5 w-3.5" style="color: var(--accent);"></i>
               Juego responsable
             </span>
           </div>
           <div class="flex items-center gap-4">
-            <a href="#" class="hover:text-neutral-200">Términos</a>
-            <a href="#" class="hover:text-neutral-200">Privacidad</a>
-            <a href="#" class="hover:text-neutral-200">Licencias</a>
+            <a href="#" class="hover:text-neutral-100">Términos</a>
+            <a href="#" class="hover:text-neutral-100">Privacidad</a>
+            <a href="#" class="hover:text-neutral-100">Licencias</a>
           </div>
           <div class="relative">
             <select id="lang" class="appearance-none bg-white/5 ring-1 ring-white/10 rounded-lg pl-3 pr-8 py-2 text-xs focus:outline-none">
@@ -346,7 +346,8 @@
           const item = document.createElement('div');
           item.className = 'flex items-center gap-2';
           const dot = document.createElement('span');
-          dot.className = 'h-1.5 w-1.5 rounded-full bg-emerald-400';
+          dot.className = 'h-1.5 w-1.5 rounded-full';
+          dot.style.backgroundColor = 'var(--accent)';
           const text = document.createElement('span');
           text.textContent = t;
           item.appendChild(dot); item.appendChild(text);

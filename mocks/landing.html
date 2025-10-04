@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casino Online — Vive la emoción</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="antialiased text-white selection:bg-white/10" style="font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji; --bg-primary:#350b2d; --bg-card:#2e0327; --text-primary:#fff; --accent:#ffc827; --accent-text:#000; background-color: var(--bg-primary); color: var(--text-primary);">
+    <div class="relative min-h-dvh overflow-hidden">
+      <!-- Dynamic Background Layers -->
+      <div class="pointer-events-none absolute inset-0">
+        <!-- Gradient glows -->
+        <div id="bg-glow-1" class="absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full blur-3xl opacity-40" style="background: radial-gradient(closest-side, rgba(16,185,129,0.25), transparent 70%); will-change: transform;"></div>
+        <div id="bg-glow-2" class="absolute -bottom-40 -right-32 h-[560px] w-[560px] rounded-full blur-3xl opacity-40" style="background: radial-gradient(closest-side, rgba(168,85,247,0.25), transparent 70%); will-change: transform;"></div>
+        <!-- Subtle noise overlay -->
+        <div class="absolute inset-0 opacity-[0.06] mix-blend-screen" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%22440%22 viewBox=%220 0 40 40%22><rect width=%2240%22 height=%2240%22 fill=%22000000%22/><g fill=%22white%22 opacity=%220.18%22><circle cx=%222%22 cy=%222%22 r=%221%22/><circle cx=%2220%22 cy=%2211%22 r=%220.6%22/><circle cx=%2215%22 cy=%2229%22 r=%220.8%22/><circle cx=%2234%22 cy=%2218%22 r=%220.7%22/></g></svg>');"></div>
+        <!-- Parallax tokens/cards -->
+        <div id="parallax" class="absolute inset-0">
+          <!-- Chip -->
+          <div class="absolute top-[12%] left-[8%] h-16 w-16 rounded-full ring-2 ring-emerald-300/30 shadow-[0_0_30px_rgba(16,185,129,0.35)]" data-depth="0.05" style="background: radial-gradient(circle at 30% 30%, rgba(16,185,129,0.40), rgba(16,185,129,0.15)); will-change: transform;"></div>
+          <!-- Card -->
+          <div class="absolute top-[22%] right-[12%] h-24 w-16 rounded-lg bg-white/5 ring-1 ring-white/15 shadow-[0_0_24px_rgba(255,255,255,0.08)] rotate-12" data-depth="0.04" style="backdrop-filter: blur(2px); will-change: transform;"></div>
+          <!-- Roulette ring -->
+          <div class="absolute bottom-[14%] left-[20%] h-24 w-24 rounded-full ring-4 ring-purple-400/40 shadow-[0_0_36px_rgba(168,85,247,0.35)]" data-depth="0.03" style="box-shadow: 0 0 0 4px rgba(255,200,39,0.35), 0 0 36px rgba(168,85,247,0.35); will-change: transform;"></div>
+          <!-- Chip -->
+          <div class="absolute bottom-[10%] right-[10%] h-12 w-12 rounded-full ring-2 ring-amber-300/25 shadow-[0_0_28px_rgba(251,191,36,0.30)] -rotate-6" data-depth="0.06" style="background: radial-gradient(circle at 30% 30%, rgba(251,191,36,0.40), rgba(251,191,36,0.15)); will-change: transform;"></div>
+        </div>
+        <!-- Floating particles -->
+        <div id="particles" class="absolute inset-0 pointer-events-none"></div>
+      </div>
+
+      <!-- Header -->
+      <header class="relative z-20 border-b border-white/10 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/40" style="background-color: rgba(53,11,45,0.6);">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-xl ring-1 ring-white/10 bg-white/5 flex items-center justify-center">
+              <i data-lucide="sparkles" class="h-5 w-5" style="color: var(--accent);"></i>
+            </div>
+            <div class="flex flex-col">
+              <h1 class="text-2xl md:text-3xl tracking-tight font-semibold text-white">Open Game</h1>
+              <p class="text-xs text-neutral-300">Casino Online · Experiencia premium</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 sm:gap-3">
+            <button id="panel-toggle" class="hidden sm:inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ring-1 ring-white/10" style="background-color: var(--bg-card);">
+              <i data-lucide="message-square" class="h-4 w-4"></i>
+              <span>Panel</span>
+            </button>
+            <button id="hdr-sound" class="inline-flex items-center justify-center rounded-lg p-2 ring-1 ring-white/10 bg-white/5 hover:bg-white/10" title="Sonido">
+              <i data-lucide="volume-2" class="h-4 w-4"></i>
+            </button>
+            <button id="hdr-fs" class="inline-flex items-center justify-center rounded-lg p-2 ring-1 ring-white/10 bg-white/5 hover:bg-white/10" title="Pantalla completa">
+              <i data-lucide="maximize-2" class="h-4 w-4"></i>
+            </button>
+            <button id="hdr-help" class="inline-flex items-center justify-center rounded-lg p-2 ring-1 ring-white/10 bg-white/5 hover:bg-white/10" title="Ayuda">
+              <i data-lucide="help-circle" class="h-4 w-4"></i>
+            </button>
+            <a href="#juegos" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ring-1 ring-emerald-300/20" style="background: linear-gradient(90deg, rgba(16,185,129,1) 0%, rgba(255,200,39,1) 100%); color: var(--accent-text); box-shadow: 0 0 28px rgba(16,185,129,0.25), 0 0 28px rgba(255,200,39,0.15);">
+              <i data-lucide="play" class="h-4 w-4"></i>
+              Juega Ahora
+            </a>
+          </div>
+        </div>
+        <!-- Ticker / Marquee -->
+        <div class="border-t border-white/10">
+          <div class="relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-transparent pointer-events-none"></div>
+            <div id="ticker" class="whitespace-nowrap flex items-center gap-8 py-2 text-sm text-neutral-200">
+              <div id="ticker-track" class="flex gap-8 will-change-transform px-6 lg:px-8"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main area -->
+      <main class="relative z-10">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8 py-10 lg:py-14">
+          <!-- HERO -->
+          <section class="relative grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div class="relative z-10 space-y-5">
+              <div class="inline-flex items-center gap-2 rounded-full px-2.5 py-1 ring-1 ring-emerald-300/30" style="background-color: rgba(16,185,129,0.10);">
+                <span class="h-1.5 w-1.5 rounded-full" style="background: linear-gradient(90deg, #10b981, #a855f7); box-shadow: 0 0 10px rgba(16,185,129,0.8);"></span>
+                <span class="text-xs text-neutral-200">Casino premium cripto · Bonos activos hoy</span>
+              </div>
+              <h2 class="text-4xl md:text-6xl lg:text-7xl tracking-tight font-semibold">
+                Vive la emoción del Casino Online
+              </h2>
+              <p class="text-base md:text-lg text-neutral-300">
+                Slots, ruleta, blackjack y más… casino cripto con programa de referidos potente y membresías con beneficios.
+              </p>
+              <div class="flex items-center gap-3">
+                <a id="cta-hero" href="#juegos" class="group relative inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium ring-1 ring-emerald-300/20" style="background: linear-gradient(90deg, rgba(16,185,129,1) 0%, rgba(255,200,39,1) 100%); color: var(--accent-text); box-shadow: 0 0 36px rgba(16,185,129,0.30), 0 0 36px rgba(255,200,39,0.20);">
+                  <i data-lucide="zap" class="h-4 w-4"></i>
+                  Juega Ahora
+                  <span id="hero-shine" class="pointer-events-none absolute -left-1/3 top-0 h-full w-1/3 rotate-6 opacity-0" style="background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0) 100%);"></span>
+                </a>
+                <a href="#promos" class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ring-1 ring-white/10 bg-white/5 hover:bg-white/10">
+                  <i data-lucide="gift" class="h-4 w-4"></i>
+                  Ver Promos
+                </a>
+              </div>
+              <div class="flex items-center gap-4 pt-2 text-xs text-neutral-300">
+                <div class="inline-flex items-center gap-2">
+                  <i data-lucide="shield-check" class="h-4 w-4" style="color: var(--accent);"></i>
+                  SSL y juego responsable
+                </div>
+                <div class="inline-flex items-center gap-2">
+                  <i data-lucide="trophy" class="h-4 w-4" style="color:#10b981;"></i>
+                  Jackpots activos
+                </div>
+              </div>
+            </div>
+
+            <!-- Mockup: Ruleta/Slots con glow -->
+            <div class="relative">
+              <div class="relative mx-auto h-72 w-72 md:h-96 md:w-96">
+                <!-- Outer glow ring -->
+                <div class="absolute inset-0 rounded-full blur-2xl opacity-70" style="background: radial-gradient(closest-side, rgba(16,185,129,0.25), rgba(255,200,39,0.20), rgba(168,85,247,0.25), transparent 70%);"></div>
+                <!-- Device frame -->
+                <div class="absolute inset-0 rounded-[28px] p-[2px]" style="background: linear-gradient(135deg, rgba(16,185,129,0.9), rgba(255,200,39,0.9), rgba(168,85,247,0.9));">
+                  <div class="h-full w-full rounded-[26px] ring-1 ring-white/10 overflow-hidden" style="background: radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.06), rgba(0,0,0,0.35));">
+                    <img src="./casino.png" />
+                  </div>
+                </div>
+                <!-- Shine sweep on frame -->
+                <div class="pointer-events-none absolute -left-1/3 top-0 h-full w-1/3 rotate-6 opacity-0" id="frame-shine" style="background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0) 100%);"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- BENEFICIOS -->
+          <section class="mt-14">
+            <h3 class="text-2xl md:text-3xl tracking-tight font-semibold">¿Por qué jugar con nosotros?</h3>
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="rounded-2xl p-5 ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition">
+                <div class="h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-emerald-300/40 mb-3" style="background: radial-gradient(circle at 30% 30%, rgba(16,185,129,0.35), rgba(16,185,129,0.15)); box-shadow: 0 0 18px rgba(16,185,129,0.25);">
+                  <i data-lucide="dice-6" class="h-5 w-5"></i>
+                </div>
+                <div class="font-medium">Variedad de juegos</div>
+                <p class="text-sm text-neutral-300">Slots, ruleta, blackjack, póker y más.</p>
+              </div>
+              <div class="rounded-2xl p-5 ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition">
+                <div class="h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-amber-300/40 mb-3" style="background: radial-gradient(circle at 30% 30%, rgba(255,200,39,0.35), rgba(255,200,39,0.15)); box-shadow: 0 0 18px rgba(255,200,39,0.25);">
+                  <i data-lucide="bolt" class="h-5 w-5"></i>
+                </div>
+                <div class="font-medium">Pagos cripto rápidos y seguros</div>
+                <p class="text-sm text-neutral-300">Depósitos ágiles y retiros verificados.</p>
+              </div>
+              <div class="rounded-2xl p-5 ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition">
+                <div class="h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-purple-300/40 mb-3" style="background: radial-gradient(circle at 30% 30%, rgba(168,85,247,0.35), rgba(168,85,247,0.15)); box-shadow: 0 0 18px rgba(168,85,247,0.25);">
+                  <i data-lucide="gift" class="h-5 w-5"></i>
+                </div>
+                <div class="font-medium">Programa de referidos potente</div>
+                <p class="text-sm text-neutral-300">Gana comisiones invitando amigos.</p>
+              </div>
+              <div class="rounded-2xl p-5 ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition">
+                <div class="h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-emerald-300/40 mb-3" style="background: radial-gradient(circle at 30% 30%, rgba(16,185,129,0.35), rgba(16,185,129,0.15)); box-shadow: 0 0 18px rgba(16,185,129,0.25);">
+                  <i data-lucide="shield-check" class="h-5 w-5"></i>
+                </div>
+                <div class="font-medium">Seguridad y confianza garantizada</div>
+                <p class="text-sm text-neutral-300">Cifrado SSL y juego justo.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- PROMOCIONES -->
+          <section id="promos" class="mt-14">
+            <div class="flex items-center justify-between">
+              <h3 class="text-2xl md:text-3xl tracking-tight font-semibold">Promociones activas</h3>
+              <div class="text-sm text-neutral-300 hidden sm:block">Desliza para ver más</div>
+            </div>
+            <div class="mt-6 relative overflow-hidden rounded-2xl">
+              <div id="promo-wrapper" class="relative">
+                <div id="promo-track" class="flex gap-4 will-change-transform"></div>
+              </div>
+              <div class="pointer-events-none absolute inset-y-0 left-0 w-24 from-[rgba(53,11,45,1)] to-transparent bg-gradient-to-r"></div>
+              <div class="pointer-events-none absolute inset-y-0 right-0 w-24 from-transparent to-[rgba(53,11,45,1)] bg-gradient-to-l"></div>
+            </div>
+          </section>
+
+          <!-- GALERÍA DE JUEGOS -->
+          <section id="juegos" class="mt-14">
+            <h3 class="text-2xl md:text-3xl tracking-tight font-semibold">Juegos destacados</h3>
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <!-- Card: Slots -->
+              <div class="group relative rounded-2xl ring-1 ring-white/10 overflow-hidden bg-white/5 hover:bg-white/10 transition">
+                <div class="aspect-video w-full overflow-hidden">
+                  <div class="h-full w-full transition-transform duration-500 group-hover:scale-105" style="background: radial-gradient(ellipse at 30% 20%, rgba(255,200,39,0.18), rgba(16,185,129,0.15), rgba(168,85,247,0.18));">
+                    <img src="./slots.png" class="object-center h-full w-full object-cover" />
+                  </div>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                  <div>
+                    <div class="font-medium">Slots</div>
+                    <div class="text-xs text-neutral-300">Jackpots y giros gratis</div>
+                  </div>
+                  <button class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium ring-1 ring-emerald-300/20" style="background: linear-gradient(90deg, rgba(16,185,129,1) 0%, rgba(255,200,39,1) 100%); color: var(--accent-text);">
+                    <i data-lucide="play" class="h-3.5 w-3.5"></i>
+                    Jugar
+                  </button>
+                </div>
+                <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition" style="box-shadow: inset 0 0 80px rgba(16,185,129,0.25);"></div>
+              </div>
+              <!-- Card: Ruleta -->
+              <div class="group relative rounded-2xl ring-1 ring-white/10 overflow-hidden bg-white/5 hover:bg-white/10 transition">
+                <div class="aspect-video w-full overflow-hidden relative">
+                  <div class="h-full w-full transition-transform duration-500 group-hover:scale-105" style="background: radial-gradient(ellipse at 30% 20%, rgba(255,200,39,0.18), rgba(16,185,129,0.15), rgba(168,85,247,0.18));">
+                    <img src="./roulette.png" class="object-center h-full w-full object-cover" />
+                  </div>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                  <div>
+                    <div class="font-medium">Ruleta</div>
+                    <div class="text-xs text-neutral-300">Apuesta al rojo o negro</div>
+                  </div>
+                  <button class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium ring-1 ring-emerald-300/20" style="background: linear-gradient(90deg, rgba(16,185,129,1) 0%, rgba(255,200,39,1) 100%); color: var(--accent-text);">
+                    <i data-lucide="play" class="h-3.5 w-3.5"></i>
+                    Jugar
+                  </button>
+                </div>
+                <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition" style="box-shadow: inset 0 0 80px rgba(168,85,247,0.25);"></div>
+              </div>
+              <!-- Card: Blackjack -->
+              <div class="group relative rounded-2xl ring-1 ring-white/10 overflow-hidden bg-white/5 hover:bg-white/10 transition">
+                <div class="aspect-video w-full overflow-hidden relative">
+                  <div class="h-full w-full transition-transform duration-500 group-hover:scale-105" style="background: radial-gradient(ellipse at 30% 20%, rgba(255,200,39,0.18), rgba(16,185,129,0.15), rgba(168,85,247,0.18));">
+                    <img src="./blackjack.png" class="object-center h-full w-full object-cover" />
+                  </div>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                  <div>
+                    <div class="font-medium">Blackjack</div>
+                    <div class="text-xs text-neutral-300">21 para ganar</div>
+                  </div>
+                  <button class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium ring-1 ring-emerald-300/20" style="background: linear-gradient(90deg, rgba(16,185,129,1) 0%, rgba(255,200,39,1) 100%); color: var(--accent-text);">
+                    <i data-lucide="play" class="h-3.5 w-3.5"></i>
+                    Jugar
+                  </button>
+                </div>
+                <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition" style="box-shadow: inset 0 0 80px rgba(255,200,39,0.25);"></div>
+              </div>
+              <!-- Card: Póker -->
+              <div class="group relative rounded-2xl ring-1 ring-white/10 overflow-hidden bg-white/5 hover:bg-white/10 transition">
+                <div class="aspect-video w-full overflow-hidden relative">
+                  <div class="h-full w-full transition-transform duration-500 group-hover:scale-105" style="background: radial-gradient(ellipse at 30% 20%, rgba(255,200,39,0.18), rgba(16,185,129,0.15), rgba(168,85,247,0.18));">
+                    <img src="./poker.png" class="object-center h-full w-full object-cover" />
+                  </div>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                  <div>
+                    <div class="font-medium">Póker</div>
+                    <div class="text-xs text-neutral-300">Siente la estrategia</div>
+                  </div>
+                  <button class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium ring-1 ring-emerald-300/20" style="background: linear-gradient(90deg, rgba(16,185,129,1) 0%, rgba(255,200,39,1) 100%); color: var(--accent-text);">
+                    <i data-lucide="play" class="h-3.5 w-3.5"></i>
+                    Jugar
+                  </button>
+                </div>
+                <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition" style="box-shadow: inset 0 0 80px rgba(16,185,129,0.25);"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CONFIANZA / COMUNIDAD -->
+          <section class="mt-14">
+            <div class="rounded-2xl ring-1 ring-white/10 p-5 bg-white/5">
+              <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-emerald-300/40" style="background: radial-gradient(circle at 30% 30%, rgba(16,185,129,0.35), rgba(16,185,129,0.15));">
+                    <i data-lucide="users" class="h-5 w-5"></i>
+                  </div>
+                  <div class="text-lg font-medium"><span id="live-count" class="tabular-nums">10,000</span>+ jugadores conectados ahora</div>
+                </div>
+                <div class="flex items-center gap-3 text-xs text-neutral-300">
+                  <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 ring-1 ring-white/10" style="background-color: rgba(255,255,255,0.04);">
+                    <i data-lucide="circle-alert" class="h-3.5 w-3.5" style="color: var(--accent);"></i>
+                    18+
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 ring-1 ring-white/10" style="background-color: rgba(255,255,255,0.04);">
+                    <i data-lucide="badge-check" class="h-3.5 w-3.5" style="color:#10b981;"></i>
+                    Juego justo
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 ring-1 ring-white/10" style="background-color: rgba(255,255,255,0.04);">
+                    <i data-lucide="lock" class="h-3.5 w-3.5"></i>
+                    SSL
+                  </span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 ring-1 ring-emerald-300/30 text-xs" style="background: radial-gradient(circle at 30% 30%, rgba(16,185,129,0.2), rgba(16,185,129,0.08));">
+                    <i data-lucide="coins" class="h-3.5 w-3.5"></i> USDT
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 ring-1 ring-white/10 text-xs" style="background-color: rgba(255,255,255,0.04);">
+                    <i data-lucide="credit-card" class="h-3.5 w-3.5"></i> Tarjetas
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 ring-1 ring-white/10 text-xs" style="background-color: rgba(255,255,255,0.04);">
+                    <i data-lucide="wallet" class="h-3.5 w-3.5"></i> Billeteras
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- Collapsible Side Panel (desktop) / Modal (mobile) -->
+      <div id="sidepanel-overlay" class="fixed inset-0 z-40 bg-black/40 opacity-0 pointer-events-none transition-opacity"></div>
+      <aside id="sidepanel" class="fixed right-0 top-0 z-50 h-full w-full sm:w-[480px] max-w-full translate-x-full transition-transform">
+        <div class="h-full flex flex-col backdrop-blur ring-1 ring-white/10" style="background-color: var(--bg-card);">
+          <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+            <div class="flex items-center gap-2">
+              <i data-lucide="panel-right" class="h-5 w-5" style="color: var(--accent);"></i>
+              <span class="text-sm font-medium">Panel</span>
+            </div>
+            <button id="panel-close" class="rounded-lg p-2 ring-1 ring-white/10 bg-white/5 hover:bg-white/10">
+              <i data-lucide="x" class="h-4 w-4"></i>
+            </button>
+          </div>
+          <div class="flex-1 overflow-y-auto px-5 py-4 space-y-3 text-sm text-neutral-200">
+            <p>Bienvenido. Aquí podrás ver novedades y contactar soporte.</p>
+          </div>
+          <div class="px-5 py-4 border-t border-white/10">
+            <button class="w-full inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ring-1 ring-emerald-300/20" style="background: linear-gradient(90deg, rgba(16,185,129,1) 0%, rgba(255,200,39,1) 100%); color: var(--accent-text);">
+              <i data-lucide="headset" class="h-4 w-4"></i>
+              Contactar soporte
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Footer -->
+      <footer class="relative z-10 mt-8 border-t border-white/10">
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(16,185,129,0.05) 40%, rgba(255,200,39,0.06) 100%);"></div>
+        <div class="relative mx-auto max-w-7xl px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-neutral-300">
+          <div class="flex items-center gap-3">
+            <a href="#" class="hover:text-neutral-100">Términos</a>
+            <span class="opacity-30">•</span>
+            <a href="#" class="hover:text-neutral-100">Juego Responsable</a>
+            <span class="opacity-30">•</span>
+            <a href="#" class="hover:text-neutral-100">Soporte</a>
+          </div>
+          <div class="flex items-center gap-3">
+            <a href="#" class="inline-flex items-center justify-center h-8 w-8 rounded-full ring-1 ring-white/10 bg-white/5 hover:bg-white/10" title="X / Twitter">
+              <i data-lucide="twitter" class="h-4 w-4"></i>
+            </a>
+            <a href="#" class="inline-flex items-center justify-center h-8 w-8 rounded-full ring-1 ring-white/10 bg-white/5 hover:bg-white/10" title="Instagram">
+              <i data-lucide="instagram" class="h-4 w-4"></i>
+            </a>
+            <a href="#" class="inline-flex items-center justify-center h-8 w-8 rounded-full ring-1 ring-white/10 bg-white/5 hover:bg-white/10" title="YouTube">
+              <i data-lucide="youtube" class="h-4 w-4"></i>
+            </a>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 ring-1 ring-white/10" style="background-color: rgba(255,255,255,0.04);">
+              <i data-lucide="circle-alert" class="h-3.5 w-3.5" style="color: var(--accent);"></i>
+              18+
+            </span>
+            <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 ring-1 ring-white/10" style="background-color: rgba(255,255,255,0.04);">
+              <i data-lucide="heart-handshake" class="h-3.5 w-3.5" style="color: var(--accent);"></i>
+              Juego responsable
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 z-[100] hidden">
+      <div class="rounded-lg bg-white text-neutral-900 px-3 py-2 text-sm shadow-lg ring-1 ring-black/10">
+        <span id="toast-text">Acción</span>
+      </div>
+    </div>
+
+    <script>
+      // Utility: icons render
+      function renderIcons() { window.lucide && window.lucide.createIcons({ attrs: { 'stroke-width': 1.5 } }); }
+
+      // Toast
+      function showToast(msg) {
+        const t = document.getElementById('toast'); const tt = document.getElementById('toast-text');
+        tt.textContent = msg; t.classList.remove('hidden');
+        clearTimeout(window.__t); window.__t = setTimeout(()=>t.classList.add('hidden'), 1800);
+      }
+
+      // Header ticker data
+      const TICKER_ITEMS = [
+        'Bono de Bienvenida 100%',
+        'Giros gratis en Slots destacados',
+        'Jackpot progresivo millonario',
+        'Cashback diario',
+        'Torneos semanales con premios'
+      ];
+
+      function initTicker() {
+        const track = document.getElementById('ticker-track');
+        if (!track) return;
+        const makeRow = () => TICKER_ITEMS.map((t)=> {
+          const item = document.createElement('div');
+          item.className = 'flex items-center gap-2';
+          const dot = document.createElement('span');
+          dot.className = 'h-1.5 w-1.5 rounded-full';
+          dot.style.background = 'linear-gradient(90deg,#10b981,#a855f7)';
+          const text = document.createElement('span');
+          text.textContent = t;
+          item.appendChild(dot); item.appendChild(text);
+          return item;
+        });
+        [...makeRow(), ...makeRow()].forEach(el => track.appendChild(el));
+
+        let x = 0;
+        function step() {
+          x -= 0.6;
+          const w = track.scrollWidth / 2;
+          if (-x >= w) x = 0;
+          track.style.transform = `translateX(${x}px)`;
+          requestAnimationFrame(step);
+        }
+        step();
+      }
+
+      // Promo carousel
+      const PROMOS = [
+        { title: 'Bono de Bienvenida 100%', desc: 'Duplica tu primer depósito', color: 'rgba(16,185,129,1), rgba(255,200,39,1)' },
+        { title: 'Giros gratis', desc: 'En slots destacados', color: 'rgba(168,85,247,1), rgba(16,185,129,1)' },
+        { title: 'Jackpot millonario', desc: 'Progresivo en vivo', color: 'rgba(255,200,39,1), rgba(168,85,247,1)' },
+      ];
+
+      function buildPromoCard(p) {
+        const card = document.createElement('div');
+        card.className = 'min-w-[280px] sm:min-w-[360px] md:min-w-[420px] rounded-2xl p-[2px]';
+        card.style.background = `linear-gradient(135deg, ${p.color})`;
+        const inner = document.createElement('div');
+        inner.className = 'h-full w-full rounded-2xl ring-1 ring-white/10 bg-white/5 p-5 flex items-center justify-between';
+        const left = document.createElement('div');
+        const t = document.createElement('div'); t.className='text-lg font-medium'; t.textContent = p.title;
+        const d = document.createElement('div'); d.className='text-sm text-neutral-200'; d.textContent = p.desc;
+        left.appendChild(t); left.appendChild(d);
+        const btn = document.createElement('button');
+        btn.className = 'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium ring-1        ring-emerald-300/20 text-neutral-900';
+        btn.style.background = 'linear-gradient(90deg, rgba(16,185,129,1) 0%, rgba(255,200,39,1) 100%)';
+        btn.innerHTML = '<i data-lucide="play" class="h-4 w-4"></i> Activar';
+        btn.addEventListener('click', () => showToast('Promo aplicada'));
+        inner.appendChild(left);
+        inner.appendChild(btn);
+        card.appendChild(inner);
+        return card;
+      }
+
+      function initPromos() {
+        const track = document.getElementById('promo-track');
+        const wrapper = document.getElementById('promo-wrapper');
+        if (!track || !wrapper) return;
+        track.innerHTML = '';
+
+        // Build cards and duplicate for seamless loop
+        const cards = PROMOS.map(buildPromoCard);
+        const cards2x = [...cards, ...PROMOS.map(buildPromoCard)];
+        cards2x.forEach((c) => track.appendChild(c));
+
+        // Render icons inside dynamic content
+        renderIcons();
+
+        let x = 0;
+        let speed = 0.8;
+        let paused = false;
+
+        let setWidth = () => track.scrollWidth / 2;
+        let W = setWidth();
+
+        function step() {
+          if (!paused) {
+            x -= speed;
+            if (-x >= W) x = 0;
+            if (x > 0) x = -W;
+            track.style.transform = `translate3d(${x}px,0,0)`;
+          }
+          requestAnimationFrame(step);
+        }
+        step();
+
+        // Pause on hover
+        wrapper.addEventListener('mouseenter', () => (paused = true));
+        wrapper.addEventListener('mouseleave', () => (paused = false));
+
+        // Drag to scrub
+        let dragging = false;
+        let last = 0;
+        const onDown = (e) => {
+          dragging = true;
+          paused = true;
+          last = (e.touches ? e.touches[0].clientX : e.clientX);
+          wrapper.classList.add('cursor-grabbing');
+          wrapper.classList.remove('cursor-grab');
+        };
+        const onMove = (e) => {
+          if (!dragging) return;
+          const cx = (e.touches ? e.touches[0].clientX : e.clientX);
+          const dx = cx - last;
+          last = cx;
+          x += dx; // move with the drag
+          track.style.transform = `translate3d(${x}px,0,0)`;
+        };
+        const onUp = () => {
+          if (!dragging) return;
+          dragging = false;
+          paused = false;
+          wrapper.classList.remove('cursor-grabbing');
+          wrapper.classList.add('cursor-grab');
+        };
+        wrapper.classList.add('cursor-grab');
+        wrapper.addEventListener('mousedown', onDown);
+        wrapper.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+        wrapper.addEventListener('touchstart', onDown, { passive: true });
+        wrapper.addEventListener('touchmove', onMove, { passive: true });
+        wrapper.addEventListener('touchend', onUp);
+
+        // Wheel to adjust speed
+        wrapper.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          speed = Math.max(0.2, Math.min(4, speed + (e.deltaY > 0 ? 0.2 : -0.2)));
+        }, { passive: false });
+
+        // Recalculate on resize
+        window.addEventListener('resize', () => { W = setWidth(); });
+      }
+
+      // Parallax background
+      function initParallax() {
+        const root = document.getElementById('parallax');
+        if (!root) return;
+        const items = [...root.querySelectorAll('[data-depth]')];
+        const move = (e) => {
+          const w = window.innerWidth, h = window.innerHeight;
+          const rx = (e.clientX - w / 2) / (w / 2);
+          const ry = (e.clientY - h / 2) / (h / 2);
+          items.forEach((el) => {
+            const d = parseFloat(el.getAttribute('data-depth')) || 0.05;
+            el.style.transform = `translate3d(${rx * 40 * d}px, ${ry * 40 * d}px, 0)`;
+          });
+        };
+        window.addEventListener('mousemove', move);
+      }
+
+      // Particles
+      function initParticles() {
+        const cont = document.getElementById('particles');
+        if (!cont) return;
+        const N = 36;
+        for (let i = 0; i < N; i++) {
+          const p = document.createElement('span');
+          const s = 2 + Math.random() * 3;
+          p.className = 'pointer-events-none block rounded-full opacity-40';
+          p.style.position = 'absolute';
+          p.style.left = `${Math.random() * 100}%`;
+          p.style.top = `${Math.random() * 100}%`;
+          p.style.width = `${s}px`;
+          p.style.height = `${s}px`;
+          p.style.background = Math.random() > 0.5
+            ? 'radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0))'
+            : 'radial-gradient(circle, rgba(255,200,39,0.6), rgba(255,200,39,0))';
+          const dur = 10 + Math.random() * 12;
+          const del = Math.random() * -dur;
+          p.style.animation = `particleFloat ${dur}s ease-in-out ${del}s infinite`;
+          cont.appendChild(p);
+        }
+      }
+
+      // Header actions (panel, sound, fullscreen, help)
+      function initHeaderActions() {
+        const $ = (sel) => document.querySelector(sel);
+        const panel = $('#sidepanel');
+        const overlay = $('#sidepanel-overlay');
+        const openPanel = () => {
+          panel.classList.remove('translate-x-full');
+          overlay.classList.remove('pointer-events-none');
+          overlay.classList.remove('opacity-0');
+          overlay.classList.add('opacity-100');
+          panel.setAttribute('aria-hidden', 'false');
+        };
+        const closePanel = () => {
+          panel.classList.add('translate-x-full');
+          overlay.classList.add('pointer-events-none');
+          overlay.classList.remove('opacity-100');
+          overlay.classList.add('opacity-0');
+          panel.setAttribute('aria-hidden', 'true');
+        };
+        $('#panel-toggle')?.addEventListener('click', openPanel);
+        $('#panel-close')?.addEventListener('click', closePanel);
+        overlay?.addEventListener('click', closePanel);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+
+        // Sound toggle
+        const btnSound = $('#hdr-sound');
+        let soundOn = true;
+        btnSound?.addEventListener('click', () => {
+          soundOn = !soundOn;
+          btnSound.innerHTML = soundOn
+            ? '<i data-lucide="volume-2" class="h-4 w-4"></i>'
+            : '<i data-lucide="volume-x" class="h-4 w-4"></i>';
+          renderIcons();
+          showToast(soundOn ? 'Sonido activado' : 'Sonido desactivado');
+        });
+
+        // Fullscreen toggle
+        const btnFs = $('#hdr-fs');
+        let fs = false;
+        btnFs?.addEventListener('click', async () => {
+          try {
+            if (!document.fullscreenElement) {
+              await document.documentElement.requestFullscreen();
+              fs = true;
+            } else {
+              await document.exitFullscreen();
+              fs = false;
+            }
+          } catch {}
+          btnFs.innerHTML = fs
+            ? '<i data-lucide="minimize-2" class="h-4 w-4"></i>'
+            : '<i data-lucide="maximize-2" class="h-4 w-4"></i>';
+          renderIcons();
+        });
+
+        // Help
+        $('#hdr-help')?.addEventListener('click', () => {
+          showToast('¿Necesitas ayuda? Abre el panel.');
+          openPanel();
+        });
+
+        // CTA shine sweeps
+        const cta = document.getElementById('cta-hero');
+        const shine = document.getElementById('hero-shine');
+        const frameShine = document.getElementById('frame-shine');
+        const sweep = (el) => {
+          if (!el) return;
+          el.animate(
+            [
+              { transform: 'translateX(-120%) rotate(6deg)', opacity: 0 },
+              { transform: 'translateX(40%) rotate(6deg)', opacity: 0.35 },
+              { transform: 'translateX(140%) rotate(6deg)', opacity: 0 }
+            ],
+            { duration: 950, easing: 'ease', fill: 'both' }
+          );
+        };
+        cta?.addEventListener('mouseenter', () => sweep(shine));
+        frameShine?.parentElement?.addEventListener('mouseenter', () => sweep(frameShine));
+
+        // "Jugar" buttons toast
+        document.querySelectorAll('#juegos button').forEach((b) =>
+          b.addEventListener('click', () => showToast('Cargando juego...'))
+        );
+      }
+
+      // Live user counter
+      function initLiveCount() {
+        const el = document.getElementById('live-count');
+        if (!el) return;
+        let val = parseInt(String(el.textContent).replace(/[^\d]/g, ''), 10) || 10000;
+        function tick() {
+          const delta = Math.floor(-5 + Math.random() * 25); // -5 to +19
+          val = Math.max(9800, val + delta);
+          el.textContent = val.toLocaleString('es-ES');
+          setTimeout(tick, 1600 + Math.random() * 1400);
+        }
+        tick();
+      }
+
+      // Subtle background glows motion
+      function initGlows() {
+        const g1 = document.getElementById('bg-glow-1');
+        const g2 = document.getElementById('bg-glow-2');
+        let t = 0;
+        function loop() {
+          t += 0.003;
+          if (g1) g1.style.transform = `translate3d(${Math.sin(t) * 12}px, ${Math.cos(t * 0.8) * 10}px, 0)`;
+          if (g2) g2.style.transform = `translate3d(${Math.cos(t * 0.7) * 14}px, ${Math.sin(t) * 12}px, 0)`;
+          requestAnimationFrame(loop);
+        }
+        loop();
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        initTicker();
+        initPromos();
+        initParallax();
+        initParticles();
+        initHeaderActions();
+        initLiveCount();
+        initGlows();
+        renderIcons();
+      });
+    </script>
+
+    <style>
+      /* Custom animations and helpers */
+      @keyframes spin-slow { to { transform: rotate(360deg); } }
+      .animate-spin-slow { animation: spin-slow 18s linear infinite; }
+
+      @keyframes particleFloat {
+        0% { transform: translateY(0) translateX(0); opacity: 0.35; }
+        50% { transform: translateY(-20px) translateX(8px); opacity: 0.6; }
+        100% { transform: translateY(0) translateX(0); opacity: 0.35; }
+      }
+
+      /* Scrollbar subtle styling inside panel */
+      #sidepanel::-webkit-scrollbar { width: 10px; }
+      #sidepanel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 8px; }
+      #sidepanel::-webkit-scrollbar-track { background: transparent; }
+
+      /* Improve focus visibility */
+      a:focus-visible, button:focus-visible {
+        outline: 2px solid rgba(16,185,129,0.9);
+        outline-offset: 2px;
+      }
+    </style>
+  </body>
+</html>
