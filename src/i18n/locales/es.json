@@ -1,0 +1,60 @@
+{
+  "app": {
+    "title": "Recargar fichas",
+    "subtitle": "Deposita con USDT en tu red favorita y acredita tus fichas al instante."
+  },
+  "alerts": {
+    "info": "{{message}}"
+  },
+  "badge": {
+    "userId": "ID: {{id}}"
+  },
+  "balanceCard": {
+    "title": "Balance actual"
+  },
+  "form": {
+    "title": "Generar orden de depósito",
+    "amountLabel": "Monto a depositar (USD)",
+    "amountPlaceholder": "Ej. 25",
+    "networkLabel": "Red (USDT)",
+    "networks": {
+      "BSC": "BSC · BEP20",
+      "ETH": "ETH · ERC20",
+      "POLYGON": "POLYGON · ERC20",
+      "TRX": "TRX · TRC20"
+    },
+    "submit": "Generar QR de depósito",
+    "submitting": "Creando orden...",
+    "clear": "Limpiar",
+    "error": "{{error}}"
+  },
+  "payment": {
+    "title": "Enviar USDT a esta dirección",
+    "selectedNetwork": "Red seleccionada:",
+    "amount": "Monto:",
+    "expiresIn": "Expira en",
+    "qrAlt": "QR de depósito",
+    "walletAddressLabel": "Dirección de wallet",
+    "walletAddressTitleEnabled": "Dirección de wallet",
+    "walletAddressTitleDisabled": "No disponible mientras el QR está completado o expirado",
+    "copy": "Copiar",
+    "copyDisabled": "Copiar deshabilitado",
+    "notes": {
+      "onlyUsdt": "Envía solo <strong>USDT</strong> en la red indicada.",
+      "expiresAtZero": "La orden expira al llegar a 00:00.",
+      "autoCredit": "Se acreditará automáticamente después de 1–3 confirmaciones."
+    },
+    "cancel": "Cancelar transacción",
+    "generateNewQr": "Generar nuevo QR"
+  },
+  "overlays": {
+    "success": {
+      "message": "{{message}}",
+      "redirecting": "Redirigiendo en unos segundos..."
+    },
+    "expired": {
+      "title": "El QR ha expirado.",
+      "subtitle": "Genera uno nuevo para continuar."
+    }
+  }
+}

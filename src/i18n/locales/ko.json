@@ -1,0 +1,60 @@
+{
+  "app": {
+    "title": "칩 충전",
+    "subtitle": "선호하는 네트워크에서 USDT로 입금하고 즉시 칩을 충전하세요."
+  },
+  "alerts": {
+    "info": "{{message}}"
+  },
+  "badge": {
+    "userId": "ID: {{id}}"
+  },
+  "balanceCard": {
+    "title": "현재 잔액"
+  },
+  "form": {
+    "title": "입금 주문 생성",
+    "amountLabel": "입금 금액 (USD)",
+    "amountPlaceholder": "예: 25",
+    "networkLabel": "네트워크 (USDT)",
+    "networks": {
+      "BSC": "BSC · BEP20",
+      "ETH": "ETH · ERC20",
+      "POLYGON": "POLYGON · ERC20",
+      "TRX": "TRX · TRC20"
+    },
+    "submit": "입금 QR 생성",
+    "submitting": "주문 생성 중...",
+    "clear": "지우기",
+    "error": "{{error}}"
+  },
+  "payment": {
+    "title": "이 주소로 USDT 전송",
+    "selectedNetwork": "선택한 네트워크:",
+    "amount": "금액:",
+    "expiresIn": "만료 시간",
+    "qrAlt": "입금 QR",
+    "walletAddressLabel": "지갑 주소",
+    "walletAddressTitleEnabled": "지갑 주소",
+    "walletAddressTitleDisabled": "QR이 완료되었거나 만료된 동안에는 사용할 수 없습니다",
+    "copy": "복사",
+    "copyDisabled": "복사 비활성화됨",
+    "notes": {
+      "onlyUsdt": "표시된 네트워크에서만 <strong>USDT</strong>를 전송하세요.",
+      "expiresAtZero": "주문은 00:00에 만료됩니다.",
+      "autoCredit": "1–3회 확인 후 자동으로 충전됩니다."
+    },
+    "cancel": "거래 취소",
+    "generateNewQr": "새 QR 생성"
+  },
+  "overlays": {
+    "success": {
+      "message": "{{message}}",
+      "redirecting": "잠시 후 자동으로 이동합니다..."
+    },
+    "expired": {
+      "title": "QR이 만료되었습니다.",
+      "subtitle": "계속하려면 새 QR을 생성하세요."
+    }
+  }
+}

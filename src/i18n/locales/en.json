@@ -1,0 +1,60 @@
+{
+  "app": {
+    "title": "Reload chips",
+    "subtitle": "Deposit with USDT on your favorite network and credit your chips instantly."
+  },
+  "alerts": {
+    "info": "{{message}}"
+  },
+  "badge": {
+    "userId": "ID: {{id}}"
+  },
+  "balanceCard": {
+    "title": "Current balance"
+  },
+  "form": {
+    "title": "Generate deposit order",
+    "amountLabel": "Amount to deposit (USD)",
+    "amountPlaceholder": "Ex. 25",
+    "networkLabel": "Network (USDT)",
+    "networks": {
+      "BSC": "BSC · BEP20",
+      "ETH": "ETH · ERC20",
+      "POLYGON": "POLYGON · ERC20",
+      "TRX": "TRX · TRC20"
+    },
+    "submit": "Generate deposit QR",
+    "submitting": "Creating order...",
+    "clear": "Clear",
+    "error": "{{error}}"
+  },
+  "payment": {
+    "title": "Send USDT to this address",
+    "selectedNetwork": "Selected network:",
+    "amount": "Amount:",
+    "expiresIn": "Expires in",
+    "qrAlt": "Deposit QR",
+    "walletAddressLabel": "Wallet address",
+    "walletAddressTitleEnabled": "Wallet address",
+    "walletAddressTitleDisabled": "Not available while the QR is completed or expired",
+    "copy": "Copy",
+    "copyDisabled": "Copy disabled",
+    "notes": {
+      "onlyUsdt": "Send only <strong>USDT</strong> on the indicated network.",
+      "expiresAtZero": "The order expires when reaching 00:00.",
+      "autoCredit": "It will be credited automatically after 1–3 confirmations."
+    },
+    "cancel": "Cancel transaction",
+    "generateNewQr": "Generate new QR"
+  },
+  "overlays": {
+    "success": {
+      "message": "{{message}}",
+      "redirecting": "Redirecting in a few seconds..."
+    },
+    "expired": {
+      "title": "The QR has expired.",
+      "subtitle": "Generate a new one to continue."
+    }
+  }
+}

@@ -4,6 +4,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { depositService } from "@/services/depositsService";
 import { walletService } from "@/services/walletService";
+import { useTranslation } from "react-i18next";
+
 // --- Tipos auxiliares ---
 type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
 
@@ -44,6 +46,8 @@ function toMMSS(totalSeconds: number) {
 
 // --- Componente principal ---
 export default function RecargaFichasPage() {
+  const { t } = useTranslation()
+
   const [balance, setBalance] = useState<number>(1);
   const [amount, setAmount] = useState<string>("");
   const [selectedNetwork, setSelectedNetwork] = useState<Network>("BSC");
@@ -395,16 +399,14 @@ export default function RecargaFichasPage() {
       <div className="max-w-3xl mx-auto">
         <header className="mb-8">
           <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
-            Recargar fichas
+            {t("app.title")}
           </h1>
-          <p className="text-neutral-400 mt-1">
-            Deposita con USDT en tu red favorita y acredita tus fichas al
-            instante.
-          </p>
+          <p className="text-neutral-400 mt-1">{t("app.subtitle")}</p>
         </header>
 
         {uiMessage && (
           <div className="mb-6 rounded-xl border border-emerald-800 bg-emerald-950/30 px-3 py-2 text-emerald-300 text-sm">
+            {/* si deseas internacionalizar mensajes dinámicos: t('alerts.info', { message: uiMessage }) */}
             {uiMessage}
           </div>
         )}
@@ -413,14 +415,16 @@ export default function RecargaFichasPage() {
         <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5 mb-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-neutral-400">Balance actual</p>
+              <p className="text-sm text-neutral-400">
+                {t("balanceCard.title")}
+              </p>
               <p className="mt-1 text-3xl font-bold">
                 {formatCurrency(balance)}
               </p>
             </div>
             <div className="text-right">
               <span className="inline-block px-3 py-1 rounded-full text-xs bg-neutral-800 border border-neutral-700">
-                ID: user-123
+                {t("badge.userId", { id: "user-123" })}
               </span>
             </div>
           </div>
@@ -429,14 +433,12 @@ export default function RecargaFichasPage() {
         {/* Formulario de creación de depósito */}
         {!deposit && (
           <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5">
-            <h2 className="text-lg font-medium mb-4">
-              Generar orden de depósito
-            </h2>
+            <h2 className="text-lg font-medium mb-4">{t("form.title")}</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="text-sm text-neutral-300">
-                  Monto a depositar (USD)
+                  {t("form.amountLabel")}
                 </label>
                 <input
                   value={amount}
@@ -444,13 +446,15 @@ export default function RecargaFichasPage() {
                   type="number"
                   min={0}
                   step={0.01}
-                  placeholder="Ej. 25"
+                  placeholder={t("form.amountPlaceholder")}
                   className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="text-sm text-neutral-300">Red (USDT)</label>
+                <label className="text-sm text-neutral-300">
+                  {t("form.networkLabel")}
+                </label>
                 <select
                   value={selectedNetwork}
                   onChange={(e) =>
@@ -458,17 +462,17 @@ export default function RecargaFichasPage() {
                   }
                   className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
                 >
-                  <option value="BSC">BSC · BEP20</option>
-                  <option value="ETH">ETH · ERC20</option>
-                  <option value="POLYGON">POLYGON · ERC20</option>
-                  <option value="TRX">TRX · TRC20</option>
+                  <option value="BSC">{t("form.networks.BSC")}</option>
+                  <option value="ETH">{t("form.networks.ETH")}</option>
+                  <option value="POLYGON">{t("form.networks.POLYGON")}</option>
+                  <option value="TRX">{t("form.networks.TRX")}</option>
                 </select>
               </div>
             </div>
 
             {error && (
               <div className="mt-4 text-sm text-red-400 bg-red-950/30 border border-red-900 rounded-xl px-3 py-2">
-                {error}
+                {t("form.error", { error })}
               </div>
             )}
 
@@ -478,7 +482,7 @@ export default function RecargaFichasPage() {
                 disabled={!canSubmit}
                 className="rounded-xl px-4 py-3 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
               >
-                {isSubmitting ? "Creando orden..." : "Generar QR de depósito"}
+                {isSubmitting ? t("form.submitting") : t("form.submit")}
               </button>
               <button
                 onClick={() => {
@@ -488,7 +492,7 @@ export default function RecargaFichasPage() {
                 }}
                 className="rounded-xl px-4 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700"
               >
-                Limpiar
+                {t("form.clear")}
               </button>
             </div>
           </section>
@@ -499,24 +503,24 @@ export default function RecargaFichasPage() {
           <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h2 className="text-lg font-medium">
-                  Enviar USDT a esta dirección
-                </h2>
+                <h2 className="text-lg font-medium">{t("payment.title")}</h2>
                 <p className="text-sm text-neutral-400 mt-1">
-                  Red seleccionada:{" "}
+                  {t("payment.selectedNetwork")}{" "}
                   <span className="font-medium text-neutral-200">
                     {deposit.chain}
                   </span>
                 </p>
                 <p className="text-sm text-neutral-400 mt-1">
-                  Monto:{" "}
+                  {t("payment.amount")}{" "}
                   <span className="font-medium text-neutral-200">
                     {formatCurrency(deposit.amount)}
                   </span>
                 </p>
               </div>
               <div className="text-right">
-                <span className="text-sm text-neutral-400">Expira en</span>
+                <span className="text-sm text-neutral-400">
+                  {t("payment.expiresIn")}
+                </span>
                 <div
                   className={`text-2xl font-bold ${
                     seconds === 0 ? "text-red-400" : "text-emerald-400"
@@ -528,22 +532,21 @@ export default function RecargaFichasPage() {
             </div>
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Contenedor QR con overlay */}
-              {/* Contenedor QR con overlay */}
+              {/* QR + overlays */}
               <div className="relative flex items-center justify-center">
-                {/* QR */}
                 <img
                   src={deposit.qrDataUrl}
-                  alt="QR de depósito"
+                  alt={t("payment.qrAlt")}
                   className="w-64 h-64 rounded-2xl border border-neutral-800 bg-neutral-950 p-3"
                 />
 
-                {/* Overlay de éxito (tiene prioridad si existe uiMessage) */}
+                {/* Overlay éxito */}
                 {uiMessage && (
                   <div className="absolute inset-0 rounded-2xl overflow-hidden flex items-center justify-center">
                     <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-[2px]" />
                     <div className="relative z-10 flex flex-col items-center text-center px-4">
                       <div className="w-14 h-14 rounded-full bg-emerald-600/20 border border-emerald-600/50 flex items-center justify-center mb-3">
+                        {/* ícono check */}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -560,22 +563,23 @@ export default function RecargaFichasPage() {
                         </svg>
                       </div>
                       <p className="text-emerald-300 text-sm md:text-base font-medium">
+                        {/* Podrías usar t('overlays.success.message', { message: uiMessage }) si quieres plantilla */}
                         {uiMessage}
                       </p>
                       <p className="text-neutral-400 text-xs mt-1">
-                        Redirigiendo en unos segundos...
+                        {t("overlays.success.redirecting")}
                       </p>
                     </div>
                   </div>
                 )}
 
-                {/* Overlay de expiración (solo si no hay uiMessage y el tiempo llegó a 0) */}
+                {/* Overlay expiración */}
                 {!uiMessage && seconds === 0 && (
                   <div className="absolute inset-0 rounded-2xl overflow-hidden flex items-center justify-center">
                     <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-[2px]" />
                     <div className="relative z-10 flex flex-col items-center text-center px-4">
-                      {/* Ícono de reloj/alerta */}
                       <div className="w-14 h-14 rounded-full bg-red-600/20 border border-red-600/50 flex items-center justify-center mb-3">
+                        {/* ícono reloj */}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -592,21 +596,19 @@ export default function RecargaFichasPage() {
                         </svg>
                       </div>
                       <p className="text-red-300 text-sm md:text-base font-medium">
-                        El QR ha expirado.
+                        {t("overlays.expired.title")}
                       </p>
                       <p className="text-neutral-400 text-xs mt-1">
-                        Genera uno nuevo para continuar.
+                        {t("overlays.expired.subtitle")}
                       </p>
 
                       <button
                         onClick={async () => {
                           try {
-                            // opcional: notificar al backend que se canceló
                             await depositService
                               .cancelCurrentQR()
                               .catch(() => {});
                           } finally {
-                            // reset local para poder crear otro
                             setDeposit(null);
                             setSeconds(0);
                             setAmount("");
@@ -617,7 +619,7 @@ export default function RecargaFichasPage() {
                         }}
                         className="mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-neutral-200 text-sm"
                       >
-                        Generar nuevo QR
+                        {t("payment.generateNewQr")}
                       </button>
                     </div>
                   </div>
@@ -626,7 +628,7 @@ export default function RecargaFichasPage() {
 
               <div>
                 <label className="text-sm text-neutral-300">
-                  Dirección de wallet
+                  {t("payment.walletAddressLabel")}
                 </label>
                 <div className="mt-2 flex items-center gap-2">
                   <input
@@ -634,8 +636,8 @@ export default function RecargaFichasPage() {
                     value={deposit.address}
                     title={
                       isOverlayActive
-                        ? "No disponible mientras el QR está completado o expirado"
-                        : "Dirección de wallet"
+                        ? t("payment.walletAddressTitleDisabled")
+                        : t("payment.walletAddressTitleEnabled")
                     }
                     className={[
                       "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 font-mono text-sm transition",
@@ -647,7 +649,11 @@ export default function RecargaFichasPage() {
                   <button
                     onClick={() => copyToClipboard(deposit.address)}
                     disabled={isOverlayActive}
-                    title={isOverlayActive ? "Copiar deshabilitado" : "Copiar"}
+                    title={
+                      isOverlayActive
+                        ? t("payment.copyDisabled")
+                        : t("payment.copy")
+                    }
                     className={[
                       "shrink-0 rounded-xl px-3 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 transition",
                       isOverlayActive
@@ -655,21 +661,22 @@ export default function RecargaFichasPage() {
                         : "",
                     ].join(" ")}
                   >
-                    Copiar
+                    {t("payment.copy")}
                   </button>
                 </div>
 
                 <div className="mt-4 rounded-xl bg-neutral-900 border border-neutral-800 p-3 text-sm text-neutral-300">
                   <ul className="list-disc list-inside space-y-1">
                     <li>
-                      Envía solo <span className="font-semibold">USDT</span> en
-                      la red indicada.
+                      {/* si renderizas HTML con i18next, usa Trans o dangerouslySetInnerHTML según tu política */}
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: t("payment.notes.onlyUsdt"),
+                        }}
+                      />
                     </li>
-                    <li>La orden expira al llegar a 00:00.</li>
-                    <li>
-                      Se acreditará automáticamente después de 1–3
-                      confirmaciones.
-                    </li>
+                    <li>{t("payment.notes.expiresAtZero")}</li>
+                    <li>{t("payment.notes.autoCredit")}</li>
                   </ul>
                 </div>
 
@@ -678,7 +685,7 @@ export default function RecargaFichasPage() {
                     onClick={handleCancel}
                     className="rounded-xl px-4 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700"
                   >
-                    Cancelar transacción
+                    {t("payment.cancel")}
                   </button>
                 </div>
               </div>
