@@ -21,7 +21,7 @@ const GamePage: FC<Props> = async ({ params }) => {
   const token = co.get("auth_token")?.value;
 
   if (!token) {
-    return redirect("/sign-up");
+    return redirect("/sign-in");
   }
 
   try {
@@ -36,6 +36,10 @@ const GamePage: FC<Props> = async ({ params }) => {
         }
       )
       .then((r) => r.data);
+
+    if (gameInfo.error == "hall_balance_less_100") {
+      return <div className="mt-20 flex justify-center h-[200px] items-center">Esté juego necesita al menos 100 usd en el balance</div>;
+    }
 
     return (
       <div className="mt-20 flex justify-center">

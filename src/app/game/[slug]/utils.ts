@@ -1,6 +1,6 @@
 export interface OpenGameApiResponse {
   status: "success";
-  error: "";
+  error: string;
   content: {
     game: {
       url: string;
