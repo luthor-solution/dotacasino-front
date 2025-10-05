@@ -4,6 +4,7 @@ import { OpenGameApiResponse } from "./utils";
 import Iframe from "./iframe";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import BackgroundGlow from "./BackgroundGlow";
 
 type Props = {
   params: Promise<{
@@ -38,11 +39,16 @@ const GamePage: FC<Props> = async ({ params }) => {
       .then((r) => r.data);
 
     if (gameInfo.error == "hall_balance_less_100") {
-      return <div className="mt-20 flex justify-center h-[200px] items-center">Esté juego necesita al menos 100 usd en el balance</div>;
+      return (
+        <div className="mt-20 flex justify-center h-[200px] items-center">
+          Esté juego necesita al menos 100 usd en el balance
+        </div>
+      );
     }
 
     return (
-      <div className="mt-20 flex justify-center">
+      <div className="mt-20 flex justify-center bg-[#350b2d]">
+        <BackgroundGlow />
         <Iframe
           url={gameInfo.content.game.url}
           sessionId={gameInfo.content.gameRes.sessionId}
