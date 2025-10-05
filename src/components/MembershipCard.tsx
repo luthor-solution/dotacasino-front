@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Membership } from "@/services/membershipsService";
 import QROverlay from "./QROverlay";
@@ -100,41 +99,6 @@ const MembershipCard: React.FC<MembershipCardProps> = ({
     }, 0);
   };
 
-  const QRSectionSkeleton = () => (
-    <div className="flex flex-col items-center py-4 w-full">
-      <div className="w-48 h-48 rounded-md bg-white/10 animate-pulse" />
-      <div className="mt-4 w-full text-sm space-y-2">
-        <div className="h-4 bg-white/10 rounded w-1/3 animate-pulse" />
-        <div className="h-4 bg-white/10 rounded w-1/2 animate-pulse" />
-        <div className="h-4 bg-white/10 rounded w-2/3 animate-pulse" />
-      </div>
-    </div>
-  );
-
-  // Copiar address
-  const [copied, setCopied] = React.useState(false);
-  const copyAddress = async () => {
-    if (!currentQR?.address) return;
-    try {
-      await navigator.clipboard.writeText(currentQR.address);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
-    } catch {
-      // Fallback: crear input temporal si clipboard falla (por permisos)
-      const el = document.createElement("input");
-      el.value = currentQR.address;
-      document.body.appendChild(el);
-      el.select();
-      try {
-        document.execCommand("copy");
-        setCopied(true);
-      } finally {
-        document.body.removeChild(el);
-        setTimeout(() => setCopied(false), 1200);
-      }
-    }
-  };
-
   return (
     <div
       className={clsx(
@@ -152,11 +116,6 @@ const MembershipCard: React.FC<MembershipCardProps> = ({
               "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%)",
           }}
         />
-        {/* {price && (
-          <div className="absolute top-3 left-3 bg-white/80 text-white px-3 py-1 rounded-full text-sm font-semibold backdrop-blur">
-            {price} dff
-          </div>
-        )} */}
       </div>
 
       <div className="p-5 flex flex-col flex-1">
@@ -186,13 +145,71 @@ const MembershipCard: React.FC<MembershipCardProps> = ({
         {/* Sección QR */}
         {currentQR && (
           <div className="flex flex-col items-center py-4 w-full">
-            <img
-              src={currentQR.qrcode_url ?? ""}
-              alt="QR code"
-              className="w-48 h-48 bg-white p-2 rounded-md"
-            />
+            {/* Contenedor QR con overlay de expiración */}
+            <div className="relative flex items-center justify-center">
+              <img
+                src={currentQR.qrcode_url ?? ""}
+                alt="QR code"
+                className={clsx(
+                  "w-48 h-48 bg-white p-2 rounded-md",
+                  "transition-all duration-200",
+                  isExpired && "opacity-60 grayscale blur-[1px]"
+                )}
+              />
 
-            <div className="mt-4">
+              {isExpired && (
+                <div className="absolute inset-0 rounded-md overflow-hidden flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+                  <div className="relative z-10 flex flex-col items-center text-center px-4">
+                    <div className="w-12 h-12 rounded-full bg-red-600/20 border border-red-600/40 flex items-center justify-center mb-2">
+                      {/* Ícono reloj */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="w-7 h-7 text-red-300"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z"
+                        />
+                      </svg>
+                    </div>
+                    <p className="text-red-300 text-sm md:text-base font-medium">
+                      QR expirado
+                    </p>
+                    <p className="text-white/70 text-xs mt-1">
+                      Genera uno nuevo para continuar
+                    </p>
+                    <button
+                      onClick={onRegenerate}
+                      className="mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-white text-sm"
+                      type="button"
+                    >
+                      Regenerar QR
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* NO tocamos el input */}
+            <div
+              className={clsx(
+                "mt-4 w-full transition-all duration-200",
+                isExpired &&
+                  "opacity-60 blur-[1px] pointer-events-none select-none"
+              )}
+              title={
+                isExpired
+                  ? "QR expirado. Genera uno nuevo para copiar."
+                  : undefined
+              }
+              aria-disabled={isExpired || undefined}
+            >
               <ReferralInput text={currentQR.address} hideButtons />
             </div>
 
@@ -214,9 +231,10 @@ const MembershipCard: React.FC<MembershipCardProps> = ({
               <div className="flex justify-between items-center">
                 <span className="text-white/70">Expira en</span>
                 <span
-                  className={`font-mono font-semibold ${
+                  className={clsx(
+                    "font-mono font-semibold",
                     isExpired ? "text-red-300" : "text-white"
-                  }`}
+                  )}
                   aria-live="polite"
                 >
                   {formatDuration(remainingMs)}

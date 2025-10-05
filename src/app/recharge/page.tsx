@@ -421,11 +421,11 @@ export default function RecargaFichasPage() {
                 {formatCurrency(balance)}
               </p>
             </div>
-            <div className="text-right">
+            {/*  <div className="text-right">
               <span className="inline-block px-3 py-1 rounded-full text-xs bg-neutral-800 border border-neutral-700">
                 {t("badge.userId", { id: "user-123" })}
               </span>
-            </div>
+            </div> */}
           </div>
         </section>
 
