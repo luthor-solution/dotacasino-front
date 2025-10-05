@@ -21,8 +21,8 @@ const ReferralInput: React.FC<Props> = ({ text, hideButtons = false }) => {
     [side, refCodeL, refCodeR]
   );
 
-  // Nombre del parámetro según el side
-  const refParam = side === "left" ? "refCodeL" : "refCodeR";
+  // Ahora el nombre del parámetro es fijo
+  const refParam = "refCode";
 
   // Host dinámico y URL final
   const referralUrl = useMemo(() => {
@@ -30,10 +30,10 @@ const ReferralInput: React.FC<Props> = ({ text, hideButtons = false }) => {
     if (typeof window === "undefined") return "";
     const origin = window.location.origin; // http://localhost:3000 o dominio prod
     const url = new URL("/sign-up", origin);
-    // si hay código lo seteamos, si no, dejamos param vacío para que coincida con el ejemplo
+    // seteamos siempre ?refCode=
     url.searchParams.set(refParam, refCode || "");
     return url.toString();
-  }, [text, refParam, refCode]);
+  }, [text, refCode]);
 
   const handleCopy = async () => {
     if (!referralUrl) {
