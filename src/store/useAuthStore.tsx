@@ -15,17 +15,20 @@ export interface User {
   phone?: string;
   language?: string;
 }
+
 interface AuthState {
   user: User | null;
   token: string | null;
   refreshToken: string | null;
   login: (user: User, token: string, refreshToken: string) => void;
   logout: () => Promise<void>;
-  setUser: (user: Partial<User>) => void; // <-- así debe quedar
+  setUser: (user: Partial<User>) => void;
 }
 
 function removeAuthCookie() {
-  document.cookie = "auth_token=; path=/; max-age=0";
+  if (typeof document !== "undefined") {
+    document.cookie = "auth_token=; path=/; max-age=0";
+  }
 }
 
 function normalizeUser(user: Partial<User>): User {
@@ -35,7 +38,7 @@ function normalizeUser(user: Partial<User>): User {
     country: user.country ?? "",
     createdAt: user.createdAt ?? "",
     roles: user.roles ?? [],
-    firstName: user.firstName ?? "", // Si no existe, queda vacío
+    firstName: user.firstName ?? "",
     lastName: user.lastName ?? "",
     displayName: user.displayName ?? "",
     phone: user.phone ?? "",
@@ -49,6 +52,7 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       refreshToken: null,
+
       login: (user, token, refreshToken) => {
         set({
           user: normalizeUser(user),
@@ -61,25 +65,38 @@ export const useAuthStore = create<AuthState>()(
           }`;
         }
       },
+
       logout: async () => {
         const token = get().token;
         const refreshToken = get().refreshToken;
+
         try {
           if (token && refreshToken) {
             await userService.logout(token, refreshToken);
-            set({ user: null, token: null, refreshToken: null });
-            if (typeof window !== "undefined") {
-              localStorage.removeItem("auth");
-              removeAuthCookie();
-              window.location.href = "/";
-            }
           }
         } catch (e: any) {
           console.log(e);
-          // Puedes manejar el error si lo deseas, pero igual limpia el estado
+        } finally {
+          // Limpia el estado y el storage/cookie siempre
+          set({ user: null, token: null, refreshToken: null });
+          if (typeof window !== "undefined") {
+            try {
+              localStorage.removeItem("auth"); // clave del persist
+            } catch {}
+            removeAuthCookie();
+            window.location.href = "/";
+          }
         }
       },
-      setUser: (user: Partial<User>) => set({ user: normalizeUser(user) }),
+
+      // Merge del usuario previo con el patch antes de normalizar para no borrar campos
+      setUser: (patch: Partial<User>) =>
+        set((state) => ({
+          user: normalizeUser({
+            ...(state.user ?? {}),
+            ...patch,
+          }),
+        })),
     }),
     {
       name: "auth",

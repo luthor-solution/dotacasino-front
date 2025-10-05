@@ -45,17 +45,16 @@ const ProfileSettings: React.FC = () => {
     try {
       const updatedProfile = await userService.updateProfile(form);
       useAuthStore.getState().setUser(updatedProfile as Partial<User>);
+      // Opcional: sincroniza el form local inmediatamente
+      setForm((prev) => ({ ...prev, ...(updatedProfile as Partial<User>) }));
       toast.success(t("profileUpdated"));
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      // Si el error viene de una respuesta de API con mensajes
       if (err?.response?.data?.message) {
         const messages = err.response.data.message;
-        if (Array.isArray(messages)) {
-          messages.forEach((msg: string) => toast.error(msg));
-        } else {
-          toast.error(messages);
-        }
+        Array.isArray(messages)
+          ? messages.forEach((msg: string) => toast.error(msg))
+          : toast.error(messages);
       } else {
         toast.error(t("profileUpdatedError"));
       }
@@ -64,7 +63,6 @@ const ProfileSettings: React.FC = () => {
       setLoading(false);
     }
   };
-
   return (
     <div className="flex flex-col gap-y-[32px] w-full md:w-fit md:border md:border-dotted md:border-gray-400/40 md:p-8 md:rounded-md">
       <ChangePasswordModal
