@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { getStatusProps } from "@/utils/transactionStatus";
 import { useTranslation } from "react-i18next";
 import { LedgerTransaction } from "@/services/walletService";
 
@@ -58,7 +57,6 @@ const TransactionsHistoryCardList: React.FC<Props> = ({ transactions }) => {
   return (
     <>
       {transactions.map((tx) => {
-        const status = getStatusProps(tx.status ?? "completed");
         const kind = tx.kind;
 
         return (
@@ -102,19 +100,6 @@ const TransactionsHistoryCardList: React.FC<Props> = ({ transactions }) => {
                 style={{ color: getAmountColor(tx.amount) }}
               >
                 {formatAmount(tx.amount)} {tx.currency || ""}
-              </span>
-            </div>
-
-            {/* Status */}
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-[#FFC827] font-semibold">
-                {t("status")}
-              </span>
-              <span
-                className="text-sm font-semibold"
-                style={{ color: status.color }}
-              >
-                {status.text}
               </span>
             </div>
 

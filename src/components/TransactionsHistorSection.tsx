@@ -13,11 +13,13 @@ import TransactionsHistoryCardList from "./TransactionsHistoryCardList";
 
 const PAGE_SIZE = 15;
 
-// UI extiende el shape del backend (LedgerTransaction) para que sea asignable
-// donde esperan LedgerTransaction[], y añadimos campos de presentación.
+// El backend puede traer status (string). Lo tipamos sin usar any.
+type RawTransaction = LedgerTransaction & { status?: string | null };
+
+// UI extiende LedgerTransaction para que sea compatible con los componentes hijos
 type UITransactionItem = LedgerTransaction & {
-  currency: string; // no llega del backend; por defecto "USD"
-  status: "completed" | "pending" | "failed" | string; // por defecto "completed"
+  currency: string; // por defecto
+  status: "completed" | "pending" | "failed" | string; // normalizado
 };
 
 function isGameMeta(meta: unknown): boolean {
@@ -37,7 +39,6 @@ function isGameMeta(meta: unknown): boolean {
   return gameKeys.some((k) => m[k] !== undefined) || m["action"] === "spin";
 }
 
-// Siempre devuelve TransactionKind (no opcional)
 function deriveKind(it: Partial<LedgerTransaction>): TransactionKind {
   if (it.kind) return it.kind;
 
@@ -54,23 +55,58 @@ function deriveKind(it: Partial<LedgerTransaction>): TransactionKind {
   ) {
     return "USER_TOPUP";
   }
-  // Fallback determinístico
   return amount < 0 ? "withdraw" : "bonus";
 }
 
-function mapToUIItem(it: Partial<LedgerTransaction>): UITransactionItem {
+// Normaliza status del backend a los que tu UI reconoce
+function normalizeStatus(
+  raw: unknown
+): "completed" | "pending" | "failed" | string {
+  if (typeof raw !== "string") return "completed";
+  const s = raw.toLowerCase();
+  if (
+    ["completed", "complete", "success", "succeeded", "ok", "done"].includes(s)
+  )
+    return "completed";
+  if (
+    [
+      "pending",
+      "processing",
+      "in_progress",
+      "in-progress",
+      "awaiting",
+      "queued",
+    ].includes(s)
+  )
+    return "pending";
+  if (
+    [
+      "failed",
+      "error",
+      "declined",
+      "rejected",
+      "canceled",
+      "cancelled",
+    ].includes(s)
+  )
+    return "failed";
+  // Si tu getStatusProps soporta más, puedes devolver s tal cual
+  return s;
+}
+
+function mapToUIItem(it: RawTransaction): UITransactionItem {
   return {
-    // LedgerTransaction (obligatorios)
+    // Campos del backend
     id: String(it.id ?? ""),
     amount: Number(it.amount ?? 0),
     balanceAfter: Number((it as LedgerTransaction).balanceAfter ?? 0),
     createdAt: String(it.createdAt ?? new Date().toISOString()),
-    kind: deriveKind(it),
     meta: it.meta,
+    kind: deriveKind(it),
 
-    // Campos de presentación para la UI
+    // Presentación UI
     currency: "USD",
-    status: "completed",
+    status: normalizeStatus(it.status),
   };
 }
 
@@ -112,24 +148,18 @@ const TransactionsHistorSection: React.FC = () => {
     walletService
       .TransactionHistory(page, PAGE_SIZE)
       .then((data) => {
-        const {
-          items,
-          total,
-          page: respPage,
-          pageSize,
-        } = mapLedger(data as TransactionHistoryResponse);
+        const { items, total, page: respPage, pageSize } = mapLedger(data);
         setTotal(total);
         setServerPageSize(pageSize || PAGE_SIZE);
 
         if (isMobile && page > 1 && respPage === page) {
-          // En móvil acumulamos las páginas, evitando duplicados
+          // En móvil acumulamos páginas evitando duplicados
           setTransactions((prev) => {
             const prevIds = new Set(prev.map((p) => p.id));
             const newItems = items.filter((i) => !prevIds.has(i.id));
             return [...prev, ...newItems];
           });
         } else {
-          // Desktop o primera página en móvil
           setTransactions(items);
         }
       })
@@ -180,7 +210,6 @@ const TransactionsHistorSection: React.FC = () => {
           <>
             <TransactionsHistoryCardList transactions={transactions} />
             <div className="flex gap-2">
-              {/* Ver menos: vuelve a la primera página */}
               {page > 1 && (
                 <button
                   className="w-1/2 mt-4 px-4 py-3 rounded bg-[#4b2342] text-white font-semibold"
@@ -190,7 +219,6 @@ const TransactionsHistorSection: React.FC = () => {
                   {t("showLess") || "Ver menos"}
                 </button>
               )}
-              {/* Ver más: solo si hay más páginas */}
               {page < totalPages && (
                 <button
                   className={`mt-4 px-4 py-3 rounded bg-[#FF9C19] text-white font-semibold ${
@@ -205,7 +233,6 @@ const TransactionsHistorSection: React.FC = () => {
             </div>
           </>
         )}
-        {/* Skeleton para loading de más páginas */}
         {loading && page > 1 && <TopupHistorySkeleton rows={3} mobile />}
       </div>
     </div>

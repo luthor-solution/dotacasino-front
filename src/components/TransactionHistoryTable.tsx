@@ -1,5 +1,4 @@
 import React from "react";
-import { getStatusProps } from "@/utils/transactionStatus";
 import { useTranslation } from "react-i18next";
 import { LedgerTransaction } from "@/services/walletService";
 
@@ -87,16 +86,7 @@ const TransactionHistoryTable: React.FC<Props> = ({ transactions }) => {
           >
             {t("amount")}
           </th>
-          <th
-            className="py-3 px-4 text-left font-medium text-[20px] tracking-wide"
-            style={{
-              background: "linear-gradient(90deg, #FFC827 0%, #FF9C19 100%)",
-              color: "#2e0327",
-              borderBottom: "2px solid #FF9C19",
-            }}
-          >
-            {t("status")}
-          </th>
+
           <th
             className="py-3 px-4 text-left font-medium text-[20px] tracking-wide"
             style={{
@@ -112,7 +102,6 @@ const TransactionHistoryTable: React.FC<Props> = ({ transactions }) => {
       </thead>
       <tbody>
         {transactions.map((tx) => {
-          const status = getStatusProps(tx.status ?? "completed");
           const kind = tx.kind;
           const kindColor = getKindColor(kind);
           return (
@@ -144,13 +133,6 @@ const TransactionHistoryTable: React.FC<Props> = ({ transactions }) => {
               <td className="py-3 px-4 text-[17px] border-r border-[#4b2342]">
                 <span style={{ color: getAmountColor(tx.amount) }}>
                   {formatAmount(tx.amount)} {tx.currency || ""}
-                </span>
-              </td>
-
-              {/* Status */}
-              <td className="py-3 px-4 text-[17px] font-semibold border-r border-[#4b2342]">
-                <span style={{ color: status.color, fontWeight: 600 }}>
-                  {status.text}
                 </span>
               </td>
 
