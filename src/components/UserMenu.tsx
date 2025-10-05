@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 export type UserMenuValue =
   | "balance"
   | "deposits"
-  | "transaction"
   | "settings"
-  | "referrals";
+  | "referrals"
+  | "trasactions";
 
 interface UserMenuProps {
   active: UserMenuValue;
@@ -19,7 +19,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ active, onSelect }) => {
   const menuItems: { label: string; value: UserMenuValue }[] = [
     { label: t("dashboard"), value: "balance" },
     { label: t("depositHistory"), value: "deposits" },
-    { label: t("transactionHistory"), value: "transaction" },
+    { label: t("transactionHistory"), value: "trasactions" },
     { label: t("accountSettings"), value: "settings" },
     { label: t("referrals"), value: "referrals" },
   ];

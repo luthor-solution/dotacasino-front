@@ -39,7 +39,6 @@ const TopupHistorySection: React.FC = () => {
         }
       })
       .finally(() => setLoading(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, isMobile]);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);

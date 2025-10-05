@@ -4,12 +4,13 @@ import UserActions from "@/components/UserActions";
 import { RiEqualizerLine } from "react-icons/ri";
 import { useState } from "react";
 import Balance from "@/components/Balance";
-import TransactionTable from "@/components/TransactionTable";
+import TopupHistorySection from "@/components/TopupHistorySection";
 import { UserMenuValue } from "@/components/UserMenu";
 import Sidebar from "@/components/SideBar";
 import ProfileSettings from "@/components/ProfileSettings";
 import Referrals from "@/components/Referrals";
 import { useTranslation } from "react-i18next";
+import TransactionsHistorSection from "@/components/TransactionsHistorSection";
 
 export default function Profile() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -43,9 +44,10 @@ export default function Profile() {
         />
 
         {option === "balance" && <Balance />}
-        {option === "deposits" && <TransactionTable />}
+        {option === "deposits" && <TopupHistorySection />}
         {option === "settings" && <ProfileSettings />}
         {option === "referrals" && <Referrals />}
+        {option === "trasactions" && <TransactionsHistorSection />}
       </section>
     </main>
   );
