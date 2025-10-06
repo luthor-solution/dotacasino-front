@@ -120,66 +120,68 @@ const VerticalTimeline: React.FC<Props> = ({ membership }) => (
         style={{ minHeight: 420 }}
       />
       <div className="flex flex-col w-full z-10">
-        {timeline.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex w-full items-center mb-8 relative"
-            style={{ minHeight: 80 }}
-          >
-            {/* Left content */}
-            <div className="w-1/2 flex justify-end pr-8">
-              {idx % 2 === 0 && (
-                <div className="text-right">
-                  <div className={`font-bold ${item.color} text-lg`}>
-                    {item.day}
+        {timeline.map((item, idx) => {
+          const isEnabled = item.enabled.includes(membership || "");
+
+          return (
+            <div
+              key={idx}
+              className="flex w-full items-center mb-8 relative"
+              style={{ minHeight: 80 }}
+            >
+              {/* Left content */}
+              <div className="w-1/2 flex justify-end pr-8">
+                {idx % 2 === 0 && (
+                  <div className="text-right">
+                    <div className={`font-bold ${item.color} text-lg`}>
+                      {item.day}
+                    </div>
+                    <div className="text-gray-300">{item.title}</div>
                   </div>
-                  <div className="text-gray-300">{item.title}</div>
-                </div>
-              )}
-            </div>
-            {/* Center circle and icon */}
-            <div className="relative flex flex-col items-center">
-              <div
-                className={clsx(
-                  `w-28 h-28 rounded-full border-8 ${item.border} flex items-center justify-center z-10 transition-all`,
-                  item.enabled.includes(membership || "") && "bg-white",
-                  !item.enabled.includes(membership || "") && "bg-gray-400"
                 )}
-              >
-                {/* <span className="fo font-bold text-black"> {item.percent}</span> */}
-                <img
-                  src={item.percent}
-                  height={100}
-                  width={100}
-                  alt=""
+              </div>
+
+              {/* Center circle and icon */}
+              <div className="relative flex flex-col items-center">
+                <div
                   className={clsx(
-                    "p-2 transition-all",
-                    !item.enabled.includes(membership || "") &&
-                      "opacity-70 brightness-50"
+                    "w-28 h-28 rounded-full border-8 flex items-center justify-center z-10 transition-all",
+                    isEnabled ? item.border : "border-red-500",
+                    isEnabled ? "bg-white" : "bg-gray-400"
                   )}
-                />
-              </div>
-              <div
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center pointer-events-none`}
-              >
-                <span
-                  className={`text-white font-bold text-lg ${item.bg} rounded-full w-8 h-8 flex items-center justify-center shadow border-2 border-white`}
-                >{`0${idx + 1}`}</span>
-              </div>
-            </div>
-            {/* Right content */}
-            <div className="w-1/2 flex justify-start pl-8">
-              {idx % 2 === 1 && (
-                <div className="text-left">
-                  <div className={`font-bold ${item.color} text-lg`}>
-                    {item.day}
-                  </div>
-                  <div className="text-gray-300">{item.title}</div>
+                >
+                  <img
+                    src={item.percent}
+                    height={100}
+                    width={100}
+                    alt=""
+                    className={clsx(
+                      "p-2 transition-all",
+                      !isEnabled && "opacity-70 brightness-50"
+                    )}
+                  />
                 </div>
-              )}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center pointer-events-none">
+                  <span
+                    className={`text-white font-bold text-lg ${item.bg} rounded-full w-8 h-8 flex items-center justify-center shadow border-2 border-white`}
+                  >{`0${idx + 1}`}</span>
+                </div>
+              </div>
+
+              {/* Right content */}
+              <div className="w-1/2 flex justify-start pl-8">
+                {idx % 2 === 1 && (
+                  <div className="text-left">
+                    <div className={`font-bold ${item.color} text-lg`}>
+                      {item.day}
+                    </div>
+                    <div className="text-gray-300">{item.title}</div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </div>

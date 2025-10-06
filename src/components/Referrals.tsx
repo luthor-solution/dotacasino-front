@@ -8,6 +8,7 @@ import MembershipCard from "./MembershipCard";
 import MembershipCardSkeleton from "./MembershipCardSkeleton";
 import { userService, MembershipQRResponse } from "@/services/userService";
 import { membershisService, Membership } from "@/services/membershipsService";
+import { depositService } from "@/services/depositsService";
 
 /* Tipos */
 type LocalQR = {
@@ -21,6 +22,9 @@ type LocalQR = {
 };
 
 type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
+
+/* Importante: memo para evitar re-render de ReferralInput y prevenir scroll jumps por focus */
+const ReferralInputMemo = React.memo(ReferralInput);
 
 /* Modal simple reutilizable */
 const Modal: React.FC<{
@@ -72,6 +76,36 @@ const Referrals: React.FC = () => {
     null
   );
 
+  // Helpers para evitar sets innecesarios (menos renders => menos riesgo de scroll/jump por focos en hijos)
+  const sameQR = (a: LocalQR | null, b: LocalQR | null) => {
+    if (!a && !b) return true;
+    if (!a || !b) return false;
+    return (
+      a.address === b.address &&
+      a.amount === b.amount &&
+      a.status === b.status &&
+      a.expires_at === b.expires_at &&
+      a.qrcode_url === b.qrcode_url &&
+      a.status_text === b.status_text &&
+      a.membership_type === b.membership_type
+    );
+  };
+  const setActiveQRIfChanged = (next: LocalQR | null) => {
+    setActiveQR((prev) => (sameQR(prev, next) ? prev : next));
+  };
+
+  const sameMemberships = (a: Membership[], b: Membership[]) => {
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) {
+      // Compara campos clave; ajusta si necesitas más
+      if (a[i].id !== b[i].id || a[i].active !== b[i].active) return false;
+    }
+    return true;
+  };
+  const setMembershipsIfChanged = (next: Membership[]) => {
+    setMemberships((prev) => (sameMemberships(prev, next) ? prev : next));
+  };
+
   useEffect(() => {
     const fetchAll = async () => {
       try {
@@ -81,7 +115,7 @@ const Referrals: React.FC = () => {
         const qr = await userService.getQRMembership();
         const mem = await membershisService.getMembeships();
 
-        setMemberships(mem);
+        setMembershipsIfChanged(mem);
         setQrMembership(qr);
 
         if (qr?.membership_type) {
@@ -94,9 +128,9 @@ const Referrals: React.FC = () => {
             status_text: qr.status_text ?? null,
             membership_type: qr.membership_type,
           };
-          setActiveQR(normalized);
+          setActiveQRIfChanged(normalized);
         } else {
-          setActiveQR(null);
+          setActiveQRIfChanged(null);
         }
       } catch (err: any) {
         console.error("Error fetching memberships:", err);
@@ -145,12 +179,6 @@ const Referrals: React.FC = () => {
     setCreatingFor(membershipId);
 
     try {
-      // Ayuda a depurar
-      console.log("createMembership payload =>", {
-        membership_type: membershipId,
-        network,
-      });
-
       const data = await userService.createMembershipQR({
         membership_type: membershipId,
         network, // <- requerido por el backend
@@ -165,7 +193,8 @@ const Referrals: React.FC = () => {
         status_text: data.status_text ?? null,
         membership_type: data.membership_type ?? membershipId,
       };
-      setActiveQR(normalized);
+      setActiveQRIfChanged(normalized);
+      // El polling arrancará solo al detectar activeQR.address
     } catch (err: any) {
       console.error(
         `${
@@ -212,9 +241,116 @@ const Referrals: React.FC = () => {
     console.log(selectedNetwork);
   }, [selectedNetwork]);
 
+  // Polling idéntico a depósitos, aplicado al QR de membresía
+  /*  useEffect(() => {
+    if (!activeQR?.address) return;
+
+    let intervalId: number | null = null;
+    let stopped = false;
+
+    const stop = () => {
+      if (stopped) return;
+      stopped = true;
+      if (intervalId) {
+        window.clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const handleOK = async () => {
+      try {
+        // 1) Refrescar la membresía actual
+        const membership = await userService.getCurrentMembership();
+        setCurrentMembership(membership.membership);
+
+        // 2) Refrescar el QR de membresía (puede desaparecer o cambiar estado)
+        const qr = await userService.getQRMembership();
+        setQrMembership(qr);
+
+        if (qr?.membership_type) {
+          const normalized: LocalQR = {
+            address: qr.address,
+            amount: qr.amount,
+            status: qr.status,
+            expires_at: qr.expires_at,
+            qrcode_url: qr.qrcode_url,
+            status_text: qr.status_text ?? null,
+            membership_type: qr.membership_type,
+          };
+          setActiveQRIfChanged(normalized);
+        } else {
+          setActiveQRIfChanged(null);
+        }
+
+        // 3) Refrescar listado de memberships por si cambian flags/estados
+        try {
+          const mem = await membershisService.getMembeships();
+          setMembershipsIfChanged(mem);
+        } catch {
+          // no crítico
+        }
+      } catch (e: any) {
+        console.warn("[membership OK refresh] error:", e?.message || e);
+      } finally {
+        // Detener polling y limpiar flags transitorios
+        stop();
+        setCreatingFor(null);
+        setPendingMembershipId(null);
+        setSelectedNetwork(null);
+        setActionMode(null);
+        setGlobalError(null);
+      }
+    };
+
+    // Mismo tick que compartiste, pero apuntando al QR de membresía
+    const tick = async () => {
+      try {
+        const res: any = await depositService.polling({
+          address: activeQR.address,
+        });
+
+        // La API devuelve "OK" o "NO"
+        const value = String(res).toUpperCase();
+
+        if (value === "OK") {
+          await handleOK();
+          return;
+        }
+        if (value === "NO") {
+          // seguimos pollinando
+          return;
+        }
+
+        // Si por alguna razón llega un objeto con un campo, intentamos leerlo
+        const fallback = String(res?.status ?? res?.result ?? "").toUpperCase();
+        if (fallback === "OK") {
+          await handleOK();
+          return;
+        }
+        // para cualquier otro valor, continuamos pollinando
+      } catch (e: any) {
+        console.warn(
+          "[membership polling] error:",
+          e?.response?.data || e?.message || e
+        );
+        // continuamos pollinando a menos que quieras detener en error
+      }
+    };
+
+    // Disparo inicial e intervalo de 5s
+    tick();
+    intervalId = window.setInterval(tick, 5000);
+
+    return () => {
+      stop();
+    };
+  }, [activeQR?.address]); */
+
   return (
     <div className="flex flex-col w-full md:max-w-5xl gap-y-[32px]">
-      <ReferralInput />
+      {/* Usa la versión memoizada para evitar re-render del input y prevenir saltos de scroll */}
+      <ReferralInputMemo />
+
       <DubaiTimeProgress progress={67} />
       <MultiplierBar />
       <VerticalTimeline membership={currentMembership} />

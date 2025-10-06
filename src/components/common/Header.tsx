@@ -8,6 +8,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useKYCStatusStore } from "@/store/useKYCStatusStore";
 import { useTranslation } from "react-i18next";
 import { walletService } from "@/services/walletService"; // <- IMPORTANTE
+import { toast } from "react-toastify";
 
 type NavLink = {
   href: string;
@@ -33,6 +34,11 @@ const Header: React.FC = () => {
   const [currency, setCurrency] = useState<string>("---");
   const [loadingWallet, setLoadingWallet] = useState<boolean>(true);
   const didFetchWallet = useRef(false);
+
+  // Estado para Reporte (desktop + mobile)
+  const [reportOpen, setReportOpen] = useState(false);
+  const [reportOpenMobile, setReportOpenMobile] = useState(false);
+  const reportRef = useRef<HTMLDivElement>(null);
 
   const navLinks: NavLink[] = [
     { href: "/", label: t("header.home") },
@@ -83,6 +89,24 @@ const Header: React.FC = () => {
     };
   }, [userMenu]);
 
+  // Cierra el popover de reporte si se hace click fuera (desktop)
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        reportRef.current &&
+        !reportRef.current.contains(event.target as Node)
+      ) {
+        setReportOpen(false);
+      }
+    }
+    if (reportOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [reportOpen]);
+
   // Fetch de wallet al montar (y solo una vez)
   const lastFetchedUserId = useRef<string | null>(null);
 
@@ -116,6 +140,82 @@ const Header: React.FC = () => {
     if (link.showWhenLogged === undefined) return true;
     return user ? link.showWhenLogged : !link.showWhenLogged;
   });
+
+  // Formulario compartido para reportar problema
+  function ReportForm({ afterSubmit }: { afterSubmit?: () => void }) {
+    const [email, setEmail] = useState("");
+    const [description, setDescription] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const submitReport = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!description.trim()) {
+        toast.error("Por favor describe el problema.");
+        return;
+      }
+      try {
+        setLoading(true);
+        const res = await fetch("/api/report-issue", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email.trim() || undefined,
+            description: description.trim(),
+            url:
+              typeof window !== "undefined" ? window.location.href : undefined,
+            userAgent:
+              typeof navigator !== "undefined"
+                ? navigator.userAgent
+                : undefined,
+          }),
+        });
+        if (!res.ok) throw new Error("Server error");
+        toast.success("¡Gracias! Tu reporte fue enviado.");
+        setDescription("");
+        setEmail("");
+        afterSubmit?.();
+      } catch {
+        toast.error("No se pudo enviar el reporte. Intenta más tarde.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    return (
+      <form onSubmit={submitReport} className="space-y-3">
+        <div className="flex flex-col gap-1">
+          <label htmlFor="report_desc" className="text-sm text-white/80">
+            Describe el problema
+          </label>
+          <textarea
+            id="report_desc"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full rounded-md border border-[#FFC827]/40 px-3 py-2 text-sm outline-none bg-white text-gray-900 focus:ring-2 focus:ring-[#FFC827]"
+            rows={4}
+            placeholder="¿Qué estabas haciendo? ¿Qué salió mal?"
+          />
+        </div>
+
+        <div className="flex items-center justify-end gap-2 pt-1">
+          <button
+            type="button"
+            className="px-3 py-2 text-sm rounded-md border border-[#FFC827]/60 text-white hover:bg-white/10"
+            onClick={() => afterSubmit?.()}
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-3 py-2 text-sm rounded-md bg-[#FFC827] text-[#2e0327] hover:opacity-90 disabled:opacity-60"
+          >
+            {loading ? "Enviando..." : "Enviar"}
+          </button>
+        </div>
+      </form>
+    );
+  }
 
   // Pequeño componente de badge de balance para reutilizar en desktop/mobile
   const BalanceBadge = () => (
@@ -171,8 +271,53 @@ const Header: React.FC = () => {
           ))}
         </nav>
 
-        {/* Lado derecho: Balance + User menu (desktop) */}
+        {/* Lado derecho: Report + Balance + User menu (desktop) */}
         <div className="hidden md:flex items-center gap-4">
+          {/* Botón Reportar problema (desktop) */}
+          <div className="relative" ref={reportRef}>
+            <button
+              onClick={() => setReportOpen((v) => !v)}
+              className="flex items-center gap-2 px-3 py-1 rounded-full border border-[#FFC827] text-[#FFC827] hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
+              aria-expanded={reportOpen}
+              aria-controls="report-popover"
+            >
+              {/* Icono bug */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M8 7V3" />
+                <path d="M16 7V3" />
+                <path d="M9 11H15" />
+                <path d="M9 15H15" />
+                <rect x="6" y="7" width="12" height="14" rx="6" />
+                <path d="M19 7l1.5-1.5" />
+                <path d="M5 7L3.5 5.5" />
+              </svg>
+              <span className="hidden lg:inline">Reportar</span>
+            </button>
+
+            {reportOpen && (
+              <div
+                id="report-popover"
+                className={`absolute right-0 mt-2 w-80 ${
+                  isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
+                } border border-[#FFC827] rounded-lg shadow-lg p-4 text-white z-50`}
+              >
+                <div className="mb-2 font-semibold">Reportar un problema</div>
+                <ReportForm afterSubmit={() => setReportOpen(false)} />
+              </div>
+            )}
+          </div>
+
           {/* Mostrar balance solo si user */}
           {user && <BalanceBadge />}
 
@@ -231,7 +376,7 @@ const Header: React.FC = () => {
                     </Link>
                   )}
                   <button
-                    className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors cursor-pointer capitalize"
+                    className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
                     onClick={() => {
                       setUserMenu(false);
                       logout();
@@ -243,14 +388,16 @@ const Header: React.FC = () => {
               )}
             </div>
           )}
-
-          {/* Mobile hamburger (visible en md:hidden, por eso lo dejamos fuera en desktop) */}
         </div>
 
         {/* Mobile hamburger */}
         <button
           className="md:hidden flex flex-col justify-center items-center w-10 h-10"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            setOpen((v) => !v);
+            // cerrar popover desktop si estaba abierto
+            setReportOpen(false);
+          }}
           aria-label="Abrir menú"
         >
           <span
@@ -307,6 +454,66 @@ const Header: React.FC = () => {
               {link.label}
             </Link>
           ))}
+
+          {/* Sección Reportar (mobile) */}
+          <div className="mt-1">
+            <button
+              onClick={() => setReportOpenMobile((v) => !v)}
+              className="w-full flex items-center justify-between px-3 py-2 rounded-md border border-[#FFC827] text-[#FFC827] hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
+              aria-expanded={reportOpenMobile}
+              aria-controls="report-mobile"
+            >
+              <span className="flex items-center gap-2">
+                {/* Icono bug */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8 7V3" />
+                  <path d="M16 7V3" />
+                  <path d="M9 11H15" />
+                  <path d="M9 15H15" />
+                  <rect x="6" y="7" width="12" height="14" rx="6" />
+                  <path d="M19 7l1.5-1.5" />
+                  <path d="M5 7L3.5 5.5" />
+                </svg>
+                Reportar un problema
+              </span>
+              <svg
+                className={`w-4 h-4 transition-transform ${
+                  reportOpenMobile ? "rotate-180" : ""
+                }`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            {reportOpenMobile && (
+              <div
+                id="report-mobile"
+                className="mt-3 border border-[#FFC827] rounded-lg p-3 text-white"
+              >
+                <ReportForm
+                  afterSubmit={() => {
+                    setReportOpenMobile(false);
+                    setOpen(false);
+                  }}
+                />
+              </div>
+            )}
+          </div>
 
           {/* User menu (mobile) */}
           {user && (
