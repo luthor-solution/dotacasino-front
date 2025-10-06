@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useKYCStatusStore } from "@/store/useKYCStatusStore";
 import { useTranslation } from "react-i18next";
+import { walletService } from "@/services/walletService"; // <- IMPORTANTE
 
 type NavLink = {
   href: string;
@@ -26,6 +27,12 @@ const Header: React.FC = () => {
   const logout = useAuthStore((state) => state.logout);
   const kycStatus = useKYCStatusStore((state) => state.kycStatus);
   const { t } = useTranslation();
+
+  // Estado para wallet
+  const [balance, setBalance] = useState<string>("$0");
+  const [currency, setCurrency] = useState<string>("---");
+  const [loadingWallet, setLoadingWallet] = useState<boolean>(true);
+  const didFetchWallet = useRef(false);
 
   const navLinks: NavLink[] = [
     { href: "/", label: t("header.home") },
@@ -76,11 +83,56 @@ const Header: React.FC = () => {
     };
   }, [userMenu]);
 
+  // Fetch de wallet al montar (y solo una vez)
+  const lastFetchedUserId = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!user) {
+      setBalance("$0");
+      setCurrency("---");
+      setLoadingWallet(false);
+      lastFetchedUserId.current = null;
+      return;
+    }
+    if (lastFetchedUserId.current === user.id) return; // ya fetcheado para este user
+
+    setLoadingWallet(true);
+    walletService
+      .getWallet()
+      .then((data) => {
+        setBalance(`$${data.balance}`);
+        setCurrency(data.currency ?? "");
+        lastFetchedUserId.current = user.id;
+      })
+      .catch(() => {
+        setBalance("$0");
+        setCurrency("---");
+      })
+      .finally(() => setLoadingWallet(false));
+  }, [user]);
+
   // Filtra los links según el estado de login
   const filteredNavLinks = navLinks.filter((link) => {
     if (link.showWhenLogged === undefined) return true;
     return user ? link.showWhenLogged : !link.showWhenLogged;
   });
+
+  // Pequeño componente de badge de balance para reutilizar en desktop/mobile
+  const BalanceBadge = () => (
+    <div
+      className={`flex items-center gap-2 px-3 py-1 rounded-full border ${
+        isRecharge ? "border-[#FFC827]" : "border-[#FFC827]"
+      } bg-black/20`}
+      title={t("totalBalance") ?? "Total Balance"}
+    >
+      <span className="text-[#FFC827] font-semibold">
+        {loadingWallet ? "..." : balance}
+      </span>
+      <span className="text-white text-[10px]">
+        {loadingWallet ? "" : currency}
+      </span>
+    </div>
+  );
 
   return (
     <header
@@ -119,74 +171,81 @@ const Header: React.FC = () => {
           ))}
         </nav>
 
-        {/* User menu (desktop) */}
-        {user && (
-          <div className="hidden md:block relative ml-4" ref={userMenuRef}>
-            <button
-              className="flex items-center gap-2 focus:outline-none cursor-pointer"
-              onClick={() => setUserMenu((v) => !v)}
-              aria-label="Abrir menú de usuario"
-            >
-              <Image
-                src="/avatar.png"
-                alt="Avatar"
-                width={40}
-                height={40}
-                className="rounded-full border-2 border-[#FFC827] bg-white"
-              />
-              <span className="text-white font-medium">
-                {user?.displayName || "Usuario"}
-              </span>
-              <svg
-                className={`w-4 h-4 text-[#FFC827] transition-transform ${
-                  userMenu ? "rotate-180" : ""
-                }`}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
+        {/* Lado derecho: Balance + User menu (desktop) */}
+        <div className="hidden md:flex items-center gap-4">
+          {/* Mostrar balance solo si user */}
+          {user && <BalanceBadge />}
+
+          {user && (
+            <div className="relative ml-2" ref={userMenuRef}>
+              <button
+                className="flex items-center gap-2 focus:outline-none cursor-pointer"
+                onClick={() => setUserMenu((v) => !v)}
+                aria-label="Abrir menú de usuario"
               >
-                <path d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {/* Dropdown */}
-            {userMenu && (
-              <div
-                className={`absolute right-0 mt-2 w-44 ${
-                  isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
-                } border border-[#FFC827] rounded-lg shadow-lg py-2 z-40 animate-fade-down`}
-              >
-                <Link
-                  href="/profile"
-                  className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
-                  onClick={() => setUserMenu(false)}
+                <Image
+                  src="/avatar.png"
+                  alt="Avatar"
+                  width={40}
+                  height={40}
+                  className="rounded-full border-2 border-[#FFC827] bg-white"
+                />
+                <span className="text-white font-medium">
+                  {user?.displayName || "Usuario"}
+                </span>
+                <svg
+                  className={`w-4 h-4 text-[#FFC827] transition-transform ${
+                    userMenu ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
                 >
-                  {t("header.myProfile")}
-                </Link>
-                {kycStatus !== "APPROVED" && (
+                  <path d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {/* Dropdown */}
+              {userMenu && (
+                <div
+                  className={`absolute right-0 mt-2 w-44 ${
+                    isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
+                  } border border-[#FFC827] rounded-lg shadow-lg py-2 z-40 animate-fade-down`}
+                >
                   <Link
-                    href="/kyc"
+                    href="/profile"
                     className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
+                    onClick={() => setUserMenu(false)}
+                  >
+                    {t("header.myProfile")}
+                  </Link>
+                  {kycStatus !== "APPROVED" && (
+                    <Link
+                      href="/kyc"
+                      className="block px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors capitalize"
+                      onClick={() => {
+                        setUserMenu(false);
+                      }}
+                    >
+                      {t("header.verifyIdentity")}
+                    </Link>
+                  )}
+                  <button
+                    className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors cursor-pointer capitalize"
                     onClick={() => {
                       setUserMenu(false);
+                      logout();
                     }}
                   >
-                    {t("header.verifyIdentity")}
-                  </Link>
-                )}
-                <button
-                  className="w-full text-left px-4 py-2 text-white hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors cursor-pointer capitalize"
-                  onClick={() => {
-                    setUserMenu(false);
-                    logout();
-                  }}
-                >
-                  {t("header.logout")}
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+                    {t("header.logout")}
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Mobile hamburger (visible en md:hidden, por eso lo dejamos fuera en desktop) */}
+        </div>
 
         {/* Mobile hamburger */}
         <button
@@ -228,6 +287,14 @@ const Header: React.FC = () => {
           `}
           style={{ willChange: "transform, opacity" }}
         >
+          {/* Balance en mobile (si user) */}
+          {user && (
+            <div className="flex justify-between items-center">
+              <span className="text-white text-sm">{t("totalBalance")}</span>
+              <BalanceBadge />
+            </div>
+          )}
+
           {filteredNavLinks.map((link) => (
             <Link
               key={link.href}
@@ -298,7 +365,7 @@ const Header: React.FC = () => {
                         setOpen(false);
                       }}
                     >
-                      Verificar identidad
+                      {t("header.verifyIdentity")}
                     </Link>
                   )}
                   <button
@@ -309,7 +376,7 @@ const Header: React.FC = () => {
                       logout();
                     }}
                   >
-                    Cerrar sesión
+                    {t("header.logout")}
                   </button>
                 </div>
               )}
