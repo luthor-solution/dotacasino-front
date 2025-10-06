@@ -66,7 +66,7 @@
     "company": {
       "title": "Company",
       "news": "News",
-      "About": "About us"
+      "about": "About us"
     },
     "games": {
       "title": "Games",
@@ -142,7 +142,7 @@
   "depositHistory": "Deposit history",
   "transactionHistory": "Transaction history",
   "accountSettings": "Account settings",
-  "referrals": "Referrals",
+  "referrals": "Referrals and memberships",
   "allInputsRequired": "All fields are required",
   "atLeast8": "The new password must be at least 8 characters",
   "passwordsMismatch": "Passwords do not match",

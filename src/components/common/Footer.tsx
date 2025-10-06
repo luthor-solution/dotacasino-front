@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 const Footer = () => {
   const pathname = usePathname();
   const [isRecharge, setIsRecharge] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     setIsRecharge(pathname === "/recharge");
@@ -129,10 +129,13 @@ const Footer = () => {
               isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
             } text-white px-4 py-2 rounded-lg border border-[#FFC827] focus:outline-none`}
             defaultValue="es"
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              i18n.changeLanguage(e.target.value);
+            }}
           >
             <option value="es">🇪🇸 Spanish</option>
             <option value="en">🇬🇧 English</option>
-            <option value="kr">🇰🇷 Korean</option>
+            <option value="ko">🇰🇷 Korean</option>
           </select>
           <Image
             src="/logo.svg"

@@ -66,7 +66,7 @@
     "company": {
       "title": "Compañía",
       "news": "Noticias",
-      "About": "Acerca de nosotros"
+      "about": "Acerca de nosotros"
     },
     "games": {
       "title": "Juegos",
@@ -142,7 +142,7 @@
   "depositHistory": "Historial de Depósitos",
   "transactionHistory": "Historial de Transacciones",
   "accountSettings": "Configuración de la cuenta",
-  "referrals": "Referidos",
+  "referrals": "Referidos y membresias",
   "allInputsRequired": "Todos los campos son obligatorios",
   "atLeast8": "La nueva contraseña debe tener al menos 8 caracteres",
   "passwordsMismatch": "Las contraseñas no coinciden",
