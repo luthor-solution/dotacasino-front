@@ -5,6 +5,7 @@ import Iframe from "./iframe";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import BackgroundGlow from "./BackgroundGlow";
+import Ticker from "./ticker";
 
 type Props = {
   params: Promise<{
@@ -47,8 +48,9 @@ const GamePage: FC<Props> = async ({ params }) => {
     }
 
     return (
-      <div className="mt-20 flex justify-center bg-[#350b2d]">
+      <div className="mt-20 flex flex-col items-center bg-[#350b2d] overflow-x-hidden">
         <BackgroundGlow />
+        <Ticker />
         <Iframe
           url={gameInfo.content.game.url}
           sessionId={gameInfo.content.gameRes.sessionId}
