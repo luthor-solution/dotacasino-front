@@ -10,6 +10,16 @@ type Props = {
   width: "0" | "1";
 };
 
+function toggleFullscreen() {
+  const el = document.getElementById("game-shell")!;
+  const isFs = document.fullscreenElement != null;
+  if (!isFs) {
+    el.requestFullscreen?.();
+  } else {
+    document.exitFullscreen?.();
+  }
+}
+
 const Iframe: FC<Props> = ({ url, sessionId, width }) => {
   const iframeRef = useRef(null);
   const router = useRouter();
@@ -39,8 +49,8 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
           >
             <div
               id="game-aspect"
-              className="max-w-[95vw] md:min-h-[70vh]"
-              style={{ aspectRatio: "16/9" }}
+              className="w-[95vw] md:w-auto md:min-h-[70vh]"
+              style={{ aspectRatio: "13/9" }}
             >
               <div
                 className="h-full w-full flex items-center justify-center relative"
@@ -49,20 +59,7 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
                     "radial-gradient(ellipse at center, rgba(255,200,39,0.08), rgba(0,0,0,0.35))",
                 }}
               >
-                <iframe
-                  className="w-full h-full"
-                  src={url}
-                  ref={iframeRef}
-                />
-
-                <div
-                  id="shine"
-                  className="pointer-events-none absolute -left-1/3 top-0 h-full w-1/3 rotate-6 opacity-0"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,200,39,0.18) 45%, rgba(255,200,39,0.22) 55%, rgba(255,255,255,0) 100%)",
-                  }}
-                ></div>
+                <iframe className="w-full h-full" src={url} ref={iframeRef} />
               </div>
             </div>
           </div>
