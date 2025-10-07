@@ -28,6 +28,7 @@ const Header: React.FC = () => {
   const logout = useAuthStore((state) => state.logout);
   const kycStatus = useKYCStatusStore((state) => state.kycStatus);
   const { t } = useTranslation();
+  const isAuthPage = pathname === "/sign-in" || pathname === "/sign-up";
 
   // Estado para wallet
   const [balance, setBalance] = useState<string>("$0");
@@ -249,9 +250,19 @@ const Header: React.FC = () => {
         } transition-all duration-300`}
       >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 select-none">
+        <Link
+          href="/"
+          className={`items-center gap-2 select-none ${
+            isAuthPage ? "hidden md:flex" : "flex"
+          }`}
+        >
           <Image src="/logo.svg" alt="Logo" width={200} height={44} />
         </Link>
+        <div
+          className={`items-center gap-2 select-none ${
+            !isAuthPage ? "hidden md:flex" : "flex"
+          }`}
+        />
 
         {/* Desktop nav */}
         <nav className="hidden md:flex gap-8 items-center uppercase">
