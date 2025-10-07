@@ -12,12 +12,42 @@ type Props = {
 };
 
 function toggleFullscreen() {
-  const el = document.getElementById("game-shell")!;
-  const isFs = document.fullscreenElement != null;
-  if (!isFs) {
-    el.requestFullscreen?.();
-  } else {
-    document.exitFullscreen?.();
+  const el = document.getElementById("game-shell");
+  if (!el) return;
+
+  const isFullscreen =
+    document.fullscreenElement ||
+    (document as any).webkitFullscreenElement ||
+    (document as any).mozFullScreenElement ||
+    (document as any).msFullscreenElement;
+
+  try {
+    if (!isFullscreen) {
+      const request =
+        el.requestFullscreen ||
+        (el as any).webkitRequestFullscreen ||
+        (el as any).mozRequestFullScreen ||
+        (el as any).msRequestFullscreen;
+
+      if (request) {
+        // En móviles, algunos navegadores exigen interacción directa (click/tap)
+        request.call(el);
+      } else {
+        console.warn("Fullscreen API no soportada en este navegador");
+      }
+    } else {
+      const exit =
+        document.exitFullscreen ||
+        (document as any).webkitExitFullscreen ||
+        (document as any).mozCancelFullScreen ||
+        (document as any).msExitFullscreen;
+
+      if (exit) {
+        exit.call(document);
+      }
+    }
+  } catch (err) {
+    console.error("Error al cambiar a pantalla completa:", err);
   }
 }
 
@@ -37,8 +67,7 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
     <div id="game-container" className="relative py-8">
       <div className="flex justify-between py-4">
         <span className="text-sm line-clamp-1">
-          Te recomendamos activar la pantalla
-          completa
+          Te recomendamos activar la pantalla completa
         </span>
         <button
           className="rounded-lg bg-white text-black h-6 w-6 flex items-center justify-center"
