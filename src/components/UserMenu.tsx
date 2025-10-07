@@ -6,7 +6,8 @@ export type UserMenuValue =
   | "deposits"
   | "settings"
   | "referrals"
-  | "trasactions";
+  | "trasactions"
+  | "withdraw";
 
 interface UserMenuProps {
   active: UserMenuValue;
@@ -22,6 +23,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ active, onSelect }) => {
     { label: t("transactionHistory"), value: "trasactions" },
     { label: t("accountSettings"), value: "settings" },
     { label: t("referrals"), value: "referrals" },
+    { label: t("withdraw"), value: "withdraw" },
   ];
   return (
     <div className="flex flex-col md:w-[400px]">

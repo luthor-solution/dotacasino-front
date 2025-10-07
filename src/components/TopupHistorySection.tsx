@@ -6,7 +6,7 @@ import TopupHistoryCardList from "./TopupHistoryCardList";
 import TopupHistorySkeleton from "./TopupHistorySkeleton";
 import { useTranslation } from "react-i18next";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 5;
 
 const TopupHistorySection: React.FC = () => {
   const [transactions, setTransactions] = useState<TopupHistoryItem[]>([]);
@@ -41,7 +41,7 @@ const TopupHistorySection: React.FC = () => {
       .finally(() => setLoading(false));
   }, [page, isMobile]);
 
-  const totalPages = Math.ceil(total / PAGE_SIZE);
+  const totalPages = Math.ceil(total / PAGE_SIZE) || 1;
 
   return (
     <div className="w-full max-w-6xl">
@@ -73,6 +73,7 @@ const TopupHistorySection: React.FC = () => {
           </span>
         </div>
       </div>
+
       {/* Mobile Cards */}
       <div className="block md:hidden space-y-4">
         {loading && page === 1 ? (
@@ -80,16 +81,28 @@ const TopupHistorySection: React.FC = () => {
         ) : (
           <>
             <TopupHistoryCardList transactions={transactions} />
-            {/* Botón Ver más solo si hay más páginas */}
-            {page < totalPages && (
-              <button
-                className="w-full mt-4 px-4 py-3 rounded bg-[#FF9C19] text-white font-semibold"
-                onClick={() => setPage((p) => p + 1)}
-                disabled={loading}
-              >
-                {loading ? t("loading") : t("showMore")}
-              </button>
-            )}
+            <div className="flex gap-2">
+              {page > 1 && (
+                <button
+                  className="w-1/2 mt-4 px-4 py-3 rounded bg-[#4b2342] text-white font-semibold"
+                  onClick={() => setPage(1)}
+                  disabled={loading}
+                >
+                  {t("showLess") || "Ver menos"}
+                </button>
+              )}
+              {page < totalPages && (
+                <button
+                  className={`mt-4 px-4 py-3 rounded bg-[#FF9C19] text-white font-semibold ${
+                    page > 1 ? "w-1/2" : "w-full"
+                  }`}
+                  onClick={() => setPage((p) => p + 1)}
+                  disabled={loading}
+                >
+                  {loading ? t("loading") : t("showMore")}
+                </button>
+              )}
+            </div>
           </>
         )}
         {/* Skeleton para loading de más páginas */}
