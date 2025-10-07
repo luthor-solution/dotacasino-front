@@ -42,18 +42,21 @@ const GamePage: FC<Props> = async ({ params }) => {
 
     if (gameInfo.error == "hall_balance_less_100") {
       return (
-        <div className="mt-20 flex justify-center h-[200px] items-center">
+        <div className="flex justify-center h-[200px] items-center">
           Esté juego necesita al menos 100 usd en el balance
         </div>
       );
     }
 
     return (
-      <div className="mt-20 flex flex-col items-center bg-[#350b2d] overflow-x-hidden">
-        <Head>
-          <style
-            dangerouslySetInnerHTML={{
-              __html: `
+      <div className="flex flex-col items-center bg-[#350b2d] overflow-x-hidden">
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+            header {
+              position: relative !important;
+            }
+
             body.core-scrollcheck {
               width: 100%;
               height: 3000px;
@@ -115,9 +118,8 @@ const GamePage: FC<Props> = async ({ params }) => {
               pointer-events: none;
             }
             `,
-            }}
-          />
-        </Head>
+          }}
+        />
 
         <BackgroundGlow />
         <Ticker />
