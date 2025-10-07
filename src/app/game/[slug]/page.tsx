@@ -46,6 +46,8 @@ const GamePage: FC<Props> = async ({ params }) => {
       );
     }
 
+    console.log(gameInfo)
+
     return (
       <div className="mt-20 flex justify-center bg-[#350b2d]">
         <BackgroundGlow />
