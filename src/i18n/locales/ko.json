@@ -167,6 +167,7 @@
       "amountLabel": "출금 금액",
       "amountPlaceholder": "0.00",
       "networkLabel": "네트워크",
+      "address": "주소",
       "networks": {
         "BSC": "BSC",
         "ETH": "ETH",

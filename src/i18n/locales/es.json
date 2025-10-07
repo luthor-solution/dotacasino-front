@@ -167,6 +167,7 @@
       "amountLabel": "Monto a retirar",
       "amountPlaceholder": "0.00",
       "networkLabel": "Red",
+      "address": "Dirección",
       "networks": {
         "BSC": "BSC",
         "ETH": "ETH",

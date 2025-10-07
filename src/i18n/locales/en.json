@@ -167,6 +167,7 @@
       "amountLabel": "Amount to withdraw",
       "amountPlaceholder": "0.00",
       "networkLabel": "Network",
+      "address": "Address",
       "networks": {
         "BSC": "BSC",
         "ETH": "ETH",
