@@ -35,6 +35,7 @@ export default function RetiroFichasPage() {
 
   const [balance, setBalance] = useState<number>(1);
   const [amount, setAmount] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
   const [selectedNetwork, setSelectedNetwork] = useState<Network>("BSC");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -97,12 +98,13 @@ export default function RetiroFichasPage() {
       const req: CreateWithdrawRequest = {
         amount: val,
         network: selectedNetwork,
+        address: address,
       };
 
       // address = network seleccionada
       const dataAny: any = await withdrawService.create({
         amount: req.amount,
-        address: req.network,
+        address: req.address,
       });
 
       const normalized: CreateWithdrawResult = {
@@ -194,6 +196,26 @@ export default function RetiroFichasPage() {
               {t("withdraw.form.title") || "Crear retiro"}
             </h2>
 
+            <div className="pb-2">
+              <div>
+                <label className="text-sm text-neutral-300">
+                  {t("withdraw.form.address")}
+                </label>
+                <input
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder={"0x..."}
+                  className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+                {exceedsBalance && (
+                  <p className="mt-2 text-sm text-red-400">
+                    {t("withdraw.form.exceedsBalance") ||
+                      "No puedes retirar más que tu balance disponible"}
+                  </p>
+                )}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="text-sm text-neutral-300">
@@ -227,6 +249,7 @@ export default function RetiroFichasPage() {
                     setSelectedNetwork(e.target.value as Network)
                   }
                   className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
+                  disabled
                 >
                   <option value="BSC">
                     {t("withdraw.form.networks.BSC") || "BSC"}

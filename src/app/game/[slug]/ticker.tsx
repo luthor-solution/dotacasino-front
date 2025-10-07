@@ -128,7 +128,7 @@ const Ticker = () => {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-neutral-950 via-transparent to-neutral-950" />
         <div
           id="ticker-track"
-          className="flex gap-8 will-change-transform whitespace-nowrap px-6 lg:px-8 text-sm text-neutral-200 py-2"
+          className="flex gap-8 will-change-transform whitespace-nowrap px-6 lg:px-8 text-sm text-neutral-200 py-2 transition-all"
           style={{ transform: "translateX(0px)", transition: "transform 0s linear" }}
         />
       </div>
