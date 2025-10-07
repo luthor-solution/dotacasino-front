@@ -57,7 +57,7 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
       <DeviceRotateBanner />
       <div className="relative mx-auto">
         <div
-          className="relative p-[2px] rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-400 to-emerald-500 shadow-[0_0_60px_rgba(16,185,129,0.2)] w-[95vw] md:w-auto md:min-h-[70vh] md:max-h-[70vh]"
+          className="relative p-[2px] rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-400 to-emerald-500 shadow-[0_0_60px_rgba(16,185,129,0.2)] w-[95vw] max-h-[90vh] md:w-auto md:min-h-[70vh] md:max-h-[70vh]"
           style={{
             background:
               "linear-gradient(90deg, #ffc827 0%, #ffcf4a 50%, #ffc827 100%)",
