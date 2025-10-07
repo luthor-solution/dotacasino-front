@@ -48,7 +48,7 @@ export default function BackgroundGlow() {
   }, []);
 
   return (
-    <div className="pointer-events-none absolute inset-0">
+    <div className="pointer-events-none absolute inset-0 hidden md:block">
       <div
         id="bg-glow-1"
         className="absolute -top-40 -left-40 h-[480px] w-[480px] rounded-full blur-3xl opacity-40"
