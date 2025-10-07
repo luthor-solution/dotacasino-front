@@ -14,6 +14,7 @@ type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
 type CreateWithdrawRequest = {
   amount: number;
   network: Network; // se enviará como "address" en el payload real
+  address: string;
 };
 
 type CreateWithdrawResult = {
