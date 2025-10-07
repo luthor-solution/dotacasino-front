@@ -49,7 +49,7 @@ const Header: React.FC = () => {
   ];
 
   useEffect(() => {
-    setIsRecharge(pathname === "/recharge");
+    setIsRecharge(pathname === "/recharge" || pathname === "/withdraw");
   }, [pathname]);
 
   useEffect(() => {
@@ -200,7 +200,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-end gap-2 pt-1">
           <button
             type="button"
-            className="px-3 py-2 text-sm rounded-md border border-[#FFC827]/60 text-white hover:bg-white/10"
+            className="px-3 py-2 text-sm rounded-md border border-[#FFC827]/60 text-white hover:bg-white/10 cursor-pointer"
             onClick={() => afterSubmit?.()}
           >
             Cancelar
@@ -208,7 +208,7 @@ const Header: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="px-3 py-2 text-sm rounded-md bg-[#FFC827] text-[#2e0327] hover:opacity-90 disabled:opacity-60"
+            className="px-3 py-2 text-sm rounded-md bg-[#FFC827] text-[#2e0327] hover:opacity-90 disabled:opacity-60 cursor-pointer"
           >
             {loading ? "Enviando..." : "Enviar"}
           </button>
@@ -219,19 +219,16 @@ const Header: React.FC = () => {
 
   // Pequeño componente de badge de balance para reutilizar en desktop/mobile
   const BalanceBadge = () => (
-    <div
-      className={`flex items-center gap-2 px-3 py-1 rounded-full border ${
+    <Link
+      href={"/withdraw"}
+      className={`flex items-center gap-2 px-3 py-1 rounded-full border hover:scale-110 transition-all duration-300 hover:bg-[#FFC827] hover:text-[#2e0327] text-[#FFC827] ${
         isRecharge ? "border-[#FFC827]" : "border-[#FFC827]"
       } bg-black/20`}
       title={t("totalBalance") ?? "Total Balance"}
     >
-      <span className="text-[#FFC827] font-semibold">
-        {loadingWallet ? "..." : balance}
-      </span>
-      <span className="text-white text-[10px]">
-        {loadingWallet ? "" : currency}
-      </span>
-    </div>
+      <span className=" font-semibold">{loadingWallet ? "..." : balance}</span>
+      <span className="text-[10px]">{loadingWallet ? "" : currency}</span>
+    </Link>
   );
 
   return (
@@ -277,7 +274,7 @@ const Header: React.FC = () => {
           <div className="relative" ref={reportRef}>
             <button
               onClick={() => setReportOpen((v) => !v)}
-              className="flex items-center gap-2 px-3 py-1 rounded-full border border-[#FFC827] text-[#FFC827] hover:bg-[#FFC827] hover:text-[#2e0327] transition-colors"
+              className="flex items-center gap-2 px-3 py-1 rounded-full border border-[#FFC827] text-[#FFC827] hover:bg-[#FFC827] hover:text-[#2e0327] hover:scale-110 transition-all duration-300 cursor-pointer"
               aria-expanded={reportOpen}
               aria-controls="report-popover"
             >

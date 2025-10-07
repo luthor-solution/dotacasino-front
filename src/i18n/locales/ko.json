@@ -142,7 +142,7 @@
   "depositHistory": "입금 내역",
   "transactionHistory": "거래 내역",
   "accountSettings": "계정 설정",
-  "referrals": "추천",
+  "referrals": "추천 및 멤버십",
   "allInputsRequired": "모든 필드는 필수입니다",
   "atLeast8": "새 비밀번호는 최소 8자여야 합니다",
   "passwordsMismatch": "비밀번호가 일치하지 않습니다",
@@ -153,5 +153,57 @@
   "newPassword": "새 비밀번호",
   "confirmPassword": "비밀번호 확인",
   "cancel": "취소",
-  "update": "업데이트"
+  "update": "업데이트",
+  "withdraw": {
+    "app": {
+      "title": "출금",
+      "subtitle": "선택한 네트워크로 자금 출금을 요청하세요."
+    },
+    "balance": {
+      "title": "사용 가능 잔액"
+    },
+    "form": {
+      "title": "출금 생성",
+      "amountLabel": "출금 금액",
+      "amountPlaceholder": "0.00",
+      "networkLabel": "네트워크",
+      "networks": {
+        "BSC": "BSC",
+        "ETH": "ETH",
+        "POLYGON": "POLYGON",
+        "TRX": "TRX"
+      },
+      "submit": "출금 요청",
+      "submitting": "전송 중...",
+      "clear": "지우기",
+      "invalidAmount": "유효한 금액을 입력하세요",
+      "genericError": "출금 생성 중 오류가 발생했습니다",
+      "error": "오류: {{error}}",
+      "exceedsBalance": "사용 가능 잔액보다 많은 금액을 출금할 수 없습니다"
+    },
+    "success": {
+      "overlayMessage": "출금 요청이 성공적으로 생성되었습니다."
+    },
+    "cancel": "요청 취소",
+    "cancelError": "요청을 취소할 수 없습니다",
+    "goToHistory": "내역으로 이동",
+    "requestId": "ID: {{id}}",
+    "summary": {
+      "title": "출금 요약",
+      "selectedNetwork": "선택된 네트워크",
+      "amount": "금액",
+      "info": "요청 전송됨"
+    },
+    "overlays": {
+      "success": {
+        "redirecting": "폼으로 돌아가는 중..."
+      }
+    },
+    "nextStepsLabel": "다음 단계 및 정보",
+    "notes": {
+      "created": "출금 요청이 성공적으로 생성되었습니다.",
+      "history": "대기 중인 동안 내역에서 상태를 확인하고 취소할 수 있습니다.",
+      "time": "처리에는 몇 분 정도 소요될 수 있습니다."
+    }
+  }
 }

@@ -33,8 +33,8 @@ export interface WithdrawListItem {
 
 export type WithdrawListResponse = WithdrawListItem[];
 
-export type CreateWithdrawResponse = any;
-export type CancelWithdrawResponse = any;
+export type CreateWithdrawResponse = { message: string; status: boolean };
+export type CancelWithdrawResponse = void;
 
 export const withdrawService = {
   // GET /withdraw-coins/list  -> Historial
