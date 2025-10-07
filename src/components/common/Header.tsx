@@ -7,8 +7,8 @@ import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useKYCStatusStore } from "@/store/useKYCStatusStore";
 import { useTranslation } from "react-i18next";
-import { walletService } from "@/services/walletService"; // <- IMPORTANTE
 import { toast } from "react-toastify";
+import { useWalletStore } from "@/store/useWalletStore";
 
 type NavLink = {
   href: string;
@@ -30,11 +30,15 @@ const Header: React.FC = () => {
   const { t } = useTranslation();
   const isAuthPage = pathname === "/sign-in" || pathname === "/sign-up";
 
-  // Estado para wallet
-  const [balance, setBalance] = useState<string>("$0");
-  const [currency, setCurrency] = useState<string>("---");
-  const [loadingWallet, setLoadingWallet] = useState<boolean>(true);
-  const didFetchWallet = useRef(false);
+  // Wallet store (Zustand)
+  const {
+    balance,
+    currency,
+    loading: walletLoading,
+    fetchWallet,
+    refreshWallet,
+    reset,
+  } = useWalletStore();
 
   // Estado para Reporte (desktop + mobile)
   const [reportOpen, setReportOpen] = useState(false);
@@ -54,9 +58,7 @@ const Header: React.FC = () => {
   }, [pathname]);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -85,9 +87,7 @@ const Header: React.FC = () => {
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [userMenu]);
 
   // Cierra el popover de reporte si se hace click fuera (desktop)
@@ -108,33 +108,36 @@ const Header: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [reportOpen]);
 
-  // Fetch de wallet al montar (y solo una vez)
-  const lastFetchedUserId = useRef<string | null>(null);
-
+  // Fetch inicial cuando hay usuario; reset cuando no hay
   useEffect(() => {
-    if (!user) {
-      setBalance("$0");
-      setCurrency("---");
-      setLoadingWallet(false);
-      lastFetchedUserId.current = null;
+    if (!user?.id) {
+      reset();
       return;
     }
-    if (lastFetchedUserId.current === user.id) return; // ya fetcheado para este user
+    // primer fetch con loading visible
+    fetchWallet(user.id);
+  }, [user?.id, fetchWallet, reset]);
 
-    setLoadingWallet(true);
-    walletService
-      .getWallet()
-      .then((data) => {
-        setBalance(`$${data.balance}`);
-        setCurrency(data.currency ?? "");
-        lastFetchedUserId.current = user.id;
-      })
-      .catch(() => {
-        setBalance("$0");
-        setCurrency("---");
-      })
-      .finally(() => setLoadingWallet(false));
-  }, [user]);
+  // Polling: cada 4s en /game/[slug], cada 15s en otras urls
+  useEffect(() => {
+    if (!user?.id) return;
+
+    // Detecta ruta /game/[slug]
+    const isGamePage =
+      pathname.startsWith("/game/") && pathname.split("/").length >= 3;
+
+    const intervalMs = isGamePage ? 4000 : 15000;
+
+    // refresco silencioso para no parpadear el "..."
+    const id = setInterval(() => {
+      refreshWallet(user.id);
+    }, intervalMs);
+
+    // Trigger inmediato al cambiar de ruta para no esperar el primer tick
+    refreshWallet(user.id);
+
+    return () => clearInterval(id);
+  }, [pathname, user?.id, refreshWallet]);
 
   // Filtra los links según el estado de login
   const filteredNavLinks = navLinks.filter((link) => {
@@ -146,7 +149,7 @@ const Header: React.FC = () => {
   function ReportForm({ afterSubmit }: { afterSubmit?: () => void }) {
     const [email, setEmail] = useState("");
     const [description, setDescription] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
     const submitReport = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -155,7 +158,7 @@ const Header: React.FC = () => {
         return;
       }
       try {
-        setLoading(true);
+        setSubmitting(true);
         const res = await fetch("/api/report-issue", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -178,7 +181,7 @@ const Header: React.FC = () => {
       } catch {
         toast.error("No se pudo enviar el reporte. Intenta más tarde.");
       } finally {
-        setLoading(false);
+        setSubmitting(false);
       }
     };
 
@@ -208,17 +211,17 @@ const Header: React.FC = () => {
           </button>
           <button
             type="submit"
-            disabled={loading}
+            disabled={submitting}
             className="px-3 py-2 text-sm rounded-md bg-[#FFC827] text-[#2e0327] hover:opacity-90 disabled:opacity-60 cursor-pointer"
           >
-            {loading ? "Enviando..." : "Enviar"}
+            {submitting ? "Enviando..." : "Enviar"}
           </button>
         </div>
       </form>
     );
   }
 
-  // Pequeño componente de badge de balance para reutilizar en desktop/mobile
+  // Badge de balance (desktop + mobile)
   const BalanceBadge = () => (
     <Link
       href={"/withdraw"}
@@ -227,8 +230,10 @@ const Header: React.FC = () => {
       } bg-black/20`}
       title={t("totalBalance") ?? "Total Balance"}
     >
-      <span className=" font-semibold">{loadingWallet ? "..." : balance}</span>
-      <span className="text-[10px]">{loadingWallet ? "" : currency}</span>
+      <span className="font-semibold">
+        {walletLoading ? "..." : `$${balance.toLocaleString()}`}
+      </span>
+      <span className="text-[10px]">{walletLoading ? "" : currency}</span>
     </Link>
   );
 
@@ -270,9 +275,9 @@ const Header: React.FC = () => {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-white hover:text-[#FFC827] transition-colors font-medium select-none pb-1
-                ${pathname === link.href ? "border-b-2 border-[#FFC827]" : ""}
-              `}
+              className={`text-white hover:text-[#FFC827] transition-colors font-medium select-none pb-1 ${
+                pathname === link.href ? "border-b-2 border-[#FFC827]" : ""
+              }`}
             >
               {link.label}
             </Link>
@@ -429,17 +434,13 @@ const Header: React.FC = () => {
       {/* Mobile menu con animación */}
       {showMenu && (
         <nav
-          className={`
-            md:hidden ${
-              isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
-            } bg-opacity-95 px-4 pb-4 pt-2 flex flex-col gap-4 uppercase
-            transition-all duration-300
-            ${
-              open
-                ? "opacity-100 translate-y-0 pointer-events-auto"
-                : "opacity-0 -translate-y-8 pointer-events-none"
-            }
-          `}
+          className={`md:hidden ${
+            isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
+          } bg-opacity-95 px-4 pb-4 pt-2 flex flex-col gap-4 uppercase transition-all duration-300 ${
+            open
+              ? "opacity-100 translate-y-0 pointer-events-auto"
+              : "opacity-0 -translate-y-8 pointer-events-none"
+          }`}
           style={{ willChange: "transform, opacity" }}
         >
           {/* Balance en mobile (si user) */}
@@ -454,9 +455,9 @@ const Header: React.FC = () => {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-white hover:text-[#FFC827] transition-colors font-medium pb-1
-                ${pathname === link.href ? "border-b-2 border-[#FFC827]" : ""}
-              `}
+              className={`text-white hover:text-[#FFC827] transition-colors font-medium pb-1 ${
+                pathname === link.href ? "border-b-2 border-[#FFC827]" : ""
+              }`}
               onClick={() => setOpen(false)}
             >
               {link.label}
