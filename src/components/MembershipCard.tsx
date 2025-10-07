@@ -94,9 +94,9 @@ const MembershipCard: React.FC<MembershipCardProps> = ({
 
   const handleCreateOrShow = async () => {
     await onCreateOrShow();
-    setTimeout(() => {
+    /*     setTimeout(() => {
       if (currentQR) setShowOverlay(true);
-    }, 0);
+    }, 0); */
   };
 
   return (
