@@ -130,10 +130,10 @@ export default function RecargaFichasPage() {
           address: deposit.address,
         });
 
-        // La API devuelve "OK" o "NO"
+        // La API devuelve "pending" o "completed" o "NO"
         const value = String(res).toUpperCase();
 
-        if (value === "OK") {
+        if (value === "completed") {
           handleOK();
           return;
         }
