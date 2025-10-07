@@ -23,7 +23,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ active, onSelect }) => {
     { label: t("transactionHistory"), value: "trasactions" },
     { label: t("accountSettings"), value: "settings" },
     { label: t("referrals"), value: "referrals" },
-    { label: t("withdraw"), value: "withdraw" },
+    { label: t("withdraw.app.title"), value: "withdraw" },
   ];
   return (
     <div className="flex flex-col md:w-[400px]">
