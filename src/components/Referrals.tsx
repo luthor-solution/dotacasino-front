@@ -242,7 +242,7 @@ const Referrals: React.FC = () => {
   }, [selectedNetwork]);
 
   // Polling idéntico a depósitos, aplicado al QR de membresía
-  /*  useEffect(() => {
+  useEffect(() => {
     if (!activeQR?.address) return;
 
     let intervalId: number | null = null;
@@ -305,7 +305,7 @@ const Referrals: React.FC = () => {
     // Mismo tick que compartiste, pero apuntando al QR de membresía
     const tick = async () => {
       try {
-        const res: any = await depositService.polling({
+        const res: any = await userService.polling({
           address: activeQR.address,
         });
 
@@ -344,7 +344,7 @@ const Referrals: React.FC = () => {
     return () => {
       stop();
     };
-  }, [activeQR?.address]); */
+  }, [activeQR?.address]);
 
   return (
     <div className="flex flex-col w-full md:max-w-5xl gap-y-[32px]">

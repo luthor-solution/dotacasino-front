@@ -102,6 +102,12 @@ export type UserByCodeResponse = {
   displayName?: string | null;
 };
 
+export interface MembershipPollingPayload {
+  address: string; // dirección a validar
+}
+
+export type DepositPollingResponse = "OK" | "NO";
+
 export const userService = {
   async register(payload: RegisterPayload): Promise<RegisterResponse> {
     const response = await axios.post(
@@ -467,6 +473,38 @@ export const userService = {
       ) {
         await userService.refreshToken();
         return userService.getUserByCode(code, false);
+      }
+      throw error;
+    }
+  },
+
+  async polling(
+    payload: MembershipPollingPayload,
+    retry = true
+  ): Promise<DepositPollingResponse> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const { data } = await axios.post(
+        `${API_BASE_URL}/users/qr-membership-polling`,
+        payload, // { address: string }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return data;
+    } catch (error) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        await userService.refreshToken();
+        return await userService.polling(payload, false);
       }
       throw error;
     }
