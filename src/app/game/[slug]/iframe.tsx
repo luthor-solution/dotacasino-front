@@ -2,8 +2,12 @@
 "use client";
 import { useGameCloseListener } from "@/hooks/useGameCloseListener";
 import { useRouter } from "next/navigation";
-import { FC, useEffect, useRef } from "react";
+import { FC, useRef } from "react";
 import { BsFullscreen } from "react-icons/bs";
+import {
+  useMobileViewportGuard,
+  DeviceRotateBanner,
+} from "./useMobileViewportGuard";
 
 type Props = {
   url: string;
@@ -11,57 +15,40 @@ type Props = {
   width: "0" | "1";
 };
 
-function toggleFullscreen() {
-  const el = document.getElementById("game-shell");
-  if (!el) return;
-
-  const isFullscreen =
-    document.fullscreenElement ||
-    (document as any).webkitFullscreenElement ||
-    (document as any).mozFullScreenElement ||
-    (document as any).msFullscreenElement;
-
-  try {
-    if (!isFullscreen) {
-      const request =
-        el.requestFullscreen ||
-        (el as any).webkitRequestFullscreen ||
-        (el as any).mozRequestFullScreen ||
-        (el as any).msRequestFullscreen;
-
-      if (request) {
-        // En móviles, algunos navegadores exigen interacción directa (click/tap)
-        request.call(el);
-      } else {
-        console.warn("Fullscreen API no soportada en este navegador");
-      }
-    } else {
-      const exit =
-        document.exitFullscreen ||
-        (document as any).webkitExitFullscreen ||
-        (document as any).mozCancelFullScreen ||
-        (document as any).msExitFullscreen;
-
-      if (exit) {
-        exit.call(document);
-      }
+const toggleFullScreen = (isFull: boolean) => {
+  if (
+    (document.fullscreenElement && document.fullscreenElement !== null) ||
+    (!document.fullscreen && !document.exitFullscreen)
+  ) {
+    if (isFull === false) {
+      return;
     }
-  } catch (err) {
-    console.error("Error al cambiar a pantalla completa:", err);
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    }
+  } else {
   }
-}
+};
 
 const Iframe: FC<Props> = ({ url, sessionId, width }) => {
   const iframeRef = useRef(null);
   const router = useRouter();
+
+  const { isLandscape, iOSSafari } = useMobileViewportGuard({
+    bodyHasMobileGameClass: true, // equivale a body.mobile-game
+    bodyHasGameWithoutScrollcheck: false, // equivale a !body.game-without-scrollcheck
+    deviceRotateSelector: ".device-rotate",
+  });
 
   useGameCloseListener({
     onClose: () => {
       router.replace("/");
     },
   });
-
-  useEffect(() => {}, []);
 
   return (
     <div id="game-container" className="relative py-8">
@@ -71,11 +58,12 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
         </span>
         <button
           className="rounded-lg bg-white text-black h-6 w-6 flex items-center justify-center"
-          onClick={toggleFullscreen}
+          onClick={() => toggleFullScreen(false)}
         >
           <BsFullscreen />
         </button>
       </div>
+      <DeviceRotateBanner />
       <div className="relative mx-auto">
         <div
           className="relative p-[2px] rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-400 to-emerald-500 shadow-[0_0_60px_rgba(16,185,129,0.2)] w-[95vw] md:w-auto md:min-h-[70vh] md:max-h-[70vh]"
