@@ -133,7 +133,7 @@ export default function RecargaFichasPage() {
         // La API devuelve "OK" o "NO"
         const value = String(res).toUpperCase();
 
-        if (value === "OK") {
+        if (value === "completed") {
           handleOK();
           return;
         }
