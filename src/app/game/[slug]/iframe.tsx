@@ -49,7 +49,7 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
           >
             <div
               id="game-aspect"
-              className="w-[95vw] md:w-auto md:min-h-[70vh]"
+              className="w-[95vw] md:w-auto md:min-h-[70vh] md:max-h-[70vh]"
               style={{ aspectRatio: "13/9" }}
             >
               <div
