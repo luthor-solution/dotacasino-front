@@ -15,24 +15,15 @@ type Props = {
   width: "0" | "1";
 };
 
-const toggleFullScreen = (isFull: boolean) => {
-  if (
-    (document.fullscreenElement && document.fullscreenElement !== null) ||
-    (!document.fullscreen && !document.exitFullscreen)
-  ) {
-    if (isFull === false) {
-      return;
-    }
-    if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen();
-    } else if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen();
-    } else if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen();
-    }
+function toggleFullscreen() {
+  const el = document.getElementById("game-shell")!;
+  const isFs = document.fullscreenElement != null;
+  if (!isFs) {
+    el.requestFullscreen?.();
   } else {
+    document.exitFullscreen?.();
   }
-};
+}
 
 const Iframe: FC<Props> = ({ url, sessionId, width }) => {
   const iframeRef = useRef(null);
@@ -58,7 +49,7 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
         </span>
         <button
           className="rounded-lg bg-white text-black h-6 w-6 flex items-center justify-center"
-          onClick={() => toggleFullScreen(false)}
+          onClick={() => toggleFullscreen()}
         >
           <BsFullscreen />
         </button>
@@ -71,14 +62,14 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
             background:
               "linear-gradient(90deg, #ffc827 0%, #ffcf4a 50%, #ffc827 100%)",
             boxShadow: "0 0 60px rgba(255,200,39,0.18)",
-            aspectRatio: "13/9",
+            aspectRatio: "16/9",
           }}
         >
           <div
             id="game-shell"
             className="relative rounded-2xl ring-1 ring-white/10 overflow-hidden bg-[var(--bg-card)]"
           >
-            <div id="game-aspect" style={{ aspectRatio: "13/9" }}>
+            <div id="game-aspect" style={{ aspectRatio: "16/9" }}>
               <div
                 className="h-full w-full flex items-center justify-center relative"
                 style={{
