@@ -49,7 +49,7 @@ const GamePage: FC<Props> = async ({ params }) => {
     }
 
     return (
-      <div className="flex flex-col items-center bg-[#350b2d] overflow-x-hidden">
+      <div className="flex flex-col items-center bg-[#350b2d]">
         <style
           dangerouslySetInnerHTML={{
             __html: `
