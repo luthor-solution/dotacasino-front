@@ -10,7 +10,8 @@ import Sidebar from "@/components/SideBar";
 import ProfileSettings from "@/components/ProfileSettings";
 import Referrals from "@/components/Referrals";
 import { useTranslation } from "react-i18next";
-import TransactionsHistorSection from "@/components/TransactionsHistorSection";
+import TransactionsHistorySection from "@/components/TransactionsHistorySection";
+import WithdrawHistorySection from "@/components/WithdrawHistorySection";
 
 export default function Profile() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -47,7 +48,8 @@ export default function Profile() {
         {option === "deposits" && <TopupHistorySection />}
         {option === "settings" && <ProfileSettings />}
         {option === "referrals" && <Referrals />}
-        {option === "trasactions" && <TransactionsHistorSection />}
+        {option === "trasactions" && <TransactionsHistorySection />}
+        {option === "withdraw" && <WithdrawHistorySection />}
       </section>
     </main>
   );

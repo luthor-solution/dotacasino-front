@@ -11,7 +11,7 @@ const Footer = () => {
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    setIsRecharge(pathname === "/recharge");
+    setIsRecharge(pathname === "/recharge" || pathname === "/withdraw");
   }, [pathname]);
 
   return (

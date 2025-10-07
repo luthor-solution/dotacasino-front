@@ -153,5 +153,57 @@
   "newPassword": "Nueva contraseña",
   "confirmPassword": "Repetir contraseña",
   "cancel": "Cancelar",
-  "update": "Actualizar"
+  "update": "Actualizar",
+  "withdraw": {
+    "app": {
+      "title": "Retiros",
+      "subtitle": "Solicita el retiro de tus fondos a la red seleccionada."
+    },
+    "balance": {
+      "title": "Balance disponible"
+    },
+    "form": {
+      "title": "Crear retiro",
+      "amountLabel": "Monto a retirar",
+      "amountPlaceholder": "0.00",
+      "networkLabel": "Red",
+      "networks": {
+        "BSC": "BSC",
+        "ETH": "ETH",
+        "POLYGON": "POLYGON",
+        "TRX": "TRX"
+      },
+      "submit": "Solicitar retiro",
+      "submitting": "Enviando...",
+      "clear": "Limpiar",
+      "invalidAmount": "Ingresa un monto válido",
+      "genericError": "Ocurrió un error al crear el retiro",
+      "error": "Error: {{error}}",
+      "exceedsBalance": "No puedes retirar más que tu balance disponible"
+    },
+    "success": {
+      "overlayMessage": "Solicitud de retiro creada correctamente."
+    },
+    "cancel": "Cancelar solicitud",
+    "cancelError": "No se pudo cancelar la solicitud",
+    "goToHistory": "Ir al historial",
+    "requestId": "ID: {{id}}",
+    "summary": {
+      "title": "Resumen del retiro",
+      "selectedNetwork": "Red seleccionada",
+      "amount": "Monto",
+      "info": "Solicitud enviada"
+    },
+    "overlays": {
+      "success": {
+        "redirecting": "Regresando al formulario..."
+      }
+    },
+    "nextStepsLabel": "Siguientes pasos e información",
+    "notes": {
+      "created": "Tu solicitud de retiro fue creada correctamente.",
+      "history": "Puedes revisar el estado y cancelarla desde el historial mientras esté pendiente.",
+      "time": "El procesamiento puede tardar algunos minutos."
+    }
+  }
 }

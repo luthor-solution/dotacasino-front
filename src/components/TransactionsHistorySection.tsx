@@ -89,7 +89,7 @@ function normalizeStatus(
       "cancelled",
     ].includes(s)
   )
-    return "failed";
+    return "cancelled";
   // Si tu getStatusProps soporta más, puedes devolver s tal cual
   return s;
 }
@@ -126,7 +126,7 @@ function mapLedger(response: TransactionHistoryResponse): {
   };
 }
 
-const TransactionsHistorSection: React.FC = () => {
+const TransactionsHistorySection: React.FC = () => {
   const [transactions, setTransactions] = useState<UITransactionItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
@@ -239,4 +239,4 @@ const TransactionsHistorSection: React.FC = () => {
   );
 };
 
-export default TransactionsHistorSection;
+export default TransactionsHistorySection;
