@@ -48,7 +48,7 @@ const GamePage: FC<Props> = async ({ params }) => {
     }
 
     return (
-      <div className="mt-20 flex flex-col items-center bg-[#350b2d]">
+      <div className="mt-20 flex flex-col items-center bg-[#350b2d] overflow-x-hidden">
         <BackgroundGlow />
         <Ticker />
         <Iframe
