@@ -1,19 +1,21 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import StepOne from "@/components/kyc/StepOne";
 import StepTwo from "@/components/kyc/StepTwo";
 import StepThree from "@/components/kyc/StepThree";
 import ProgressBar from "@/components/ProgressBar";
 import StepFour from "@/components/kyc/StepFour";
-import { useEffect } from "react";
 import { useKycStore } from "@/store/useKYCStore";
 import { kycService } from "@/services/kycService";
 import { toast } from "react-toastify";
 import { useKYCStatusStore } from "@/store/useKYCStatusStore";
 import KycStatus from "@/components/kyc/KycStatus";
+import { useTranslation } from "react-i18next";
 
 export default function KYC() {
+  const { t } = useTranslation();
+
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -71,21 +73,37 @@ export default function KYC() {
       await kycService.submitKyc(submitPayload);
 
       // Aquí puedes mostrar un mensaje de éxito o redirigir
-      toast.success("¡Verificación enviada con éxito!");
+      toast.success(t("kyc.wizard.successToast"));
     } catch (err: any) {
       console.log(err);
-      toast.error(err.response.data.message);
-      setError(err.message || "Error al enviar la verificación");
+      toast.error(err?.response?.data?.message);
+      setError(t("kyc.wizard.submitError"));
     } finally {
       setLoading(false);
     }
   };
 
   const steps = [
-    { component: <StepOne />, percent: 25, label: "Paso 1" },
-    { component: <StepTwo />, percent: 50, label: "Paso 2" },
-    { component: <StepThree />, percent: 75, label: "Paso 3" },
-    { component: <StepFour />, percent: 100, label: "Paso 4" },
+    {
+      component: <StepOne />,
+      percent: 25,
+      label: t("kyc.wizard.stepLabel", { number: 1 }),
+    },
+    {
+      component: <StepTwo />,
+      percent: 50,
+      label: t("kyc.wizard.stepLabel", { number: 2 }),
+    },
+    {
+      component: <StepThree />,
+      percent: 75,
+      label: t("kyc.wizard.stepLabel", { number: 3 }),
+    },
+    {
+      component: <StepFour />,
+      percent: 100,
+      label: t("kyc.wizard.stepLabel", { number: 4 }),
+    },
   ];
 
   useEffect(() => {
@@ -126,7 +144,7 @@ export default function KYC() {
                       className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
                       disabled={loading}
                     >
-                      Anterior
+                      {t("previous")}
                     </button>
                   )}
                   {step < steps.length ? (
@@ -135,7 +153,7 @@ export default function KYC() {
                       className="rounded-full w-fit px-[24px] text-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)]"
                       disabled={loading}
                     >
-                      Siguiente
+                      {t("next")}
                     </button>
                   ) : (
                     <button
@@ -143,7 +161,9 @@ export default function KYC() {
                       onClick={handleSubmit}
                       disabled={loading}
                     >
-                      {loading ? "Enviando..." : "Iniciar verificación"}
+                      {loading
+                        ? t("kyc.wizard.submitting")
+                        : t("kyc.wizard.startVerification")}
                     </button>
                   )}
                 </div>

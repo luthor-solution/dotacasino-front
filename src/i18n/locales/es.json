@@ -213,5 +213,91 @@
     "pending": "Pendiente",
     "failed": "Fallido",
     "unknown": "Desconocido"
+  },
+  "kyc": {
+    "stepOne": {
+      "verificationStatus": "Estado de verificación",
+      "notStarted": "No iniciado",
+      "pendingDocs": "Documentos pendientes para subir",
+      "id": {
+        "title": "Documento de identidad",
+        "instructions": {
+          "line1": "Debes capturar ambos lados de la identificación con buena calidad y",
+          "line2": "buena iluminación"
+        },
+        "frontCaption": {
+          "line1": "ANVERSO DE LA",
+          "line2": "IDENTIFICACIÓN"
+        },
+        "backCaption": {
+          "line1": "REVERSO DE LA",
+          "line2": "IDENTIFICACIÓN"
+        }
+      },
+      "selfie": {
+        "title": "Selfie",
+        "instructions": {
+          "line1": "Necesitamos tomar una foto",
+          "line2": "de tu rostro"
+        },
+        "caption": {
+          "line1": "TU",
+          "line2": "SELFIE"
+        }
+      }
+    },
+    "stepTwo": {
+      "title": "Completa la información faltante",
+      "personalData": "Datos personales",
+      "namePlaceholder": "Nombre",
+      "lastNamePlaceholder": "Apellido",
+      "idLabel": "ID",
+      "idPlaceholder": "ID",
+      "countryLabel": "País",
+      "countryPlaceholder": "País",
+      "countries": {
+        "mexico": "México",
+        "usa": "Estados Unidos",
+        "canada": "Canadá"
+      },
+      "birthdayPlaceholder": "Fecha de nacimiento"
+    },
+    "stepThree": {
+      "title": "Necesitamos validar tu identificación para continuar con el proceso",
+      "selectType": "Selecciona el tipo de documento",
+      "typePlaceholder": "Tipo de documento",
+      "options": {
+        "idCard": "Documento nacional de identidad",
+        "driverLicense": "Licencia de conducir",
+        "passport": "Pasaporte",
+        "addressProof": "Comprobante de domicilio"
+      },
+      "id": {
+        "title": "Documento de identidad",
+        "instructions": {
+          "line1": "Debes capturar ambos lados de la identificación con buena calidad y",
+          "line2": "buena iluminación"
+        },
+        "frontLabel": "ANVERSO DE LA IDENTIFICACIÓN",
+        "backLabel": "REVERSO DE LA IDENTIFICACIÓN"
+      },
+      "hoverHint": "Posiciona el cursor encima de cada opción para empezar"
+    },
+    "stepFour": {
+      "title": "Necesitamos validar tu identificación para continuar con el proceso",
+      "selfie": {
+        "title": "Selfie",
+        "instructions": "Tómate una selfie clara y con buena iluminación",
+        "label": "TU SELFIE"
+      },
+      "hoverHint": "Posiciona el cursor encima de cada opción para empezar"
+    },
+    "wizard": {
+      "stepLabel": "Paso {{number}}",
+      "startVerification": "Iniciar verificación",
+      "submitting": "Enviando...",
+      "successToast": "¡Verificación enviada con éxito!",
+      "submitError": "Error al enviar la verificación"
+    }
   }
 }
