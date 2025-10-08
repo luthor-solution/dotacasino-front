@@ -61,7 +61,6 @@ export default function RecargaFichasPage() {
   const [seconds, setSeconds] = useState<number>(0);
   const timerRef = useRef<number | null>(null);
 
-  // Carga inicial del balance al montar
   useEffect(() => {
     let mounted = true;
     (async () => {
