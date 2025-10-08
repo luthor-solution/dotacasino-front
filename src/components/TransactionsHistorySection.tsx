@@ -11,7 +11,7 @@ import TransactionHistoryTable from "./TransactionHistoryTable";
 import TopupHistorySkeleton from "./TopupHistorySkeleton";
 import TransactionsHistoryCardList from "./TransactionsHistoryCardList";
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 10;
 
 // El backend puede traer status (string). Lo tipamos sin usar any.
 type RawTransaction = LedgerTransaction & { status?: string | null };

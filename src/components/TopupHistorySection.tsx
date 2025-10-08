@@ -6,7 +6,7 @@ import TopupHistoryCardList from "./TopupHistoryCardList";
 import TopupHistorySkeleton from "./TopupHistorySkeleton";
 import { useTranslation } from "react-i18next";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 const TopupHistorySection: React.FC = () => {
   const [transactions, setTransactions] = useState<TopupHistoryItem[]>([]);

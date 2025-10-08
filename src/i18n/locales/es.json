@@ -206,5 +206,12 @@
       "history": "Puedes revisar el estado y cancelarla desde el historial mientras esté pendiente.",
       "time": "El procesamiento puede tardar algunos minutos."
     }
+  },
+
+  "statusTable": {
+    "succeeded": "Completado",
+    "pending": "Pendiente",
+    "failed": "Fallido",
+    "unknown": "Desconocido"
   }
 }

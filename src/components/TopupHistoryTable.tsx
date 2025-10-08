@@ -35,7 +35,7 @@ const TopupHistoryTable: React.FC<Props> = ({ transactions }) => {
           >
             {t("amount")}
           </th>
-          <th
+          {/*          <th
             className="py-3 px-4 text-left font-medium text-[20px] tracking-wide"
             style={{
               background: "linear-gradient(90deg, #FFC827 0%, #FF9C19 100%)",
@@ -44,7 +44,7 @@ const TopupHistoryTable: React.FC<Props> = ({ transactions }) => {
             }}
           >
             {t("status")}
-          </th>
+          </th> */}
           <th
             className="py-3 px-4 text-left font-medium text-[20px] tracking-wide"
             style={{
@@ -73,7 +73,7 @@ const TopupHistoryTable: React.FC<Props> = ({ transactions }) => {
             <td className="py-3 px-4 text-white text-[17px] border-r border-[#4b2342]">
               {tx.amount} {tx.currency}
             </td>
-            <td className="py-3 px-4 text-[17px] font-semibold border-r border-[#4b2342]">
+            {/* <td className="py-3 px-4 text-[17px] font-semibold border-r border-[#4b2342]">
               <span
                 style={{
                   color: getStatusProps(tx.status).color,
@@ -82,7 +82,7 @@ const TopupHistoryTable: React.FC<Props> = ({ transactions }) => {
               >
                 {getStatusProps(tx.status).text}
               </span>
-            </td>
+            </td> */}
             <td
               className="py-3 px-4 text-[17px] font-semibold"
               style={{ color: "#FF9C19" }}
