@@ -136,6 +136,7 @@ const Footer = () => {
             <option value="es">🇪🇸 Spanish</option>
             <option value="en">🇬🇧 English</option>
             <option value="ko">🇰🇷 Korean</option>
+            <option value="pt">🇵🇹 Portuguese</option>
           </select>
           <Image
             src="/logo.svg"

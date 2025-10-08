@@ -147,6 +147,7 @@ const Header: React.FC = () => {
 
   // Formulario compartido para reportar problema
   function ReportForm({ afterSubmit }: { afterSubmit?: () => void }) {
+    const { t } = useTranslation();
     const [email, setEmail] = useState("");
     const [description, setDescription] = useState("");
     const [submitting, setSubmitting] = useState(false);
@@ -154,7 +155,7 @@ const Header: React.FC = () => {
     const submitReport = async (e: React.FormEvent) => {
       e.preventDefault();
       if (!description.trim()) {
-        toast.error("Por favor describe el problema.");
+        toast.error(t("report.form.toasts.requiredDescription"));
         return;
       }
       try {
@@ -174,12 +175,12 @@ const Header: React.FC = () => {
           }),
         });
         if (!res.ok) throw new Error("Server error");
-        toast.success("¡Gracias! Tu reporte fue enviado.");
+        toast.success(t("report.form.toasts.success"));
         setDescription("");
         setEmail("");
         afterSubmit?.();
       } catch {
-        toast.error("No se pudo enviar el reporte. Intenta más tarde.");
+        toast.error(t("report.form.toasts.error"));
       } finally {
         setSubmitting(false);
       }
@@ -189,7 +190,7 @@ const Header: React.FC = () => {
       <form onSubmit={submitReport} className="space-y-3">
         <div className="flex flex-col gap-1">
           <label htmlFor="report_desc" className="text-sm text-white/80">
-            Describe el problema
+            {t("report.form.describeLabel")}
           </label>
           <textarea
             id="report_desc"
@@ -197,7 +198,7 @@ const Header: React.FC = () => {
             onChange={(e) => setDescription(e.target.value)}
             className="w-full rounded-md border border-[#FFC827]/40 px-3 py-2 text-sm outline-none bg-white text-gray-900 focus:ring-2 focus:ring-[#FFC827]"
             rows={4}
-            placeholder="¿Qué estabas haciendo? ¿Qué salió mal?"
+            placeholder={t("report.form.describePlaceholder")}
           />
         </div>
 
@@ -207,14 +208,14 @@ const Header: React.FC = () => {
             className="px-3 py-2 text-sm rounded-md border border-[#FFC827]/60 text-white hover:bg-white/10 cursor-pointer"
             onClick={() => afterSubmit?.()}
           >
-            Cancelar
+            {t("report.form.cancel")}
           </button>
           <button
             type="submit"
             disabled={submitting}
             className="px-3 py-2 text-sm rounded-md bg-[#FFC827] text-[#2e0327] hover:opacity-90 disabled:opacity-60 cursor-pointer"
           >
-            {submitting ? "Enviando..." : "Enviar"}
+            {submitting ? t("report.form.submitting") : t("report.form.submit")}
           </button>
         </div>
       </form>
@@ -315,7 +316,7 @@ const Header: React.FC = () => {
                 <path d="M19 7l1.5-1.5" />
                 <path d="M5 7L3.5 5.5" />
               </svg>
-              <span className="hidden lg:inline">Reportar</span>
+              <span className="hidden lg:inline">{t("report.label")}</span>
             </button>
 
             {reportOpen && (
@@ -325,7 +326,7 @@ const Header: React.FC = () => {
                   isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
                 } border border-[#FFC827] rounded-lg shadow-lg p-4 text-white z-50`}
               >
-                <div className="mb-2 font-semibold">Reportar un problema</div>
+                <div className="mb-2 font-semibold">{t("report.title")}</div>
                 <ReportForm afterSubmit={() => setReportOpen(false)} />
               </div>
             )}
@@ -494,7 +495,7 @@ const Header: React.FC = () => {
                   <path d="M19 7l1.5-1.5" />
                   <path d="M5 7L3.5 5.5" />
                 </svg>
-                Reportar un problema
+                {t("report.title")}
               </span>
               <svg
                 className={`w-4 h-4 transition-transform ${

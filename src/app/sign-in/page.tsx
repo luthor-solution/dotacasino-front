@@ -9,8 +9,10 @@ import { useState } from "react";
 import { userService } from "@/services/userService";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function SignIn() {
+  const { t } = useTranslation();
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -28,14 +30,14 @@ export default function SignIn() {
       const res = await userService.login(form);
       // Guarda solo user, token y refreshToken
       login(res.user, res.access_token, res.refresh_token);
-      setMsg("¡Inicio de sesión exitoso!");
+      setMsg(t("auth.signIn.success"));
       router.push("/");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setMsg(
         err.response?.data?.message ||
           err.message ||
-          "Ocurrió un error al iniciar sesión."
+          t("auth.signIn.errorGeneric")
       );
     } finally {
       setLoading(false);
@@ -64,13 +66,13 @@ export default function SignIn() {
           </div>
           <div className="flex flex-col space-y-[24px] xl:w-[400px] w-full">
             <FancyInput
-              placeholder="email"
+              placeholder={t("auth.signIn.emailPlaceholder")}
               name="email"
               icon={<FiUser />}
               onChange={(val) => handleChange("email", val)}
             />
             <FancyInput
-              placeholder="Password"
+              placeholder={t("auth.signIn.passwordPlaceholder")}
               name="password"
               icon={<FiLock />}
               type="password"
@@ -95,7 +97,7 @@ export default function SignIn() {
                   : ""
               }`}
             >
-              {loading ? "Iniciando..." : "Iniciar Sesión"}
+              {loading ? t("auth.signIn.submitting") : t("auth.signIn.submit")}
             </FancyButton>
           </div>
           <div className="w-full flex justify-end">
@@ -103,23 +105,23 @@ export default function SignIn() {
               href="forgot-password"
               className="text-[15px] text-[#e2a94f] underline hover:scale-110 transition-all duration-500"
             >
-              Olvidé mi contraseña
+              {t("auth.signIn.forgotPassword")}
             </Link>
           </div>
         </div>
 
         <div className="flex flex-col space-y-6 text-white text-center w-fit">
           <span className="text-[#FFC827] text-[28px] tracking-wide font-[600]">
-            Bienvenido a Dota Casino
+            {t("auth.signIn.welcomeTitle")}
           </span>
-          <span>Inicia sesión en tu cuenta para empezar a divertirte.</span>
+          <span>{t("auth.signIn.welcomeSubtitle")}</span>
           <div>
-            <span>¿Aún no tienes una cuenta? </span>
+            <span>{t("auth.signIn.noAccount")}</span>
             <Link
               href="/sign-up"
               className="text-[#e2a94f] underline hover:scale-110 transition-all duration-500"
             >
-              Regístrate
+              {t("auth.signIn.register")}
             </Link>
           </div>
         </div>

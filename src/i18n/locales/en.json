@@ -80,9 +80,9 @@
       "refundPolicy": "Refund Policy"
     },
     "rows": {
-      "one": "dota.click is a high-end, trusted crypto casino offering a wide variety of slot games, unique online slot machines, sports betting, esports events, live dealer games, poker tournaments and popular fish games. Our selection of handcrafted games will leave no player indifferent. Our crypto online casino dota.click offers the best selection of online slots today with different themes and styles; all your favorite games can be easily found in the game providers section and added to your personal Favorites list for quick access at any convenient time.",
+      "one": "dota.click is a trusted, high-end crypto casino offering a variety of slot games, unique online slot machines, sports betting, esports events, live dealer games, poker tournaments and popular fish games. Our curated game selection will not leave players indifferent. Our crypto online casino dota.click provides the best selection of online slots today with different themes and styles; all your favorite games can be easily found in the game providers section and added to your personal Favorites list for quick access at any convenient time.",
       "two": "Advantages of playing at vip crypto casino dota.click:",
-      "three": "Our premium crypto online casino dota.click adheres to high security standards to provide a safe player experience. The main advantage of our casino dota.click is the large selection of slot games in partnership with leading game providers. The quick and simple registration process, without unnecessary verification, lets you start your best gaming session quickly. Most importantly, you will be pleased with the instant process of depositing and withdrawing your funds, both in major cryptocurrencies and in stablecoins. This lets you stay in a good mood and enjoy a pleasant thrill. All information provided by users is confidential and anonymous. You can be absolutely sure we reliably protect your funds and guarantee the security of your balance. Our online casino is securely protected against hacker attacks; we are online 24/7/365.",
+      "three": "Our premium crypto online casino dota.click adheres to high security standards to provide a safe player experience. The main advantage of our casino dota.click is the large selection of slot games in partnership with leading game providers. The quick and simple registration process, without unnecessary verification, lets you start your gaming session quickly. Most importantly, you will be pleased with the instant deposit and withdrawal process for both major cryptocurrencies and stablecoins. This allows you to stay in a good mood and enjoy an exciting experience. All information provided by users is confidential and anonymous. You can be absolutely sure we reliably protect your funds and guarantee the security of your balance. Our online casino is securely protected against hacker attacks; we are online 24/7/365.",
       "four": "We have done our best to ensure convenient play not only on personal computers but also on phones and tablets. Our mobile version of the dota.click online casino is very user-friendly and is constantly being improved. The mobile app for playing slots on your phone is incredibly fast and offers the same features as the online casino site format you are used to.",
       "five": "Stay with us and you'll gain a reliable partner in your online entertainment for years to come. We wish you all the best!"
     }
@@ -205,6 +205,177 @@
       "created": "Your withdrawal request was created successfully.",
       "history": "You can check its status and cancel it from history while it is pending.",
       "time": "Processing may take a few minutes."
+    }
+  },
+  "statusTable": {
+    "succeeded": "Succeeded",
+    "pending": "Pending",
+    "failed": "Failed",
+    "unknown": "Unknown"
+  },
+  "kyc": {
+    "stepOne": {
+      "verificationStatus": "Verification status",
+      "notStarted": "Not started",
+      "pendingDocs": "Documents pending upload",
+      "id": {
+        "title": "Identity document",
+        "instructions": {
+          "line1": "You must capture both sides of the ID with good quality and",
+          "line2": "good lighting"
+        },
+        "frontCaption": {
+          "line1": "FRONT OF THE",
+          "line2": "IDENTIFICATION"
+        },
+        "backCaption": {
+          "line1": "BACK OF THE",
+          "line2": "IDENTIFICATION"
+        }
+      },
+      "selfie": {
+        "title": "Selfie",
+        "instructions": {
+          "line1": "We need to take a photo",
+          "line2": "of your face"
+        },
+        "caption": {
+          "line1": "YOUR",
+          "line2": "SELFIE"
+        }
+      }
+    },
+    "stepTwo": {
+      "title": "Complete the missing information",
+      "personalData": "Personal data",
+      "namePlaceholder": "Name",
+      "lastNamePlaceholder": "Last name",
+      "idLabel": "ID",
+      "idPlaceholder": "ID",
+      "countryLabel": "Country",
+      "countryPlaceholder": "Country",
+      "countries": {
+        "mexico": "Mexico",
+        "usa": "United States",
+        "canada": "Canada"
+      },
+      "birthdayPlaceholder": "Date of birth"
+    },
+    "stepThree": {
+      "title": "We need to validate your ID to continue the process",
+      "selectType": "Select the document type",
+      "typePlaceholder": "Document type",
+      "options": {
+        "idCard": "National identity document",
+        "driverLicense": "Driver's license",
+        "passport": "Passport",
+        "addressProof": "Proof of address"
+      },
+      "id": {
+        "title": "Identity document",
+        "instructions": {
+          "line1": "You must capture both sides of the ID with good quality and",
+          "line2": "good lighting"
+        },
+        "frontLabel": "FRONT OF THE IDENTIFICATION",
+        "backLabel": "BACK OF THE IDENTIFICATION"
+      },
+      "hoverHint": "Hover over each option to start"
+    },
+    "stepFour": {
+      "title": "We need to validate your ID to continue the process",
+      "selfie": {
+        "title": "Selfie",
+        "instructions": "Take a clear selfie with good lighting",
+        "label": "YOUR SELFIE"
+      },
+      "hoverHint": "Hover over each option to start"
+    },
+    "wizard": {
+      "stepLabel": "Step {{number}}",
+      "startVerification": "Start verification",
+      "submitting": "Submitting...",
+      "successToast": "Verification submitted successfully!",
+      "submitError": "Error submitting verification"
+    }
+  },
+  "report": {
+    "label": "Report",
+    "title": "Report a problem",
+    "form": {
+      "describeLabel": "Describe the problem",
+      "describePlaceholder": "What were you doing? What went wrong?",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "toasts": {
+        "requiredDescription": "Please describe the problem.",
+        "success": "Thanks! Your report was submitted.",
+        "error": "Could not send the report. Try again later."
+      }
+    }
+  },
+  "auth": {
+    "signIn": {
+      "emailPlaceholder": "Email",
+      "passwordPlaceholder": "Password",
+      "submitting": "Signing in...",
+      "submit": "Sign In",
+      "success": "Sign in successful!",
+      "errorGeneric": "An error occurred while signing in.",
+      "forgotPassword": "Forgot my password",
+      "welcomeTitle": "Welcome to Dota Casino",
+      "welcomeSubtitle": "Sign in to your account to start having fun.",
+      "noAccount": "Don't have an account yet? ",
+      "register": "Sign up"
+    },
+    "signUp": {
+      "emailPlaceholder": "Email",
+      "passwordPlaceholder": "Password",
+      "countryPlaceholder": "Country (eg: ES)",
+      "referralPlaceholder": "Referral code (optional)",
+      "verifyReferralLoading": "Verifying referral code...",
+      "referredBy": "Referred by: {{name}}",
+      "referralNotFound": "Referral code not found",
+      "referralVerifyError": "Could not verify referral",
+      "success": "Registration successful! You can now sign in.",
+      "errorGeneric": "An error occurred while registering.",
+      "goToSignIn": "Go to sign in",
+      "registering": "Registering...",
+      "register": "Register",
+      "welcomeTitle": "Welcome to Dota Casino",
+      "welcomeSubtitle": "Sign up to Dota Casino to start having fun.",
+      "haveAccount": "Already have an account? ",
+      "signIn": "Sign in",
+      "acceptTermsPrefix": "I accept the",
+      "acceptTermsLink": "terms and conditions"
+    },
+    "forgotPassword": {
+      "emailPlaceholder": "Email",
+      "requiredEmail": "Please enter your email.",
+      "successToast": "Sent successfully",
+      "successMsg": "If the email exists in our system, we have sent you a link to reset your password.",
+      "errorGeneric": "An error occurred while requesting the password reset.",
+      "submitting": "Sending...",
+      "submit": "Send reset link",
+      "backToSignIn": "Back to sign in",
+      "createAccount": "Create account",
+      "title": "Forgot your password?",
+      "subtitle": "Enter your email and we'll send you a link to reset it."
+    }
+  },
+  "legal": {
+    "antiSpam": {
+      "bannerTitle": "Games",
+      "bannerSubtitle": "Choose an option to continue",
+      "title": "Anti-spam policy",
+      "body": "All registered customers will receive announcements and newsletters from dota.click and/or its subsidiaries (Bestpoker.com, dota.click, BestAffiliate.com) by email regarding various aspects of the Service, including, but not limited to, notices of future updates or changes, service issues or events, and special offers and promotions from dota.click and/or its subsidiaries.<br/><br/>dota.click and all subsidiaries will make an effort to assist subscribers who continuously receive emails they consider objectionable and/or unsolicited and who notify us of the problem.<br/><br/>A registered customer of dota.click and/or its subsidiaries has the option to unsubscribe from all of our promotional newsletters. All registered customers also have the option to enable/disable the newsletter feature in their personal account settings. Registered customers cannot unsubscribe or opt out of receiving newsletters/emails about critical security software updates or similar information that is vital to the customer and the service provided by dota.click and/or its subsidiaries unless they choose to permanently close their account.<br/><br/>dota.click and/or its subsidiaries do not permit or authorize others to use the services to collect, harvest or obtain information about dota.click customers or subscribers, including, but not limited to, subscriber email addresses, which are confidential and proprietary information of dota.click. Doing so will violate the applicable Terms of Use for the services.<br/><br/>If you believe you are receiving unsolicited email from dota.click and/or its subsidiaries, please contact support regarding this matter."
+    },
+    "terms": {
+      "bannerTitle": "Games",
+      "bannerSubtitle": "Choose an option to continue",
+      "title": "Terms and conditions",
+      "body": "The terms and conditions set out below come into effect on July 10, 2016. Before using the dota.click website (\"dota.click Casino\", \"Website\"), please read these Terms and Conditions carefully. By using this website you confirm your acceptance of these Terms and Conditions.<br/><br/>In the event of any discrepancy between the English and Spanish versions of these Terms and Conditions, the English version shall prevail.<br/><br/><b>Changes to the Terms and Conditions</b><br/>The Company may change these Terms and Conditions as necessary. The Company will make reasonable efforts to inform players of significant changes. Nevertheless, please review the Terms and Conditions regularly to stay informed of updates.<br/><br/><b>Who may play</b><br/>dota.click Casino accepts players only from countries and geographic regions where online gambling is permitted by law. Players must independently verify the regulations and laws governing gambling in their country or region of residence. Responsibility for non-compliance with such laws rests entirely with the player.<br/><br/>Only persons aged 18 or over, or the minimum age required to participate in online gambling according to the laws of their place of residence, may play on the website. Responsibility for knowing such laws rests entirely with the player. If you are a player from Spain, the United Kingdom, the United States of America or any U.S. territory, you are prohibited from playing for real money on the website, including playing for Bitcoin.<br/><br/>The Company reserves the right to request evidence of the player's age compliance and to restrict access to play or suspend accounts for those who cannot provide evidence of reaching the required age for gambling.<br/><br/><b>Fees and taxes</b><br/>The player is solely responsible for paying any fees and taxes due on winnings in accordance with the laws of the player's country or region of residence.<br/><br/>If a player who requested withdrawal of funds from the website has not wagered an amount equal to at least three times the last deposit before making the withdrawal request, we reserve the right to charge that player the transaction processing costs for both the deposit and the withdrawal. This decision is at the discretion of dota.click Casino management.<br/><br/><b>Game rules</b><br/>The player confirms that they know the rules of the games in which they may participate on the website. The responsibility for knowing payout percentages and rules for games the player participates in lies entirely with the player.<br/><br/><b>Disclaimer</b><br/>The player acknowledges that playing on the website may lead to monetary loss. The Company is not responsible for any financial losses incurred by the player as a result of playing on the website.<br/><br/>The Company takes all reasonable measures to protect the player's personal data and provides such data only to parties involved in delivering gaming services on the website. Nevertheless, the Company is not responsible for how third parties (for example, game providers or affiliates) handle this information. Processing of the player's personal data by such third parties is carried out in accordance with their terms and conditions.<br/><br/>The Company is not responsible for hardware or software defects, loss of internet connection, or any other technical problem that may limit a player's access to the website or interrupt their play.<br/><br/><b>Use of player account</b><br/>Each player is entitled to create a single gaming account. Creating more than one account for the same player may lead to deletion of all player accounts and cancellation of all cash payments. The player must not give anyone access to their gaming account nor allow third parties (including minors) to use the website from their account.<br/><br/>The website may only be used for personal purposes and must not be used for commercial purposes.<br/><br/><b>Anti-fraud</b><br/>The Company has a strict anti-fraud policy. If a player is suspected of fraudulent actions, including but not limited to:<br/>- colluding with other players,<br/>- developing strategies aimed at obtaining unfair gains,<br/>- fraudulent actions against other online casinos or payment systems,<br/>- chargebacks or reversals of credit card payments,<br/>- other types of fraud,<br/>- being declared bankrupt in the country of residence,<br/>- providing false information during registration,<br/>then the Company reserves the right to close all player accounts and cancel all cash payments. This decision is entirely at the Company’s discretion and the player will not be notified of the reasons for such decision. The Company reserves the right to notify relevant authorities to investigate fraudulent actions by the player.<br/><br/>The Company may require any player to provide documents confirming identity. The player may be asked to take a selfie holding the document and confirm the date the selfie was taken. Alteration of photographic documents using any special software is strictly prohibited. If the player does not provide requested documents within one month from the request, we reserve the right to confiscate the player's account balance and close the account.<br/><br/>If a player, for any reason, refuses to take a selfie in accordance with security requirements, they may request payment of funds to a bank account registered in their name.<br/><br/>We reserve the right to charge transaction processing costs to the player if they have not wagered the deposit amount at least three times before requesting withdrawals. Attempts to meet the 3× wagering requirement solely through table games (roulette, blackjack, poker, etc.) prior to requesting a withdrawal may be considered fraudulent actions against the payment system or the casino. This decision is entirely at the casino’s discretion and is not subject to appeal.<br/><br/><b>Deposit</b><br/>dota.click Casino offers various methods to top up the gaming account. A player may use VISA and MasterCard credit and debit cards, as well as various online wallets to fund the account. Contact support at dotasoporte@gmail.com to inquire about the appropriate deposit method for your region of residence.<br/><br/>Also note that the minimum deposit is 5 EUR / 5 USD / 200 KZT.<br/><br/><b>Withdraw / Refund</b><br/>The minimum amount to withdraw funds is 20 EUR / 20 USD / 500 KZT. The maximum withdrawal amount depends on the payment system you use. If the requested withdrawal amount exceeds the payment system limit, the payment will be made in parts. Withdrawal requests begin processing immediately upon receipt; however, the withdrawal process may take up to five days with certain payment systems.<br/><br/>Each player may make up to two refunds in one day and up to seven in a calendar week. Cashouts that violate this restriction will be canceled, and the player will be notified by email. If a player’s withdrawal amount must be split into several payments to comply with payment system limits, such payments will be considered a single withdrawal provided the player has not made a deposit between them.<br/><br/>dota.click Casino supports payments via Visa Original Credit Transfer (OCT) and Mastercard Payment Transfer. The card used at dota.click Casino must not be a corporate credit card and must be issued in a country permitted by these rules.<br/><br/>Note that even if your country is among those allowed, we cannot guarantee a successful transaction because the card-issuing bank may block it at its discretion.<br/><br/>Also note that the operating currency of dota.click Casino is the euro (EUR). If you transact in other currencies, the funds debited from your card may be slightly higher than the initial transaction amount due to currency conversion fees charged by the bank and/or payment system.<br/><br/>If the deposit was made with a credit or debit card and the withdrawal amount is equal to or less than the deposit amount, we reserve the right to return funds to that credit or debit card. If the withdrawal amount exceeds the deposit amount, the difference will be paid by one of the alternative payment methods.<br/><br/>The Company reserves the right to verify the player's identity before processing withdrawals and to delay payment for the time required for such verification. If the player provided inaccurate data, payment may be denied completely and the account disabled. If such a decision is made, the player will be notified by email.<br/><br/>If a player wins more than 50,000 EUR (or equivalent), we reserve the right to split the payment of the total amount into monthly payments of 50,000 EUR until all winnings are paid. The maximum payable amount to the player is 20,000 EUR per week and 50,000 EUR per month unless otherwise specified. Exceptions may be made for high VIP-status players. All progressive jackpots are paid in full.<br/><br/>E-wallet withdrawal times vary from a few seconds to 15 minutes. Withdrawals to credit/debit cards and by bank transfer may take 1–5 days. Account verification time prior to payment, if required, may be up to 12 hours.<br/><br/><b>BONUS TERMS</b><br/>1. All bonuses are available to players from all countries unless otherwise stated.<br/>2. Per address, IP address, email, phone number, payment system account (Neteller, Skrill, credit card, etc.), etc., bonuses may be received by only one person.<br/>3. When using any bonus code, only uppercase letters should be used. Each bonus code can be used only once.<br/>4. When playing with a bonus, real money will be spent first. Bets will be deducted from the player's real balance. If the real balance is exhausted, bets will be deducted from the bonus balance.<br/>5. Upon bonus expiration, the bonus and any winnings derived from it will be voided.<br/>6. dota.click Casino reserves the right to update these rules at any time.<br/><br/><b>Privacy and security</b><br/><br/><b>1. Privacy</b><br/>All information about dota.click Casino players is considered strictly confidential by the Company. All data is stored and processed in accordance with data protection and privacy laws.<br/><br/><b>2. Collection of personal information</b><br/>We collect personal data from players when registering at dota.click Casino, when responding to requests, and when contacting customer support. Information may include the player's name, date of birth, residential address, email address, IP address, credit or debit card numbers, and other personal information. Such personal data is accessible to dota.click Casino employees, employees of the game content provider Direx N.V., payment systems, and other third parties who assist the Company in providing gaming services to users. All parties with access to personal data handle it strictly in accordance with privacy and data protection laws. Data is fully protected against unauthorized access.<br/><br/><b>3. Information about player account balances</b><br/>All information about player deposits, winnings, and withdrawals is considered strictly confidential. We do not disclose such information to third parties without the player's prior consent unless required by law.<br/><br/><b>4. Use of personal data for marketing</b><br/>The Company uses players' personal data for marketing purposes. However, we respect the player's right to privacy. If the player does not wish to receive promotional messages, they may select the appropriate option during registration. They may also unsubscribe from promotional materials at any time using the website.<br/><br/><b>5. Cookie policy</b><br/>dota.click Casino uses cookies to save the player's personal settings and preferences to provide more convenient gaming services. To set personal privacy settings, a player should contact customer support at dotasoporte@gmail.com<br/><br/><b>6. Disclosure of personal data</b><br/>If the Company determines that a player has engaged in fraudulent activities related to game manipulation, payment system fraud, provision of false personal data, money laundering, use of stolen credit cards, etc., we reserve the right to disclose such player's personal data and make it available to the public.<br/><br/><b>7. Personal data security</b><br/>The Company seeks to provide 100% secure gaming services and ensure that players' personal data cannot be stolen, lost, or used unlawfully. We use the latest technological advances to protect players' personal data.<br/><br/><b>SSL technology</b><br/>dota.click Casino uses 128-bit SSL (Secure Socket Layer) technology, preferred by many financial institutions and major banks, to secure transactions on the website.<br/><br/><b>Fraud management system</b><br/>We use a special anti-fraud system to prevent any possible financial fraud on the website. Any attempt at illegal activity leads to immediate account blocking.<br/><br/><b>Player account access</b><br/>Account access is possible only with the player's unique ID and password. The player is fully responsible for the security of these credentials and for ensuring others cannot access the account.<br/><br/><b>Payment system security</b><br/>We work only with the most reputable and reliable payment systems, allowing us to guarantee thorough processing of player deposits and withdrawals in accordance with all security standards.<br/><br/><b>Responsible gaming</b><br/>Remember, gambling in a casino should be treated only as entertainment. Gambling should not harm you, your family, or friends. Before playing at dota.click Casino, it is important to understand that gambling cannot be considered a means of generating income or paying debts. We recommend you always monitor how much time you spend playing and how much money you can afford to lose. Never gamble amounts you cannot afford to lose.<br/><br/><b>Help for problem gamblers</b><br/>If you believe gambling is having a negative impact on your life or the lives of those close to you, we recommend that you consider measures such as setting personal limits on gambling, self-exclusion, or seeking specialist help."
     }
   }
 }

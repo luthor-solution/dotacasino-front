@@ -1,5 +1,6 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import Image from "next/image";
 import Link from "next/link";
 import { FiMail } from "react-icons/fi";
@@ -8,15 +9,17 @@ import FancyButton from "@/components/FancyButton";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { userService } from "@/services/userService";
+import { useTranslation } from "react-i18next";
 
 export default function ForgotPassword() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     if (!email.trim()) {
-      setMsg("Por favor ingresa tu correo electrónico.");
+      setMsg(t("auth.forgotPassword.requiredEmail"));
       return;
     }
 
@@ -26,15 +29,13 @@ export default function ForgotPassword() {
     try {
       await userService.requestPasswordReset({ email });
 
-      setMsg(
-        "Si el correo existe en nuestro sistema, te enviamos un enlace para restablecer tu contraseña."
-      );
-      toast.success("Enviado con éxito");
+      setMsg(t("auth.forgotPassword.successMsg"));
+      toast.success(t("auth.forgotPassword.successToast"));
     } catch (err: any) {
       const errorMsg =
         err?.response?.data?.message ||
         err?.message ||
-        "Ocurrió un error al solicitar el restablecimiento.";
+        t("auth.forgotPassword.errorGeneric");
       setMsg(errorMsg);
       toast.error(errorMsg);
     } finally {
@@ -61,7 +62,7 @@ export default function ForgotPassword() {
 
           <div className="flex flex-col space-y-[24px] xl:w-[400px] w-full">
             <FancyInput
-              placeholder="Correo electrónico"
+              placeholder={t("auth.forgotPassword.emailPlaceholder")}
               name="email"
               icon={<FiMail />}
               onChange={(val) => setEmail(val)}
@@ -87,7 +88,9 @@ export default function ForgotPassword() {
                   : ""
               }`}
             >
-              {loading ? "Enviando..." : "Enviar enlace de restablecimiento"}
+              {loading
+                ? t("auth.forgotPassword.submitting")
+                : t("auth.forgotPassword.submit")}
             </FancyButton>
           </div>
 
@@ -96,24 +99,22 @@ export default function ForgotPassword() {
               href="/sign-in"
               className="text-[#e2a94f] underline hover:scale-110 transition-all duration-500"
             >
-              Volver a iniciar sesión
+              {t("auth.forgotPassword.backToSignIn")}
             </Link>
             <Link
               href="/sign-up"
               className="text-[#e2a94f] underline hover:scale-110 transition-all duration-500"
             >
-              Crear cuenta
+              {t("auth.forgotPassword.createAccount")}
             </Link>
           </div>
         </div>
 
         <div className="flex flex-col space-y-6 text-white text-center w-fit">
           <span className="text-[#FFC827] text-[28px] tracking-wide font-[600]">
-            ¿Olvidaste tu contraseña?
+            {t("auth.forgotPassword.title")}
           </span>
-          <span>
-            Ingresa tu correo y te enviaremos un enlace para restablecerla.
-          </span>
+          <span>{t("auth.forgotPassword.subtitle")}</span>
         </div>
       </div>
     </div>

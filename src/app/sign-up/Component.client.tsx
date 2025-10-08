@@ -10,12 +10,14 @@ import { useEffect, useMemo, useState } from "react";
 import { userService } from "@/services/userService";
 import SuccessNotification from "@/components/SuccessNotification";
 import { useSearchParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 type ReferredProfile = {
   displayName?: string | null;
 };
 
 export default function Component() {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
   const _refCode = searchParams.get("refCode");
 
@@ -67,10 +69,10 @@ export default function Component() {
           setRefProfile(null);
           const message =
             err?.response?.status === 404
-              ? "Código de referido no encontrado"
+              ? t("auth.signUp.referralNotFound")
               : err?.response?.data?.message ||
                 err?.message ||
-                "No se pudo verificar el referido";
+                t("auth.signUp.referralVerifyError");
           setRefError(message);
         }
       } finally {
@@ -82,7 +84,7 @@ export default function Component() {
     return () => {
       cancelled = true;
     };
-  }, [form.referralCode]);
+  }, [form.referralCode, t]);
 
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -116,7 +118,7 @@ export default function Component() {
       await userService.register(payload);
 
       setSuccess(true);
-      setMsg("¡Registro exitoso! Ahora puedes iniciar sesión.");
+      setMsg(t("auth.signUp.success"));
     } catch (err: any) {
       if (Array.isArray(err.response?.data?.message)) {
         const errors: { [key: string]: string } = {};
@@ -134,7 +136,7 @@ export default function Component() {
         setMsg(
           err.response?.data?.message ||
             err.message ||
-            "Ocurrió un error al registrarse."
+            t("auth.signUp.errorGeneric")
         );
       }
     } finally {
@@ -179,32 +181,32 @@ export default function Component() {
               <SuccessNotification
                 message={msg}
                 linkHref="/sign-in"
-                linkText="Ir a iniciar sesión"
+                linkText={t("auth.signUp.goToSignIn")}
               />
             ) : (
               <>
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 w-full">
                   <FancyInput
-                    placeholder="Email"
+                    placeholder={t("auth.signUp.emailPlaceholder")}
                     name="email"
                     icon={<FiMail />}
                     onChange={(val) => handleChange("email", val)}
                   />
                   <FancyInput
-                    placeholder="Password"
+                    placeholder={t("auth.signUp.passwordPlaceholder")}
                     name="password"
                     icon={<FiLock />}
                     type="password"
                     onChange={(val) => handleChange("password", val)}
                   />
                   <FancyInput
-                    placeholder="Country (ej: ES)"
+                    placeholder={t("auth.signUp.countryPlaceholder")}
                     name="country"
                     icon={<FiFlag />}
                     onChange={(val) => handleChange("country", val)}
                   />
                   <FancyInput
-                    placeholder="Referral Code (opcional)"
+                    placeholder={t("auth.signUp.referralPlaceholder")}
                     name="referralCode"
                     icon={<FiCode />}
                     value={form.referralCode}
@@ -216,7 +218,7 @@ export default function Component() {
                 <div className="mt-2 min-h-[22px]">
                   {refLoading && (
                     <div className="text-xs text-gray-300">
-                      Verificando código de referido...
+                      {t("auth.signUp.verifyReferralLoading")}
                     </div>
                   )}
                   {!refLoading && refError && (
@@ -224,7 +226,7 @@ export default function Component() {
                   )}
                   {!refLoading && !refError && referredName && (
                     <div className="text-xs text-green-400">
-                      Referido por: {referredName}
+                      {t("auth.signUp.referredBy", { name: referredName })}
                     </div>
                   )}
                 </div>
@@ -254,9 +256,9 @@ export default function Component() {
                     className="accent-[#FFC827] w-5 h-5"
                   />
                   <label htmlFor="acceptTerms" className="text-white text-sm">
-                    Acepto los{" "}
+                    {t("auth.signUp.acceptTermsPrefix")}{" "}
                     <a href="#" className="underline text-[#FFC827]">
-                      términos y condiciones
+                      {t("auth.signUp.acceptTermsLink")}
                     </a>
                   </label>
                 </div>
@@ -269,7 +271,9 @@ export default function Component() {
                       : ""
                   }`}
                 >
-                  {loading ? "Registrando..." : "Registrarse"}
+                  {loading
+                    ? t("auth.signUp.registering")
+                    : t("auth.signUp.register")}
                 </FancyButton>
               </>
             )}
@@ -278,16 +282,16 @@ export default function Component() {
 
         <div className="flex flex-col space-y-6 text-white text-center w-fit">
           <span className="text-[#FFC827] text-[28px] tracking-wide font-[600]">
-            Bienvenido a Dota Casino
+            {t("auth.signUp.welcomeTitle")}
           </span>
-          <span>Regístrate en Dota Casino para empezar a divertirte.</span>
+          <span>{t("auth.signUp.welcomeSubtitle")}</span>
           <div>
-            <span>¿Ya tienes una cuenta? </span>
+            <span>{t("auth.signUp.haveAccount")}</span>
             <Link
               href="/sign-in"
               className="text-[#e2a94f] underline hover:scale-110 transition-all duration-500"
             >
-              Inicia sesión
+              {t("auth.signUp.signIn")}
             </Link>
           </div>
         </div>

@@ -1,0 +1,381 @@
+{
+  "app": {
+    "title": "Recarregar fichas",
+    "subtitle": "Deposite com USDT na sua rede favorita e credite suas fichas instantaneamente."
+  },
+  "alerts": {
+    "info": "{{message}}"
+  },
+  "badge": {
+    "userId": "ID: {{id}}"
+  },
+  "balanceCard": {
+    "title": "Saldo atual"
+  },
+  "form": {
+    "title": "Gerar ordem de depósito",
+    "amountLabel": "Valor a depositar (USD)",
+    "amountPlaceholder": "Ex.: 25",
+    "networkLabel": "Rede (USDT)",
+    "networks": {
+      "BSC": "BSC · BEP20",
+      "ETH": "ETH · ERC20",
+      "POLYGON": "POLYGON · ERC20",
+      "TRX": "TRX · TRC20"
+    },
+    "submit": "Gerar QR de depósito",
+    "submitting": "Criando ordem...",
+    "clear": "Limpar",
+    "error": "{{error}}"
+  },
+  "payment": {
+    "title": "Enviar USDT para este endereço",
+    "selectedNetwork": "Rede selecionada:",
+    "amount": "Valor:",
+    "expiresIn": "Expira em",
+    "qrAlt": "QR de depósito",
+    "walletAddressLabel": "Endereço da carteira",
+    "walletAddressTitleEnabled": "Endereço da carteira",
+    "walletAddressTitleDisabled": "Não disponível enquanto o QR estiver completado ou expirado",
+    "copy": "Copiar",
+    "copyDisabled": "Copiar desabilitado",
+    "notes": {
+      "onlyUsdt": "Envie apenas <strong>USDT</strong> na rede indicada.",
+      "expiresAtZero": "A ordem expira quando chegar a 00:00.",
+      "autoCredit": "Será creditado automaticamente após 1–3 confirmações."
+    },
+    "cancel": "Cancelar transação",
+    "generateNewQr": "Gerar novo QR"
+  },
+  "overlays": {
+    "success": {
+      "message": "{{message}}",
+      "redirecting": "Redirecionando em alguns segundos..."
+    },
+    "expired": {
+      "title": "O QR expirou.",
+      "subtitle": "Gere um novo para continuar."
+    }
+  },
+  "bankServersBanner": {
+    "title": "Banco de servidores",
+    "subtitle": "Escolha uma opção para continuar"
+  },
+  "goToServer": "Ir para o servidor",
+  "footer": {
+    "company": {
+      "title": "Empresa",
+      "news": "Notícias",
+      "about": "Sobre nós"
+    },
+    "games": {
+      "title": "Jogos",
+      "bonds": "Bônus",
+      "jackpots": "Jackpots"
+    },
+    "resources": {
+      "title": "Recursos",
+      "termsAndConditions": "Termos e Condições",
+      "antiSpamPolicy": "Política Anti-Spam",
+      "refundPolicy": "Política de Reembolso"
+    },
+    "rows": {
+      "one": "dota.click é um cassino cripto de alto padrão e confiável, com uma grande variedade de jogos de caça-níqueis, máquinas de slot online únicas, apostas esportivas, eventos de eSports, jogos com dealer ao vivo, torneios de pôquer e populares jogos de pesca. Nossa seleção de jogos artesanais não deixará nenhum jogador indiferente. Nosso cassino online cripto dota.click oferece hoje a melhor seleção de slots online com diferentes temas e estilos; todos os seus jogos favoritos podem ser facilmente encontrados na seção de provedores de jogos e adicionados à sua lista pessoal de Favoritos para acesso rápido a qualquer momento conveniente.",
+      "two": "Vantagens de jogar no vip crypto casino dota.click:",
+      "three": "Nosso cassino online cripto premium dota.click segue altos padrões de segurança para oferecer uma experiência de jogo segura. A principal vantagem do nosso cassino dota.click é a grande seleção de jogos de slots em parceria com os principais provedores. O processo de cadastro rápido e simples, sem verificações desnecessárias, permite que você inicie sua melhor sessão de jogo rapidamente. Mas, o mais importante, você ficará satisfeito com o processo instantâneo de depósito e retirada de fundos, tanto em criptomoedas principais quanto em stablecoins. Isso permite que você esteja sempre de bom humor e aproveite uma emoção agradável. Todas as informações fornecidas pelos usuários são confidenciais e anônimas. Você pode ter absoluta certeza de que protegemos seus fundos de forma confiável e garantimos a segurança do seu saldo. Nosso cassino online é protegido contra ataques de hackers; estamos online 24/7/365.",
+      "four": "Fizemos o nosso melhor para proporcionar um jogo conveniente não apenas em computadores pessoais, mas também em telefones e tablets. Nossa versão móvel do cassino online dota.click é muito fácil de usar e está sempre sendo aprimorada. O app móvel para jogar slots no telefone é incrivelmente rápido e tem as mesmas funcionalidades do site do cassino online a que você está acostumado.",
+      "five": "Fique conosco e você terá um parceiro confiável no seu entretenimento online pelos próximos anos. Desejamos tudo de melhor!"
+    }
+  },
+  "header": {
+    "home": "Início",
+    "games": "Jogos",
+    "recharge": "Recarregar",
+    "signIn": "Entrar",
+    "signUp": "Registrar-se",
+    "myProfile": "Meu perfil",
+    "verifyIdentity": "Verificar identidade",
+    "logout": "Sair"
+  },
+  "gamesBanner": {
+    "title": "Jogos",
+    "subtitle": "Escolha uma opção para continuar"
+  },
+  "loading": "Carregando...",
+  "showMore": "Ver mais",
+  "page": "Página",
+  "of": "de",
+  "next": "Próxima",
+  "previous": "Anterior",
+  "searchGame": "Pesquisar jogo...",
+  "noGames": "Não há jogos nesta categoria.",
+  "hide": "Ocultar",
+  "category": "Categoria",
+  "playNow": "Jogar agora",
+  "profileBanner": {
+    "title": "Painel do usuário",
+    "subtitle": "Escolha uma opção para continuar"
+  },
+  "userDashboard": "Painel do usuário",
+  "showMenu": "Ver menu",
+  "totalBalance": "SALDO TOTAL",
+  "winnings": "GANHOS",
+  "cashout": "RETIRADO",
+  "showAll": "Ver tudo",
+  "transactionID": "ID da transação",
+  "amount": "Valor",
+  "status": "Status",
+  "date": "Data",
+  "profileUpdated": "Perfil atualizado",
+  "profileUpdatedError": "Erro ao atualizar perfil",
+  "changePhoto": "Alterar foto",
+  "firstName": "Nome",
+  "lastName": "Sobrenome",
+  "displayName": "Nome de usuário",
+  "phone": "Telefone",
+  "notFound": "Não encontrado",
+  "changePassword": "Alterar senha",
+  "updating": "Atualizando...",
+  "updateProfile": "Atualizar perfil",
+  "welcome": "Bem-vindo",
+  "dashboard": "Painel",
+  "depositHistory": "Histórico de depósitos",
+  "transactionHistory": "Histórico de transações",
+  "accountSettings": "Configurações da conta",
+  "referrals": "Indicações e assinaturas",
+  "allInputsRequired": "Todos os campos são obrigatórios",
+  "atLeast8": "A nova senha deve ter pelo menos 8 caracteres",
+  "passwordsMismatch": "As senhas não coincidem",
+  "passwordDiff": "A nova senha deve ser diferente da atual",
+  "passwordUpdated": "Senha atualizada com sucesso",
+  "passwordUpdatedError": "Erro ao atualizar a senha",
+  "currentPassword": "Senha atual",
+  "newPassword": "Nova senha",
+  "confirmPassword": "Confirmar senha",
+  "cancel": "Cancelar",
+  "update": "Atualizar",
+  "withdraw": {
+    "app": {
+      "title": "Retiradas",
+      "subtitle": "Solicite a retirada de seus fundos para a rede selecionada."
+    },
+    "balance": {
+      "title": "Saldo disponível"
+    },
+    "form": {
+      "title": "Criar retirada",
+      "amountLabel": "Valor a retirar",
+      "amountPlaceholder": "0.00",
+      "networkLabel": "Rede",
+      "address": "Endereço",
+      "networks": {
+        "BSC": "BSC",
+        "ETH": "ETH",
+        "POLYGON": "POLYGON",
+        "TRX": "TRX"
+      },
+      "submit": "Solicitar retirada",
+      "submitting": "Enviando...",
+      "clear": "Limpar",
+      "invalidAmount": "Insira um valor válido",
+      "genericError": "Ocorreu um erro ao criar a retirada",
+      "error": "Erro: {{error}}",
+      "exceedsBalance": "Você não pode sacar mais do que o seu saldo disponível"
+    },
+    "success": {
+      "overlayMessage": "Solicitação de retirada criada com sucesso."
+    },
+    "cancel": "Cancelar solicitação",
+    "cancelError": "Não foi possível cancelar a solicitação",
+    "goToHistory": "Ir ao histórico",
+    "requestId": "ID: {{id}}",
+    "summary": {
+      "title": "Resumo da retirada",
+      "selectedNetwork": "Rede selecionada",
+      "amount": "Valor",
+      "info": "Solicitação enviada"
+    },
+    "overlays": {
+      "success": {
+        "redirecting": "Retornando ao formulário..."
+      }
+    },
+    "nextStepsLabel": "Próximos passos e informações",
+    "notes": {
+      "created": "Sua solicitação de retirada foi criada com sucesso.",
+      "history": "Você pode verificar o status e cancelá-la no histórico enquanto estiver pendente.",
+      "time": "O processamento pode levar alguns minutos."
+    }
+  },
+  "statusTable": {
+    "succeeded": "Concluído",
+    "pending": "Pendente",
+    "failed": "Falhou",
+    "unknown": "Desconhecido"
+  },
+  "kyc": {
+    "stepOne": {
+      "verificationStatus": "Status de verificação",
+      "notStarted": "Não iniciado",
+      "pendingDocs": "Documentos pendentes para envio",
+      "id": {
+        "title": "Documento de identidade",
+        "instructions": {
+          "line1": "Você deve capturar ambos os lados do documento com boa qualidade e",
+          "line2": "boa iluminação"
+        },
+        "frontCaption": {
+          "line1": "FRENTE DO",
+          "line2": "DOCUMENTO"
+        },
+        "backCaption": {
+          "line1": "VERSO DO",
+          "line2": "DOCUMENTO"
+        }
+      },
+      "selfie": {
+        "title": "Selfie",
+        "instructions": {
+          "line1": "Precisamos tirar uma foto",
+          "line2": "do seu rosto"
+        },
+        "caption": {
+          "line1": "SUA",
+          "line2": "SELFIE"
+        }
+      }
+    },
+    "stepTwo": {
+      "title": "Complete as informações faltantes",
+      "personalData": "Dados pessoais",
+      "namePlaceholder": "Nome",
+      "lastNamePlaceholder": "Sobrenome",
+      "idLabel": "ID",
+      "idPlaceholder": "ID",
+      "countryLabel": "País",
+      "countryPlaceholder": "País",
+      "countries": {
+        "mexico": "México",
+        "usa": "Estados Unidos",
+        "canada": "Canadá"
+      },
+      "birthdayPlaceholder": "Data de nascimento"
+    },
+    "stepThree": {
+      "title": "Precisamos validar seu documento para continuar com o processo",
+      "selectType": "Selecione o tipo de documento",
+      "typePlaceholder": "Tipo de documento",
+      "options": {
+        "idCard": "Documento nacional de identidade",
+        "driverLicense": "Carteira de motorista",
+        "passport": "Passaporte",
+        "addressProof": "Comprovante de residência"
+      },
+      "id": {
+        "title": "Documento de identidade",
+        "instructions": {
+          "line1": "Você deve capturar ambos os lados do documento com boa qualidade e",
+          "line2": "boa iluminação"
+        },
+        "frontLabel": "FRENTE DO DOCUMENTO",
+        "backLabel": "VERSO DO DOCUMENTO"
+      },
+      "hoverHint": "Posicione o cursor sobre cada opção para começar"
+    },
+    "stepFour": {
+      "title": "Precisamos validar seu documento para continuar com o processo",
+      "selfie": {
+        "title": "Selfie",
+        "instructions": "Tire uma selfie clara e com boa iluminação",
+        "label": "SUA SELFIE"
+      },
+      "hoverHint": "Posicione o cursor sobre cada opção para começar"
+    },
+    "wizard": {
+      "stepLabel": "Passo {{number}}",
+      "startVerification": "Iniciar verificação",
+      "submitting": "Enviando...",
+      "successToast": "Verificação enviada com sucesso!",
+      "submitError": "Erro ao enviar a verificação"
+    }
+  },
+  "report": {
+    "label": "Reportar",
+    "title": "Reportar um problema",
+    "form": {
+      "describeLabel": "Descreva o problema",
+      "describePlaceholder": "O que você estava fazendo? O que deu errado?",
+      "cancel": "Cancelar",
+      "submit": "Enviar",
+      "submitting": "Enviando...",
+      "toasts": {
+        "requiredDescription": "Por favor descreva o problema.",
+        "success": "Obrigado! Seu relatório foi enviado.",
+        "error": "Não foi possível enviar o relatório. Tente novamente mais tarde."
+      }
+    }
+  },
+  "auth": {
+    "signIn": {
+      "emailPlaceholder": "E-mail",
+      "passwordPlaceholder": "Senha",
+      "submitting": "Entrando...",
+      "submit": "Entrar",
+      "success": "Login bem-sucedido!",
+      "errorGeneric": "Ocorreu um erro ao entrar.",
+      "forgotPassword": "Esqueci minha senha",
+      "welcomeTitle": "Bem-vindo ao Dota Casino",
+      "welcomeSubtitle": "Faça login na sua conta para começar a se divertir.",
+      "noAccount": "Ainda não tem uma conta? ",
+      "register": "Registrar-se"
+    },
+    "signUp": {
+      "emailPlaceholder": "E-mail",
+      "passwordPlaceholder": "Senha",
+      "countryPlaceholder": "País (ex: BR)",
+      "referralPlaceholder": "Código de indicação (opcional)",
+      "verifyReferralLoading": "Verificando código de indicação...",
+      "referredBy": "Indicado por: {{name}}",
+      "referralNotFound": "Código de indicação não encontrado",
+      "referralVerifyError": "Não foi possível verificar a indicação",
+      "success": "Registro efetuado com sucesso! Agora você pode entrar.",
+      "errorGeneric": "Ocorreu um erro ao registrar-se.",
+      "goToSignIn": "Ir para entrar",
+      "registering": "Registrando...",
+      "register": "Registrar-se",
+      "welcomeTitle": "Bem-vindo ao Dota Casino",
+      "welcomeSubtitle": "Registre-se no Dota Casino para começar a se divertir.",
+      "haveAccount": "Já tem uma conta? ",
+      "signIn": "Entrar",
+      "acceptTermsPrefix": "Aceito os",
+      "acceptTermsLink": "termos e condições"
+    },
+    "forgotPassword": {
+      "emailPlaceholder": "E-mail",
+      "requiredEmail": "Por favor insira seu e-mail.",
+      "successToast": "Enviado com sucesso",
+      "successMsg": "Se o e-mail existir em nosso sistema, enviamos um link para redefinir sua senha.",
+      "errorGeneric": "Ocorreu um erro ao solicitar a redefinição de senha.",
+      "submitting": "Enviando...",
+      "submit": "Enviar link de redefinição",
+      "backToSignIn": "Voltar ao login",
+      "createAccount": "Criar conta",
+      "title": "Esqueceu sua senha?",
+      "subtitle": "Digite seu e-mail e enviaremos um link para redefinir sua senha."
+    }
+  },
+  "legal": {
+    "antiSpam": {
+      "bannerTitle": "Jogos",
+      "bannerSubtitle": "Escolha uma opção para continuar",
+      "title": "Política antispam",
+      "body": "Todos os clientes registados receberão anúncios e boletins informativos da dota.click e/ou suas subsidiárias (Bestpoker.com, dota.click, BestAffiliate.com) por e-mail sobre vários aspetos do Serviço, incluindo, entre outros, avisos de futuras atualizações ou alterações, problemas ou eventos do serviço e ofertas e promoções especiais da dota.click e/ou suas subsidiárias.<br/><br/>A dota.click e todas as subsidiárias envidarão esforços para ajudar os assinantes que continuamente recebem e-mails que consideram indesejáveis e/ou não solicitados e que nos notificam sobre o problema.<br/><br/>Um cliente registado na dota.click e/ou suas subsidiárias tem a opção de cancelar a subscrição de todos os nossos boletins promocionais. Todos os clientes registados também têm a opção de ativar/desativar a funcionalidade de boletim nas definições da sua conta pessoal. Clientes registados não podem cancelar a subscrição nem optar por não receber boletins/e-mails sobre atualizações críticas de software de segurança ou informações semelhantes que sejam vitais para o cliente e para o serviço prestado pela dota.click e/ou suas subsidiárias, a menos que decidam encerrar a sua conta permanentemente.<br/><br/>A dota.click e/ou suas subsidiárias não permitem nem autorizam que terceiros utilizem os serviços para recolher, agregar ou obter informações sobre clientes ou assinantes da dota.click, incluindo, entre outros, endereços de e-mail de assinantes, que são informações confidenciais e proprietárias da dota.click. Tal comportamento violará os Termos de Uso aplicáveis aos serviços.<br/><br/>Se acreditar que está a receber e-mails não solicitados da dota.click e/ou das suas subsidiárias, contacte o suporte relativamente a este assunto."
+    },
+    "terms": {
+      "bannerTitle": "Jogos",
+      "bannerSubtitle": "Escolha uma opção para continuar",
+      "title": "Termos e condições",
+      "body": "Os termos e condições descritos abaixo entram em vigor em 10 de julho de 2016. Antes de utilizar o website dota.click (\"dota.click Casino\", \"Website\"), por favor leia estes Termos e Condições com atenção. Ao utilizar este website, confirma a sua aceitação destes Termos e Condições.<br/><br/>Em caso de discrepância entre as versões em inglês e espanhol destes Termos e Condições, prevalecerá sempre a versão em inglês.<br/><br/><b>Alterações aos Termos e Condições</b><br/>A Empresa pode alterar estes Termos e Condições sempre que necessário. A Empresa envidará esforços razoáveis para informar os jogadores sobre alterações significativas. No entanto, consulte os Termos e Condições regularmente para se manter informado sobre atualizações.<br/><br/><b>Quem pode jogar</b><br/>O casino dota.click aceita jogadores apenas de países e regiões geográficas onde o jogo online é permitido por lei. O jogador deve verificar de forma independente as regulamentações e leis que regem os jogos de azar na sua região de residência. A responsabilidade por não cumprir tais leis recai inteiramente sobre o jogador.<br/><br/>Apenas pessoas com 18 anos ou mais, ou a idade mínima exigida para participar em jogos de azar online de acordo com as leis do local de residência, podem jogar no website. A responsabilidade por conhecer tais leis recai inteiramente sobre o jogador. Se for um jogador de Espanha, Reino Unido, Estados Unidos da América ou qualquer território dos EUA, tem proibido jogar com dinheiro real no website, incluindo jogar com Bitcoin.<br/><br/>A Empresa reserva-se o direito de solicitar prova do cumprimento da idade exigida ao jogador, bem como de limitar o acesso ao jogo ou suspender a conta para aqueles que não possam fornecer prova de terem atingido a idade necessária para participar em jogos de azar.<br/><br/><b>Comissões e impostos</b><br/>O jogador é o único responsável por pagar todas as taxas e impostos devidos sobre os ganhos, de acordo com a legislação do país ou região de residência.<br/><br/>Se um jogador que solicitou a retirada de fundos do website não tiver apostado um montante igual a pelo menos três vezes o último depósito antes de efetuar o pedido de retirada, reservamo-nos o direito de cobrar a esse jogador os custos de processamento da transação tanto para o depósito como para a retirada. Esta decisão fica ao critério da administração do dota.click Casino.<br/><br/><b>Regras do jogo</b><br/>O jogador confirma que conhece as regras dos jogos em que pode participar no website. A responsabilidade por conhecer as percentagens de pagamento e as regras dos jogos em que participa recai inteiramente sobre o jogador.<br/><br/><b>Isenção de responsabilidade</b><br/>O jogador reconhece que jogar no website pode levar a perdas financeiras. A Empresa não se responsabiliza por eventuais perdas financeiras que o jogador possa sofrer como resultado de jogar no website.<br/><br/>A Empresa toma todas as medidas razoáveis para proteger os dados pessoais do jogador e fornece esses dados apenas a partes envolvidas na prestação de serviços de jogo no website. Apesar disso, a Empresa não é responsável por como terceiros (por exemplo, fornecedores de jogos ou afiliados) manuseiam essa informação. O tratamento dos dados pessoais do jogador por esses terceiros é realizado de acordo com os seus termos e condições.<br/><br/>A Empresa não é responsável por defeitos de hardware ou software, perda de ligação à Internet ou qualquer outro problema técnico que possa limitar o acesso do jogador ao website ou interromper o seu jogo.<br/><br/><b>Uso da conta do jogador</b><br/>Cada jogador tem o direito de criar uma única conta de jogo. Criar mais de uma conta para o mesmo jogador poderá levar à eliminação de todas as contas e ao cancelamento de todos os pagamentos em dinheiro. O jogador não deve dar acesso a ninguém à sua conta nem permitir que terceiros (incluindo menores) utilizem o website a partir da sua conta.<br/><br/>O website só pode ser usado para fins pessoais e não deve ser usado para fins comerciais.<br/><br/><b>Anti-fraude</b><br/>A Empresa tem uma política antifraude rigorosa. Se um jogador for suspeito de ações fraudulentas, incluindo, entre outros:<br/>- colaborar com outros jogadores,<br/>- desenvolver estratégias destinadas a obter ganhos injustos,<br/>- ações fraudulentas contra outros casinos online ou sistemas de pagamento,<br/>- estornos ou reversões de pagamentos por cartão de crédito,<br/>- outros tipos de fraude,<br/>- ser declarado falido no país de residência,<br/>- fornecer informações falsas durante o registo,<br/>então a Empresa reserva-se o direito de encerrar todas as contas do jogador e cancelar todos os pagamentos em dinheiro. Esta decisão é inteiramente discricionária da Empresa e o jogador não será notificado das razões para tal decisão. A Empresa reserva-se o direito de notificar as autoridades competentes para investigar ações fraudulentas praticadas pelo jogador.<br/><br/>A Empresa tem o direito de solicitar a quaisquer jogadores os documentos que confirmem a sua identidade. Pode ser solicitado ao jogador que tire uma selfie com o documento na mão e confirme a data em que essa selfie foi tirada. A modificação de documentos fotográficos utilizando qualquer software é estritamente proibida. Se o jogador não fornecer os documentos solicitados no prazo de um mês a partir do pedido, reservamo-nos o direito de confiscar o saldo da conta do jogador e encerrar a sua conta.<br/><br/>Se um jogador, por qualquer razão, recusar tirar uma selfie de acordo com os requisitos de segurança, pode solicitar o pagamento de fundos para uma conta bancária registada em seu nome.<br/><br/>Reservamo-nos o direito de cobrar os custos de processamento da transação ao jogador se este não tiver apostado o montante do depósito pelo menos 3 vezes antes de solicitar retiradas. Tentativas de cumprir o requisito de aposta 3× exclusivamente através de jogos de mesa (roleta, blackjack, póquer, etc.) antes de solicitar uma retirada poderão ser consideradas ações fraudulentas contra o sistema de pagamento ou o casino. Esta decisão é inteiramente discricionária do casino e não está sujeita a recurso.<br/><br/><b>Depósito</b><br/>O dota.click Casino oferece vários métodos para recarregar a conta de jogo. O jogador pode usar cartões VISA e MasterCard de crédito e débito, assim como várias carteiras online para financiar a conta. Contacte o suporte em dotasoporte@gmail.com para consultar o método de depósito adequado para a sua região de residência.<br/><br/>Note também que o depósito mínimo é 5 EUR / 5 USD / 200 KZT.<br/><br/><b>Retirar / Reembolso</b><br/>O montante mínimo para retirada é 20 EUR / 20 USD / 500 KZT. O montante máximo de retirada depende do sistema de pagamento que estiver a utilizar. Se o montante solicitado para retirada exceder o limite do sistema de pagamento, o pagamento será efetuado em partes. Os pedidos de retirada começam a ser processados imediatamente após a recepção; no entanto, o processo de retirada pode demorar até cinco dias com alguns sistemas de pagamento.<br/><br/>Cada jogador pode efetuar até dois reembolsos num dia e até sete numa semana calendário. As retiradas que violem esta restrição serão canceladas, e o jogador será notificado por e-mail. Se o montante retirado tiver de ser dividido em vários pagamentos para cumprir os limites do sistema de pagamento, tais pagamentos serão considerados uma única retirada, desde que o jogador não tenha efetuado um depósito entre eles.<br/><br/>O dota.click Casino suporta pagamentos via Visa Original Credit Transfer (OCT) e Mastercard Payment Transfer. O cartão utilizado no dota.click Casino não deve ser um cartão de crédito corporativo e deve também ser emitido no país permitido por estas regras.<br/><br/>Note que mesmo que o seu país esteja entre os admitidos, não podemos garantir uma transação bem-sucedida, pois o banco emissor do cartão pode bloqueá-lo a seu critério.<br/><br/>Além disso, note que a moeda operacional do dota.click Casino é o euro (EUR). Se efetuar transações noutras moedas, os fundos debitados do seu cartão podem ser ligeiramente superiores ao montante inicial da transação devido a taxas de conversão cobradas pelo banco e/ou pelo sistema de pagamento.<br/><br/>Se o depósito foi efetuado com um cartão de crédito ou débito e o montante da retirada for igual ou inferior ao montante do depósito, reservamo-nos o direito de devolver os fundos para esse cartão de crédito ou débito. Se o montante da retirada exceder o montante do depósito, a diferença será paga por um dos métodos de pagamento alternativos.<br/><br/>A Empresa reserva-se o direito de verificar a identidade do jogador antes de processar as retiradas e de atrasar o pagamento pelo tempo necessário para essa verificação. Caso o jogador tenha fornecido dados incorretos, o pagamento pode ser recusado na totalidade e a sua conta pode ser desativada. Se tal decisão for tomada, o jogador será notificado por e-mail.<br/><br/>Se um jogador ganhar mais de 50.000 EUR (ou equivalente), reservamo-nos o direito de dividir o pagamento do montante total em pagamentos mensais de 50.000 EUR até que todos os ganhos sejam pagos. O montante máximo a pagar ao jogador é de 20.000 EUR por semana e 50.000 EUR por mês, salvo indicação em contrário. Podem ser feitas exceções para jogadores VIP de alto estatuto. Todos os jackpots progressivos são pagos integralmente.<br/><br/>O tempo de processamento das carteiras eletrónicas varia de alguns segundos a 15 minutos. As retiradas para cartões de crédito e débito e por transferência bancária podem demorar 1–5 dias. O tempo para verificar a sua conta antes do pagamento, se necessário, pode ser de até 12 horas.<br/><br/><b>CONDIÇÕES DE BÓNUS</b><br/>1. Todos os bónus estão disponíveis para jogadores de todos os países, salvo indicação em contrário.<br/>2. Por endereço, endereço IP, email, número de telefone, conta do sistema de pagamento (Neteller, Skrill, cartão de crédito, etc.), etc., os bónus só podem ser recebidos por uma pessoa.<br/>3. Ao usar qualquer código de bónus, devem ser usadas apenas letras maiúsculas. Cada código de bónus só pode ser usado uma vez.<br/>4. Ao jogar com um bónus, primeiro será gasto o dinheiro real. As apostas serão deduzidas do saldo real do jogador. Se o saldo real estiver esgotado, as apostas serão deduzidas do saldo do bónus.<br/><br/>5. Quando o bónus expirar, o bónus e quaisquer ganhos dele resultantes serão anulados.<br/><br/>6. O dota.click Casino reserva-se o direito de atualizar estas regras a qualquer momento.<br/><br/><b>Privacidade e segurança</b><br/><br/><b>1. Privacidade</b><br/>Todas as informações sobre os jogadores do dota.click Casino são consideradas estritamente confidenciais pela Empresa. Todos os dados são armazenados e processados de acordo com as leis de proteção de dados e privacidade.<br/><br/><b>2. Recolha de informação pessoal</b><br/>Recolhemos dados pessoais dos jogadores ao registar-se no dota.click Casino, ao responder a pedidos e ao contactar o serviço de apoio ao cliente. As informações podem incluir o nome do jogador, data de nascimento, morada, endereço de e-mail, endereço IP, números de cartão de crédito ou débito e outras informações pessoais. Esses dados pessoais estão disponíveis para funcionários do dota.click Casino, funcionários do fornecedor de conteúdo de jogos Direx N.V., sistemas de pagamento e outros terceiros que ajudam a Empresa a fornecer serviços de jogo aos utilizadores. Todas as partes com acesso aos dados pessoais tratam-nos estritamente de acordo com as leis de privacidade e proteção de dados. Os dados estão totalmente protegidos contra acesso não autorizado.<br/><br/><b>3. Informação sobre saldos das contas dos jogadores</b><br/>Todas as informações sobre depósitos, ganhos e retiradas dos jogadores são consideradas estritamente confidenciais. Não divulgamos tais informações a terceiros sem o consentimento prévio do jogador, salvo quando exigido por lei.<br/><br/><b>4. Uso de dados pessoais para marketing</b><br/>A Empresa utiliza os dados pessoais dos jogadores para fins de marketing. No entanto, respeitamos o direito à privacidade do jogador. Se o jogador não desejar receber mensagens promocionais, pode selecionar a opção adequada durante o registo. Também pode cancelar a subscrição de materiais promocionais em qualquer altura através do website.<br/><br/><b>5. Política de cookies</b><br/>O dota.click Casino utiliza cookies para guardar as configurações pessoais e preferências do jogador, de modo a fornecer serviços de jogo mais convenientes. Para alterar as definições de privacidade pessoais, o jogador deve contactar o apoio ao cliente em dotasoporte@gmail.com<br/><br/><b>6. Divulgação de dados pessoais</b><br/>Caso a Empresa conclua que um jogador participou em atividades fraudulentas relacionadas com manipulação de jogos, fraude em sistemas de pagamento, fornecimento de dados pessoais falsos, branqueamento de capitais, uso de cartões de crédito roubados, etc., reservamo-nos o direito de divulgar os dados pessoais desse jogador e torná-los públicos.<br/><br/><b>7. Segurança dos dados pessoais</b><br/>A Empresa procura fornecer serviços de jogo 100% seguros e garantir que os dados pessoais dos jogadores não possam ser roubados, perdidos ou utilizados ilegalmente. Utilizamos os mais recentes avanços tecnológicos para proteger os dados pessoais dos jogadores.<br/><br/><b>Tecnologia SSL</b><br/>O dota.click Casino utiliza tecnologia SSL de 128 bits (Secure Socket Layer), preferida por muitas instituições financeiras e bancos importantes, para garantir a segurança das transações no website.<br/><br/><b>Sistema de gestão de fraudes</b><br/>Utilizamos um sistema antifraude especial para evitar qualquer tipo de fraude financeira no website. Qualquer tentativa de ação ilegal leva imediatamente ao bloqueio da conta do jogador.<br/><br/><b>Acesso à conta pelo jogador</b><br/>O acesso à conta só pode ser feito com o ID e a palavra-passe únicos do jogador. O jogador é totalmente responsável pela segurança destas credenciais e por garantir que outros não consigam aceder à conta.<br/><br/><b>Segurança dos sistemas de pagamento</b><br/>Trabalhamos apenas com os sistemas de pagamento mais reputados e fiáveis, o que nos permite garantir o processamento rigoroso dos depósitos e retiradas dos jogadores de acordo com todas as normas de segurança.<br/><br/><b>Jogo responsável</b><br/>Lembre-se de que o jogo num casino deve ser encarado apenas como entretenimento. O jogo não deve causar danos a si, à sua família ou amigos. Antes de jogar no dota.click Casino, é importante compreender que o jogo não pode ser considerado uma fonte de rendimento nem uma forma de pagar dívidas. Recomendamos que monitorize sempre quanto tempo passa a jogar e quanto dinheiro pode gastar. Nunca jogue quantias que não possa perder.<br/><br/><b>Ajuda para jogadores problemáticos</b><br/>Se acredita que o jogo está a ter um impacto negativo na sua vida ou na vida de familiares e amigos, recomendamos que considere medidas como definir limites pessoais para o jogo, autoexclusão ou procurar ajuda de um especialista."
+    }
+  }
+}
