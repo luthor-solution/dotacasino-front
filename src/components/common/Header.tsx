@@ -230,6 +230,9 @@ const Header: React.FC = () => {
         isRecharge ? "border-[#FFC827]" : "border-[#FFC827]"
       } bg-black/20`}
       title={t("totalBalance") ?? "Total Balance"}
+      onClick={() => {
+        setOpen(false);
+      }}
     >
       <span className="font-semibold">
         {walletLoading ? "..." : `$${balance.toLocaleString()}`}
