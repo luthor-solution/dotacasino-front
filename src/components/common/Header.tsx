@@ -337,25 +337,27 @@ const Header: React.FC = () => {
 
           {user && (
             <div className="relative ml-2" ref={userMenuRef}>
-              <button
+              <div
                 className="flex items-center gap-2 focus:outline-none cursor-pointer"
-                onClick={() => setUserMenu((v) => !v)}
                 aria-label="Abrir menú de usuario"
               >
-                <Image
-                  src="/avatar.png"
-                  alt="Avatar"
-                  width={40}
-                  height={40}
-                  className="rounded-full border-2 border-[#FFC827] bg-white"
-                />
-                <span className="text-white font-medium">
-                  {user?.displayName || "Usuario"}
-                </span>
+                <Link href={"/profile"} className="flex items-center gap-x-2">
+                  <Image
+                    src="/avatar.png"
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    className="rounded-full border-2 border-[#FFC827] bg-white"
+                  />
+                  <span className="text-white font-medium">
+                    {user?.displayName || "Usuario"}
+                  </span>
+                </Link>
                 <svg
                   className={`w-4 h-4 text-[#FFC827] transition-transform ${
                     userMenu ? "rotate-180" : ""
                   }`}
+                  onClick={() => setUserMenu((v) => !v)}
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={2}
@@ -363,7 +365,7 @@ const Header: React.FC = () => {
                 >
                   <path d="M19 9l-7 7-7-7" />
                 </svg>
-              </button>
+              </div>
               {/* Dropdown */}
               {userMenu && (
                 <div
