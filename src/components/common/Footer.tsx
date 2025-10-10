@@ -145,7 +145,7 @@ const Footer = () => {
             height={150}
             className="mt-2"
           />
-          <span className="text-[#bdbdbd] text-sm mt-2">Dota.Click 2025™</span>
+          <span className="text-[#bdbdbd] text-sm mt-2">Dota 2025™</span>
         </div>
       </div>
 
