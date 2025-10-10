@@ -174,22 +174,12 @@ export default function Home() {
         {!filters.category && !filters.search && (
           <>
             <GamesCarousel
-              title="Arcade"
-              category="arcade"
-              onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "arcade" }));
-              }}
-            />
-
-            <GamesCarousel
               title="Crash games"
               category="crash_games"
               onShowMore={() => {
                 setFilters((prev) => ({ ...prev, category: "crash_games" }));
               }}
             />
-
-            <JackpotLevels />
 
             <GamesCarousel
               title="Lottery"
@@ -199,11 +189,21 @@ export default function Home() {
               }}
             />
 
+            <JackpotLevels />
+
             <GamesCarousel
               title="Live dealers"
               category="live_dealers"
               onShowMore={() => {
                 setFilters((prev) => ({ ...prev, category: "live_dealers" }));
+              }}
+            />
+
+            <GamesCarousel
+              title="Arcade"
+              category="arcade"
+              onShowMore={() => {
+                setFilters((prev) => ({ ...prev, category: "arcade" }));
               }}
             />
           </>
