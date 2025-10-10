@@ -162,6 +162,7 @@
     "balance": {
       "title": "사용 가능 잔액"
     },
+    "minimumAmount": "최소 출금 금액",
     "form": {
       "title": "출금 생성",
       "amountLabel": "출금 금액",
@@ -180,7 +181,8 @@
       "invalidAmount": "유효한 금액을 입력하세요",
       "genericError": "출금 생성 중 오류가 발생했습니다",
       "error": "오류: {{error}}",
-      "exceedsBalance": "사용 가능 잔액보다 많은 금액을 출금할 수 없습니다"
+      "exceedsBalance": "사용 가능 잔액보다 많은 금액을 출금할 수 없습니다",
+      "minimumWithdrawAmount": "최소 출금 금액은 10달러입니다."
     },
     "success": {
       "overlayMessage": "출금 요청이 성공적으로 생성되었습니다."

@@ -162,6 +162,7 @@
     "balance": {
       "title": "Available balance"
     },
+    "minimumAmount": "Minimum withdrawal amount",
     "form": {
       "title": "Create withdrawal",
       "amountLabel": "Amount to withdraw",
@@ -180,7 +181,8 @@
       "invalidAmount": "Enter a valid amount",
       "genericError": "An error occurred while creating the withdrawal",
       "error": "Error: {{error}}",
-      "exceedsBalance": "You cannot withdraw more than your available balance"
+      "exceedsBalance": "You cannot withdraw more than your available balance",
+      "minimumWithdrawAmount": "The minimum withdrawal amount is $10."
     },
     "success": {
       "overlayMessage": "Withdrawal request created successfully."

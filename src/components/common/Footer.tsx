@@ -141,7 +141,7 @@ const Footer = () => {
           <Image
             src="/logo.svg"
             alt="DOTA Logo"
-            width={180}
+            width={130}
             height={150}
             className="mt-2"
           />

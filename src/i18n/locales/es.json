@@ -162,6 +162,7 @@
     "balance": {
       "title": "Balance disponible"
     },
+    "minimumAmount": "Monto mínimo de retiro",
     "form": {
       "title": "Crear retiro",
       "amountLabel": "Monto a retirar",
@@ -180,7 +181,8 @@
       "invalidAmount": "Ingresa un monto válido",
       "genericError": "Ocurrió un error al crear el retiro",
       "error": "Error: {{error}}",
-      "exceedsBalance": "No puedes retirar más que tu balance disponible"
+      "exceedsBalance": "No puedes retirar más que tu balance disponible",
+      "minimumWithdrawAmount": "El monto mínimo de retiro es de 10 dólares"
     },
     "success": {
       "overlayMessage": "Solicitud de retiro creada correctamente."

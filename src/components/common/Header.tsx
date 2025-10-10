@@ -262,7 +262,7 @@ const Header: React.FC = () => {
             isAuthPage ? "hidden md:flex" : "flex"
           }`}
         >
-          <Image src="/logo.svg" alt="Logo" width={200} height={44} />
+          <Image src="/logo.svg" alt="Logo" width={150} height={44} />
         </Link>
         <div
           className={`items-center gap-2 select-none ${

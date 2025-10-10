@@ -162,6 +162,7 @@
     "balance": {
       "title": "Saldo disponível"
     },
+    "minimumAmount": "Montante mínimo de retirada",
     "form": {
       "title": "Criar retirada",
       "amountLabel": "Valor a retirar",
@@ -180,7 +181,8 @@
       "invalidAmount": "Insira um valor válido",
       "genericError": "Ocorreu um erro ao criar a retirada",
       "error": "Erro: {{error}}",
-      "exceedsBalance": "Você não pode sacar mais do que o seu saldo disponível"
+      "exceedsBalance": "Você não pode sacar mais do que o seu saldo disponível",
+      "minimumWithdrawAmount": "O valor mínimo para retirada é de 10 dólares."
     },
     "success": {
       "overlayMessage": "Solicitação de retirada criada com sucesso."

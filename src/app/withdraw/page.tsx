@@ -96,6 +96,14 @@ export default function RetiroFichasPage() {
         return;
       }
 
+      if (val < 10) {
+        setError(
+          t("withdraw.form.minimumWithdrawAmount") ||
+            "El monto mínimo de retiro es de 5 dólares"
+        );
+        return;
+      }
+
       const req: CreateWithdrawRequest = {
         amount: val,
         network: selectedNetwork,
@@ -192,110 +200,121 @@ export default function RetiroFichasPage() {
 
         {/* Formulario (idéntico layout y estilos) */}
         {!withdrawCreated && (
-          <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5">
-            <h2 className="text-lg font-medium mb-4">
-              {t("withdraw.form.title") || "Crear retiro"}
-            </h2>
-
-            <div className="pb-2">
-              <div>
-                <label className="text-sm text-neutral-300">
-                  {t("withdraw.form.address")}
-                </label>
-                <input
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder={"0x..."}
-                  className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-                {exceedsBalance && (
-                  <p className="mt-2 text-sm text-red-400">
-                    {t("withdraw.form.exceedsBalance") ||
-                      "No puedes retirar más que tu balance disponible"}
-                  </p>
-                )}
-              </div>
+          <div className="flex flex-col space-y-8 mt-4">
+            <div className="flex items-center w-full gap-x-2 justify-end">
+              <h2 className="text-lg font-medium leading-0">
+                {t("withdraw.minimumAmount")}
+              </h2>
+              <label className="text-lg font-medium text-red-500 leading-0">
+                5 USD
+              </label>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="text-sm text-neutral-300">
-                  {t("withdraw.form.amountLabel") || "Monto a retirar"}
-                </label>
-                <input
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  type="number"
-                  min={0}
-                  step={0.01}
-                  max={balance}
-                  placeholder={t("withdraw.form.amountPlaceholder") || "0.00"}
-                  className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-                {exceedsBalance && (
-                  <p className="mt-2 text-sm text-red-400">
-                    {t("withdraw.form.exceedsBalance") ||
-                      "No puedes retirar más que tu balance disponible"}
-                  </p>
-                )}
+            <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5">
+              <h2 className="text-lg font-medium mb-4">
+                {t("withdraw.form.title") || "Crear retiro"}
+              </h2>
+
+              <div className="pb-2">
+                <div>
+                  <label className="text-sm text-neutral-300">
+                    {t("withdraw.form.address")}
+                  </label>
+                  <input
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder={"0x..."}
+                    className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                  {exceedsBalance && (
+                    <p className="mt-2 text-sm text-red-400">
+                      {t("withdraw.form.exceedsBalance") ||
+                        "No puedes retirar más que tu balance disponible"}
+                    </p>
+                  )}
+                </div>
               </div>
 
-              <div>
-                <label className="text-sm text-neutral-300">
-                  {t("withdraw.form.networkLabel") || "Red"}
-                </label>
-                <select
-                  value={selectedNetwork}
-                  onChange={(e) =>
-                    setSelectedNetwork(e.target.value as Network)
-                  }
-                  className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
-                  disabled
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm text-neutral-300">
+                    {t("withdraw.form.amountLabel") || "Monto a retirar"}
+                  </label>
+                  <input
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    type="number"
+                    min={0}
+                    step={0.01}
+                    max={balance}
+                    placeholder={t("withdraw.form.amountPlaceholder") || "0.00"}
+                    className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                  {exceedsBalance && (
+                    <p className="mt-2 text-sm text-red-400">
+                      {t("withdraw.form.exceedsBalance") ||
+                        "No puedes retirar más que tu balance disponible"}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="text-sm text-neutral-300">
+                    {t("withdraw.form.networkLabel") || "Red"}
+                  </label>
+                  <select
+                    value={selectedNetwork}
+                    onChange={(e) =>
+                      setSelectedNetwork(e.target.value as Network)
+                    }
+                    className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
+                    disabled
+                  >
+                    <option value="BSC">
+                      {t("withdraw.form.networks.BSC") || "BSC"}
+                    </option>
+                    <option value="ETH">
+                      {t("withdraw.form.networks.ETH") || "ETH"}
+                    </option>
+                    <option value="POLYGON">
+                      {t("withdraw.form.networks.POLYGON") || "POLYGON"}
+                    </option>
+                    <option value="TRX">
+                      {t("withdraw.form.networks.TRX") || "TRX"}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              {error && (
+                <div className="mt-4 text-sm text-red-400 bg-red-950/30 border border-red-900 rounded-xl px-3 py-2">
+                  {t("withdraw.form.error", { error }) || `Error: ${error}`}
+                </div>
+              )}
+
+              <div className="mt-5 flex items-center gap-3">
+                <button
+                  onClick={handleCreateWithdraw}
+                  disabled={!canSubmit}
+                  className="rounded-xl px-4 py-3 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
                 >
-                  <option value="BSC">
-                    {t("withdraw.form.networks.BSC") || "BSC"}
-                  </option>
-                  <option value="ETH">
-                    {t("withdraw.form.networks.ETH") || "ETH"}
-                  </option>
-                  <option value="POLYGON">
-                    {t("withdraw.form.networks.POLYGON") || "POLYGON"}
-                  </option>
-                  <option value="TRX">
-                    {t("withdraw.form.networks.TRX") || "TRX"}
-                  </option>
-                </select>
+                  {isSubmitting
+                    ? t("withdraw.form.submitting") || "Enviando..."
+                    : t("withdraw.form.submit") || "Solicitar retiro"}
+                </button>
+                <button
+                  onClick={() => {
+                    setAmount("");
+                    setSelectedNetwork("BSC");
+                    setError("");
+                  }}
+                  className="rounded-xl px-4 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700"
+                >
+                  {t("withdraw.form.clear") || "Limpiar"}
+                </button>
               </div>
-            </div>
-
-            {error && (
-              <div className="mt-4 text-sm text-red-400 bg-red-950/30 border border-red-900 rounded-xl px-3 py-2">
-                {t("withdraw.form.error", { error }) || `Error: ${error}`}
-              </div>
-            )}
-
-            <div className="mt-5 flex items-center gap-3">
-              <button
-                onClick={handleCreateWithdraw}
-                disabled={!canSubmit}
-                className="rounded-xl px-4 py-3 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
-              >
-                {isSubmitting
-                  ? t("withdraw.form.submitting") || "Enviando..."
-                  : t("withdraw.form.submit") || "Solicitar retiro"}
-              </button>
-              <button
-                onClick={() => {
-                  setAmount("");
-                  setSelectedNetwork("BSC");
-                  setError("");
-                }}
-                className="rounded-xl px-4 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700"
-              >
-                {t("withdraw.form.clear") || "Limpiar"}
-              </button>
-            </div>
-          </section>
+            </section>
+          </div>
         )}
 
         {/* Vista “post-creación” (mismo card y grid; sin QR ni contador) */}

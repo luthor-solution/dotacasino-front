@@ -173,7 +173,7 @@ export default function Component() {
         <div className="relative backdrop-blur-lg px-4 sm:px-8 xl:px-[60px] py-8 sm:py-12 xl:py-[100px] border border-[#a97bbf33] rounded-[25px] space-y-8 sm:space-y-10 xl:space-y-[50px] flex flex-col items-center text-center w-full md:w-[700px] xl:w-fit">
           <div className="w-full flex justify-center items-center">
             <Link href={"/"}>
-              <Image src={"/logo.svg"} width={250} height={100} alt="" />
+              <Image src={"/logo.svg"} width={200} height={100} alt="" />
             </Link>
           </div>
           <div className="flex flex-col space-y-[24px] xl:w-[700px] w-full">
