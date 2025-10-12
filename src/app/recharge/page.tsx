@@ -48,7 +48,7 @@ function toMMSS(totalSeconds: number) {
 export default function RecargaFichasPage() {
   const { t } = useTranslation();
 
-  const [balance, setBalance] = useState<number>(1);
+  const [balance, setBalance] = useState<number>(0);
   const [amount, setAmount] = useState<string>("");
   const [selectedNetwork, setSelectedNetwork] = useState<Network>("BSC");
 

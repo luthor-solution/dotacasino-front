@@ -34,7 +34,7 @@ export default function RetiroFichasPage() {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const [balance, setBalance] = useState<number>(1);
+  const [balance, setBalance] = useState<number>(0);
   const [amount, setAmount] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [selectedNetwork, setSelectedNetwork] = useState<Network>("BSC");
