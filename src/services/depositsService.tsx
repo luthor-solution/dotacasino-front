@@ -114,7 +114,6 @@ export const depositService = {
     }
   },
 
-  // POST /deposit-coins/polling  -> Validar estado de la transacción para una address
   async polling(
     payload: DepositPollingPayload,
     retry = true
