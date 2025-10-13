@@ -1,11 +1,3 @@
-// app/cx-casino/page.tsx
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "CX Casino — Cripto seguro y programa de referidos",
-  description:
-    "Casino cripto premium: transparente, seguro y con programa de referidos. Deposita en cripto, juega y retira cuando quieras.",
-};
 
 export default function Page() {
   return (
@@ -25,12 +17,7 @@ export default function Page() {
               className="flex items-center gap-3"
               aria-label="Inicio CX Casino"
             >
-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-white/5 ring-1 ring-white/10">
-                <span className="text-lg font-semibold tracking-tight">CX</span>
-              </div>
-              <span className="hidden sm:inline text-sm font-medium text-slate-300">
-                Casino cripto
-              </span>
+              <img src="/logo.svg" className="h-8" />
             </a>
             <nav className="main-nav hidden md:flex items-center gap-8 text-sm">
               <a
@@ -177,7 +164,7 @@ export default function Page() {
                 <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <figure className="rounded-lg border border-white/10 bg-white/[0.02] p-4 hover:border-white/20">
                     <img
-                      src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=400&auto=format&fit=crop"
+                      src="/auditoria.png"
                       alt="Badge de auditoría externa aplicada a los juegos"
                       className="h-12 w-auto object-contain mx-auto"
                     />
@@ -187,7 +174,7 @@ export default function Page() {
                   </figure>
                   <figure className="rounded-lg border border-white/10 bg-white/[0.02] p-4 hover:border-white/20">
                     <img
-                      src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=400&auto=format&fit=crop"
+                      src="/cifradoe2e.png"
                       alt="Badge de cifrado de extremo a extremo"
                       className="h-12 w-auto object-contain mx-auto"
                     />
@@ -197,7 +184,7 @@ export default function Page() {
                   </figure>
                   <figure className="rounded-lg border border-white/10 bg-white/[0.02] p-4 hover:border-white/20">
                     <img
-                      src="https://images.unsplash.com/photo-1554135346-bc1e5f1bab7b?q=80&w=400&auto=format&fit=crop"
+                      src="/licencia.png"
                       alt="Badge de licenciamiento y cumplimiento regulatorio"
                       className="h-12 w-auto object-contain mx-auto"
                     />
@@ -222,10 +209,7 @@ export default function Page() {
                     >
                       <path d="m5 12 5 5L20 7"></path>
                     </svg>
-                    <p className="text-sm text-slate-300">
-                      Verificado: infraestructura de custodia mixta
-                      (fría/caliente)
-                    </p>
+                    <p className="text-sm text-slate-300">Verificado</p>
                   </div>
                   <div className="mt-4 space-y-3">
                     <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] p-3">
@@ -247,9 +231,7 @@ export default function Page() {
                           Pagos en cripto instantáneos
                         </span>
                       </div>
-                      <span className="text-xs text-cyan-300">
-                        USDT, BTC, ETH
-                      </span>
+                      <span className="text-xs text-cyan-300">USDT</span>
                     </div>
                     <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] p-3">
                       <div className="flex items-center gap-3">
@@ -369,67 +351,6 @@ export default function Page() {
                       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                     </svg>
                     Copiar
-                  </a>
-                </div>
-
-                <div className="mt-5 flex flex-wrap items-center gap-2">
-                  <span className="text-xs text-slate-400">Compartir:</span>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-2 rounded-md border border-white/10 px-3 py-2 text-xs text-slate-200 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
-                    aria-label="Compartir en X (placeholder)"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="h-4 w-4 text-slate-300"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                    >
-                      <path d="M4 4l16 16M20 4 4 20"></path>
-                    </svg>
-                    X
-                  </a>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-2 rounded-md border border-white/10 px-3 py-2 text-xs text-slate-200 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
-                    aria-label="Compartir en Telegram (placeholder)"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="h-4 w-4 text-sky-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                    >
-                      <path d="m22 2-7 20-4-7-7-4 20-9z"></path>
-                      <path d="m14 9-4 4"></path>
-                    </svg>
-                    Telegram
-                  </a>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-2 rounded-md border border-white/10 px-3 py-2 text-xs text-slate-200 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
-                    aria-label="Compartir en WhatsApp (placeholder)"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="h-4 w-4 text-emerald-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                    >
-                      <path d="M20 11.5A8.5 8.5 0 1 1 11.5 3a8.5 8.5 0 0 1 8.5 8.5z"></path>
-                      <path d="M6 19l1.5-4.5"></path>
-                      <path d="M9.5 10.5c1 2 3 3 4 3"></path>
-                    </svg>
-                    WhatsApp
                   </a>
                 </div>
 
@@ -1356,12 +1277,7 @@ export default function Page() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div>
                 <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-white/5 ring-1 ring-white/10">
-                    <span className="text-lg font-semibold tracking-tight">
-                      CX
-                    </span>
-                  </div>
-                  <span className="text-sm text-slate-300">Casino cripto</span>
+                  <img src="/logo.svg" className="h-8" />
                 </div>
                 <p className="mt-3 text-sm text-slate-400">
                   Tu seguridad es nuestra prioridad. Transparencia en cada
