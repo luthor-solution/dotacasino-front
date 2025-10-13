@@ -590,7 +590,7 @@ export default function Page() {
               <article className="group rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden hover:border-white/20">
                 <figure className="relative">
                   <img
-                    src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?q=80&w=600&auto=format&fit=crop"
+                    src="/slots.png"
                     alt="Máquina de slots con luces de neón"
                     className="h-40 w-full object-cover"
                   />
@@ -598,10 +598,10 @@ export default function Page() {
                     Slots con animaciones brillantes
                   </figcaption>
                   <div className="absolute top-3 left-3 flex gap-2">
-                    <span className="rounded-md bg-emerald-500/20 px-2 py-1 text-[10px] font-medium text-emerald-300">
+                    <span className="rounded-md bg-emerald-500/80 px-2 py-1 text-[10px] font-medium text-emerald-300">
                       RTP alto
                     </span>
-                    <span className="rounded-md bg-amber-500/20 px-2 py-1 text-[10px] font-medium text-amber-300">
+                    <span className="rounded-md bg-amber-500/80 px-2 py-1 text-[10px] font-medium text-amber-300">
                       Jackpot
                     </span>
                   </div>
@@ -638,7 +638,7 @@ export default function Page() {
               <article className="group rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden hover:border-white/20">
                 <figure className="relative">
                   <img
-                    src="https://images.unsplash.com/photo-1562572159-4efc207f5aff?q=80&w=600&auto=format&fit=crop"
+                    src="/ruleta.png"
                     alt="Mesa de ruleta premium"
                     className="h-40 w-full object-cover"
                   />
@@ -675,7 +675,7 @@ export default function Page() {
               <article className="group rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden hover:border-white/20">
                 <figure className="relative">
                   <img
-                    src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop"
+                    src="/blackjack.png"
                     alt="Mesa de blackjack con cartas sobre paño verde"
                     className="h-40 w-full object-cover"
                   />
@@ -717,7 +717,7 @@ export default function Page() {
               <article className="group rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden hover:border-white/20">
                 <figure className="relative">
                   <img
-                    src="https://images.unsplash.com/photo-1489365091240-6a18fc761ec2?q=80&w=600&auto=format&fit=crop"
+                    src="/poker.png"
                     alt="Mesa de póker con fichas y cartas"
                     className="h-40 w-full object-cover"
                   />
@@ -1270,113 +1270,6 @@ export default function Page() {
             </div>
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className="site-footer border-t border-white/10">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div>
-                <div className="flex items-center gap-3">
-                  <img src="/logo.svg" className="h-8" />
-                </div>
-                <p className="mt-3 text-sm text-slate-400">
-                  Tu seguridad es nuestra prioridad. Transparencia en cada
-                  apuesta.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold tracking-tight text-white">
-                  Legal
-                </h3>
-                <ul className="mt-3 space-y-2 text-sm">
-                  <li>
-                    <a
-                      href="#"
-                      className="text-slate-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded"
-                    >
-                      Términos
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-slate-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded"
-                    >
-                      Privacidad
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-slate-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded"
-                    >
-                      Juego responsable
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-slate-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded"
-                    >
-                      Licencias
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold tracking-tight text-white">
-                  Soporte
-                </h3>
-                <ul className="mt-3 space-y-2 text-sm">
-                  <li>
-                    <a
-                      href="#"
-                      className="text-slate-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded"
-                    >
-                      Contacto
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-slate-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded"
-                    >
-                      Centro de ayuda
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#faq"
-                      className="text-slate-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 rounded"
-                    >
-                      Preguntas frecuentes
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold tracking-tight text-white">
-                  Aviso
-                </h3>
-                <p className="mt-3 text-xs text-slate-400">
-                  El acceso puede estar restringido según país o jurisdicción.
-                  Asegúrate de cumplir con las leyes locales. El juego implica
-                  riesgos; juega de forma responsable.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-white/10 pt-6">
-              <p className="text-xs text-slate-500">
-                © <span aria-hidden="true">2025</span> CX Casino. Todos los
-                derechos reservados.
-              </p>
-              <p className="text-xs text-slate-500">
-                Marca y elementos visuales a modo de placeholder.
-              </p>
-            </div>
-          </div>
-        </footer>
       </div>
     </main>
   );
