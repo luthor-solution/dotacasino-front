@@ -334,7 +334,7 @@
     "signUp": {
       "emailPlaceholder": "Correo electrónico",
       "passwordPlaceholder": "Contraseña",
-      "countryPlaceholder": "País (ej: ES)",
+      "countryPlaceholder": "País",
       "referralPlaceholder": "Código de referido (opcional)",
       "verifyReferralLoading": "Verificando código de referido...",
       "referredBy": "Referido por: {{name}}",

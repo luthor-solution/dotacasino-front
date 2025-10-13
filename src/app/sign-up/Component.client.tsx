@@ -11,6 +11,7 @@ import { userService } from "@/services/userService";
 import SuccessNotification from "@/components/SuccessNotification";
 import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import CountryAutocomplete from "@/components/CountryAutocomplete";
 
 type ReferredProfile = {
   displayName?: string | null;
@@ -27,7 +28,7 @@ export default function Component() {
   const [form, setForm] = useState({
     email: "",
     password: "",
-    country: "ES",
+    country: "",
     acceptTerms: false,
     referralCode: "", // se autocompleta abajo
   });
@@ -199,11 +200,18 @@ export default function Component() {
                     type="password"
                     onChange={(val) => handleChange("password", val)}
                   />
-                  <FancyInput
+                  {/*  <FancyInput
                     placeholder={t("auth.signUp.countryPlaceholder")}
                     name="country"
                     icon={<FiFlag />}
                     onChange={(val) => handleChange("country", val)}
+                  /> */}
+                  <CountryAutocomplete
+                    placeholder={t("auth.signUp.countryPlaceholder")}
+                    name="country"
+                    value={form.country}
+                    onChange={(val) => handleChange("country", val)}
+                    icon={<FiFlag />}
                   />
                   <FancyInput
                     placeholder={t("auth.signUp.referralPlaceholder")}
