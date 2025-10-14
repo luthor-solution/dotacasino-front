@@ -95,7 +95,8 @@
     "signUp": "Regístrate",
     "myProfile": "Mi perfil",
     "verifyIdentity": "Verificar identidad",
-    "logout": "Cerrar Sesión"
+    "logout": "Cerrar Sesión",
+    "servers": "Servidores"
   },
   "gamesBanner": {
     "title": "Juegos",

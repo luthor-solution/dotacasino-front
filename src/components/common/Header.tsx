@@ -22,6 +22,7 @@ const Header: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [isRecharge, setIsRecharge] = useState(false);
+  const [isLanding, setIsLanding] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const user = useAuthStore((state) => state.user);
@@ -47,6 +48,7 @@ const Header: React.FC = () => {
 
   const navLinks: NavLink[] = [
     { href: "/", label: t("header.home") },
+    { href: "/servers", label: t("header.servers") },
     { href: "/games", label: t("header.games") },
     { href: "/recharge", label: t("header.recharge"), showWhenLogged: true },
     { href: "/sign-in", label: t("header.signIn"), showWhenLogged: false },
@@ -55,6 +57,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     setIsRecharge(pathname === "/recharge" || pathname === "/withdraw");
+    setIsLanding(pathname === "/");
   }, [pathname]);
 
   useEffect(() => {
@@ -250,6 +253,8 @@ const Header: React.FC = () => {
                 ? "bg-neutral-950 bg-opacity-95 shadow-lg"
                 : "bg-[#2e0327] bg-opacity-95 shadow-lg"
             }`
+          : isLanding
+          ? "bg-[#2e0327] bg-opacity-95 shadow-lg"
           : "bg-transparent"
       }`}
     >

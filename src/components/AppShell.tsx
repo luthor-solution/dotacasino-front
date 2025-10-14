@@ -8,15 +8,17 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [visible, setVisible] = useState(true);
   useEffect(() => {
     if (!loading) {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
       setTimeout(() => {
         setVisible(false);
       }, 1300);
     }
   }, [loading]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  });
+  }); */
 
   return (
     <>

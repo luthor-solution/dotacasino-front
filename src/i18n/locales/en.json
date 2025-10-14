@@ -93,9 +93,10 @@
     "recharge": "Recharge",
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "myProfile": "My profile",
-    "verifyIdentity": "Verify identity",
-    "logout": "Log out"
+    "myProfile": "My Profile",
+    "verifyIdentity": "Verify Identity",
+    "logout": "Log Out",
+    "servers": "Servers"
   },
   "gamesBanner": {
     "title": "Games",

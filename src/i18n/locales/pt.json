@@ -91,11 +91,12 @@
     "home": "Início",
     "games": "Jogos",
     "recharge": "Recarregar",
-    "signIn": "Entrar",
-    "signUp": "Registrar-se",
+    "signIn": "Iniciar sessão",
+    "signUp": "Registar-se",
     "myProfile": "Meu perfil",
     "verifyIdentity": "Verificar identidade",
-    "logout": "Sair"
+    "logout": "Terminar sessão",
+    "servers": "Servidores"
   },
   "gamesBanner": {
     "title": "Jogos",

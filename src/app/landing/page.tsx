@@ -1,4 +1,3 @@
-
 export default function Page() {
   return (
     <main className="min-h-screen bg-neutral-950 text-slate-100 antialiased selection:bg-cyan-500/20 selection:text-cyan-300">
@@ -9,7 +8,7 @@ export default function Page() {
         Saltar al contenido
       </a>
 
-      <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-neutral-950/70 backdrop-blur">
+      {/*     <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-neutral-950/70 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <a
@@ -69,7 +68,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </header>
+      </header> */}
 
       <div id="contenido" className="site-main pt-20 md:pt-24">
         {/* Hero */}
