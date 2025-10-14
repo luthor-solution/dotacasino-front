@@ -1,11 +1,20 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import GamesGrid from "../GamesGrid";
+import GamesCarousel from "../GamesCarousel";
 import { Game, GamesResponse, gamesService } from "@/services/gamesService";
 
 const PopularGames = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -32,10 +41,10 @@ const PopularGames = () => {
       {/* Overlay degradado solo arriba */}
       <div className="absolute left-0 top-0 w-full h-[30%] pointer-events-none bg-gradient-to-b from-[#2e0327] to-[#2e032700] z-0"></div>
 
-      <div className="relative z-10 flex flex-col text-center justify-center max-w-full mx-auto items-center px-[24px] py-16">
-        <div className="flex flex-col  md:max-w-2xl">
+      <div className="relative z-10 flex flex-col text-center justify-center max-w-full mx-auto items-center py-16">
+        <div className="flex flex-col  md:max-w-2xl px-[24px]">
           <span className="md:text-[50px] text-[30px] font-[700]  capitalize leading-[130%] relative z-10">
-            Refiere y gana
+            Refiere populares
           </span>
           <span className="text-[19px]">
             A casino is a facility for certain types of gambling. Casinos are
@@ -45,7 +54,17 @@ const PopularGames = () => {
             stand-up comedy, concerts, and sports.
           </span>
         </div>
-        <GamesGrid games={games} loading={loading} />
+
+        {/* Desktop: Grid  |  Mobile: Carousel */}
+        <div className="w-full max-w-6xl mt-8">
+          {isMobile ? (
+            // En mobile usamos el GamesCarousel. Puedes ajustar title/category según tu lógica.
+            <GamesCarousel title="" category="lottery" auto />
+          ) : (
+            // En desktop mostramos el grid de juegos (datos cargados arriba)
+            <GamesGrid games={games} loading={loading} />
+          )}
+        </div>
       </div>
     </section>
   );

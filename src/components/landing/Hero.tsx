@@ -17,15 +17,16 @@ const Hero = () => {
         <div className="flex flex-col gap-y-[32px] w-fit">
           <div className="relative max-w-2xl">
             {/* Carta detrás del título (solo visible en md+) */}
-            <div className="hidden md:block absolute -left-38 -top-20 pointer-events-none z-0">
+            <div className="hidden md:block absolute -left-38 -top-20 pointer-events-none z-0 hero-card-wrapper">
               <img
                 src="/card.png"
                 alt="card"
                 width={220}
                 height={300}
-                style={{
+                /*  style={{
                   opacity: 0.18,
-                }}
+                }} */
+                className="hero-card"
               />
             </div>
 
@@ -65,10 +66,83 @@ const Hero = () => {
             alt={"ruleta"}
             width={650}
             height={120}
-            className="object-contain"
+            className="object-contain ruleta-mobile"
           />
         </div>
       </div>
+
+      {/* Estilos de la animación (inline para simplicidad) */}
+      <style>{`
+        /* Animación sutil de flotación/rotación para hero-card (existente) */
+        .hero-card {
+          transform-origin: center;
+          animation: heroCardFloat 6s ease-in-out infinite;
+          will-change: transform, opacity;
+        }
+
+        @keyframes heroCardFloat {
+          0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0.18;
+          }
+          25% {
+            transform: translateY(-10px) rotate(-1deg);
+            opacity: 0.22;
+          }
+          50% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0.18;
+          }
+          75% {
+            transform: translateY(8px) rotate(1deg);
+            opacity: 0.16;
+          }
+          100% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0.18;
+          }
+        }
+
+        /* RULETA MOBILE: misma animación de movimiento pero SIN modificar opacidad */
+        .ruleta-mobile {
+          transform-origin: center;
+          animation: heroCardFloatNoOpacity 6s ease-in-out infinite;
+          will-change: transform;
+        }
+
+        @keyframes heroCardFloatNoOpacity {
+          0% {
+            transform: translateY(0) rotate(0deg);
+          }
+          25% {
+            transform: translateY(-10px) rotate(-1deg);
+          }
+          50% {
+            transform: translateY(0) rotate(0deg);
+          }
+          75% {
+            transform: translateY(8px) rotate(1deg);
+          }
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+        }
+
+        /* En pantallas md+ desactivamos la animación para la ruleta */
+        @media (min-width: 768px) {
+          .ruleta-mobile {
+            animation: none;
+          }
+        }
+
+        /* Preferencia del usuario por reducir movimiento */
+        @media (prefers-reduced-motion: reduce) {
+          .hero-card,
+          .ruleta-mobile {
+            animation: none !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };
