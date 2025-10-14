@@ -9,6 +9,7 @@ interface GamesCarouselProps {
   title: string;
   category: string;
   onShowMore?: () => void;
+  auto?: boolean; // nueva prop opcional
 }
 
 const CARD_GAP = 24; // px
@@ -48,12 +49,15 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
   title,
   category,
   onShowMore,
+  auto = false, // valor por defecto false
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [responsive, setResponsive] = useState(getResponsiveSettings());
   const { t } = useTranslation();
+  const [isHovered, setIsHovered] = useState(false);
+  const autoIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -81,6 +85,44 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
     }
   };
 
+  // Auto-scroll cada 3 segundos (opcional)
+  useEffect(() => {
+    // limpia cualquier intervalo previo
+    if (autoIntervalRef.current) {
+      clearInterval(autoIntervalRef.current);
+      autoIntervalRef.current = null;
+    }
+
+    if (!auto) return;
+
+    const tick = () => {
+      const el = scrollRef.current;
+      if (!el) return;
+
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      // Si estamos al final, volvemos al principio
+      if (el.scrollLeft >= maxScroll - 1) {
+        el.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        const scrollAmount = responsive.cardWidth + CARD_GAP;
+        el.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      }
+    };
+
+    // No iniciar intervalo si está hover o no hay items suficientes
+    if (!isHovered && games.length > 0) {
+      autoIntervalRef.current = window.setInterval(tick, 3000);
+    }
+
+    return () => {
+      if (autoIntervalRef.current) {
+        clearInterval(autoIntervalRef.current);
+        autoIntervalRef.current = null;
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auto, isHovered, responsive, games.length]);
+
   return (
     <div className="w-full flex justify-center items-center py-6  md:px-0">
       {/* Flecha izquierda (solo desktop/tablet) */}
@@ -105,7 +147,6 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
           responsive.showArrows
             ? {
                 width: `${responsive.carouselWidth}px`,
-                /* minWidth: `${responsive.carouselWidth}px`, */
                 maxWidth: `${responsive.carouselWidth}px`,
                 overflow: "hidden",
               }
@@ -132,8 +173,9 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
           className="flex overflow-x-auto gap-6 scrollbar-hide px-4"
           style={{
             scrollBehavior: "smooth",
-            /*  scrollSnapType: "x mandatory", */
           }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           {loading ? (
             Array.from({

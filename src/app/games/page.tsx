@@ -179,6 +179,7 @@ export default function Home() {
               onShowMore={() => {
                 setFilters((prev) => ({ ...prev, category: "crash_games" }));
               }}
+              auto
             />
 
             <GamesCarousel
@@ -197,6 +198,7 @@ export default function Home() {
               onShowMore={() => {
                 setFilters((prev) => ({ ...prev, category: "live_dealers" }));
               }}
+              auto
             />
 
             <GamesCarousel
