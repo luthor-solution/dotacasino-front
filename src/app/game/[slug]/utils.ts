@@ -1,3 +1,5 @@
+type DEVICE = "DESKTOP" | "MOBILE";
+
 export interface OpenGameApiResponse {
   status: "success";
   error: string;
@@ -19,6 +21,9 @@ export interface OpenGameApiResponse {
     gameRes: {
       sessionId: string; // id de session del juego
     };
+  };
+  game: {
+    devices: DEVICE[];
   };
 }
 

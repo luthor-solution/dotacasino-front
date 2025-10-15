@@ -11,11 +11,11 @@ import {
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { FaTimes } from "react-icons/fa";
 import Ticker from "./ticker";
+import clsx from "clsx";
 
 type Props = {
   url: string;
-  sessionId: string;
-  width: "0" | "1";
+  devices: string[];
 };
 
 function toggleFullscreen() {
@@ -28,7 +28,7 @@ function toggleFullscreen() {
   }
 }
 
-const Iframe: FC<Props> = ({ url, sessionId, width }) => {
+const Iframe: FC<Props> = ({ url, devices }) => {
   const iframeRef = useRef(null);
   const router = useRouter();
 
@@ -48,7 +48,7 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
 
   if (isMobile) {
     return (
-      <div className="absolute top-0 left-0 h-screen w-screen z-100 flex flex-col justify-end bg-[#350b2d]">
+      <div className="absolute top-0 left-0 h-screen w-screen z-100 flex flex-col bg-[#350b2d]">
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -60,10 +60,34 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
         />
         <div className="h-[48px] flex justify-between py-2 px-4 items-center">
           <img src="/logo.svg" className="h-full w-auto" />
-          <FaTimes className="h-[30px]" />
+          <FaTimes className="h-[30px]" onClick={() => router.push("/games")} />
         </div>
         <Ticker />
-        <iframe className="w-full h-full" src={url} ref={iframeRef} />
+        {!devices.includes("MOBILE") && !iOSSafari && (
+          <div className="flex justify-between p-4">
+            <span className="text-sm line-clamp-1">
+              Te recomendamos activar la pantalla completa
+            </span>
+            <button
+              className="rounded-lg bg-white text-black h-6 w-6 flex items-center justify-center"
+              onClick={() => toggleFullscreen()}
+            >
+              <BsFullscreen />
+            </button>
+          </div>
+        )}
+        {iOSSafari &&
+          <DeviceRotateBanner />
+        }
+        <iframe
+          className={clsx(
+            "w-full",
+            devices.includes("MOBILE") && "h-full",
+            !devices.includes("MOBILE") && "aspect-[16/9]"
+          )}
+          src={url}
+          ref={iframeRef}
+        />
       </div>
     );
   }
