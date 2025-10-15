@@ -8,6 +8,7 @@ import {
   useMobileViewportGuard,
   DeviceRotateBanner,
 } from "./useMobileViewportGuard";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 type Props = {
   url: string;
@@ -29,6 +30,8 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
   const iframeRef = useRef(null);
   const router = useRouter();
 
+  const { isDesktop } = useWindowSize()
+
   const { isLandscape, iOSSafari } = useMobileViewportGuard({
     bodyHasMobileGameClass: true, // equivale a body.mobile-game
     bodyHasGameWithoutScrollcheck: false, // equivale a !body.game-without-scrollcheck
@@ -40,6 +43,12 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
       router.replace("/");
     },
   });
+
+  if(!isDesktop) {
+    <div className="absolute top-0 left-0 h-screen">
+      <iframe className="w-full h-full" src={url} ref={iframeRef} />
+    </div>
+  }
 
   return (
     <div id="game-container" className="relative py-8">
@@ -57,19 +66,18 @@ const Iframe: FC<Props> = ({ url, sessionId, width }) => {
       
       <div className="relative mx-auto">
         <div
-          className="relative p-[2px] rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-400 to-emerald-500 shadow-[0_0_60px_rgba(16,185,129,0.2)] w-[95vw] max-h-[90vh] md:w-auto md:min-h-[70vh] md:max-h-[70vh]"
+          className="relative p-[2px] rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-400 to-emerald-500 shadow-[0_0_60px_rgba(16,185,129,0.2)] w-[95vw] max-h-[90vh] md:w-auto md:min-h-[70vh] md:max-h-[70vh] md:aspect-[16/9]"
           style={{
             background:
               "linear-gradient(90deg, #ffc827 0%, #ffcf4a 50%, #ffc827 100%)",
             boxShadow: "0 0 60px rgba(255,200,39,0.18)",
-            aspectRatio: "16/9",
           }}
         >
           <div
             id="game-shell"
             className="relative rounded-2xl ring-1 ring-white/10 overflow-hidden bg-[var(--bg-card)]"
           >
-            <div id="game-aspect" style={{ aspectRatio: "16/9" }}>
+            <div id="game-aspect" className="md:aspect-[16/9]">
               <div
                 className="h-full w-full flex items-center justify-center relative"
                 style={{
