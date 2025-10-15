@@ -18,16 +18,16 @@ import {
 import { useTranslation } from "react-i18next";
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  fast_games: <FiZap size={28} />,
-  arcade: <FiMonitor size={28} />,
+  /* fast_games: <FiZap size={28} />, */
+  /* arcade: <FiMonitor size={28} />, */
+  /*  roulette: <FiDisc size={28} />, */
   crash_games: <FiTrendingUp size={28} />,
-  roulette: <FiDisc size={28} />,
   sport: <FiActivity size={28} />,
   live_dealers: <FiUsers size={28} />,
   slots: <FiGrid size={28} />,
-  lottery: <FiGift size={28} />,
+  /*  lottery: <FiGift size={28} />, */
   video_poker: <FiLayers size={28} />,
-  card: <FiHeart size={28} />,
+  /*  card: <FiHeart size={28} />, */
   todos: <FiGlobe size={28} />,
 };
 
@@ -50,7 +50,20 @@ const CategoriesMenu: React.FC<{
   useEffect(() => {
     gamesService
       .getCategories()
-      .then((res) => setCategories(res.categories))
+      .then((res) => {
+        const valid = Array.from(
+          new Set(
+            (res.categories || [])
+              // excluye "todos" de las dinámicas
+              .filter((c: string) => c && c !== "todos")
+              // solo las que tienen icono definido
+              .filter((c: string) =>
+                Object.prototype.hasOwnProperty.call(categoryIcons, c)
+              )
+          )
+        );
+        setCategories(valid);
+      })
       .finally(() => setCatLoading(false));
   }, []);
 
