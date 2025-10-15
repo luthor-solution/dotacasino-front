@@ -48,7 +48,7 @@ const Iframe: FC<Props> = ({ url, devices }) => {
 
   if (isMobile) {
     return (
-      <div className="absolute top-0 left-0 h-screen w-screen z-100 flex flex-col bg-[#350b2d]">
+      <div className="absolute top-0 left-0 h-[100dvh] w-screen z-100 flex flex-col bg-[#350b2d]">
         <style
           dangerouslySetInnerHTML={{
             __html: `
