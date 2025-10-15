@@ -2,42 +2,49 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FiUserPlus } from "react-icons/fi";
 import { SiTether } from "react-icons/si";
 import { GiGamepad } from "react-icons/gi";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 
-const baseSteps = [
-  {
-    id: "01",
-    icon: <FiUserPlus size={28} />,
-    title: "Crea tu cuenta",
-    desc: "Regístrate con correo y activa la seguridad.",
-  },
-  {
-    id: "02",
-    icon: <SiTether size={28} />,
-    title: "Deposita en cripto (USDT)",
-    desc: "Cargos bajos y confirmación rápida.",
-  },
-  {
-    id: "03",
-    icon: <GiGamepad size={28} />,
-    title: "Juega",
-    desc: "Elige tus títulos favoritos y disfruta.",
-  },
-  {
-    id: "04",
-    icon: <FaMoneyCheckAlt size={26} />,
-    title: "Retira",
-    desc: "Cobros cuando quieras, sin fricciones.",
-  },
-];
-
 const STEP_INTERVAL = 1500; // ms entre pasos
 const EXPLOSION_DURATION = 4000; // ms duración de explosión (antes de reiniciar)
 
 const HowToPlay = () => {
+  const { t } = useTranslation();
+
+  // Pasos con textos traducidos
+  const steps = useMemo(
+    () => [
+      {
+        id: "01",
+        icon: <FiUserPlus size={28} />,
+        title: t("how.steps.create.title"),
+        desc: t("how.steps.create.desc"),
+      },
+      {
+        id: "02",
+        icon: <SiTether size={28} />,
+        title: t("how.steps.deposit.title"),
+        desc: t("how.steps.deposit.desc"),
+      },
+      {
+        id: "03",
+        icon: <GiGamepad size={28} />,
+        title: t("how.steps.play.title"),
+        desc: t("how.steps.play.desc"),
+      },
+      {
+        id: "04",
+        icon: <FaMoneyCheckAlt size={26} />,
+        title: t("how.steps.withdraw.title"),
+        desc: t("how.steps.withdraw.desc"),
+      },
+    ],
+    [t]
+  );
+
   const [active, setActive] = useState<number>(0);
   const [exploding, setExploding] = useState(false);
   const [particles, setParticles] = useState<
@@ -73,9 +80,8 @@ const HowToPlay = () => {
     }
     stepTimeoutRef.current = window.setTimeout(() => {
       const next = currentIndex + 1;
-      const lastIndex = baseSteps.length - 1;
+      const lastIndex = steps.length - 1;
       if (next >= lastIndex) {
-        // activar último (verde) y detonar explosión; no quitamos amarillos aquí
         setActive(lastIndex);
         triggerExplosion();
       } else {
@@ -115,16 +121,12 @@ const HowToPlay = () => {
       explosionTimeoutRef.current = null;
     }
     explosionTimeoutRef.current = window.setTimeout(() => {
-      // quitar amarillo acumulado y quitar verde/explosión al mismo tiempo
       setExploding(false);
       setParticles([]);
-      setShowCompletedHighlights(false); // quitar amarillos todos a la vez
-      // dejamos el estado "base" visible un instante, luego reiniciamos secuencia
-      // usamos un pequeño delay para que la remoción visual sea perceptible
+      setShowCompletedHighlights(false);
       window.setTimeout(() => {
         setActive(0);
         setShowCompletedHighlights(true);
-        // programar la siguiente secuencia
         stepTimeoutRef.current = window.setTimeout(
           () => scheduleNextStep(0),
           300
@@ -140,8 +142,6 @@ const HowToPlay = () => {
       setShowCompletedHighlights(false);
       return;
     }
-
-    // inicio de secuencia normal
     setActive(0);
     setShowCompletedHighlights(true);
     scheduleNextStep(0);
@@ -152,7 +152,7 @@ const HowToPlay = () => {
         window.clearTimeout(explosionTimeoutRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, steps.length]);
 
   return (
     <section
@@ -171,11 +171,10 @@ const HowToPlay = () => {
         <div className="flex justify-center">
           <div className="text-center max-w-2xl">
             <h2 className="text-white text-4xl md:text-5xl font-extrabold mb-4 capitalize">
-              Como jugar
+              {t("how.title")}
             </h2>
             <p className="text-[#d1c7d1] text-base md:text-lg">
-              A casino is a facility for certain types of gambling. Casinos are
-              often built combined with hotels, resorts.
+              {t("how.description")}
             </p>
           </div>
         </div>
@@ -186,12 +185,11 @@ const HowToPlay = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center relative z-10">
-            {baseSteps.map((s, idx) => {
-              const lastIndex = baseSteps.length - 1;
+            {steps.map((s, idx) => {
+              const lastIndex = steps.length - 1;
               const isLast = idx === lastIndex;
               const lastIsGreen = isLast && (active === lastIndex || exploding);
 
-              // <- FIX: ya no dependemos de `!exploding`, así los amarillos permanecen durante la explosión
               const isYellow =
                 !lastIsGreen &&
                 showCompletedHighlights &&

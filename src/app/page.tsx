@@ -7,7 +7,7 @@ import ReferrallAndWin from "@/components/landing/ReferrallAndWin";
 const Landing = () => {
   return (
     <main className="relative min-h-fit flex flex-col">
-      <div className="relative z-10 flex justify-center items-center flex-1 pt-20 flex-col">
+      <div className="relative z-10 flex justify-center items-center flex-1 pt-20 flex-col text-white">
         <Hero />
         <ReferrallAndWin />
         <PopularGames />

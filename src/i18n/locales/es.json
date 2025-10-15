@@ -392,5 +392,54 @@
       "title": "Política KYC (Conozca a su Cliente) y AML",
       "body": "Política KYC (Conozca a su Cliente)<br/><br/>En Dota Casino, la seguridad de nuestros usuarios y la integridad de nuestra plataforma son prioridades fundamentales.<br/><br/>Para cumplir con los estándares internacionales y prevenir actividades fraudulentas, aplicamos procedimientos de verificación de identidad bajo la política KYC (Know Your Customer).<br/><br/><br>Objetivo</br><br/>El propósito de nuestra política KYC es:<br/>• Verificar la identidad de los usuarios de manera segura y confidencial.<br/>• Prevenir el acceso a la plataforma por parte de personas o entidades involucradas en actividades ilícitas.<br/>• Garantizar que todas las operaciones realizadas sean legítimas y transparentes.<br/><br/><br>Proceso de verificación</br><br/>Durante el registro o en el momento en que se requiera, Dota Casino podrá solicitar a los usuarios:<br/>• Documento de identidad válido (pasaporte, cédula o licencia de conducir).<br/>• Comprobante de domicilio reciente.<br/>• En algunos casos, verificación de fuente de fondos o comprobantes de titularidad de la billetera cripto utilizada.<br/><br/>Toda la información proporcionada se almacena de forma segura, cumpliendo con las leyes internacionales de protección de datos y privacidad.<br/><br/><br>Política AML (Anti-Lavado de Dinero)</br><br/>Dota Casino está firmemente comprometido con la prevención del lavado de dinero (AML) y el financiamiento del terrorismo (CFT). Aplicamos procedimientos internos, monitoreo constante y controles automáticos para detectar operaciones sospechosas o inusuales.<br/><br/><br>Principios clave</br><br/>• Rechazamos cualquier intento de utilizar nuestra plataforma para ocultar o transferir fondos de origen ilícito.<br/>• Supervisamos las transacciones para identificar actividades inusuales o patrones sospechosos.<br/>• Nos reservamos el derecho de solicitar información adicional o bloquear temporalmente una cuenta hasta completar los procesos de verificación correspondientes.<br/>• Colaboramos, cuando la ley lo requiera, con las autoridades competentes para garantizar el cumplimiento normativo.<br/><br/><br>Compromiso con la transparencia y la seguridad</br><br/>En Dota Casino, entendemos que la confianza se construye con responsabilidad. Por eso, mantenemos un equilibrio entre la privacidad de nuestros usuarios y el cumplimiento de las normas internacionales KYC/AML, garantizando un entorno seguro, transparente y confiable para todos.<br/><br/>Dota Casino — Seguridad, transparencia y cumplimiento al servicio del jugador."
     }
+  },
+  "hero": {
+    "title": {
+      "prefix": "Refiere",
+      "highlight": "y gana",
+      "suffix": "con nosotros hasta un {{percent}}%"
+    },
+    "ctaRefer": "Refiere y gana",
+    "ctaPlay": "Jugar ahora",
+    "alt": {
+      "roulette": "ruleta",
+      "card": "carta decorativa de casino"
+    }
+  },
+  "how": {
+    "title": "Cómo jugar",
+    "description": "Jugar es muy fácil: crea tu cuenta, deposita en cripto, elige tus juegos favoritos y retira cuando quieras. Rápido, seguro y sin complicaciones.",
+    "steps": {
+      "create": {
+        "title": "Crea tu cuenta",
+        "desc": "Regístrate con correo y activa la seguridad."
+      },
+      "deposit": {
+        "title": "Deposita en cripto (USDT)",
+        "desc": "Cargos bajos y confirmación rápida."
+      },
+      "play": {
+        "title": "Juega",
+        "desc": "Elige tus títulos favoritos y disfruta."
+      },
+      "withdraw": {
+        "title": "Retira",
+        "desc": "Cobros cuando quieras, sin fricciones."
+      }
+    }
+  },
+  "popular": {
+    "title": "Juegos Populares",
+    "description": "Descubre los favoritos de nuestra comunidad: experiencias dinámicas, gráficos de alta calidad y premios emocionantes, disponibles 24/7 en cualquier dispositivo."
+  },
+  "referral": {
+    "title": "CONECTA-COMPARTE-GANA",
+    "desc": "Haz parte del programa de afiliados de DOTA CASINO y obtén recompensas automáticas por cada jugador que invites. Disfruta hasta {{percent}}% en beneficios distribuidos en 4 niveles, con pagos transparentes y en tiempo real.",
+    "loginPrompt": "Inicia sesión para ver tu código de referido",
+    "loginBtn": "Iniciar sesión",
+    "alt": {
+      "roulette": "ruleta",
+      "cards": "cartas decorativas"
+    }
   }
 }

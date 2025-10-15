@@ -392,5 +392,54 @@
       "title": "Política KYC (Conheça o Seu Cliente) e AML",
       "body": "Política KYC (Conheça o Seu Cliente)<br/><br/>No Dota Casino, a segurança dos nossos utilizadores e a integridade da nossa plataforma são prioridades fundamentais.<br/><br/>Para cumprir os padrões internacionais e prevenir actividades fraudulentas, aplicamos procedimentos de verificação de identidade ao abrigo da política KYC (Know Your Customer).<br/><br/><b>Objectivo</b><br/>O objectivo da nossa política KYC é:<br/>• Verificar a identidade dos utilizadores de forma segura e confidencial.<br/>• Prevenir o acesso à plataforma por pessoas ou entidades envolvidas em actividades ilícitas.<br/>• Garantir que todas as operações realizadas sejam legítimas e transparentes.<br/><br/><b>Processo de verificação</b><br/>Durante o registo ou sempre que necessário, o Dota Casino poderá solicitar aos utilizadores:<br/>• Documento de identificação válido (passaporte, cartão de cidadão ou carta de condução).<br/>• Comprovativo de morada recente.<br/>• Em alguns casos, verificação da origem dos fundos ou comprovativos de titularidade da carteira cripto utilizada.<br/><br/>Toda a informação fornecida é armazenada de forma segura, em conformidade com as leis internacionais de protecção de dados e privacidade.<br/><br/><b>Política AML (Prevenção da Lavagem de Dinheiro)</b><br/>O Dota Casino está firmemente comprometido com a prevenção da lavagem de dinheiro (AML) e do financiamento do terrorismo (CFT). Aplicamos procedimentos internos, monitorização contínua e controlos automáticos para detectar operações suspeitas ou incomuns.<br/><br/><b>Princípios-chave</b><br/>• Rejeitamos qualquer tentativa de utilizar a nossa plataforma para ocultar ou transferir fundos de origem ilícita.<br/>• Monitorizamos as transacções para identificar actividades incomuns ou padrões suspeitos.<br/>• Reservamo‑nos o direito de solicitar informação adicional ou bloquear temporariamente uma conta até à conclusão dos processos de verificação correspondentes.<br/>• Colaboramos, quando exigido por lei, com as autoridades competentes para garantir o cumprimento regulamentar.<br/><br/><b>Compromisso com a transparência e a segurança</b><br/>No Dota Casino, entendemos que a confiança se constrói com responsabilidade. Mantemos um equilíbrio entre a privacidade dos nossos utilizadores e o cumprimento das normas internacionais KYC/AML, garantindo um ambiente seguro, transparente e fiável para todos.<br/><br/>Dota Casino — Segurança, transparência e conformidade ao serviço do jogador."
     }
+  },
+  "hero": {
+    "title": {
+      "prefix": "Indique",
+      "highlight": "e ganhe",
+      "suffix": "conosco até {{percent}}%"
+    },
+    "ctaRefer": "Indicar e ganhar",
+    "ctaPlay": "Jogar agora",
+    "alt": {
+      "roulette": "roleta",
+      "card": "carta decorativa de cassino"
+    }
+  },
+  "how": {
+    "title": "Como jogar",
+    "description": "É simples: crie sua conta, deposite com cripto, escolha seus jogos favoritos e saque quando quiser. Rápido, seguro e sem complicações.",
+    "steps": {
+      "create": {
+        "title": "Crie sua conta",
+        "desc": "Cadastre-se com e‑mail e ative a segurança."
+      },
+      "deposit": {
+        "title": "Deposite em cripto (USDT)",
+        "desc": "Taxas baixas e confirmação rápida."
+      },
+      "play": {
+        "title": "Jogue",
+        "desc": "Escolha seus títulos favoritos e aproveite."
+      },
+      "withdraw": {
+        "title": "Retire",
+        "desc": "Saques quando quiser, sem burocracia."
+      }
+    }
+  },
+  "popular": {
+    "title": "Jogos Populares",
+    "description": "Descubra os favoritos da nossa comunidade: experiências dinâmicas, gráficos de alta qualidade e prêmios empolgantes, disponíveis 24/7 em qualquer dispositivo."
+  },
+  "referral": {
+    "title": "CONECTE-COMPARTILHE-GANHE",
+    "desc": "Faça parte do programa de afiliados da DOTA CASINO e receba recompensas automáticas por cada jogador indicado. Aproveite até {{percent}}% em benefícios distribuídos em 4 níveis, com pagamentos transparentes e em tempo real.",
+    "loginPrompt": "Entre para ver seu código de indicação",
+    "loginBtn": "Entrar",
+    "alt": {
+      "roulette": "roleta",
+      "cards": "cartas decorativas"
+    }
   }
 }

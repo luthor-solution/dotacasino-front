@@ -392,5 +392,54 @@
       "title": "KYC (Know Your Customer) & AML Policy",
       "body": "KYC Policy (Know Your Customer)<br/><br/>At Dota Casino, the security of our users and the integrity of our platform are core priorities.<br/><br/>To meet international standards and prevent fraudulent activity, we implement identity verification procedures under the KYC policy.<br/><br/><br>Purpose</br><br/>The purpose of our KYC policy is to:<br/>• Verify users' identities in a secure and confidential manner.<br/>• Prevent access to the platform by persons or entities involved in illicit activities.<br/>• Ensure that all operations carried out are legitimate and transparent.<br/><br/><br>Verification process</br><br/>During registration or when required, Dota Casino may ask users to provide:<br/>• A valid identity document (passport, national ID or driver's license).<br/>• A recent proof of address.<br/>• In some cases, proof of source of funds or ownership of the crypto wallet used.<br/><br/>All information provided is stored securely in accordance with international data protection and privacy laws.<br/><br/><br>AML Policy (Anti-Money Laundering)</br><br/>Dota Casino is firmly committed to preventing money laundering (AML) and terrorist financing (CFT). We apply internal procedures, continuous monitoring and automated controls to detect suspicious or unusual activity.<br/><br/><br>Key principles</br><br/>• We reject any attempt to use our platform to conceal or move funds of illicit origin.<br/>• We monitor transactions to identify unusual activities or suspicious patterns.<br/>• We reserve the right to request additional information or temporarily block an account until verification procedures are completed.<br/>• We cooperate, where required by law, with competent authorities to ensure regulatory compliance.<br/><br/><br>Commitment to transparency and security</br><br/>At Dota Casino we understand that trust is built on responsibility. Therefore, we balance user privacy with compliance with international KYC/AML standards, ensuring a safe, transparent and reliable environment for everyone.<br/><br/>Dota Casino — Security, transparency and compliance at the service of the player."
     }
+  },
+  "hero": {
+    "title": {
+      "prefix": "Refer",
+      "highlight": "and earn",
+      "suffix": "with us up to {{percent}}%"
+    },
+    "ctaRefer": "Refer and earn",
+    "ctaPlay": "Play now",
+    "alt": {
+      "roulette": "roulette wheel",
+      "card": "decorative casino card"
+    }
+  },
+  "how": {
+    "title": "How to Play",
+    "description": "It’s easy: create your account, deposit with crypto, choose your favorite games, and withdraw whenever you want. Fast, secure, and hassle-free.",
+    "steps": {
+      "create": {
+        "title": "Create your account",
+        "desc": "Sign up with email and enable security."
+      },
+      "deposit": {
+        "title": "Deposit in crypto (USDT)",
+        "desc": "Low fees and quick confirmation."
+      },
+      "play": {
+        "title": "Play",
+        "desc": "Pick your favorite titles and enjoy."
+      },
+      "withdraw": {
+        "title": "Withdraw",
+        "desc": "Cash out anytime, with no friction."
+      }
+    }
+  },
+  "popular": {
+    "title": "Popular Games",
+    "description": "Discover our community’s favorites: dynamic experiences, high‑quality graphics, and exciting rewards—available 24/7 on any device."
+  },
+  "referral": {
+    "title": "CONNECT-SHARE-EARN",
+    "desc": "Join DOTA CASINO’s affiliate program and receive automatic rewards for every player you invite. Enjoy up to {{percent}}% in benefits across 4 levels, with transparent, real-time payouts.",
+    "loginPrompt": "Sign in to view your referral code",
+    "loginBtn": "Sign in",
+    "alt": {
+      "roulette": "roulette wheel",
+      "cards": "decorative cards"
+    }
   }
 }
