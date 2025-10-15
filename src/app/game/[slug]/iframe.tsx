@@ -52,7 +52,7 @@ const Iframe: FC<Props> = ({ url, devices }) => {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-            header {
+            header, footer {
               display: none;
             }
             `,
