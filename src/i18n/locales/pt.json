@@ -66,7 +66,9 @@
     "company": {
       "title": "Empresa",
       "news": "Notícias",
-      "about": "Sobre nós"
+      "about": "Sobre nós",
+      "missionAndVision": "Missão e Visão",
+      "values": "Nossos Valores"
     },
     "games": {
       "title": "Jogos",
@@ -441,5 +443,24 @@
       "roulette": "roleta",
       "cards": "cartas decorativas"
     }
+  },
+  "about": {
+    "title": "Quem Somos",
+    "body": "<p>A Dota Casino é uma plataforma global de entretenimento digital que combina a inovação do mundo cripto com a confiabilidade das passarelas de pagamento tradicionais. Nascemos com o propósito de redefinir a experiência de jogo online, oferecendo um ambiente seguro, transparente e tecnologicamente avançado, onde cada jogador pode se divertir com liberdade e total confidencialidade.</p><p>Nossa abordagem se baseia em três pilares fundamentais:</p><ul><li><strong>Segurança de nível premium:</strong> protegemos as informações e os fundos dos nossos usuários com os mais altos padrões de criptografia e controle.</li><li><strong>Inovação constante:</strong> integramos soluções blockchain, criptomoedas e sistemas de pagamento em moeda fiduciária, adaptando-nos às necessidades de cada país.</li><li><strong>Experiência personalizada:</strong> combinamos tecnologia, design e serviço para oferecer um ambiente fluido, confiável e acessível a partir de qualquer dispositivo.</li></ul><p>Na Dota Casino, acreditamos que o jogo online deve ser uma experiência justa, responsável e emocionante, apoiada por um sistema financeiro sólido e por uma comunidade de jogadores que valorizam a integridade, a privacidade e o entretenimento de qualidade.</p><p><strong>Dota Casino:</strong> a fusão perfeita entre a emoção do jogo, a inovação digital e a segurança financeira.</p>"
+  },
+  "mission": {
+    "title": "Nossa Missão",
+    "body": "<p>Na Dota Casino, nossa missão é oferecer uma experiência de jogo online segura, moderna e transparente, que una o melhor do ecossistema cripto à estabilidade do sistema financeiro tradicional.</p><p>Buscamos que cada jogador desfrute de um ambiente confiável, ágil e responsável, onde a emoção do entretenimento seja vivida com liberdade, privacidade e suporte tecnológico de primeira linha.</p><p>Comprometemo-nos a inovar continuamente, garantir a segurança dos nossos usuários e promover uma cultura de <strong>jogo consciente e sustentável</strong>, na qual a diversão esteja sempre acompanhada de responsabilidade.</p>"
+  },
+  "vision": {
+    "title": "Nossa Visão",
+    "body": "<p>Ser reconhecidos como <strong>o cassino online mais confiável e avançado do ecossistema cripto global</strong>, integrando tecnologia, transparência e entretenimento em uma experiência de classe mundial.</p><p>Queremos liderar a evolução do jogo digital, construindo uma comunidade internacional que valorize a inovação, a integridade e a confiança.</p><p>Na Dota Casino, aspiramos redefinir o que significa jogar online: uma experiência sem fronteiras, segura, inclusiva e pensada para o futuro.</p>"
+  },
+  "missionVision": {
+    "title": "Missão e Visão"
+  },
+  "values": {
+    "title": "Nossos Valores",
+    "body": "<ul><li><strong>Segurança e Confiança:</strong> Protegemos seus fundos e dados com tecnologia de ponta.</li><li><strong>Inovação Constante:</strong> Integramos soluções blockchain e fiduciárias para uma experiência moderna e segura.</li><li><strong>Transparência e Conformidade:</strong> Operamos com políticas claras e conformidade KYC/AML em cada processo.</li><li><strong>Experiência do Usuário:</strong> Cada detalhe foi pensado para oferecer conforto, fluidez e acessibilidade total.</li><li><strong>Jogo Responsável:</strong> Promovemos um entretenimento consciente, equilibrado e sempre sob controle.</li></ul><p><strong>Dota Casino</strong> — Segurança, inovação e responsabilidade em cada jogada.</p>"
   }
 }

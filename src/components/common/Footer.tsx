@@ -53,23 +53,34 @@ const Footer = () => {
       <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-8">
         <div className="flex flex-col md:flex-row gap-12 flex-1">
           <div>
-            <h3 className="font-bold mb-3">{t("footer.company.title")}</h3>
+            <a href={"/about-us"}>
+              <h3 className="font-bold mb-3 hover:text-[#FFC827] transition">
+                {t("footer.company.title")}
+              </h3>
+            </a>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-[#FFC827] transition">
-                  {t("footer.company.news")}
+                <a
+                  href="/mission-and-vision"
+                  className="hover:text-[#FFC827] transition"
+                >
+                  {t("footer.company.missionAndVision")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-[#FFC827] transition">
-                  {t("footer.company.about")}
+                  {t("footer.company.values")}
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-bold mb-3">{t("footer.games.title")}</h3>
+            <Link href={"/games"}>
+              <h3 className="font-bold mb-3 hover:text-[#FFC827] transition">
+                {t("footer.games.title")}
+              </h3>
+            </Link>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="hover:text-[#FFC827] transition">
