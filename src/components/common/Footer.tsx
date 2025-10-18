@@ -68,7 +68,10 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#FFC827] transition">
+                <a
+                  href="/our-values"
+                  className="hover:text-[#FFC827] transition"
+                >
                   {t("footer.company.values")}
                 </a>
               </li>
