@@ -54,7 +54,11 @@ const GamePage: FC<Props> = async ({ params }) => {
 
         <Iframe
           url={gameInfo.content.game.url}
-          devices={gameInfo.game.devices}
+          devices={
+            gameInfo.game.slug.startsWith("sport_betting")
+              ? ["DEKSTOP", "MOBILE"]
+              : gameInfo.game.devices
+          }
         />
       </div>
     );
