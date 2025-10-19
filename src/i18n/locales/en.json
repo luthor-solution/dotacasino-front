@@ -462,5 +462,25 @@
   "values": {
     "title": "Our Values",
     "body": "<ul><li><strong>Security and Trust:</strong> We safeguard your funds and data with top‑tier technology.</li><li><strong>Constant Innovation:</strong> We integrate blockchain and fiat solutions for a modern and secure experience.</li><li><strong>Transparency and Compliance:</strong> We operate with clear policies and KYC/AML compliance in every process.</li><li><strong>User Experience:</strong> Every detail is designed to provide comfort, smoothness, and full accessibility.</li><li><strong>Responsible Gaming:</strong> We promote conscious, balanced entertainment that is always under control.</li></ul><p><strong>Dota Casino</strong> — Security, innovation, and responsibility in every play.</p>"
+  },
+  "timeline": {
+    "level1": {
+      "day": "Level 1",
+      "title": "Gain 20% of your first level"
+    },
+    "level2": {
+      "day": "Level 2 (Basic)",
+      "title": "Gain 7% of your second level"
+    },
+    "level3": {
+      "day": "Level 3 (Advanced)",
+      "title": "Gain 7% of your third level",
+      "requires": "Register 3 direct referrals with a $500 USDT membership"
+    },
+    "level4": {
+      "day": "Level 4 (Pro)",
+      "title": "Gain 7% of your fourth level",
+      "requires": "Register 4 direct referrals with a $1,000 USDT membership"
+    }
   }
 }

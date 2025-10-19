@@ -462,5 +462,25 @@
   "values": {
     "title": "Nossos Valores",
     "body": "<ul><li><strong>Segurança e Confiança:</strong> Protegemos seus fundos e dados com tecnologia de ponta.</li><li><strong>Inovação Constante:</strong> Integramos soluções blockchain e fiduciárias para uma experiência moderna e segura.</li><li><strong>Transparência e Conformidade:</strong> Operamos com políticas claras e conformidade KYC/AML em cada processo.</li><li><strong>Experiência do Usuário:</strong> Cada detalhe foi pensado para oferecer conforto, fluidez e acessibilidade total.</li><li><strong>Jogo Responsável:</strong> Promovemos um entretenimento consciente, equilibrado e sempre sob controle.</li></ul><p><strong>Dota Casino</strong> — Segurança, inovação e responsabilidade em cada jogada.</p>"
+  },
+  "timeline": {
+    "level1": {
+      "day": "Nível 1",
+      "title": "Ganhe 20% do seu primeiro nível"
+    },
+    "level2": {
+      "day": "Nível 2 (Básico)",
+      "title": "Ganhe 7% do seu segundo nível"
+    },
+    "level3": {
+      "day": "Nível 3 (Avançado)",
+      "title": "Ganhe 7% do seu terceiro nível",
+      "requires": "Registre 3 indicados diretos com plano de 500 USDT"
+    },
+    "level4": {
+      "day": "Nível 4 (Pro)",
+      "title": "Ganhe 7% do seu quarto nível",
+      "requires": "Registre 4 indicados diretos com plano de 1.000 USDT"
+    }
   }
 }
