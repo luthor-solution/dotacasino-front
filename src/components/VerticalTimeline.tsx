@@ -66,8 +66,8 @@ const icons = [
 export const timeline = (t: TFunction<"ns1", undefined>) => {
   return [
     {
-      day: t("level1.day"),
-      title: t("level1.title"),
+      day: t("timeline.level1.day"),
+      title: t("timeline.level1.title"),
       color: "text-[#FFC827]",
       bg: "bg-lime-400",
       border: "border-[#FFC827]",
@@ -76,8 +76,8 @@ export const timeline = (t: TFunction<"ns1", undefined>) => {
       enabled: ["free", "p-100", "p-500", "p-1000"],
     },
     {
-      day: t("level2.day"),
-      title: t("level2.title"),
+      day: t("timeline.level2.day"),
+      title: t("timeline.level2.title"),
       color: "text-[#FFC827]",
       bg: "bg-yellow-400",
       border: "border-[#FFC827]",
@@ -86,26 +86,26 @@ export const timeline = (t: TFunction<"ns1", undefined>) => {
       enabled: ["p-100", "p-500", "p-1000"],
     },
     {
-      day: t("level3.day"),
-      title: t("level3.title"),
+      day: t("timeline.level3.day"),
+      title: t("timeline.level3.title"),
       color: "text-[#FFC827]",
       bg: "bg-orange-400",
       border: "border-[#FFC827]",
       icon: icons[2],
       percent: "/7.png",
       enabled: ["p-500", "p-1000"],
-      requires: [t("level3.requires")],
+      requires: [t("timeline.level3.requires")],
     },
     {
-      day: t("level4.day"),
-      title: t("level4.title"),
+      day: t("timeline.level4.day"),
+      title: t("timeline.level4.title"),
       color: "text-[#FFC827]",
       bg: "bg-fuchsia-500",
       border: "border-[#FFC827]",
       icon: icons[3],
       percent: "/7.png",
       enabled: ["p-1000"],
-      requires: [t("level4.requires")],
+      requires: [t("timeline.level4.requires")],
     },
   ];
 };
@@ -116,17 +116,46 @@ type Props = {
 
 const VerticalTimeline: React.FC<Props> = ({ membership }) => {
   const { t } = useTranslation();
+
+  const renderInfo = (
+    item: ReturnType<typeof timeline> extends (infer U)[] ? U : never,
+    isEnabled: boolean,
+    align: "left" | "right"
+  ) => (
+    <div className={align === "left" ? "text-right" : "text-left"}>
+      <div className={clsx("font-bold text-lg", item.color)}>{item.day}</div>
+      <div className="text-gray-300">{item.title}</div>
+
+      {/* Requisitos (si existen) */}
+      {item.requires?.length ? (
+        <ul
+          className={clsx(
+            "mt-2 list-disc pl-5 text-sm",
+            align === "left" ? "inline-block text-gray-400" : "text-gray-400",
+            !isEnabled && "opacity-60"
+          )}
+        >
+          {item.requires.map((req: string, i: number) => (
+            <li key={i}>{req}</li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
+
   return (
-    <div className=" w-full flex flex-col items-center justify-start py-8">
+    <div className="w-full flex flex-col items-center justify-start py-8">
       <h2 className="text-3xl font-bold mb-10 text-white">
         VERTICAL <span className="text-[#FFC827]">TIMELINE</span>
       </h2>
+
       <div className="relative w-full max-w-2xl flex justify-center">
-        {/* Vertical line */}
+        {/* Línea vertical */}
         <div
           className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-2 bg-gray-200 rounded-full z-0"
           style={{ minHeight: 420 }}
         />
+
         <div className="flex flex-col w-full z-10">
           {timeline(t).map((item, idx) => {
             const isEnabled = item.enabled.includes(membership || "");
@@ -137,19 +166,12 @@ const VerticalTimeline: React.FC<Props> = ({ membership }) => {
                 className="flex w-full items-center mb-8 relative"
                 style={{ minHeight: 80 }}
               >
-                {/* Left content */}
+                {/* Columna izquierda */}
                 <div className="w-1/2 flex justify-end pr-8">
-                  {idx % 2 === 0 && (
-                    <div className="text-right">
-                      <div className={`font-bold ${item.color} text-lg`}>
-                        {item.day}
-                      </div>
-                      <div className="text-gray-300">{item.title}</div>
-                    </div>
-                  )}
+                  {idx % 2 === 0 && renderInfo(item, isEnabled, "left")}
                 </div>
 
-                {/* Center circle and icon */}
+                {/* Centro: círculo y número */}
                 <div className="relative flex flex-col items-center">
                   <div
                     className={clsx(
@@ -171,21 +193,17 @@ const VerticalTimeline: React.FC<Props> = ({ membership }) => {
                   </div>
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center pointer-events-none">
                     <span
-                      className={`text-white font-bold text-lg ${item.bg} rounded-full w-8 h-8 flex items-center justify-center shadow border-2 border-white`}
+                      className={clsx(
+                        "text-white font-bold text-lg rounded-full w-8 h-8 flex items-center justify-center shadow border-2 border-white",
+                        item.bg
+                      )}
                     >{`0${idx + 1}`}</span>
                   </div>
                 </div>
 
-                {/* Right content */}
+                {/* Columna derecha */}
                 <div className="w-1/2 flex justify-start pl-8">
-                  {idx % 2 === 1 && (
-                    <div className="text-left">
-                      <div className={`font-bold ${item.color} text-lg`}>
-                        {item.day}
-                      </div>
-                      <div className="text-gray-300">{item.title}</div>
-                    </div>
-                  )}
+                  {idx % 2 === 1 && renderInfo(item, isEnabled, "right")}
                 </div>
               </div>
             );
