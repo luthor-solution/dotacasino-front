@@ -462,5 +462,19 @@
   "values": {
     "title": "Nossos Valores",
     "body": "<ul><li><strong>Segurança e Confiança:</strong> Protegemos seus fundos e dados com tecnologia de ponta.</li><li><strong>Inovação Constante:</strong> Integramos soluções blockchain e fiduciárias para uma experiência moderna e segura.</li><li><strong>Transparência e Conformidade:</strong> Operamos com políticas claras e conformidade KYC/AML em cada processo.</li><li><strong>Experiência do Usuário:</strong> Cada detalhe foi pensado para oferecer conforto, fluidez e acessibilidade total.</li><li><strong>Jogo Responsável:</strong> Promovemos um entretenimento consciente, equilibrado e sempre sob controle.</li></ul><p><strong>Dota Casino</strong> — Segurança, inovação e responsabilidade em cada jogada.</p>"
+  },
+  "startingGame": {
+    "title": "Iniciando jogo",
+    "slowMessage": "Se demorar muito, clique para recarregar",
+    "reloadButton": "Recarregar"
+  },
+  "gamePage": {
+    "balanceError": {
+      "message": "Este jogo requer pelo menos {{amount}} USD no saldo",
+      "backButton": "Voltar aos jogos"
+    }
+  },
+  "diceLoader": {
+    "verifyingSession": "Verificando sessão"
   }
 }

@@ -14,6 +14,23 @@ const Footer = () => {
     setIsRecharge(pathname === "/recharge" || pathname === "/withdraw");
   }, [pathname]);
 
+  const [lang, setLang] = useState<string>("es");
+
+  useEffect(() => {
+    // Preferencia: i18n.language -> cookie/localStorage -> "es"
+    const fromI18n = i18n.language;
+    const fromLS =
+      typeof window !== "undefined" ? localStorage.getItem("i18nextLng") : null;
+    setLang(fromI18n || fromLS || "es");
+
+    // Si el idioma de i18n cambia en otro sitio, sincroniza el select
+    const handler = (lng: string) => setLang(lng);
+    i18n.on("languageChanged", handler);
+    return () => {
+      i18n.off("languageChanged", handler);
+    };
+  }, []);
+
   return (
     <footer
       className={`relative ${
@@ -99,7 +116,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-bold mb-3">{t("footer.resources.title")}</h3>
+            {/* <h3 className="font-bold mb-3">{t("footer.resources.title")}</h3> */}
             <ul className="space-y-2">
               <li>
                 <Link href="/terms" className="hover:text-[#FFC827] transition">
@@ -139,9 +156,12 @@ const Footer = () => {
             className={`${
               isRecharge ? "bg-neutral-950" : "bg-[#2e0327]"
             } text-white px-4 py-2 rounded-lg border border-[#FFC827] focus:outline-none`}
-            defaultValue="es"
+            value={lang}
             onChange={(e) => {
               i18n.changeLanguage(e.target.value);
+              if (typeof window !== "undefined") {
+                localStorage.setItem("i18nextLng", e.target.value);
+              }
             }}
           >
             <option value="es">🇪🇸 Spanish</option>

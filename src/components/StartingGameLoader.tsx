@@ -61,7 +61,7 @@ interface Props {
   loading: boolean;
 }
 
-const FullScreenDiceLoader: React.FC<Props> = ({ loading }) => {
+const StartingGameLoader: React.FC<Props> = ({ loading }) => {
   const { t } = useTranslation();
 
   return (
@@ -93,11 +93,18 @@ const FullScreenDiceLoader: React.FC<Props> = ({ loading }) => {
         </div>
       </div>
 
-      <span className="text-white text-xl font-semibold drop-shadow mt-16">
-        {t("diceLoader.verifyingSession")}
+      <span className="text-white text-xl font-semibold drop-shadow mt-10">
+        {t("startingGame.title")}
       </span>
+      <p className="text-white text-sm mt-2">{t("startingGame.slowMessage")}</p>
+      <button
+        onClick={() => window.location.reload()}
+        className="mt-4 px-5 py-2 bg-[#FFC827] text-[#2e0327] font-semibold rounded shadow hover:shadow-lg transition cursor-pointer"
+      >
+        {t("startingGame.reloadButton")}
+      </button>
     </div>
   );
 };
 
-export default FullScreenDiceLoader;
+export default StartingGameLoader;

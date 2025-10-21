@@ -37,7 +37,10 @@ const ReferrallAndWin = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col md:flex-row justify-center w-full items-center px-[24px] py-20 bg-[#350b2d]">
+    <div
+      className="relative flex flex-col md:flex-row justify-center w-full items-center px-[24px] py-20 bg-[#350b2d]"
+      id="refer"
+    >
       {/* Partículas (debajo) */}
       <div
         aria-hidden

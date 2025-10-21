@@ -6,6 +6,14 @@ const Hero = () => {
   const { t } = useTranslation();
   const percent = 41;
 
+  const handleScrollRefer = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const target = document.getElementById("refer");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section
       className="relative w-full bg-left bg-cover bg-no-repeat md:bg-[length:150%]  overflow-hidden"
@@ -41,22 +49,25 @@ const Hero = () => {
           </div>
 
           <div className="flex md:gap-x-[16px] flex-col md:flex-row gap-y-[16px]">
-            <div
+            <a
+              href="#refer"
+              onClick={handleScrollRefer}
               className="text-[22px] font-[900] text-[#350b2d] py-[13px] px-[35px] rounded-2xl hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 cursor-pointer items-center text-center capitalize"
               style={{
                 background: "linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%)",
               }}
             >
               {t("hero.ctaRefer")}
-            </div>
-            <div
+            </a>
+            <a
+              href="/games"
               className="text-[22px] font-[900] text-[#350b2d] py-[13px] px-[35px] rounded-2xl hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 cursor-pointer items-center text-center capitalize"
               style={{
                 background: "linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%)",
               }}
             >
               {t("hero.ctaPlay")}
-            </div>
+            </a>
           </div>
         </div>
         <div className="md:w-fit">

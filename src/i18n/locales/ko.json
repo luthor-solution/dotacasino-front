@@ -462,5 +462,19 @@
   "values": {
     "title": "우리의 가치",
     "body": "<ul><li><strong>보안과 신뢰:</strong> 최첨단 기술로 자금과 데이터를 보호합니다.</li><li><strong>지속적인 혁신:</strong> 현대적이고 안전한 경험을 위해 블록체인과 법정화폐 솔루션을 통합합니다.</li><li><strong>투명성과 컴플라이언스:</strong> 모든 과정에서 명확한 정책과 KYC/AML 준수를 바탕으로 운영합니다.</li><li><strong>사용자 경험:</strong> 편의성, 부드러운 흐름, 완전한 접근성을 제공하도록 모든 디테일을 설계했습니다.</li><li><strong>책임 있는 게임:</strong> 항상 통제되는 자각적이고 균형 잡힌 엔터테인먼트를 지향합니다.</li></ul><p><strong>Dota Casino</strong> — 모든 플레이에 보안, 혁신, 책임을.</p>"
+  },
+  "startingGame": {
+    "title": "게임 시작 중",
+    "slowMessage": "오래 걸리면 새로 고침을 클릭하세요",
+    "reloadButton": "새로고침"
+  },
+  "gamePage": {
+    "balanceError": {
+      "message": "이 게임을 하려면 최소 {{amount}}달러의 잔액이 필요합니다",
+      "backButton": "게임 목록으로 돌아가기"
+    }
+  },
+  "diceLoader": {
+    "verifyingSession": "세션 확인 중"
   }
 }

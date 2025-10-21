@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import BackgroundGlow from "./BackgroundGlow";
 import Ticker from "./ticker";
 import Head from "next/head";
-
+import BalanceError from "./BalanceError";
 type Props = {
   params: Promise<{
     slug: string;
@@ -40,12 +40,8 @@ const GamePage: FC<Props> = async ({ params }) => {
       )
       .then((r) => r.data);
 
-    if (gameInfo.error == "hall_balance_less_100") {
-      return (
-        <div className="flex justify-center h-[200px] items-center">
-          Esté juego necesita al menos 100 usd en el balance
-        </div>
-      );
+    if (gameInfo.error === "hall_balance_less_100") {
+      return <BalanceError requiredAmount={100} />;
     }
 
     return (
@@ -60,7 +56,11 @@ const GamePage: FC<Props> = async ({ params }) => {
     );
   } catch (err) {
     console.error(err);
-    return <div className="mt-20">Algo salio mal, error</div>;
+    return (
+      <div className="mt-20 text-center text-white">
+        Algo salió mal, error al cargar el juego.
+      </div>
+    );
   }
 };
 
