@@ -496,5 +496,17 @@
       "title": "Ganhe 7% do seu quarto nível",
       "requires": "Registre 4 indicados diretos com plano de 1.000 USDT"
     }
-  }
+  },
+  "somethingWentWrong": "Ocorreu um erro",
+  "previous": "Anterior",
+  "next": "Próximo",
+  "page": "Página",
+  "of": "de",
+  "showMore": "Ver mais",
+  "showLess": "Ver menos",
+  "loading": "Carregando...",
+  "cancelWithdrawTitle": "Cancelar saque",
+  "cancelWithdrawDesc": "Tem certeza de que deseja cancelar este saque? Esta ação não pode ser desfeita.",
+  "cancelWithdraw": "Cancelar saque",
+  "keep": "Manter"
 }

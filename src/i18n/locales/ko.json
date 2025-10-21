@@ -496,5 +496,17 @@
       "title": "네 번째 레벨에서 7%를 획득하세요",
       "requires": "$1,000 USDT 멤버십으로 직접 추천 4명을 등록하세요"
     }
-  }
+  },
+  "somethingWentWrong": "문제가 발생했습니다",
+  "previous": "이전",
+  "next": "다음",
+  "page": "페이지",
+  "of": "의",
+  "showMore": "더 보기",
+  "showLess": "간단히 보기",
+  "loading": "불러오는 중...",
+  "cancelWithdrawTitle": "출금 취소",
+  "cancelWithdrawDesc": "이 출금을 취소하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+  "cancelWithdraw": "출금 취소",
+  "keep": "유지"
 }
