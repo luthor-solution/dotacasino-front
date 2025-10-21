@@ -23,6 +23,7 @@ export interface OpenGameApiResponse {
     };
   };
   game: {
+    slug: string;
     devices: DEVICE[];
   };
 }

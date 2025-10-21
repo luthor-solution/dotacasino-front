@@ -16,17 +16,20 @@ import {
   FiChevronRight,
 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import { FaFutbol } from "react-icons/fa";
+import { GiPokerHand } from "react-icons/gi";
+import { useRouter } from "next/navigation";
 
 const categoryIcons: Record<string, React.ReactNode> = {
   /* fast_games: <FiZap size={28} />, */
   /* arcade: <FiMonitor size={28} />, */
   /*  roulette: <FiDisc size={28} />, */
   crash_games: <FiTrendingUp size={28} />,
-  sport: <FiActivity size={28} />,
+  sport: <FaFutbol size={28} />,
   live_dealers: <FiUsers size={28} />,
   slots: <FiGrid size={28} />,
   /*  lottery: <FiGift size={28} />, */
-  video_poker: <FiLayers size={28} />,
+  video_poker: <GiPokerHand size={28} />,
   /*  card: <FiHeart size={28} />, */
   todos: <FiGlobe size={28} />,
 };
@@ -40,6 +43,7 @@ const CategoriesMenu: React.FC<{
   selected?: string;
   onSelect?: (cat: string | undefined) => void;
 }> = ({ selected, onSelect }) => {
+  const router = useRouter()
   const [categories, setCategories] = useState<string[]>([]);
   const [catLoading, setCatLoading] = useState(true);
   const [showLeft, setShowLeft] = useState(false);
@@ -162,7 +166,10 @@ const CategoriesMenu: React.FC<{
                   isSelected ? "text-[#FFC827]" : ""
                 }`}
                 onClick={() => {
-                  if (isSelected || cat === "todos") {
+                  if(cat == "sport") {
+                    router.push("/game/sport_betting-3002")
+                  }
+                  else if (isSelected || cat === "todos") {
                     onSelect?.(undefined);
                   } else {
                     onSelect?.(cat);

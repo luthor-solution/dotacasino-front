@@ -476,5 +476,25 @@
   },
   "diceLoader": {
     "verifyingSession": "Verificando sesión"
+  },
+  "timeline": {
+    "level1": {
+      "day": "Nivel 1",
+      "title": "Gana 20% de tu primer nivel"
+    },
+    "level2": {
+      "day": "Nivel 2 (Básico)",
+      "title": "Gana 7% de tu segundo nivel"
+    },
+    "level3": {
+      "day": "Nivel 3 (Avanzado)",
+      "title": "Gana 7% de tu tercer nivel",
+      "requires": "Registra 3 directos con membresía de $500 USDT"
+    },
+    "level4": {
+      "day": "Nivel 4 (Pro)",
+      "title": "Gana 7% de tu cuarto nivel",
+      "requires": "Registra 4 directos con membresía de $1,000 USDT"
+    }
   }
 }

@@ -476,5 +476,25 @@
   },
   "diceLoader": {
     "verifyingSession": "Verifying session"
+  },
+  "timeline": {
+    "level1": {
+      "day": "Level 1",
+      "title": "Gain 20% of your first level"
+    },
+    "level2": {
+      "day": "Level 2 (Basic)",
+      "title": "Gain 7% of your second level"
+    },
+    "level3": {
+      "day": "Level 3 (Advanced)",
+      "title": "Gain 7% of your third level",
+      "requires": "Register 3 direct referrals with a $500 USDT membership"
+    },
+    "level4": {
+      "day": "Level 4 (Pro)",
+      "title": "Gain 7% of your fourth level",
+      "requires": "Register 4 direct referrals with a $1,000 USDT membership"
+    }
   }
 }
