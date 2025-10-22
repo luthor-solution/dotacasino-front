@@ -152,7 +152,7 @@ export default function Page() {
             {/* VISUAL NETWORK DIAGRAM */}
             <section className="mb-14">
               <div className="rounded-2xl ring-1 ring-white/10 bg-white/5 p-6 md:p-10 overflow-x-auto">
-                <div className="min-w-[600px]">
+                <div>
                   <div className="flex flex-col items-center gap-8">
                     {/* Root */}
                     <div className="flex flex-col items-center">
