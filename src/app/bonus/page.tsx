@@ -731,13 +731,6 @@ export default function Page() {
                       <Rocket className="h-5 w-5" strokeWidth={1.5} />
                       {t("bonus_view.cta.primary")}
                     </a>
-                    <a
-                      href="#contacto"
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-base font-medium ring-1 ring-white/10 bg-white/5 hover:bg-white/10"
-                    >
-                      <Headset className="h-5 w-5" strokeWidth={1.5} />
-                      {t("bonus_view.cta.secondary")}
-                    </a>
                   </div>
                 </div>
               </div>
