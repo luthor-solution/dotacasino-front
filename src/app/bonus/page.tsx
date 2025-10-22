@@ -718,7 +718,7 @@ export default function Page() {
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                     <a
-                      href="#registro"
+                      href="/sign-up"
                       className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-medium ring-1 ring-emerald-300/20"
                       style={{
                         background:
