@@ -511,7 +511,7 @@
   "keep": "유지",
   "bonus_view": {
     "badge.share": "공유하고 수익 얻기",
-    "hero.title": "<accent>{levels}단계</accent>까지 추천 수익",
+    "hero.title": "{{levels}}단계까지 추천 수익",
     "hero.subtitle": "추천 네트워크를 구축하고 1단계에서 최대 20%, 추가 단계에서 최대 7%의 커미션을 받으세요. 성장할수록 수익도 커집니다.",
     "diagram.you": "나",
     "levels.sectionTitle": "레벨별 구성 및 요건",

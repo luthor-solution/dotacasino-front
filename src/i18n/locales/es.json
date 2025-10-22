@@ -511,7 +511,7 @@
   "keep": "Mantener",
   "bonus_view": {
     "badge.share": "Gana compartiendo",
-    "hero.title": "Refiere y gana hasta en <accent>{levels} niveles</accent>",
+    "hero.title": "Refiere y gana hasta en {{levels}} niveles",
     "hero.subtitle": "Construye tu red de referidos y obtén comisiones de hasta el 20% en el primer nivel, más hasta 7% en niveles adicionales. Cuanto más creces, más ganas.",
     "diagram.you": "Tú",
     "levels.sectionTitle": "Desglose de niveles y requisitos",

@@ -511,7 +511,7 @@
   "keep": "Manter",
   "bonus_view": {
     "badge.share": "Ganhe compartilhando",
-    "hero.title": "Indique e ganhe em <accent>{levels} níveis</accent>",
+    "hero.title": "Indique e ganhe em {{levels}} níveis",
     "hero.subtitle": "Construa sua rede de indicações e ganhe até 20% no primeiro nível, mais até 7% nos níveis adicionais. Quanto mais você cresce, mais você ganha.",
     "diagram.you": "Você",
     "levels.sectionTitle": "Detalhe dos níveis e requisitos",
