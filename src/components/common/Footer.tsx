@@ -103,7 +103,7 @@ const Footer = () => {
             </Link>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-[#FFC827] transition">
+                <a href="/bonus" className="hover:text-[#FFC827] transition">
                   {t("footer.games.bonds")}
                 </a>
               </li>
