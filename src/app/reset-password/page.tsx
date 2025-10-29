@@ -1,18 +1,22 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FiLock } from "react-icons/fi";
 import FancyInput from "@/components/FancyInput";
 import FancyButton from "@/components/FancyButton";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { userService } from "@/services/userService";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "next/navigation";
 
-export default function ResetPassword() {
+// Opcional: evita SSG/estático si esta página depende de query params dinámicos
+export const dynamic = "force-dynamic";
+// o alternativamente: export const revalidate = 0;
+
+function ResetPasswordContent() {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
   const rid = searchParams.get("rid") || "";
@@ -131,7 +135,7 @@ export default function ResetPassword() {
       <div className="flex flex-col xl:flex-row items-center justify-center w-full xl:space-x-16 space-y-[60px] xl:space-y-0 z-10 relative">
         <div className="relative backdrop-blur-lg px-4 sm:px-8 xl:px-[60px] py-8 sm:py-12 xl:py-[100px] border border-[#a97bbf33] rounded-[25px] space-y-8 sm:space-y-10 xl:space-y-[50px] flex flex-col items-center text-center w-full md:w-[400px] xl:w-fit">
           <div className="w-full flex justify-center items-center">
-            <Image src={"/logo.svg"} width={200} height={100} alt="" />
+            <Image src={"/logo.svg"} width={200} height={100} alt="Logo" />
           </div>
 
           <div className="flex flex-col space-y-[24px] xl:w-[400px] w-full">
@@ -201,5 +205,13 @@ export default function ResetPassword() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={null}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

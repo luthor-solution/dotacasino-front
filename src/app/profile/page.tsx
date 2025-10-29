@@ -1,8 +1,11 @@
+// app/profile/page.tsx
 "use client";
+
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Banner from "@/components/Banner";
 import UserActions from "@/components/UserActions";
 import { RiEqualizerLine } from "react-icons/ri";
-import { useEffect, useMemo, useState } from "react";
 import Balance from "@/components/Balance";
 import TopupHistorySection from "@/components/TopupHistorySection";
 import { UserMenuValue } from "@/components/UserMenu";
@@ -12,7 +15,6 @@ import Referrals from "@/components/Referrals";
 import { useTranslation } from "react-i18next";
 import TransactionsHistorySection from "@/components/TransactionsHistorySection";
 import WithdrawHistorySection from "@/components/WithdrawHistorySection";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const OPTION_PARAM = "option";
 
@@ -21,7 +23,7 @@ const VALID_OPTIONS: UserMenuValue[] = [
   "deposits",
   "settings",
   "referrals",
-  "trasactions", // ojo: así está escrito en tu código
+  "trasactions",
   "withdraw",
 ];
 
@@ -29,7 +31,7 @@ function isValidOption(val: string | null): val is UserMenuValue {
   return !!val && (VALID_OPTIONS as string[]).includes(val);
 }
 
-export default function Profile() {
+function ProfileContent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [option, setOption] = useState<UserMenuValue>("balance");
   const { t } = useTranslation();
@@ -38,28 +40,20 @@ export default function Profile() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Lee el option desde el query param cuando exista/cambie
   useEffect(() => {
     const urlOption = searchParams.get(OPTION_PARAM);
     if (isValidOption(urlOption) && urlOption !== option) {
       setOption(urlOption);
     }
-    // No limpiamos el query aquí; solo reflejamos el query en el estado.
-  }, [searchParams]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [searchParams, option]);
 
-  // Handler único para seleccionar opción:
-  // - Actualiza estado
-  // - Si hay query param ?option=..., lo elimina dejando solo el pathname
   const handleSelect = (val: UserMenuValue) => {
     setOption(val);
-
-    // Si la URL trae ?option=..., lo limpiamos reemplazando la URL
     if (searchParams.has(OPTION_PARAM)) {
       router.replace(pathname, { scroll: false });
     }
   };
 
-  // Memoiza el contenido activo para evitar renders innecesarios
   const ActiveSection = useMemo(() => {
     switch (option) {
       case "balance":
@@ -85,10 +79,8 @@ export default function Profile() {
         title={t("profileBanner.title")}
         subtitle={t("profileBanner.subtitle")}
       />
-
       <section className="py-16 w-full flex flex-col md:flex-row items-start justify-center gap-x-[24px] gap-y-[24px] px-[32px]">
         <UserActions hide active={option} onSelect={handleSelect} />
-
         <div
           className={`w-full px-[24px] justify-between flex items-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)] md:hidden`}
           onClick={() => setSidebarOpen(true)}
@@ -96,7 +88,6 @@ export default function Profile() {
           <span>{t("showMenu")}</span>
           <RiEqualizerLine className="text-[24px]" />
         </div>
-
         <Sidebar
           open={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
@@ -106,9 +97,16 @@ export default function Profile() {
             setSidebarOpen(false);
           }}
         />
-
         {ActiveSection}
       </section>
     </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <ProfileContent />
+    </Suspense>
   );
 }
