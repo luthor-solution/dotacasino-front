@@ -321,6 +321,26 @@
     }
   },
   "auth": {
+    "resetPassword": {
+      "title": "Redefinir senha",
+      "subtitle": "Crie uma nova senha para sua conta.",
+      "passwordPlaceholder": "Nova senha",
+      "confirmPasswordPlaceholder": "Confirmar nova senha",
+      "submit": "Redefinir senha",
+      "submitting": "Processando...",
+      "verifying": "Verificando token...",
+      "successMsg": "Sua senha foi redefinida com sucesso.",
+      "successToast": "Senha atualizada!",
+      "errorGeneric": "Não foi possível redefinir a senha. Tente novamente.",
+      "requiredPassword": "A senha é obrigatória.",
+      "requiredConfirm": "A confirmação de senha é obrigatória.",
+      "passwordsMismatch": "As senhas não coincidem.",
+      "passwordTooShort": "A senha deve ter pelo menos 8 caracteres.",
+      "tokenMissing": "Token inválido ou ausente.",
+      "tokenInvalid": "O token de recuperação é inválido ou expirou.",
+      "backToSignIn": "Voltar para entrar",
+      "goToForgot": "Esqueceu sua senha?"
+    },
     "signIn": {
       "emailPlaceholder": "E-mail",
       "passwordPlaceholder": "Senha",

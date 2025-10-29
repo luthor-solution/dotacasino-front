@@ -321,6 +321,26 @@
     }
   },
   "auth": {
+    "resetPassword": {
+      "title": "Restablecer contraseña",
+      "subtitle": "Crea una nueva contraseña para tu cuenta.",
+      "passwordPlaceholder": "Nueva contraseña",
+      "confirmPasswordPlaceholder": "Confirmar nueva contraseña",
+      "submit": "Restablecer contraseña",
+      "submitting": "Procesando...",
+      "verifying": "Verificando token...",
+      "successMsg": "Tu contraseña ha sido restablecida correctamente.",
+      "successToast": "¡Contraseña actualizada!",
+      "errorGeneric": "No se pudo restablecer la contraseña. Inténtalo de nuevo.",
+      "requiredPassword": "La contraseña es obligatoria.",
+      "requiredConfirm": "La confirmación de contraseña es obligatoria.",
+      "passwordsMismatch": "Las contraseñas no coinciden.",
+      "passwordTooShort": "La contraseña debe tener al menos 8 caracteres.",
+      "tokenMissing": "Token inválido o faltante.",
+      "tokenInvalid": "El token de recuperación no es válido o ha expirado.",
+      "backToSignIn": "Volver a iniciar sesión",
+      "goToForgot": "¿Olvidaste tu contraseña?"
+    },
     "signIn": {
       "emailPlaceholder": "Correo electrónico",
       "passwordPlaceholder": "Contraseña",

@@ -321,6 +321,26 @@
     }
   },
   "auth": {
+    "resetPassword": {
+      "title": "Reset password",
+      "subtitle": "Create a new password for your account.",
+      "passwordPlaceholder": "New password",
+      "confirmPasswordPlaceholder": "Confirm new password",
+      "submit": "Reset password",
+      "submitting": "Processing...",
+      "verifying": "Verifying token...",
+      "successMsg": "Your password has been reset successfully.",
+      "successToast": "Password updated!",
+      "errorGeneric": "Could not reset the password. Please try again.",
+      "requiredPassword": "Password is required.",
+      "requiredConfirm": "Password confirmation is required.",
+      "passwordsMismatch": "Passwords do not match.",
+      "passwordTooShort": "Password must be at least 8 characters long.",
+      "tokenMissing": "Invalid or missing token.",
+      "tokenInvalid": "The recovery token is invalid or has expired.",
+      "backToSignIn": "Back to sign in",
+      "goToForgot": "Forgot your password?"
+    },
     "signIn": {
       "emailPlaceholder": "Email",
       "passwordPlaceholder": "Password",

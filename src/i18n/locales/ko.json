@@ -321,6 +321,26 @@
     }
   },
   "auth": {
+    "resetPassword": {
+      "title": "비밀번호 재설정",
+      "subtitle": "계정의 새 비밀번호를 만들어 주세요.",
+      "passwordPlaceholder": "새 비밀번호",
+      "confirmPasswordPlaceholder": "새 비밀번호 확인",
+      "submit": "비밀번호 재설정",
+      "submitting": "처리 중...",
+      "verifying": "토큰 확인 중...",
+      "successMsg": "비밀번호가 성공적으로 재설정되었습니다.",
+      "successToast": "비밀번호가 업데이트되었습니다!",
+      "errorGeneric": "비밀번호를 재설정할 수 없습니다. 다시 시도해 주세요.",
+      "requiredPassword": "비밀번호는 필수입니다.",
+      "requiredConfirm": "비밀번호 확인은 필수입니다.",
+      "passwordsMismatch": "비밀번호가 일치하지 않습니다.",
+      "passwordTooShort": "비밀번호는 최소 8자 이상이어야 합니다.",
+      "tokenMissing": "토큰이 없거나 잘못되었습니다.",
+      "tokenInvalid": "복구 토큰이 유효하지 않거나 만료되었습니다.",
+      "backToSignIn": "로그인으로 돌아가기",
+      "goToForgot": "비밀번호를 잊으셨나요?"
+    },
     "signIn": {
       "emailPlaceholder": "이메일",
       "passwordPlaceholder": "비밀번호",

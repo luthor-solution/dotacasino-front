@@ -451,6 +451,65 @@ export const userService = {
       throw error;
     }
   },
+  async verifyRecoveryToken(params: {
+    rid: string;
+    rt: string;
+  }): Promise<RecoveryInitResponse> {
+    const { rid, rt } = params;
+
+    try {
+      const response = await axios.post<RecoveryInitResponse>(
+        `${API_BASE_URL}/auth/recovery/verify`,
+        { rid, rt }, // body en POST
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return response.data; // { ok: true }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const msg =
+          error.response?.data?.message ||
+          error.message ||
+          "No se pudo verificar el token de recuperación.";
+        throw new Error(msg);
+      }
+      throw error;
+    }
+  },
+
+  async resetPassword(params: {
+    rid: string;
+    rt: string;
+    newPassword: string;
+  }): Promise<RecoveryInitResponse> {
+    const { rid, rt, newPassword } = params;
+
+    try {
+      const response = await axios.post<RecoveryInitResponse>(
+        `${API_BASE_URL}/auth/recovery/complete`,
+        { rid, rt, newPassword }, // body según el swagger
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data; // { ok: true }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const msg =
+          error.response?.data?.message ||
+          error.message ||
+          "No se pudo restablecer la contraseña.";
+        throw new Error(msg);
+      }
+      throw error;
+    }
+  },
 
   async getUserByCode(code: string, retry = true): Promise<UserByCodeResponse> {
     if (!code) throw new Error("Code is required");
