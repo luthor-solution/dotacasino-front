@@ -498,13 +498,6 @@
     }
   },
   "somethingWentWrong": "Ocurrió un error",
-  "previous": "Anterior",
-  "next": "Siguiente",
-  "page": "Página",
-  "of": "de",
-  "showMore": "Ver más",
-  "showLess": "Ver menos",
-  "loading": "Cargando...",
   "cancelWithdrawTitle": "Cancelar retiro",
   "cancelWithdrawDesc": "¿Estás seguro que deseas cancelar este retiro? Esta acción no se puede deshacer.",
   "cancelWithdraw": "Cancelar retiro",

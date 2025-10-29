@@ -498,13 +498,6 @@
     }
   },
   "somethingWentWrong": "Something went wrong",
-  "previous": "Previous",
-  "next": "Next",
-  "page": "Page",
-  "of": "of",
-  "showMore": "Show more",
-  "showLess": "Show less",
-  "loading": "Loading...",
   "cancelWithdrawTitle": "Cancel withdrawal",
   "cancelWithdrawDesc": "Are you sure you want to cancel this withdrawal? This action cannot be undone.",
   "cancelWithdraw": "Cancel withdrawal",
