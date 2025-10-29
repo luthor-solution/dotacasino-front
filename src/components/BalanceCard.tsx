@@ -39,7 +39,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
             </>
           ) : (
             <>
-              <span className="text-[32px] font-bold leading-[100%]">
+              <span className="text-[32px] font-bold leading-[100%] text-white">
                 {amount} <span className="text-[12px]">{currency}</span>
               </span>
               <span className="text-[12px] leading-[100%]">{label}</span>
