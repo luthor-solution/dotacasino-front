@@ -432,7 +432,7 @@ export const userService = {
     try {
       const response = await axios.post<RecoveryInitResponse>(
         `${API_BASE_URL}/auth/recovery/init`,
-        { email },
+        { email, host: window.location.host },
         {
           headers: {
             "Content-Type": "application/json",
