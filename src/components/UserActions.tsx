@@ -11,6 +11,7 @@ interface Props {
 
 export default function UserActions({ hide, full, active, onSelect }: Props) {
   const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
 
   return (
     <div
@@ -21,6 +22,13 @@ export default function UserActions({ hide, full, active, onSelect }: Props) {
       <UserOptions
         avatar="/avatar.png"
         username={user ? `${user.displayName ?? ""}`.trim() : "Usuario"}
+        onLogout={async () => {
+          try {
+            await logout();
+          } catch (err) {
+            console.error("Error en logout:", err);
+          }
+        }}
       />
       <UserMenu active={active} onSelect={onSelect} />
     </div>

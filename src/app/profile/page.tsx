@@ -2,7 +2,7 @@
 import Banner from "@/components/Banner";
 import UserActions from "@/components/UserActions";
 import { RiEqualizerLine } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Balance from "@/components/Balance";
 import TopupHistorySection from "@/components/TopupHistorySection";
 import { UserMenuValue } from "@/components/UserMenu";
@@ -12,11 +12,72 @@ import Referrals from "@/components/Referrals";
 import { useTranslation } from "react-i18next";
 import TransactionsHistorySection from "@/components/TransactionsHistorySection";
 import WithdrawHistorySection from "@/components/WithdrawHistorySection";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+const OPTION_PARAM = "option";
+
+const VALID_OPTIONS: UserMenuValue[] = [
+  "balance",
+  "deposits",
+  "settings",
+  "referrals",
+  "trasactions", // ojo: así está escrito en tu código
+  "withdraw",
+];
+
+function isValidOption(val: string | null): val is UserMenuValue {
+  return !!val && (VALID_OPTIONS as string[]).includes(val);
+}
 
 export default function Profile() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [option, setOption] = useState<UserMenuValue>("balance");
   const { t } = useTranslation();
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Lee el option desde el query param cuando exista/cambie
+  useEffect(() => {
+    const urlOption = searchParams.get(OPTION_PARAM);
+    if (isValidOption(urlOption) && urlOption !== option) {
+      setOption(urlOption);
+    }
+    // No limpiamos el query aquí; solo reflejamos el query en el estado.
+  }, [searchParams]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Handler único para seleccionar opción:
+  // - Actualiza estado
+  // - Si hay query param ?option=..., lo elimina dejando solo el pathname
+  const handleSelect = (val: UserMenuValue) => {
+    setOption(val);
+
+    // Si la URL trae ?option=..., lo limpiamos reemplazando la URL
+    if (searchParams.has(OPTION_PARAM)) {
+      router.replace(pathname, { scroll: false });
+    }
+  };
+
+  // Memoiza el contenido activo para evitar renders innecesarios
+  const ActiveSection = useMemo(() => {
+    switch (option) {
+      case "balance":
+        return <Balance />;
+      case "deposits":
+        return <TopupHistorySection />;
+      case "settings":
+        return <ProfileSettings />;
+      case "referrals":
+        return <Referrals />;
+      case "trasactions":
+        return <TransactionsHistorySection />;
+      case "withdraw":
+        return <WithdrawHistorySection />;
+      default:
+        return <Balance />;
+    }
+  }, [option]);
 
   return (
     <main className="bg-[#350b2d] min-h-screen flex flex-col">
@@ -26,7 +87,8 @@ export default function Profile() {
       />
 
       <section className="py-16 w-full flex flex-col md:flex-row items-start justify-center gap-x-[24px] gap-y-[24px] px-[32px]">
-        <UserActions hide active={option} onSelect={setOption} />
+        <UserActions hide active={option} onSelect={handleSelect} />
+
         <div
           className={`w-full px-[24px] justify-between flex items-center hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 text-black font-bold py-3 cursor-pointer bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)] md:hidden`}
           onClick={() => setSidebarOpen(true)}
@@ -34,22 +96,18 @@ export default function Profile() {
           <span>{t("showMenu")}</span>
           <RiEqualizerLine className="text-[24px]" />
         </div>
+
         <Sidebar
           open={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           active={option}
           onSelect={(val) => {
-            setOption(val);
+            handleSelect(val);
             setSidebarOpen(false);
           }}
         />
 
-        {option === "balance" && <Balance />}
-        {option === "deposits" && <TopupHistorySection />}
-        {option === "settings" && <ProfileSettings />}
-        {option === "referrals" && <Referrals />}
-        {option === "trasactions" && <TransactionsHistorySection />}
-        {option === "withdraw" && <WithdrawHistorySection />}
+        {ActiveSection}
       </section>
     </main>
   );
