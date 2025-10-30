@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore, User } from "@/store/useAuthStore";
 import { userService } from "@/services/userService";
 import { useKYCStatusStore } from "@/store/useKYCStatusStore";
 import { useRefCodesStore } from "@/store/useRefCodesStore";
@@ -35,6 +35,7 @@ export default function VerifyToken({
     async function fetchProfile() {
       try {
         const profile = await userService.getProfile();
+        useAuthStore.getState().setUser(profile as Partial<User>);
         if (!cancelled) {
           setKycStatus(profile.kycStatus ?? null);
           // Guarda refCodeL y refCodeR del perfil

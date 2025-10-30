@@ -45,6 +45,7 @@ const ProfileSettings: React.FC = () => {
     try {
       const updatedProfile = await userService.updateProfile(form);
       useAuthStore.getState().setUser(updatedProfile as Partial<User>);
+      console.log(updatedProfile);
       // Opcional: sincroniza el form local inmediatamente
       setForm((prev) => ({ ...prev, ...(updatedProfile as Partial<User>) }));
       toast.success(t("profileUpdated"));
