@@ -49,7 +49,7 @@ const GamePage: FC<Props> = async ({ params }) => {
         <BackgroundGlow />
 
         <Iframe
-          url={gameInfo.content.game.url}
+          url={gameInfo.content.game.url.replace("http:", "https:")}
           devices={
             gameInfo.game.slug.startsWith("sport_betting")
               ? ["DEKSTOP", "MOBILE"]
