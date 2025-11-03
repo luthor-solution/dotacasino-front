@@ -30,7 +30,8 @@ const Header: React.FC = () => {
   const kycStatus = useKYCStatusStore((state) => state.kycStatus);
   const { t } = useTranslation();
   const isAuthPage = pathname === "/sign-in" || pathname === "/sign-up";
-
+  const inGame =
+    pathname.startsWith("/game/") && pathname.split("/").length >= 3;
   // Wallet store (Zustand)
   const {
     balance,
@@ -253,8 +254,8 @@ const Header: React.FC = () => {
                 ? "bg-neutral-950 bg-opacity-95 shadow-lg"
                 : "bg-[#2e0327] bg-opacity-95 shadow-lg"
             }`
-          : isLanding
-          ? "bg-[#2e0327] bg-opacity-95 shadow-lg"
+          : isLanding || inGame
+          ? "bg-[#2e0327] bg-opacity-95"
           : "bg-transparent"
       }`}
     >
