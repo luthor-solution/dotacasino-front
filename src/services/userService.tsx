@@ -48,6 +48,14 @@ export interface ProfileResponse {
   refCodeR?: string;
 }
 
+export interface ProfileStats {
+  referral_bonus: {
+    amount: number | null;
+  };
+  referral_count: number;
+  balance: string;
+}
+
 export interface UpdateProfilePayload {
   firstName: string;
   lastName: string;
@@ -223,6 +231,37 @@ export const userService = {
           await userService.refreshToken();
           // Vuelve a intentar obtener el perfil (solo una vez)
           return await userService.getProfile(false);
+        } catch {
+          // El logout ya se maneja en refreshToken si falla
+        }
+      }
+      throw error;
+    }
+  },
+
+  async getProfileStats(retry = true): Promise<ProfileStats> {
+    const { token } = useAuthStore.getState();
+    if (!token) throw new Error("No token available");
+
+    try {
+      const response = await axios.get(`${API_BASE_URL}/profile/stats`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data as ProfileStats;
+    } catch (error) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        // Intenta refrescar el token
+        try {
+          await userService.refreshToken();
+          // Vuelve a intentar obtener el perfil (solo una vez)
+          return await userService.getProfileStats(false);
         } catch {
           // El logout ya se maneja en refreshToken si falla
         }

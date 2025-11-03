@@ -590,5 +590,10 @@
     "cta.subtitle": "지금 가입하고 추천 링크를 생성한 뒤 네트워크를 구축하세요. 제한 없고 번거롭지 않습니다.",
     "cta.primary": "무료 계정 만들기",
     "cta.secondary": "지원팀과 상담"
+  },
+  "balanceCardProfile": {
+    "balance": "총 잔액",
+    "referrals": "추천인",
+    "referralsBonus": "추천 보너스"
   }
 }

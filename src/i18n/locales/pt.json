@@ -590,5 +590,10 @@
     "cta.subtitle": "Entre agora, gere seu link de indicação e comece a construir sua rede. Sem limites, sem complicações.",
     "cta.primary": "Criar minha conta gratuita",
     "cta.secondary": "Falar com o suporte"
+  },
+  "balanceCardProfile": {
+    "balance": "Saldo total",
+    "referrals": "Indicações",
+    "referralsBonus": "Bônus de indicação"
   }
 }

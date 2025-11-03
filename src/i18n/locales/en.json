@@ -590,5 +590,10 @@
     "cta.subtitle": "Join now, generate your referral link, and start building your network. No limits, no hassle.",
     "cta.primary": "Create my free account",
     "cta.secondary": "Talk to support"
+  },
+  "balanceCardProfile": {
+    "balance": "Total balance",
+    "referrals": "Referrals",
+    "referralsBonus": "Referral bonus"
   }
 }

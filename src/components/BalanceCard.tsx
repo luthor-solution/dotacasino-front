@@ -1,6 +1,6 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
-
+/* import { useTranslation } from "react-i18next";
+ */
 interface BalanceCardProps {
   amount: string;
   label: string;
@@ -20,8 +20,8 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
   currency,
   loading,
 }) => {
-  const { t } = useTranslation();
-
+  /*   const { t } = useTranslation();
+   */
   return (
     <div
       className="flex gap-x-[54px] p-[32px] border-2 border-[#FFC827] rounded-xl items-start w-full"
@@ -42,17 +42,19 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
               <span className="text-[32px] font-bold leading-[100%] text-white">
                 {amount} <span className="text-[12px]">{currency}</span>
               </span>
-              <span className="text-[12px] leading-[100%]">{label}</span>
+              <span className="text-[12px] leading-[100%] uppercase">
+                {label}
+              </span>
             </>
           )}
         </div>
-        {loading ? (
+        {/*  {loading ? (
           <Skeleton className="h-[28px] w-[80px] rounded-[4px] mt-2" />
         ) : (
           <span className="bg-[linear-gradient(0deg,_#ff9c19_40%,_#ffdd2d_110%)] px-[12px] py-[4px] rounded-[4px] w-fit text-black text-[12px] tracking-wide font-[500]">
             {t("showAll")}
           </span>
-        )}
+        )} */}
       </div>
 
       <div

@@ -590,5 +590,10 @@
     "cta.subtitle": "Únete ahora, genera tu enlace de referido y comienza a construir tu red. Sin límites, sin complicaciones.",
     "cta.primary": "Crear mi cuenta gratis",
     "cta.secondary": "Hablar con soporte"
+  },
+  "balanceCardProfile": {
+    "balance": "Balance total",
+    "referrals": "Referidos",
+    "referralsBonus": "Bonus referidos"
   }
 }
