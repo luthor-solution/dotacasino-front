@@ -4,10 +4,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { depositService } from "@/services/depositsService";
 import { walletService } from "@/services/walletService";
+import stdMexService from "@/services/stdMexService";
+import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
 // --- Tipos auxiliares ---
 type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
+type Tab = "CRIPTO" | "SPEI";
 
 type CreateDepositRequest = {
   amount: number;
@@ -48,18 +51,27 @@ function toMMSS(totalSeconds: number) {
 export default function RecargaFichasPage() {
   const { t } = useTranslation();
 
+  // Tabs
+  const [activeTab, setActiveTab] = useState<Tab>("CRIPTO");
+
   const [balance, setBalance] = useState<number>(0);
+
+  // CRIPTO
   const [amount, setAmount] = useState<string>("");
   const [selectedNetwork, setSelectedNetwork] = useState<Network>("BSC");
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>("");
   const [uiMessage, setUiMessage] = useState<string>("");
-
   const [deposit, setDeposit] = useState<CreateDepositResponse | null>(null);
-
   const [seconds, setSeconds] = useState<number>(0);
   const timerRef = useRef<number | null>(null);
+
+  // SPEI (mantener variables aunque no se muestren los inputs de banco y concepto)
+  const [speiClabe, setSpeiClabe] = useState<string>("");
+  const [speiNombre, setSpeiNombre] = useState<string>("");
+  const [speiBanco, setSpeiBanco] = useState<string>("STP");
+  const [speiConcepto, setSpeiConcepto] = useState<string>("PAGO");
+  const [speiClabeLocked, setSpeiClabeLocked] = useState<boolean>(false); // deshabilita input si viene de API
 
   useEffect(() => {
     let mounted = true;
@@ -80,8 +92,9 @@ export default function RecargaFichasPage() {
     };
   }, []);
 
-  // Polling cada 5s mientras haya un QR activo
+  // Polling cada 5s mientras haya un QR activo y estemos en la pestaña CRIPTO
   useEffect(() => {
+    if (activeTab !== "CRIPTO") return;
     if (!deposit?.address) return;
 
     let intervalId: number | null = null;
@@ -96,7 +109,6 @@ export default function RecargaFichasPage() {
       }
     };
 
-    // 5) Dentro del useEffect de polling, sustituye tu handleOK por este (refresca balance tras OK)
     const handleOK = async () => {
       setUiMessage("Depósito acreditado correctamente.");
 
@@ -132,7 +144,7 @@ export default function RecargaFichasPage() {
         // La API devuelve "pending" o "completed" o "NO"
         const value = String(res).toUpperCase();
 
-        if (value === "completed") {
+        if (value === "COMPLETED") {
           handleOK();
           return;
         }
@@ -141,19 +153,17 @@ export default function RecargaFichasPage() {
           return;
         }
 
-        // Si por alguna razón llega un objeto con un campo, intentamos leerlo
+        // Fallback si la API devuelve otra estructura
         const fallback = String(res?.status ?? res?.result ?? "").toUpperCase();
         if (fallback === "OK") {
           handleOK();
           return;
         }
-        // para cualquier otro valor, continuamos pollinando
       } catch (e: any) {
         console.warn(
           "[deposit polling] error:",
           e?.response?.data || e?.message || e
         );
-        // continuamos pollinando a menos que quieras detener en error
       }
     };
 
@@ -164,98 +174,9 @@ export default function RecargaFichasPage() {
     return () => {
       stop();
     };
-  }, [deposit?.address]);
+  }, [deposit?.address, activeTab]);
 
-  /*  useEffect(() => {
-    if (!deposit?.address) return;
-
-    let intervalId: number | null = null;
-    let stopped = false;
-    const attemptsRef = { current: 0 }; // contador de intentos
-
-    const stop = () => {
-      if (stopped) return;
-      stopped = true;
-      if (intervalId) {
-        window.clearInterval(intervalId);
-        intervalId = null;
-      }
-    };
-
-   const handleOK = async () => {
-      setUiMessage("Depósito acreditado correctamente.");
-
-      // Refrescar balance cuando se acredita
-      try {
-        const wallet = await walletService.getWallet();
-        setBalance(wallet.balance);
-      } catch (e: any) {
-        console.warn(
-          "[wallet] no se pudo refrescar el balance tras OK:",
-          e?.message || e
-        );
-      }
-
-      // Detener polling y resetear UI
-      stop();
-      setTimeout(() => {
-        setUiMessage("");
-        setDeposit(null);
-        setSeconds(0);
-        setAmount("");
-        setSelectedNetwork("BSC");
-        setError("");
-      }, 3000);
-    };
-    const tick = async () => {
-      try {
-        attemptsRef.current += 1;
-
-        // Forzado: a partir del 3er intento, simular "OK"
-        if (attemptsRef.current >= 3) {
-          const fake = "OK";
-          console.log(
-            "[deposit polling - FAKE]",
-            fake,
-            "attempt:",
-            attemptsRef.current
-          );
-          handleOK();
-          return;
-        }
-
-        // Antes de llegar al 3er intento, llama al backend normalmente
-        const res: any = await depositService.polling({
-          address: deposit.address,
-        });
-        console.log("[deposit polling]", res, "attempt:", attemptsRef.current);
-
-        const value = String(res).toUpperCase();
-
-        if (value === "OK") {
-          handleOK();
-          return;
-        }
-        // "NO" => continuar
-      } catch (e: any) {
-        console.warn(
-          "[deposit polling] error:",
-          e?.response?.data || e?.message || e
-        );
-        // continuamos pollinando
-      }
-    };
-
-    // Primer tick inmediato y luego cada 5s
-    tick();
-    intervalId = window.setInterval(tick, 5000);
-
-    return () => {
-      stop();
-    };
-  }, [deposit?.address]); */
-
-  // 1) Al montar, intenta recuperar el QR vigente desde el backend
+  // Al montar, intenta recuperar el QR vigente desde el backend (para CRIPTO)
   useEffect(() => {
     const loadCurrentQR = async () => {
       try {
@@ -291,7 +212,7 @@ export default function RecargaFichasPage() {
     loadCurrentQR();
   }, []);
 
-  // Manejo del temporizador
+  // Manejo del temporizador (solo CRIPTO/QR)
   useEffect(() => {
     if (!deposit?.expiresAt) return;
     setSeconds(secondsLeft(deposit.expiresAt));
@@ -313,11 +234,12 @@ export default function RecargaFichasPage() {
   }, [deposit?.expiresAt]);
 
   const canSubmit = useMemo(() => {
+    if (activeTab !== "CRIPTO") return false;
     const val = parseFloat(amount);
     return !isSubmitting && !deposit && !Number.isNaN(val) && val > 0;
-  }, [amount, isSubmitting, deposit]);
+  }, [amount, isSubmitting, deposit, activeTab]);
 
-  // Crear depósito
+  // Crear depósito CRIPTO
   async function handleCreateDeposit() {
     try {
       setError("");
@@ -390,6 +312,46 @@ export default function RecargaFichasPage() {
     }
   }
 
+  // Autorellenar CLABE al entrar en la pestaña SPEI
+  useEffect(() => {
+    if (activeTab !== "SPEI") return;
+
+    let mounted = true;
+    (async () => {
+      try {
+        const data: any = await stdMexService.getClabe();
+        if (!mounted) return;
+
+        const clabe = String(data?.clabe ?? "").replace(/\D/g, "");
+        if (clabe.length === 18) {
+          setSpeiClabe(clabe);
+          setSpeiClabeLocked(true); // bloquear edición si viene desde backend
+          if (data?.bank) setSpeiBanco(String(data.bank));
+          if (data?.accountName && !speiNombre) {
+            setSpeiNombre(String(data.accountName));
+          }
+        } else {
+          setSpeiClabeLocked(false); // habilitar input
+          toast.error("No se encontró CLABE. Captura manualmente.");
+        }
+      } catch (e: any) {
+        setSpeiClabeLocked(false); // habilitar input
+        const msg =
+          e?.response?.data?.message ||
+          e?.message ||
+          "No se pudo obtener la CLABE";
+        toast.error(msg);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
+
+  // handleSpeiSubmit sigue desconectado
+
   const isOverlayActive = Boolean(uiMessage) || seconds === 0;
 
   return (
@@ -402,9 +364,34 @@ export default function RecargaFichasPage() {
           <p className="text-neutral-400 mt-1">{t("app.subtitle")}</p>
         </header>
 
+        {/* Tabs */}
+        <div className="mb-6">
+          <div className="inline-flex rounded-xl border border-neutral-800 bg-neutral-900/60 p-1">
+            <button
+              onClick={() => setActiveTab("CRIPTO")}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
+                activeTab === "CRIPTO"
+                  ? "bg-emerald-600 text-white"
+                  : "text-neutral-300 hover:bg-neutral-800"
+              }`}
+            >
+              Cripto
+            </button>
+            <button
+              onClick={() => setActiveTab("SPEI")}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
+                activeTab === "SPEI"
+                  ? "bg-emerald-600 text-white"
+                  : "text-neutral-300 hover:bg-neutral-800"
+              }`}
+            >
+              SPEI
+            </button>
+          </div>
+        </div>
+
         {uiMessage && (
           <div className="mb-6 rounded-xl border border-emerald-800 bg-emerald-950/30 px-3 py-2 text-emerald-300 text-sm">
-            {/* si deseas internacionalizar mensajes dinámicos: t('alerts.info', { message: uiMessage }) */}
             {uiMessage}
           </div>
         )}
@@ -420,16 +407,11 @@ export default function RecargaFichasPage() {
                 {formatCurrency(balance)}
               </p>
             </div>
-            {/*  <div className="text-right">
-              <span className="inline-block px-3 py-1 rounded-full text-xs bg-neutral-800 border border-neutral-700">
-                {t("badge.userId", { id: "user-123" })}
-              </span>
-            </div> */}
           </div>
         </section>
 
-        {/* Formulario de creación de depósito */}
-        {!deposit && (
+        {/* ——————————— TAB: CRIPTO ——————————— */}
+        {activeTab === "CRIPTO" && !deposit && (
           <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5">
             <h2 className="text-lg font-medium mb-4">{t("form.title")}</h2>
 
@@ -496,8 +478,8 @@ export default function RecargaFichasPage() {
           </section>
         )}
 
-        {/* Vista de pago con QR */}
-        {deposit && (
+        {/* Vista de pago con QR (solo CRIPTO) */}
+        {activeTab === "CRIPTO" && deposit && (
           <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5">
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -561,7 +543,6 @@ export default function RecargaFichasPage() {
                         </svg>
                       </div>
                       <p className="text-emerald-300 text-sm md:text-base font-medium">
-                        {/* Podrías usar t('overlays.success.message', { message: uiMessage }) si quieres plantilla */}
                         {uiMessage}
                       </p>
                       <p className="text-neutral-400 text-xs mt-1">
@@ -666,7 +647,6 @@ export default function RecargaFichasPage() {
                 <div className="mt-4 rounded-xl bg-neutral-900 border border-neutral-800 p-3 text-sm text-neutral-300">
                   <ul className="list-disc list-inside space-y-1">
                     <li>
-                      {/* si renderizas HTML con i18next, usa Trans o dangerouslySetInnerHTML según tu política */}
                       <span
                         dangerouslySetInnerHTML={{
                           __html: t("payment.notes.onlyUsdt"),
@@ -688,6 +668,82 @@ export default function RecargaFichasPage() {
                 </div>
               </div>
             </div>
+          </section>
+        )}
+
+        {/* ——————————— TAB: SPEI ——————————— */}
+        {activeTab === "SPEI" && (
+          <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5">
+            <h2 className="text-lg font-medium mb-4">
+              Datos para transferencia SPEI
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* CLABE */}
+              <div>
+                <label className="text-sm text-neutral-300">CLABE</label>
+                <input
+                  value={speiClabe}
+                  onChange={(e) =>
+                    setSpeiClabe(e.target.value.replace(/\D/g, "").slice(0, 18))
+                  }
+                  placeholder="CLABE (18 dígitos)"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={18}
+                  disabled={speiClabeLocked}
+                  className={[
+                    "mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500",
+                    speiClabeLocked ? "opacity-70 cursor-not-allowed" : "",
+                  ].join(" ")}
+                />
+                {speiClabe && speiClabe.length !== 18 && (
+                  <p className="mt-2 text-xs text-red-400">
+                    La CLABE debe tener 18 dígitos.
+                  </p>
+                )}
+              </div>
+
+              {/* NOMBRE */}
+              <div>
+                <label className="text-sm text-neutral-300">Nombre</label>
+                <input
+                  value={speiNombre}
+                  onChange={(e) => setSpeiNombre(e.target.value)}
+                  placeholder="Tu nombre completo"
+                  className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+
+              {/* Banco y Concepto: variables mantenidas pero SIN inputs */}
+            </div>
+
+            <div className="mt-5 flex items-center gap-3">
+              {/* Guardar/Continuar desconectado (no hace nada) */}
+              <button
+                // onClick={() => {}} // intencionalmente desconectado
+                className="rounded-xl px-4 py-3 bg-emerald-600 hover:bg-emerald-500 font-medium"
+              >
+                Guardar/Continuar
+              </button>
+              <button
+                onClick={() => {
+                  setSpeiNombre("");
+                  setUiMessage("");
+                  // Si quieres permitir edición manual tras limpiar:
+                  setSpeiClabeLocked(false);
+                  // Opcional: limpiar CLABE
+                  // setSpeiClabe("");
+                }}
+                className="rounded-xl px-4 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700"
+              >
+                Limpiar
+              </button>
+            </div>
+
+            <p className="mt-4 text-sm text-neutral-400">
+              Asegúrate de capturar el concepto exactamente como “PAGO”.
+            </p>
           </section>
         )}
       </div>

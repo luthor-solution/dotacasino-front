@@ -49,9 +49,9 @@ export default function RetiroFichasPage() {
   const [withdrawCreated, setWithdrawCreated] =
     useState<CreateWithdrawResult | null>(null);
 
-  // SPEI
-  const [speiClabe, setSpeiClabe] = useState<string>("");
-  const [speiNombre, setSpeiNombre] = useState<string>("");
+  // SPEI (DESHABILITADO)
+  // const [speiClabe, setSpeiClabe] = useState<string>("");
+  // const [speiNombre, setSpeiNombre] = useState<string>("");
 
   // Carga inicial de wallet (balance y posible CLABE dinámica)
   useEffect(() => {
@@ -152,12 +152,12 @@ export default function RetiroFichasPage() {
     }
   }
 
-  // Simulación de submit SPEI (opcional: solo muestra feedback)
-  function handleSpeiSubmit() {
-    setUiMessage(
-      "Usa estos datos para realizar tu transferencia SPEI. Recuerda poner el concepto exactamente como 'PAGO'."
-    );
-  }
+  // Simulación de submit SPEI (DESHABILITADO)
+  // function handleSpeiSubmit() {
+  //   setUiMessage(
+  //     "Usa estos datos para realizar tu transferencia SPEI. Recuerda poner el concepto exactamente como 'PAGO'."
+  //   );
+  // }
 
   async function handleCancel() {
     try {
@@ -196,7 +196,7 @@ export default function RetiroFichasPage() {
         </header>
 
         {/* Tabs (AQUÍ) */}
-        <div className="mb-6">
+        {/*     <div className="mb-6">
           <div className="inline-flex rounded-xl border border-neutral-800 bg-neutral-900/60 p-1">
             <button
               onClick={() => setActiveTab("CRIPTO")}
@@ -208,6 +208,8 @@ export default function RetiroFichasPage() {
             >
               Cripto
             </button>
+
+            
             <button
               onClick={() => setActiveTab("SPEI")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
@@ -218,8 +220,9 @@ export default function RetiroFichasPage() {
             >
               SPEI
             </button>
+            
           </div>
-        </div>
+        </div> */}
 
         {uiMessage && (
           <div className="mb-6 rounded-xl border border-emerald-800 bg-emerald-950/30 px-3 py-2 text-emerald-300 text-sm">
@@ -480,7 +483,8 @@ export default function RetiroFichasPage() {
           </>
         )}
 
-        {/* ——————————— TAB: SPEI ——————————— */}
+        {/* ——————————— TAB: SPEI ——————————— (DESHABILITADO) */}
+        {/*
         {activeTab === "SPEI" && (
           <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5 mt-4">
             <h2 className="text-lg font-medium mb-4">
@@ -488,7 +492,7 @@ export default function RetiroFichasPage() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* CLABE */}
+             
               <div>
                 <label className="text-sm text-neutral-300">CLABE</label>
                 <input
@@ -509,7 +513,6 @@ export default function RetiroFichasPage() {
                 )}
               </div>
 
-              {/* BANCO */}
               <div>
                 <label className="text-sm text-neutral-300">Banco</label>
                 <input
@@ -520,7 +523,6 @@ export default function RetiroFichasPage() {
                 />
               </div>
 
-              {/* NOMBRE */}
               <div>
                 <label className="text-sm text-neutral-300">Nombre</label>
                 <input
@@ -531,7 +533,6 @@ export default function RetiroFichasPage() {
                 />
               </div>
 
-              {/* CONCEPTO */}
               <div>
                 <label className="text-sm text-neutral-300">Concepto</label>
                 <input
@@ -566,8 +567,8 @@ export default function RetiroFichasPage() {
             </p>
           </section>
         )}
+        */}
       </div>
     </div>
   );
 }
-1;
