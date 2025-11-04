@@ -5,13 +5,24 @@ import { userService } from "@/services/userService";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
+// types para /stdmex/clabe
+export interface StdMexClabeResponse {
+  id_usuario: string;
+  clabe: string;
+  banco: string; // p.ej. "STP"
+  instrucciones: {
+    BENEFICIARIO: string;
+    CONCEPTO: string;
+  };
+}
+
 export const stdMexService = {
   /**
    * GET /stdmex/clabe
    * Solo obtiene datos para prellenar (respuesta tipada como any temporalmente).
    * Implementa refresh de token y reintento único en caso de 401.
    */
-  async getClabe(retry = true): Promise<any> {
+  async getClabe(retry = true): Promise<StdMexClabeResponse> {
     const { token } = useAuthStore.getState();
     if (!token) throw new Error("No token available");
     if (!API_BASE_URL) throw new Error("Missing NEXT_PUBLIC_API_BASE_URL");
@@ -24,7 +35,7 @@ export const stdMexService = {
           Accept: "application/json",
         },
       });
-      return response.data as any;
+      return response.data as StdMexClabeResponse;
     } catch (error) {
       if (
         axios.isAxiosError(error) &&
