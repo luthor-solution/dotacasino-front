@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { depositService } from "@/services/depositsService";
 import { walletService } from "@/services/walletService";
 import stdMexService from "@/services/stdMexService";
+import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
@@ -50,6 +51,7 @@ function toMMSS(totalSeconds: number) {
 // --- Componente principal ---
 export default function RecargaFichasPage() {
   const { t } = useTranslation();
+  const user = useAuthStore((state) => state.user);
 
   // Tabs
   const [activeTab, setActiveTab] = useState<Tab>("CRIPTO");
@@ -66,12 +68,16 @@ export default function RecargaFichasPage() {
   const [seconds, setSeconds] = useState<number>(0);
   const timerRef = useRef<number | null>(null);
 
-  // SPEI (mantener variables aunque no se muestren los inputs de banco y concepto)
+  // SPEI (solo lectura)
   const [speiClabe, setSpeiClabe] = useState<string>("");
-  const [speiNombre, setSpeiNombre] = useState<string>("");
   const [speiBanco, setSpeiBanco] = useState<string>("STP");
-  const [speiConcepto, setSpeiConcepto] = useState<string>("PAGO");
-  const [speiClabeLocked, setSpeiClabeLocked] = useState<boolean>(false); // deshabilita input si viene de API
+  const [speiMetodoPago] = useState<string>("PAGO"); // siempre en mayúsculas
+
+  // Nombre completo desde el usuario (con fallback)
+  const fullName =
+    [user?.firstName?.trim(), user?.lastName?.trim()]
+      .filter(Boolean)
+      .join(" ") || "[Tu nombre completo]";
 
   useEffect(() => {
     let mounted = true;
@@ -141,7 +147,6 @@ export default function RecargaFichasPage() {
           address: deposit.address,
         });
 
-        // La API devuelve "pending" o "completed" o "NO"
         const value = String(res).toUpperCase();
 
         if (value === "COMPLETED") {
@@ -149,11 +154,9 @@ export default function RecargaFichasPage() {
           return;
         }
         if (value === "NO") {
-          // seguimos pollinando
           return;
         }
 
-        // Fallback si la API devuelve otra estructura
         const fallback = String(res?.status ?? res?.result ?? "").toUpperCase();
         if (fallback === "OK") {
           handleOK();
@@ -303,16 +306,16 @@ export default function RecargaFichasPage() {
     }
   }
 
-  async function copyToClipboard(text: string) {
+  async function copyToClipboard(text: string, label?: string) {
     try {
       await navigator.clipboard.writeText(text);
-      alert("Dirección copiada al portapapeles");
+      toast.success(`${label ?? "Texto"} copiado`);
     } catch {
-      alert("No se pudo copiar. Copia manualmente.");
+      toast.error("No se pudo copiar. Copia manualmente.");
     }
   }
 
-  // Autorellenar CLABE al entrar en la pestaña SPEI
+  // Autorellenar CLABE/Banco al entrar en la pestaña SPEI (solo lectura)
   useEffect(() => {
     if (activeTab !== "SPEI") return;
 
@@ -325,17 +328,19 @@ export default function RecargaFichasPage() {
         const clabe = String(data?.clabe ?? "").replace(/\D/g, "");
         if (clabe.length === 18) {
           setSpeiClabe(clabe);
-          setSpeiClabeLocked(true); // bloquear edición si viene desde backend
-          if (data?.bank) setSpeiBanco(String(data.bank));
-          if (data?.accountName && !speiNombre) {
-            setSpeiNombre(String(data.accountName));
-          }
         } else {
-          setSpeiClabeLocked(false); // habilitar input
-          toast.error("No se encontró CLABE. Captura manualmente.");
+          setSpeiClabe("");
+          toast.error("No se encontró CLABE. Inténtalo más tarde.");
+        }
+
+        if (data?.banco) {
+          setSpeiBanco(String(data.banco));
+        } else {
+          setSpeiBanco("STP");
         }
       } catch (e: any) {
-        setSpeiClabeLocked(false); // habilitar input
+        setSpeiClabe("");
+        setSpeiBanco("STP");
         const msg =
           e?.response?.data?.message ||
           e?.message ||
@@ -347,10 +352,7 @@ export default function RecargaFichasPage() {
     return () => {
       mounted = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
-
-  // handleSpeiSubmit sigue desconectado
 
   const isOverlayActive = Boolean(uiMessage) || seconds === 0;
 
@@ -526,7 +528,6 @@ export default function RecargaFichasPage() {
                     <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-[2px]" />
                     <div className="relative z-10 flex flex-col items-center text-center px-4">
                       <div className="w-14 h-14 rounded-full bg-emerald-600/20 border border-emerald-600/50 flex items-center justify-center mb-3">
-                        {/* ícono check */}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -558,7 +559,6 @@ export default function RecargaFichasPage() {
                     <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-[2px]" />
                     <div className="relative z-10 flex flex-col items-center text-center px-4">
                       <div className="w-14 h-14 rounded-full bg-red-600/20 border border-red-600/50 flex items-center justify-center mb-3">
-                        {/* ícono reloj */}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -626,7 +626,9 @@ export default function RecargaFichasPage() {
                     ].join(" ")}
                   />
                   <button
-                    onClick={() => copyToClipboard(deposit.address)}
+                    onClick={() =>
+                      copyToClipboard(deposit.address, "Dirección")
+                    }
                     disabled={isOverlayActive}
                     title={
                       isOverlayActive
@@ -671,79 +673,110 @@ export default function RecargaFichasPage() {
           </section>
         )}
 
-        {/* ——————————— TAB: SPEI ——————————— */}
+        {/* ——————————— TAB: SPEI — SOLO LECTURA ——————————— */}
         {activeTab === "SPEI" && (
           <section className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5">
-            <h2 className="text-lg font-medium mb-4">
-              Datos para transferencia SPEI
-            </h2>
+            <h2 className="text-lg font-medium mb-4">{t("spei.title")}</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* CLABE */}
-              <div>
-                <label className="text-sm text-neutral-300">CLABE</label>
-                <input
-                  value={speiClabe}
-                  onChange={(e) =>
-                    setSpeiClabe(e.target.value.replace(/\D/g, "").slice(0, 18))
+            <div className="space-y-3">
+              {/* Banco */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-[120px] text-sm text-neutral-400">
+                  {t("spei.bankLabel")}
+                </div>
+                <div className="flex-1">
+                  <div className="w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 text-sm">
+                    {speiBanco || "STP"}
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    copyToClipboard(speiBanco || "STP", t("spei.bankLabel"))
                   }
-                  placeholder="CLABE (18 dígitos)"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  maxLength={18}
-                  disabled={speiClabeLocked}
+                  className="shrink-0 rounded-xl px-3 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-sm cursor-pointer"
+                  title={t("spei.copyBankTitle")}
+                >
+                  {t("spei.copy")}
+                </button>
+              </div>
+
+              {/* CLABE */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-[120px] text-sm text-neutral-400">
+                  {t("spei.clabeLabel")}
+                </div>
+                <div className="flex-1">
+                  <div className="w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 font-mono text-sm cursor-pointer">
+                    {speiClabe || t("spei.unavailable")}
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    copyToClipboard(speiClabe || "", t("spei.clabeLabel"))
+                  }
+                  disabled={!speiClabe}
                   className={[
-                    "mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500",
-                    speiClabeLocked ? "opacity-70 cursor-not-allowed" : "",
+                    "shrink-0 rounded-xl px-3 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-sm cursor-pointer",
+                    !speiClabe ? "opacity-50 cursor-not-allowed" : "",
                   ].join(" ")}
-                />
-                {speiClabe && speiClabe.length !== 18 && (
-                  <p className="mt-2 text-xs text-red-400">
-                    La CLABE debe tener 18 dígitos.
-                  </p>
-                )}
+                  title={
+                    speiClabe
+                      ? t("spei.copyClabeTitle")
+                      : t("spei.copyClabeUnavailable")
+                  }
+                >
+                  {t("spei.copy")}
+                </button>
               </div>
 
-              {/* NOMBRE */}
-              <div>
-                <label className="text-sm text-neutral-300">Nombre</label>
-                <input
-                  value={speiNombre}
-                  onChange={(e) => setSpeiNombre(e.target.value)}
-                  placeholder="Tu nombre completo"
-                  className="mt-2 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
-                />
+              {/* Beneficiario (Nombre completo) */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-[120px] text-sm text-neutral-400">
+                  {t("spei.beneficiaryLabel")}
+                </div>
+                <div className="flex-1">
+                  <div className="w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 text-sm">
+                    {fullName}
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    copyToClipboard(fullName, t("spei.beneficiaryLabel"))
+                  }
+                  className="shrink-0 rounded-xl px-3 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-sm cursor-pointer"
+                  title={t("spei.copyBeneficiaryTitle")}
+                >
+                  {t("spei.copy")}
+                </button>
               </div>
 
-              {/* Banco y Concepto: variables mantenidas pero SIN inputs */}
+              {/* Método de pago (PAGO) */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-[120px] text-sm text-neutral-400">
+                  {t("spei.conceptLabel")}
+                </div>
+                <div className="flex-1">
+                  <div className="w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-3 text-sm">
+                    {speiMetodoPago}
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    copyToClipboard(speiMetodoPago, t("spei.conceptLabel"))
+                  }
+                  className="shrink-0 rounded-xl px-3 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-sm"
+                  title={t("spei.copyConceptTitle")}
+                >
+                  {t("spei.copy")}
+                </button>
+              </div>
             </div>
 
-            <div className="mt-5 flex items-center gap-3">
-              {/* Guardar/Continuar desconectado (no hace nada) */}
-              <button
-                // onClick={() => {}} // intencionalmente desconectado
-                className="rounded-xl px-4 py-3 bg-emerald-600 hover:bg-emerald-500 font-medium"
-              >
-                Guardar/Continuar
-              </button>
-              <button
-                onClick={() => {
-                  setSpeiNombre("");
-                  setUiMessage("");
-                  // Si quieres permitir edición manual tras limpiar:
-                  setSpeiClabeLocked(false);
-                  // Opcional: limpiar CLABE
-                  // setSpeiClabe("");
-                }}
-                className="rounded-xl px-4 py-3 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700"
-              >
-                Limpiar
-              </button>
+            <div className="mt-4 rounded-xl bg-amber-900/20 border border-amber-700/50 p-3">
+              <p className="text-amber-300 text-sm">
+                {t("spei.importantNote")}
+              </p>
             </div>
-
-            <p className="mt-4 text-sm text-neutral-400">
-              Asegúrate de capturar el concepto exactamente como “PAGO”.
-            </p>
           </section>
         )}
       </div>

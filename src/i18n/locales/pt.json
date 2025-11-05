@@ -595,5 +595,20 @@
     "balance": "Saldo total",
     "referrals": "Indicações",
     "referralsBonus": "Bônus de indicação"
+  },
+  "spei": {
+    "title": "Dados para transferência SPEI",
+    "bankLabel": "Banco",
+    "clabeLabel": "CLABE",
+    "beneficiaryLabel": "Beneficiário",
+    "conceptLabel": "Conceito",
+    "copy": "Copiar",
+    "copyBankTitle": "Copiar banco",
+    "copyClabeTitle": "Copiar CLABE",
+    "copyClabeUnavailable": "CLABE indisponível",
+    "copyBeneficiaryTitle": "Copiar beneficiário",
+    "copyConceptTitle": "Copiar conceito",
+    "importantNote": "Importante: garanta que o conceito seja exatamente “PAGO”.",
+    "unavailable": "[Indisponível]"
   }
 }

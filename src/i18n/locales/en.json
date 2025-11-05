@@ -595,5 +595,20 @@
     "balance": "Total balance",
     "referrals": "Referrals",
     "referralsBonus": "Referral bonus"
+  },
+  "spei": {
+    "title": "SPEI transfer details",
+    "bankLabel": "Bank",
+    "clabeLabel": "CLABE",
+    "beneficiaryLabel": "Beneficiary",
+    "conceptLabel": "Concept",
+    "copy": "Copy",
+    "copyBankTitle": "Copy bank",
+    "copyClabeTitle": "Copy CLABE",
+    "copyClabeUnavailable": "CLABE unavailable",
+    "copyBeneficiaryTitle": "Copy beneficiary",
+    "copyConceptTitle": "Copy concept",
+    "importantNote": "Important: make sure the concept is exactly “PAGO”.",
+    "unavailable": "[Unavailable]"
   }
 }

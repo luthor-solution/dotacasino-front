@@ -595,5 +595,20 @@
     "balance": "총 잔액",
     "referrals": "추천인",
     "referralsBonus": "추천 보너스"
+  },
+  "spei": {
+    "title": "SPEI 송금 정보",
+    "bankLabel": "은행",
+    "clabeLabel": "CLABE",
+    "beneficiaryLabel": "수취인",
+    "conceptLabel": "개념",
+    "copy": "복사",
+    "copyBankTitle": "은행 복사",
+    "copyClabeTitle": "CLABE 복사",
+    "copyClabeUnavailable": "CLABE를 사용할 수 없습니다",
+    "copyBeneficiaryTitle": "수취인 복사",
+    "copyConceptTitle": "개념 복사",
+    "importantNote": "중요: 개념이 반드시 “PAGO”와 정확히 일치해야 합니다.",
+    "unavailable": "[사용할 수 없음]"
   }
 }
