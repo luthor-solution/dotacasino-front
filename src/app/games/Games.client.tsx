@@ -11,6 +11,7 @@ import JackpotLevels from "@/components/JackpotLevels";
 /* import { getCachedOrFetch, makeCacheKey } from "@/utils/cache"; */
 import { useTranslation } from "react-i18next";
 import { parseAsInteger, useQueryState } from "nuqs";
+import useSWR from "swr";
 
 export default function GamesView() {
   const [category, setCategory] = useQueryState("category", {
@@ -42,24 +43,37 @@ export default function GamesView() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    gamesService
-      .getGames({
+  const { data, error, isLoading } = useSWR(
+    ["games", page, pageSize, filters],
+    () =>
+      gamesService.getGames({
         page,
         pageSize,
         search: filters.search || undefined,
         category: filters.category || undefined,
         device: filters.device || undefined,
         sort: filters.sort || undefined,
-      })
-      .then((res: GamesResponse) => {
-        setTotal(res.total);
-        setGames(res.items);
-      })
-      .catch(() => setGames([]))
-      .finally(() => setLoading(false));
-  }, [page, pageSize, filters]);
+      }),
+    {
+      revalidateOnFocus: false, // opcional
+    }
+  );
+
+  useEffect(() => {
+    // loading
+    setLoading(isLoading);
+
+    // éxito
+    if (data) {
+      setTotal(data.total);
+      setGames(data.items);
+    }
+
+    // error
+    if (error) {
+      setGames([]);
+    }
+  }, [data, error, isLoading, setGames, setTotal, setLoading]);
 
   useEffect(() => {
     // Si aún estamos en la primera descarga, cuando termine
