@@ -10,10 +10,15 @@ import NoGames from "@/components/NoGames";
 import JackpotLevels from "@/components/JackpotLevels";
 /* import { getCachedOrFetch, makeCacheKey } from "@/utils/cache"; */
 import { useTranslation } from "react-i18next";
+import { parseAsInteger, useQueryState } from "nuqs";
 
 export default function Home() {
+  const [category, setCategory] = useQueryState("category", {
+    defaultValue: "",
+  });
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(0));
+
   const [games, setGames] = useState<Game[]>([]);
-  const [page, setPage] = useState(1);
   const [pageSize] = useState(12);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -24,7 +29,7 @@ export default function Home() {
   // Filtros
   const [filters, setFilters] = useState({
     search: "",
-    category: "",
+    category,
     device: "",
     sort: "order",
   });
@@ -155,6 +160,7 @@ export default function Home() {
           <CategoriesMenu
             selected={filters.category}
             onSelect={(cat) => {
+              setCategory(cat || "");
               setFilters((prev) => ({ ...prev, category: cat || "" }));
               setPage(1);
             }}

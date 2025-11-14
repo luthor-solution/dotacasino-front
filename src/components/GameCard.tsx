@@ -2,25 +2,23 @@
 "use client";
 import React, { useState } from "react";
 import { Game } from "@/services/gamesService";
-import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import StartingGameLoader from "./StartingGameLoader";
+import Link from "next/link";
 
 const GameCard: React.FC<Game> = ({ title, thumbnailUrl, category, slug }) => {
   const { t } = useTranslation();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
     setLoading(true);
-    router.push(`/game/${slug}`);
   };
 
   return (
     <>
       {loading && <StartingGameLoader loading={loading} />}
 
-      <div
+      <Link
         className="relative rounded-xl p-6 flex flex-col items-center shadow-lg overflow-hidden group hover:shadow-[0_0_16px_2px_#ff9c19] w-full transition-all duration-500 cursor-pointer hover:scale-[105%]"
         style={{
           backgroundImage: "url('/background/bg3.png')",
@@ -30,6 +28,7 @@ const GameCard: React.FC<Game> = ({ title, thumbnailUrl, category, slug }) => {
             "-3.828px -3.828px 6px 0px rgba(255, 200, 39, 0.4), 3px 5px 8px 0px rgba(255, 82, 1, 0.2)",
         }}
         onClick={handleClick}
+        href={`/game/${slug}`}
       >
         {/* Overlay oscuro */}
         <div className="absolute inset-0 bg-[#2e0327] opacity-80 z-0" />
@@ -68,7 +67,7 @@ const GameCard: React.FC<Game> = ({ title, thumbnailUrl, category, slug }) => {
             <div className="text-white text-sm mb-4 uppercase">{category}</div>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };
