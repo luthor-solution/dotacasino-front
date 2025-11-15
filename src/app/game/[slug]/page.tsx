@@ -44,6 +44,8 @@ const GamePage: FC<Props> = async ({ params }) => {
       return <BalanceError requiredAmount={100} />;
     }
 
+    console.log(gameInfo)
+
     return (
       <div className="flex flex-col items-center bg-[#350b2d]">
         <BackgroundGlow />

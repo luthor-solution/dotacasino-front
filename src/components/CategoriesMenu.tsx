@@ -1,35 +1,24 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gamesService } from "@/services/gamesService";
 import {
-  FiZap,
-  FiMonitor,
-  FiTrendingUp,
-  FiDisc,
-  FiActivity,
-  FiUsers,
   FiGrid,
-  FiGift,
-  FiLayers,
-  FiHeart,
   FiGlobe,
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
-import { FaFutbol } from "react-icons/fa";
-import { GiPokerHand } from "react-icons/gi";
 import { useRouter } from "next/navigation";
 
 const categoryIcons: Record<string, React.ReactNode> = {
   /* fast_games: <FiZap size={28} />, */
   /* arcade: <FiMonitor size={28} />, */
   /*  roulette: <FiDisc size={28} />, */
-  crash_games: <FiTrendingUp size={28} />,
-  sport: <FaFutbol size={28} />,
-  live_dealers: <FiUsers size={28} />,
-  slots: <FiGrid size={28} />,
+  crash_games: <img src="/categories/crash.png" className={"h-[28px]"} />,
+  sport: <img src="/categories/sport.png" className={"h-[28px]"} />,
+  live_dealers: <img src="/categories/livedealer.png" className={"h-[28px]"} />,
+  slots: <img src="/categories/slots.png" className={"h-[28px]"} />,
   /*  lottery: <FiGift size={28} />, */
-  video_poker: <GiPokerHand size={28} />,
+  video_poker: <img src="/categories/videopoker.png" className={"h-[28px]"} />,
   /*  card: <FiHeart size={28} />, */
   todos: <FiGlobe size={28} />,
 };
@@ -185,7 +174,7 @@ const CategoriesMenu: React.FC<{
                 </span>
                 <span
                   className={`font-bold text-xs group-hover:text-[#FFC827] transition-colors text-center ${
-                    isSelected ? "text-[#FFC827]" : "text-white"
+                    isSelected ? "text-[#FFC827] underline underline-offset-3" : "text-white"
                   }`}
                 >
                   {formatCategoryName(cat)}
