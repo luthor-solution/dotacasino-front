@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { FC } from "react";
 import { OpenGameApiResponse } from "./utils";
@@ -40,10 +41,13 @@ const GamePage: FC<Props> = async ({ params }) => {
       .then((r) => r.data);
 
     if (gameInfo.error === "hall_balance_less_100") {
-      return <BalanceError requiredAmount={100} />;
+      throw new Error("not_enoght_balance");
+      //return <BalanceError requiredAmount={100} />;
     }
 
-    console.log(gameInfo)
+    if (!gameInfo.content.game.url) {
+      throw new Error(JSON.stringify(gameInfo));
+    }
 
     return (
       <div className="flex flex-col items-center bg-[#350b2d]">
@@ -59,9 +63,9 @@ const GamePage: FC<Props> = async ({ params }) => {
         />
       </div>
     );
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
-    return <GameErrorStatus />;
+    return <GameErrorStatus gameResponse={err.toString()} />;
   }
 };
 

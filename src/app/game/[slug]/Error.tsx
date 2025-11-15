@@ -6,17 +6,19 @@ import { AlertTriangle, ArrowRight } from "lucide-react";
 import { reportService } from "@/services/reportService";
 
 type GameErrorStatusProps = {
+  gameResponse?: string;
   redirectDelayMs?: number; // opcional, por defecto 4000 ms
 };
 
 export function GameErrorStatus({
   redirectDelayMs = 4000,
+  gameResponse,
 }: GameErrorStatusProps) {
   const router = useRouter();
 
   useEffect(() => {
     reportService.report(
-      "Error render page /game/[slug]",
+      "Error render page /game/[slug] - " + gameResponse,
       window.location.href
     );
   }, []);
