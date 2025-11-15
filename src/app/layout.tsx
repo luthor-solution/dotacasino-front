@@ -7,6 +7,7 @@ import ScrollToTopButton from "@/components/ScrollToTopButton";
 import AppShell from "@/components/AppShell";
 import Footer from "@/components/common/Footer";
 import "@/i18n/index";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +30,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <ToastContainer />
-
         <Header />
-        <AppShell>{children}</AppShell>
+        <NuqsAdapter>
+          <AppShell>{children}</AppShell>
+        </NuqsAdapter>
         <Footer />
         <ScrollToTopButton />
       </body>
