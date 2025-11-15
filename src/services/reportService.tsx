@@ -6,7 +6,7 @@ export const reportService = {
   // POST /deposit-coins/create-qr
   async report(text: string, url: string) {
     try {
-      const { data } = await axios.post(`${API_BASE_URL}/report/new`, {
+      const { data } = await axios.post(`${API_BASE_URL}/reports/new`, {
         text,
         url,
       });
