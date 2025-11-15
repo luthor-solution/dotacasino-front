@@ -5,9 +5,8 @@ import Iframe from "./iframe";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import BackgroundGlow from "./BackgroundGlow";
-import Ticker from "./ticker";
-import Head from "next/head";
 import BalanceError from "./BalanceError";
+import { GameErrorStatus } from "./Error";
 type Props = {
   params: Promise<{
     slug: string;
@@ -62,11 +61,7 @@ const GamePage: FC<Props> = async ({ params }) => {
     );
   } catch (err) {
     console.error(err);
-    return (
-      <div className="mt-20 text-center text-white">
-        Algo salió mal, error al cargar el juego.
-      </div>
-    );
+    return <GameErrorStatus />;
   }
 };
 
