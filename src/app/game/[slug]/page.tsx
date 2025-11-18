@@ -42,7 +42,6 @@ const GamePage: FC<Props> = async ({ params }) => {
 
     if (gameInfo.error === "hall_balance_less_100") {
       throw new Error("not_enoght_balance");
-      //return <BalanceError requiredAmount={100} />;
     }
 
     if (!gameInfo.content.game.url) {
