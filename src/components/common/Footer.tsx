@@ -96,7 +96,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <Link href={"/games"}>
+            <Link href={"/"}>
               <h3 className="font-bold mb-3 hover:text-[#FFC827] transition">
                 {t("footer.games.title")}
               </h3>

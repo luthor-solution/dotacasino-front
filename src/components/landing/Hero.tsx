@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -59,15 +60,15 @@ const Hero = () => {
             >
               {t("hero.ctaRefer")}
             </a>
-            <a
-              href="/games"
+            <Link
+              href="/"
               className="text-[22px] font-[900] text-[#350b2d] py-[13px] px-[35px] rounded-2xl hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 cursor-pointer items-center text-center capitalize"
               style={{
                 background: "linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%)",
               }}
             >
               {t("hero.ctaPlay")}
-            </a>
+            </Link>
           </div>
         </div>
         <div className="md:w-fit">

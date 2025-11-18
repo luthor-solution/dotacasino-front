@@ -1,16 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gamesService } from "@/services/gamesService";
 import {
-  FiZap,
-  FiMonitor,
   FiTrendingUp,
-  FiDisc,
-  FiActivity,
   FiUsers,
   FiGrid,
-  FiGift,
-  FiLayers,
-  FiHeart,
   FiGlobe,
   FiChevronLeft,
   FiChevronRight,
@@ -43,7 +36,7 @@ const CategoriesMenu: React.FC<{
   selected?: string;
   onSelect?: (cat: string | undefined) => void;
 }> = ({ selected, onSelect }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [categories, setCategories] = useState<string[]>([]);
   const [catLoading, setCatLoading] = useState(true);
   const [showLeft, setShowLeft] = useState(false);
@@ -166,10 +159,9 @@ const CategoriesMenu: React.FC<{
                   isSelected ? "text-[#FFC827]" : ""
                 }`}
                 onClick={() => {
-                  if(cat == "sport") {
-                    router.push("/game/sport_betting-3002")
-                  }
-                  else if (isSelected || cat === "todos") {
+                  if (cat == "sport") {
+                    router.push("/game/sport_betting-3002");
+                  } else if (isSelected || cat === "todos") {
                     onSelect?.(undefined);
                   } else {
                     onSelect?.(cat);

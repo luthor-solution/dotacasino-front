@@ -116,6 +116,8 @@ export interface MembershipPollingPayload {
 
 export type DepositPollingResponse = "OK" | "NO";
 
+type ReportCreateResponse = { ok: boolean }; // Ajusta este tipo según tu API
+
 export const userService = {
   async register(payload: RegisterPayload): Promise<RegisterResponse> {
     const response = await axios.post(
@@ -603,6 +605,42 @@ export const userService = {
       ) {
         await userService.refreshToken();
         return await userService.polling(payload, false);
+      }
+      throw error;
+    }
+  },
+  async createReport(
+    params: { text: string; url: string },
+    retry = true
+  ): Promise<ReportCreateResponse> {
+    const { token } = useAuthStore.getState();
+
+    try {
+      const response = await axios.post<ReportCreateResponse>(
+        `${API_BASE_URL}/reports/new`,
+        {
+          text: params.text,
+          url: params.url,
+        },
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data; // p.ej. { ok: true }
+    } catch (error: unknown) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        await userService.refreshToken();
+        return userService.createReport(
+          { text: params.text, url: params.url },
+          false
+        );
       }
       throw error;
     }

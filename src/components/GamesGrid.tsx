@@ -1,5 +1,5 @@
 import GameCard from "./GameCard";
-import { Game } from "@/services/gamesService";
+import { Game } from "@/services/Service";
 import GameCardSkeleton from "./GameCardSkeleton";
 
 interface GamesGridProps {
