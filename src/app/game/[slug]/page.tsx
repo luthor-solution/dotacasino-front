@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { FC } from "react";
 import { OpenGameApiResponse } from "./utils";
@@ -5,9 +6,8 @@ import Iframe from "./iframe";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import BackgroundGlow from "./BackgroundGlow";
-import Ticker from "./ticker";
-import Head from "next/head";
 import BalanceError from "./BalanceError";
+import { GameErrorStatus } from "./Error";
 type Props = {
   params: Promise<{
     slug: string;
@@ -41,7 +41,12 @@ const GamePage: FC<Props> = async ({ params }) => {
       .then((r) => r.data);
 
     if (gameInfo.error === "hall_balance_less_100") {
-      return <BalanceError requiredAmount={100} />;
+      throw new Error("not_enoght_balance");
+      //return <BalanceError requiredAmount={100} />;
+    }
+
+    if (!gameInfo.content.game.url) {
+      throw new Error(JSON.stringify(gameInfo));
     }
 
     return (
@@ -58,13 +63,9 @@ const GamePage: FC<Props> = async ({ params }) => {
         />
       </div>
     );
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
-    return (
-      <div className="mt-20 text-center text-white">
-        Algo salió mal, error al cargar el juego.
-      </div>
-    );
+    return <GameErrorStatus gameResponse={err.toString()} />;
   }
 };
 
