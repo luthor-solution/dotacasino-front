@@ -30,7 +30,7 @@ const GamePage: FC<Props> = async ({ params }) => {
   try {
     const gameInfo = await axios
       .post<OpenGameApiResponse>(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}//openGame/${slug}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/games/openGame/${slug}`,
         {},
         {
           headers: {
