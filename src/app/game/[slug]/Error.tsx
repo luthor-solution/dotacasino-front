@@ -17,18 +17,22 @@ export function GameErrorStatus({
   const router = useRouter();
 
   useEffect(() => {
-    reportService.report(
-      "Error render page /game/[slug] - " + gameResponse,
-      window.location.href
-    );
+    if (!process.env.NEXT_PUBLIC_API_BASE_URL?.includes("localhost")) {
+      reportService.report(
+        "Error render page /game/[slug] - " + gameResponse,
+        window.location.href
+      );
+    }
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.back();
-    }, redirectDelayMs);
+    if (!process.env.NEXT_PUBLIC_API_BASE_URL?.includes("localhost")) {
+      const timer = setTimeout(() => {
+        router.back();
+      }, redirectDelayMs);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, [router, redirectDelayMs]);
 
   return (

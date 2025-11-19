@@ -41,11 +41,12 @@ const GamePage: FC<Props> = async ({ params }) => {
       .then((r) => r.data);
 
     if (gameInfo.error === "hall_balance_less_100") {
+      console.error("NOT ENOUGHT BALANCE")
       throw new Error("not_enoght_balance");
-      //return <BalanceError requiredAmount={100} />;
     }
 
     if (!gameInfo.content.game.url) {
+      console.error("URL NULL")
       throw new Error(JSON.stringify(gameInfo));
     }
 
@@ -64,7 +65,6 @@ const GamePage: FC<Props> = async ({ params }) => {
       </div>
     );
   } catch (err: any) {
-    console.error(err);
     return <GameErrorStatus gameResponse={err.toString()} />;
   }
 };
