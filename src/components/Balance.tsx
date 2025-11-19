@@ -1,10 +1,8 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import GameCard from "@/components/GameCard";
 import { FiLogOut, FiDollarSign, FiTrendingUp } from "react-icons/fi";
 import BalanceCard from "@/components/BalanceCard";
 import { gamesService, Game, GamesResponse } from "@/services/gamesService";
-import GameCardSkeleton from "./GameCardSkeleton";
 import { useTranslation } from "react-i18next";
 import { userService } from "@/services/userService";
 import ReferralInput from "./ReferralInput";

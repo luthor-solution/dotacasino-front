@@ -1,11 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gamesService } from "@/services/gamesService";
-import {
-  FiGrid,
-  FiGlobe,
-  FiChevronLeft,
-  FiChevronRight,
-} from "react-icons/fi";
+import { FiGrid, FiGlobe, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 
@@ -32,7 +27,7 @@ const CategoriesMenu: React.FC<{
   selected?: string;
   onSelect?: (cat: string | undefined) => void;
 }> = ({ selected, onSelect }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [categories, setCategories] = useState<string[]>([]);
   const [catLoading, setCatLoading] = useState(true);
   const [showLeft, setShowLeft] = useState(false);
@@ -155,10 +150,9 @@ const CategoriesMenu: React.FC<{
                   isSelected ? "text-[#FFC827]" : ""
                 }`}
                 onClick={() => {
-                  if(cat == "sport") {
-                    router.push("/game/sport_betting-3002")
-                  }
-                  else if (isSelected || cat === "todos") {
+                  if (cat == "sport") {
+                    router.push("/game/sport_betting-3002");
+                  } else if (isSelected || cat === "todos") {
                     onSelect?.(undefined);
                   } else {
                     onSelect?.(cat);
@@ -174,7 +168,9 @@ const CategoriesMenu: React.FC<{
                 </span>
                 <span
                   className={`font-bold text-xs group-hover:text-[#FFC827] transition-colors text-center ${
-                    isSelected ? "text-[#FFC827] underline underline-offset-3" : "text-white"
+                    isSelected
+                      ? "text-[#FFC827] underline underline-offset-3"
+                      : "text-white"
                   }`}
                 >
                   {formatCategoryName(cat)}

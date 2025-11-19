@@ -19,7 +19,7 @@ const BalanceError: React.FC<BalanceErrorProps> = ({
       </h2>
 
       <Link
-        href="/games"
+        href="/"
         className="bg-[#FFC827] hover:bg-[#ff9c19] transition-all px-6 py-2 rounded-md text-[#2e0327] font-semibold shadow hover:shadow-[0_4px_24px_0_#ff9c19] cursor-pointer"
       >
         {t("gamePage.balanceError.backButton")}

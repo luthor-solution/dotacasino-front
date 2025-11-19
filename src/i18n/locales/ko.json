@@ -98,7 +98,8 @@
     "myProfile": "내 프로필",
     "verifyIdentity": "신원 확인",
     "logout": "로그아웃",
-    "servers": "서버"
+    "servers": "서버",
+    "referAndEarn": "추천하고 보상 받기"
   },
   "gamesBanner": {
     "title": "게임",

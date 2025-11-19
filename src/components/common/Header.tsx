@@ -9,6 +9,7 @@ import { useKYCStatusStore } from "@/store/useKYCStatusStore";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useWalletStore } from "@/store/useWalletStore";
+import { userService } from "@/services/userService";
 
 type NavLink = {
   href: string;
@@ -48,9 +49,9 @@ const Header: React.FC = () => {
   const reportRef = useRef<HTMLDivElement>(null);
 
   const navLinks: NavLink[] = [
-    { href: "/", label: t("header.home") },
+    { href: "/", label: t("header.games") },
+    { href: "/refer-and-win", label: t("header.referAndEarn") },
     { href: "/servers", label: t("header.servers") },
-    { href: "/games", label: t("header.games") },
     { href: "/recharge", label: t("header.recharge"), showWhenLogged: true },
     { href: "/sign-in", label: t("header.signIn"), showWhenLogged: false },
     { href: "/sign-up", label: t("header.signUp"), showWhenLogged: false },
@@ -58,7 +59,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     setIsRecharge(pathname === "/recharge" || pathname === "/withdraw");
-    setIsLanding(pathname === "/");
+    setIsLanding(pathname === "/refer-and-win");
   }, [pathname]);
 
   useEffect(() => {
@@ -152,36 +153,26 @@ const Header: React.FC = () => {
   // Formulario compartido para reportar problema
   function ReportForm({ afterSubmit }: { afterSubmit?: () => void }) {
     const { t } = useTranslation();
-    const [email, setEmail] = useState("");
     const [description, setDescription] = useState("");
     const [submitting, setSubmitting] = useState(false);
 
     const submitReport = async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!description.trim()) {
+
+      const text = description.trim();
+      if (!text) {
         toast.error(t("report.form.toasts.requiredDescription"));
         return;
       }
+
       try {
         setSubmitting(true);
-        const res = await fetch("/api/report-issue", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email.trim() || undefined,
-            description: description.trim(),
-            url:
-              typeof window !== "undefined" ? window.location.href : undefined,
-            userAgent:
-              typeof navigator !== "undefined"
-                ? navigator.userAgent
-                : undefined,
-          }),
-        });
-        if (!res.ok) throw new Error("Server error");
+        const url = typeof window !== "undefined" ? window.location.href : "";
+
+        await userService.createReport({ text, url });
+
         toast.success(t("report.form.toasts.success"));
         setDescription("");
-        setEmail("");
         afterSubmit?.();
       } catch {
         toast.error(t("report.form.toasts.error"));

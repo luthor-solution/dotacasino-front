@@ -60,7 +60,7 @@ const Iframe: FC<Props> = ({ url, devices }) => {
         />
         <div className="h-[48px] flex justify-between py-2 px-4 items-center">
           <img src="/logo.svg" className="h-full w-auto" />
-          <FaTimes className="h-[30px]" onClick={() => router.push("/games")} />
+          <FaTimes className="h-[30px]" onClick={() => router.push("/")} />
         </div>
         <Ticker />
         {!devices.includes("MOBILE") && !iOSSafari && (
@@ -76,9 +76,7 @@ const Iframe: FC<Props> = ({ url, devices }) => {
             </button>
           </div>
         )}
-        {iOSSafari &&
-          <DeviceRotateBanner />
-        }
+        {iOSSafari && <DeviceRotateBanner />}
         <iframe
           className={clsx(
             "w-full",

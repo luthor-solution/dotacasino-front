@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Game } from "@/services/gamesService";
 import { useTranslation } from "react-i18next";
 import StartingGameLoader from "./StartingGameLoader";
