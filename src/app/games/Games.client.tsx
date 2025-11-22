@@ -203,6 +203,15 @@ export default function GamesView() {
             />
 
             <GamesCarousel
+              title="Live dealers"
+              category="live_dealers"
+              onShowMore={() => {
+                setFilters((prev) => ({ ...prev, category: "live_dealers" }));
+              }}
+              auto
+            />
+
+            <GamesCarousel
               title="Lottery"
               category="lottery"
               onShowMore={() => {
@@ -213,19 +222,10 @@ export default function GamesView() {
             <JackpotLevels />
 
             <GamesCarousel
-              title="Live dealers"
-              category="live_dealers"
+              title="Slots"
+              category="slots"
               onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "live_dealers" }));
-              }}
-              auto
-            />
-
-            <GamesCarousel
-              title="Arcade"
-              category="arcade"
-              onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "arcade" }));
+                setFilters((prev) => ({ ...prev, category: "slots" }));
               }}
             />
           </>
