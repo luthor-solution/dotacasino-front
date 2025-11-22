@@ -211,14 +211,6 @@ export default function GamesView() {
               auto
             />
 
-            <GamesCarousel
-              title="Lottery"
-              category="lottery"
-              onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "lottery" }));
-              }}
-            />
-
             <JackpotLevels />
 
             <GamesCarousel
@@ -226,6 +218,14 @@ export default function GamesView() {
               category="slots"
               onShowMore={() => {
                 setFilters((prev) => ({ ...prev, category: "slots" }));
+              }}
+            />
+
+            <GamesCarousel
+              title="Video Poker"
+              category="video_poker"
+              onShowMore={() => {
+                setFilters((prev) => ({ ...prev, category: "video_poker" }));
               }}
             />
           </>
