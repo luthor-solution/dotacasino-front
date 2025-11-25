@@ -81,6 +81,7 @@ const Hero = () => {
             loop
             muted
             playsInline
+            controls
           />
         </div>
       </div>
