@@ -84,7 +84,7 @@ const Hero = () => {
         <div className="md:w-fit mt-8 md:mt-0 flex justify-center">
           <video
             ref={videoRef}
-            src="https://pub-988f5ec6c66245f5a160acee0dce4133.r2.dev/promo-video.mp4&t=" // ruta de tu video
+            src="https://pub-988f5ec6c66245f5a160acee0dce4133.r2.dev/promo-video.mp4&"
             poster="https://pub-988f5ec6c66245f5a160acee0dce4133.r2.dev/0002.jpg"
             className="ruleta-mobile w-[260px] md:w-[320px] aspect-[9/16] rounded-3xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] object-cover"
             controls
