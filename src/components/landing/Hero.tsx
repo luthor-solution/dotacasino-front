@@ -17,7 +17,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative w-full bg-left bg-cover bg-no-repeat md:bg-[length:150%]  overflow-hidden"
+      className="relative w-full bg-left bg-cover bg-no-repeat md:bg-[length:150%] overflow-hidden"
       style={{ backgroundImage: "url('/background/bg4.png')" }}
     >
       {/* Overlays aplicados dentro de Hero */}
@@ -71,13 +71,16 @@ const Hero = () => {
             </Link>
           </div>
         </div>
-        <div className="md:w-fit">
-          <img
-            src={"/ruletalanding.png"}
-            alt={t("hero.alt.roulette")}
-            width={650}
-            height={120}
-            className="object-contain ruleta-mobile"
+
+        {/* Contenedor de video vertical */}
+        <div className="md:w-fit mt-8 md:mt-0 flex justify-center">
+          <video
+            src="https://pub-988f5ec6c66245f5a160acee0dce4133.r2.dev/promo-video.mp4" // cambia a la ruta de tu video
+            className="ruleta-mobile w-[260px] md:w-[320px] aspect-[9/16] rounded-3xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
           />
         </div>
       </div>
