@@ -46,7 +46,7 @@ const ServerCard: React.FC<Server> = ({
             alt={name}
             width={220}
             height={120}
-            className="object-contain"
+            className="object-contain aspect-square"
           />
         </div>
         <h2 className="text-white text-xl font-semibold mb-2">{name}</h2>
