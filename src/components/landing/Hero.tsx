@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 const Hero = () => {
   const { t } = useTranslation();
   const percent = 41;
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleScrollRefer = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -14,6 +15,13 @@ const Hero = () => {
       target.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  useEffect(() => {
+    if (videoRef.current) {
+      // volumen al máximo
+      videoRef.current.volume = 1;
+    }
+  }, []);
 
   return (
     <section
@@ -53,7 +61,7 @@ const Hero = () => {
             <a
               href="#refer"
               onClick={handleScrollRefer}
-              className="text-[22px] font-[900] text-[#350b2d] py-[13px] px-[35px] rounded-2xl hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 cursor-pointer items-center text-center capitalize"
+              className="text-[22px] font-[900] text-[#350b2d] py-[13px] px-[35px] rounded-2xl hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 cursor-pointer items-center text-center.capitalize"
               style={{
                 background: "linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%)",
               }}
@@ -62,7 +70,7 @@ const Hero = () => {
             </a>
             <Link
               href="/"
-              className="text-[22px] font-[900] text-[#350b2d] py-[13px] px-[35px] rounded-2xl hover:shadow-[0_4px_24px_0_#ff9c19] transition-all duration-500 cursor-pointer items-center text-center capitalize"
+              className="text-[22px] font-[900] text-[#350b2d] py-[13px] px-[35px] rounded-2xl hover:shadow-[0_4px_24px_0_#ff9c19] transition-all.duration-500 cursor-pointer items-center text-center capitalize"
               style={{
                 background: "linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%)",
               }}
@@ -75,13 +83,12 @@ const Hero = () => {
         {/* Contenedor de video vertical */}
         <div className="md:w-fit mt-8 md:mt-0 flex justify-center">
           <video
-            src="https://pub-988f5ec6c66245f5a160acee0dce4133.r2.dev/promo-video.mp4" // cambia a la ruta de tu video
+            ref={videoRef}
+            src="https://pub-988f5ec6c66245f5a160acee0dce4133.r2.dev/promo-video.mp4&t=" // ruta de tu video
+            poster="https://pub-988f5ec6c66245f5a160acee0dce4133.r2.dev/0002.jpg"
             className="ruleta-mobile w-[260px] md:w-[320px] aspect-[9/16] rounded-3xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] object-cover"
-            autoPlay
-            loop
-            muted
-            playsInline
             controls
+            playsInline
           />
         </div>
       </div>
@@ -104,7 +111,7 @@ const Hero = () => {
 
         .ruleta-mobile {
           transform-origin: center;
-          animation: heroCardFloatNoOpacity 6s ease-in-out infinite;
+          animation: heroCardFloatNoOpacity 6s.ease-in-out infinite;
           will-change: transform;
         }
 
@@ -113,7 +120,7 @@ const Hero = () => {
           25% { transform: translateY(-10px) rotate(-1deg); }
           50% { transform: translateY(0) rotate(0deg); }
           75% { transform: translateY(8px) rotate(1deg); }
-          100% { transform: translateY(0) rotate(0deg); }
+          100% { transform: translateY(0).rotate(0deg); }
         }
 
         @media (min-width: 768px) {
