@@ -13,6 +13,7 @@ export interface GamesQuery {
   sort?: string;
   pageSize?: number;
   page?: number;
+  domain: string;
 }
 
 export interface Game {
@@ -47,7 +48,7 @@ export interface GameCategoriesResponse {
 
 export const gamesService = {
   async getGames(
-    params: GamesQuery = {},
+    params: GamesQuery,
     retry = true
   ): Promise<GamesResponse> {
     const { token } = useAuthStore.getState();

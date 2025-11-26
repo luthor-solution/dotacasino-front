@@ -21,7 +21,7 @@ const PopularGames = () => {
   useEffect(() => {
     setLoading(true);
     gamesService
-      .getGames({ page: 1, pageSize: 8 })
+      .getGames({ page: 1, pageSize: 8, domain: window.location.host })
       .then((res: GamesResponse) => setGames(res.items))
       .catch(() => setGames([]))
       .finally(() => setLoading(false));

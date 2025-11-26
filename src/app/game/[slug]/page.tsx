@@ -3,22 +3,27 @@ import axios from "axios";
 import { FC } from "react";
 import { OpenGameApiResponse } from "./utils";
 import Iframe from "./iframe";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import BackgroundGlow from "./BackgroundGlow";
-import BalanceError from "./BalanceError";
 import { GameErrorStatus } from "./Error";
-type Props = {
+
+interface Props {
   params: Promise<{
     slug: string;
   }>;
-};
+}
 
 /**
  * Redirigir a los usuarios si no tienen sesion
  * sesion obligatoria para jugar
  */
 const GamePage: FC<Props> = async ({ params }) => {
+  const headersList = await headers();
+
+  const host =
+    headersList.get("x-forwarded-host") ?? headersList.get("host") ?? null;
+
   const { slug = "" } = await params;
   const co = await cookies();
   const token = co.get("auth_token")?.value;
@@ -31,7 +36,9 @@ const GamePage: FC<Props> = async ({ params }) => {
     const gameInfo = await axios
       .post<OpenGameApiResponse>(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/games/openGame/${slug}`,
-        {},
+        {
+          domain: host,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -41,12 +48,12 @@ const GamePage: FC<Props> = async ({ params }) => {
       .then((r) => r.data);
 
     if (gameInfo.error === "hall_balance_less_100") {
-      console.error("NOT ENOUGHT BALANCE")
+      console.error("NOT ENOUGHT BALANCE");
       throw new Error("not_enoght_balance");
     }
 
     if (!gameInfo.content.game.url) {
-      console.error("URL NULL")
+      console.error("URL NULL");
       throw new Error(JSON.stringify(gameInfo));
     }
 

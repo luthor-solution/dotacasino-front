@@ -48,6 +48,7 @@ export default function Balance() {
       .getGames({
         page: 1,
         pageSize: 3,
+        domain: window.location.host,
       })
       .then((res: GamesResponse) => {
         setGames(res.items);

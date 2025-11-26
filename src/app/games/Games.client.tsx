@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Banner from "@/components/Banner";
 import GamesGrid from "@/components/GamesGrid";
 import GameFilters from "@/components/GameFilters";
-import { gamesService, Game, GamesResponse } from "@/services/gamesService";
+import { gamesService, Game } from "@/services/gamesService";
 import CategoriesMenu from "@/components/CategoriesMenu";
 import GamesCarousel from "@/components/GamesCarousel";
 import NoGames from "@/components/NoGames";
@@ -17,7 +17,7 @@ export default function GamesView() {
   const [category, setCategory] = useQueryState("category", {
     defaultValue: "",
   });
-  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(0));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
 
   const [games, setGames] = useState<Game[]>([]);
   const [pageSize] = useState(12);
@@ -53,6 +53,7 @@ export default function GamesView() {
         category: filters.category || undefined,
         device: filters.device || undefined,
         sort: filters.sort || undefined,
+        domain: window.location.host,
       }),
     {
       revalidateOnFocus: false, // opcional
