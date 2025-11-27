@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { userService } from "@/services/userService";
+import { useTranslation } from "react-i18next";
 
 const DURATION_MS = 1200;
 
@@ -19,6 +20,8 @@ const MultiplierBar: React.FC = () => {
   const startTimeRef = useRef<number | null>(null);
   const startLimitRef = useRef<number>(limit);
   const startCurrentRef = useRef<number>(current);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchMultiplier = async () => {
@@ -103,9 +106,9 @@ const MultiplierBar: React.FC = () => {
             WebkitTextFillColor: "transparent",
           }} */
         >
-          Multiplier
+          {t("multiplier")}
         </span>
-        <span className="text-gray-300 text-sm mt-1">Up to 10x</span>
+        <span className="text-gray-300 text-sm mt-1"> {t("up_to")} 10x</span>
         <span className="text-white text-4xl font-bold mt-2">
           $
           {limit.toLocaleString("en", {

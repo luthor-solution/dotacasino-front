@@ -619,5 +619,11 @@
     "copyConceptTitle": "Copy concept",
     "importantNote": "Important: make sure the concept is exactly “PAGO”.",
     "unavailable": "[Unavailable]"
-  }
+  },
+  "referralInput": {
+    "right": "Right",
+    "left": "Left"
+  },
+  "multiplier": "Multiplier",
+  "up_to": "Up to"
 }

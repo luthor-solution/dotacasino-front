@@ -619,5 +619,11 @@
     "copyConceptTitle": "개념 복사",
     "importantNote": "중요: 개념이 반드시 “PAGO”와 정확히 일치해야 합니다.",
     "unavailable": "[사용할 수 없음]"
-  }
+  },
+  "referralInput": {
+    "right": "오른쪽",
+    "left": "왼쪽"
+  },
+  "multiplier": "승수",
+  "up_to": "최대"
 }

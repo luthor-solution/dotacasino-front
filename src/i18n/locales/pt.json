@@ -619,5 +619,11 @@
     "copyConceptTitle": "Copiar conceito",
     "importantNote": "Importante: garanta que o conceito seja exatamente “PAGO”.",
     "unavailable": "[Indisponível]"
-  }
+  },
+  "referralInput": {
+    "right": "Direita",
+    "left": "Esquerda"
+  },
+  "multiplier": "Multiplicador",
+  "up_to": "Até"
 }

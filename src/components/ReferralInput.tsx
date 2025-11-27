@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import { FaLink, FaCopy } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useRefCodesStore } from "@/store/useRefCodesStore";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   text?: string; // si pasas un texto manual, tendrá prioridad
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const ReferralInput: React.FC<Props> = ({ text, hideButtons = false }) => {
+  const { t } = useTranslation();
   const [side, setSide] = useState<"left" | "right">("left");
 
   const refCodeL = useRefCodesStore((s) => s.refCodeL);
@@ -61,7 +63,7 @@ const ReferralInput: React.FC<Props> = ({ text, hideButtons = false }) => {
             onClick={() => setSide("left")}
             type="button"
           >
-            Left
+            {t("referralInput.left")}
           </button>
           <button
             className={`px-4 py-1 rounded-r-md font-semibold transition-colors cursor-pointer ${
@@ -72,7 +74,7 @@ const ReferralInput: React.FC<Props> = ({ text, hideButtons = false }) => {
             onClick={() => setSide("right")}
             type="button"
           >
-            Right
+            {t("referralInput.right")}
           </button>
         </div>
       )}

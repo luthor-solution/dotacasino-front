@@ -251,7 +251,7 @@ const Header: React.FC = () => {
       }`}
     >
       <div
-        className={`max-w-6xl mx-auto flex items-center justify-between px-4 ${
+        className={`max-w-7xl mx-auto flex items-center justify-between px-4 ${
           scrolled ? "py-4" : "py-5"
         } transition-all duration-300`}
       >
