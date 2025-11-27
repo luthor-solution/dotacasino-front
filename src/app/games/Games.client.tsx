@@ -195,7 +195,7 @@ export default function GamesView() {
         {!filters.category && !filters.search && (
           <>
             <GamesCarousel
-              title="Crash games"
+              title={t(`categories.crash_games`)}
               category="crash_games"
               onShowMore={() => {
                 setFilters((prev) => ({ ...prev, category: "crash_games" }));
@@ -204,7 +204,7 @@ export default function GamesView() {
             />
 
             <GamesCarousel
-              title="Live dealers"
+              title={t(`categories.live_dealers`)}
               category="live_dealers"
               onShowMore={() => {
                 setFilters((prev) => ({ ...prev, category: "live_dealers" }));
@@ -215,7 +215,7 @@ export default function GamesView() {
             <JackpotLevels />
 
             <GamesCarousel
-              title="Slots"
+              title={t(`categories.slots`)}
               category="slots"
               onShowMore={() => {
                 setFilters((prev) => ({ ...prev, category: "slots" }));
@@ -223,7 +223,7 @@ export default function GamesView() {
             />
 
             <GamesCarousel
-              title="Video Poker"
+              title={t(`categories.video_poker`)}
               category="video_poker"
               onShowMore={() => {
                 setFilters((prev) => ({ ...prev, category: "video_poker" }));
