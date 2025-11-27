@@ -367,30 +367,32 @@ export default function RecargaFichasPage() {
         </header>
 
         {/* Tabs */}
-        <div className="mb-6">
-          <div className="inline-flex rounded-xl border border-neutral-800 bg-neutral-900/60 p-1">
-            <button
-              onClick={() => setActiveTab("CRIPTO")}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
-                activeTab === "CRIPTO"
-                  ? "bg-emerald-600 text-white"
-                  : "text-neutral-300 hover:bg-neutral-800"
-              }`}
-            >
-              Cripto
-            </button>
-            <button
-              onClick={() => setActiveTab("SPEI")}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
-                activeTab === "SPEI"
-                  ? "bg-emerald-600 text-white"
-                  : "text-neutral-300 hover:bg-neutral-800"
-              }`}
-            >
-              SPEI
-            </button>
+        {user?.country === "MX" && (
+          <div className="mb-6">
+            <div className="inline-flex rounded-xl border border-neutral-800 bg-neutral-900/60 p-1">
+              <button
+                onClick={() => setActiveTab("CRIPTO")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
+                  activeTab === "CRIPTO"
+                    ? "bg-emerald-600 text-white"
+                    : "text-neutral-300 hover:bg-neutral-800"
+                }`}
+              >
+                Cripto
+              </button>
+              <button
+                onClick={() => setActiveTab("SPEI")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
+                  activeTab === "SPEI"
+                    ? "bg-emerald-600 text-white"
+                    : "text-neutral-300 hover:bg-neutral-800"
+                }`}
+              >
+                SPEI
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {uiMessage && (
           <div className="mb-6 rounded-xl border border-emerald-800 bg-emerald-950/30 px-3 py-2 text-emerald-300 text-sm">
