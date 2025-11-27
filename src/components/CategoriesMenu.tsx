@@ -173,7 +173,7 @@ const CategoriesMenu: React.FC<{
                       : "text-white"
                   }`}
                 >
-                  {formatCategoryName(cat)}
+                  {t(`categories.${cat}`)}
                 </span>
               </div>
             );

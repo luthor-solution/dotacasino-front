@@ -518,6 +518,14 @@
       "requires": "Registre 4 indicados diretos com plano de 1.000 USDT"
     }
   },
+  "categories": {
+    "crash_games": "Crash",
+    "sport": "Esportes",
+    "live_dealers": "Ao vivo",
+    "slots": "Slots",
+    "video_poker": "Vídeo Pôquer",
+    "todos": "Todos"
+  },
   "somethingWentWrong": "Ocorreu um erro",
   "cancelWithdrawTitle": "Cancelar saque",
   "cancelWithdrawDesc": "Tem certeza de que deseja cancelar este saque? Esta ação não pode ser desfeita.",

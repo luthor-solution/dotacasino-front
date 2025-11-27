@@ -518,6 +518,14 @@
       "requires": "$1,000 USDT 멤버십으로 직접 추천 4명을 등록하세요"
     }
   },
+  "categories": {
+    "crash_games": "크래시",
+    "sport": "스포츠",
+    "live_dealers": "라이브 딜러",
+    "slots": "슬롯",
+    "video_poker": "비디오 포커",
+    "todos": "전체"
+  },
   "somethingWentWrong": "문제가 발생했습니다",
   "cancelWithdrawTitle": "출금 취소",
   "cancelWithdrawDesc": "이 출금을 취소하시겠습니까? 이 작업은 되돌릴 수 없습니다.",

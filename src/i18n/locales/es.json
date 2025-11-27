@@ -518,6 +518,14 @@
       "requires": "Registra 4 directos con membresía de $1,000 USDT"
     }
   },
+  "categories": {
+    "crash_games": "Crash",
+    "sport": "Deportes",
+    "live_dealers": "En vivo",
+    "slots": "Slots",
+    "video_poker": "Video Poker",
+    "todos": "Todos"
+  },
   "somethingWentWrong": "Ocurrió un error",
   "cancelWithdrawTitle": "Cancelar retiro",
   "cancelWithdrawDesc": "¿Estás seguro que deseas cancelar este retiro? Esta acción no se puede deshacer.",

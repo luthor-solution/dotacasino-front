@@ -518,6 +518,14 @@
       "requires": "Register 4 direct referrals with a $1,000 USDT membership"
     }
   },
+  "categories": {
+    "crash_games": "Crash",
+    "sport": "Sports",
+    "live_dealers": "Live Dealers",
+    "slots": "Slots",
+    "video_poker": "Video Poker",
+    "todos": "All"
+  },
   "somethingWentWrong": "Something went wrong",
   "cancelWithdrawTitle": "Cancel withdrawal",
   "cancelWithdrawDesc": "Are you sure you want to cancel this withdrawal? This action cannot be undone.",
