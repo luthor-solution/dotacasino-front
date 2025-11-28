@@ -8,7 +8,6 @@ import CategoriesMenu from "@/components/CategoriesMenu";
 import GamesCarousel from "@/components/GamesCarousel";
 import NoGames from "@/components/NoGames";
 import JackpotLevels from "@/components/JackpotLevels";
-/* import { getCachedOrFetch, makeCacheKey } from "@/utils/cache"; */
 import { useTranslation } from "react-i18next";
 import { parseAsInteger, useQueryState } from "nuqs";
 import useSWR from "swr";
