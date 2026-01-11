@@ -12,6 +12,7 @@ import SuccessNotification from "@/components/SuccessNotification";
 import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import CountryAutocomplete from "@/components/CountryAutocomplete";
+import { ipService } from "@/services/ipService";
 
 type ReferredProfile = {
   displayName?: string | null;
@@ -108,12 +109,15 @@ export default function Component() {
 
       const referralToSend: string = hasReferral ? trimmedReferral : "";
 
+      const userIp = await ipService.getUserIp();
+
       const payload: any = {
         email: form.email,
         password: form.password,
         country: form.country,
         acceptTerms: form.acceptTerms,
         referralCode: referralToSend,
+        ip: userIp,
       };
 
       await userService.register(payload);

@@ -12,6 +12,7 @@ export interface RegisterPayload {
   acceptTerms: boolean;
   referralCode?: string;
   side?: string;
+  ip: string;
 }
 
 export interface RegisterResponse {
