@@ -9,6 +9,7 @@ export interface GamesQuery {
   provider?: string;
   platformType?: string;
   category?: string;
+  categoryName?: string;
   device?: string;
   sort?: string;
   pageSize?: number;
@@ -87,12 +88,15 @@ export const gamesService = {
     }
   },
 
-  async getCategories(retry = true): Promise<GameCategoriesResponse> {
+  async getCategories(pageSize = 100, retry = true): Promise<GameCategoriesResponse> {
     const { token } = useAuthStore.getState();
     /* if (!token) throw new Error("No token available"); */
 
     try {
       const response = await axios.get(`${API_BASE_URL}/games/categories`, {
+        params: {
+          pageSize,
+        },
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -109,7 +113,7 @@ export const gamesService = {
         const { refreshToken } = useAuthStore.getState();
         if (refreshToken) {
           await userService.refreshToken();
-          return gamesService.getCategories(false);
+          return gamesService.getCategories(pageSize, false);
         }
       }
       throw error;
@@ -149,5 +153,5 @@ export type GameProvider = {
   id: string;
   name: string;
   game_count: number;
-  logo_url?: string;
+  imageUrl?: string;
 };

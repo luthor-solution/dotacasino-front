@@ -227,18 +227,18 @@ export default function GamesView() {
           <>
             <GamesCarousel
               title={t(`categories.jackpots`)}
-              category="fe5a59e4-d323-4a21-9087-2abdcb315aa3"
+              category="Jackpots"
               onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "fe5a59e4-d323-4a21-9087-2abdcb315aa3" }));
+                setFilters((prev) => ({ ...prev, category: "Jackpots" }));
               }}
               auto
             />
 
             <GamesCarousel
               title={t(`categories.live_dealers`)}
-              category="943ca3f0-e7ee-4562-96ef-91ccdde66b5c"
+              category="Live Casino"
               onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "943ca3f0-e7ee-4562-96ef-91ccdde66b5c" }));
+                setFilters((prev) => ({ ...prev, category: "Live Casino" }));
               }}
               auto
             />
@@ -247,17 +247,17 @@ export default function GamesView() {
 
             <GamesCarousel
               title={t(`categories.slots`)}
-              category="15c85efc-f141-42ed-a85e-3fd8c7ea390d"
+              category="Slots"
               onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "15c85efc-f141-42ed-a85e-3fd8c7ea390d" }));
+                setFilters((prev) => ({ ...prev, category: "Slots" }));
               }}
             />
 
             <GamesCarousel
               title={t(`categories.video_poker`)}
-              category="1722b66d-d10c-46b5-beb7-fb4bb68aefed"
+              category="Video Poker"
               onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "1722b66d-d10c-46b5-beb7-fb4bb68aefed" }));
+                setFilters((prev) => ({ ...prev, category: "Video Poker" }));
               }}
             />
           </>

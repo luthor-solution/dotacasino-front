@@ -51,7 +51,7 @@ export default function CategoriesPage() {
               {categories.map((cat) => (
                 <Link
                   key={cat.id}
-                  href={`/games?category=${cat.id}`}
+                  href={`/games?category=${cat.name}`}
                   className="p-6 rounded-2xl bg-[#181818] border border-[#FFC827]/20 text-white text-center font-bold hover:bg-[#FFC827] hover:text-[#2e0327] hover:border-[#FFC827] transition-all duration-300 shadow-xl"
                 >
                   {cat.name}

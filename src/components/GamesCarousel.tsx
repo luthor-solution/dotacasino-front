@@ -63,7 +63,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
     setLoading(true);
     gamesService
       .getGames({
-        category,
+        categoryName: category,
         page: 1,
         pageSize: MAX_GAMES,
         domain: window.location.host,

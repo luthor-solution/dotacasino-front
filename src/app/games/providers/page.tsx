@@ -59,9 +59,9 @@ export default function ProvidersPage() {
 
                   {/* Logo Container */}
                   <div className="w-20 h-20 rounded-2xl bg-[#2e0327] border border-[#FFC827]/20 flex items-center justify-center overflow-hidden group-hover:scale-110 group-hover:border-[#2e0327]/20 transition-transform duration-500">
-                    {provider.logo_url ? (
+                    {provider.imageUrl ? (
                       <img 
-                        src={provider.logo_url} 
+                        src={provider.imageUrl} 
                         alt={provider.name} 
                         className="w-full h-full object-contain p-2"
                       />

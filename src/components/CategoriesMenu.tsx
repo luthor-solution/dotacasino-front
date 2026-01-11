@@ -5,21 +5,13 @@ import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  // Jackpots
-  "fe5a59e4-d323-4a21-9087-2abdcb315aa3": <FiStar size={28} />,
-  // Slots
-  "15c85efc-f141-42ed-a85e-3fd8c7ea390d": <img src="/categories/slots.png" className={"h-[28px]"} alt="" />,
-  // Virtual Sports
-  "3f3bfa0f-0bb5-4b3a-af93-de00af018d74": <img src="/categories/sport.png" className={"h-[28px]"} alt="" />,
-  // Popular
-  "1837c755-751c-486e-8e00-3dc96ff991cd": <FiZap size={28} />,
-  // Crash Game
-  "603cc3a5-e292-43f5-ad85-0c28a23f3c7f": <img src="/categories/crash.png" className={"h-[28px]"} alt="" />,
-  // Live Dealers
-  "943ca3f0-e7ee-4562-96ef-91ccdde66b5c": <img src="/categories/livedealer.png" className={"h-[28px]"} alt="" />,
-  // Video Poker
-  "1722b66d-d10c-46b5-beb7-fb4bb68aefed": <img src="/categories/videopoker.png" className={"h-[28px]"} alt="" />,
-  // Fallbacks for named keys
+  "Jackpots": <FiStar size={28} />,
+  "Slots": <img src="/categories/slots.png" className={"h-[28px]"} alt="" />,
+  "Virtual Sports": <img src="/categories/sport.png" className={"h-[28px]"} alt="" />,
+  "Popular": <FiZap size={28} />,
+  "Crash Game": <img src="/categories/crash.png" className={"h-[28px]"} alt="" />,
+  "Live Dealers": <img src="/categories/livedealer.png" className={"h-[28px]"} alt="" />,
+  "Video Poker": <img src="/categories/videopoker.png" className={"h-[28px]"} alt="" />,
   todos: <FiGlobe size={28} />,
 };
 
@@ -37,7 +29,7 @@ const CategoriesMenu: React.FC<{
 
   useEffect(() => {
     gamesService
-      .getCategories()
+      .getCategories(5)
       .then((res) => {
         const categoriesData = res.categories || [];
         const hasAll = categoriesData.some(c => c.id === 'todos' || c.id === 'all');
@@ -60,14 +52,15 @@ const CategoriesMenu: React.FC<{
       setShowLeft(scrollLeft > 0);
       setShowRight(scrollLeft + clientWidth < scrollWidth - 1);
     };
+    const currentRef = scrollRef.current;
     handleScroll();
-    if (scrollRef.current) {
-      scrollRef.current.addEventListener("scroll", handleScroll);
+    if (currentRef) {
+      currentRef.addEventListener("scroll", handleScroll);
     }
     window.addEventListener("resize", handleScroll);
     return () => {
-      if (scrollRef.current) {
-        scrollRef.current.removeEventListener("scroll", handleScroll);
+      if (currentRef) {
+        currentRef.removeEventListener("scroll", handleScroll);
       }
       window.removeEventListener("resize", handleScroll);
     };
@@ -137,7 +130,7 @@ const CategoriesMenu: React.FC<{
           categories.map((cat) => {
             const isSelected =
               (cat.id === "todos" && (!selected || categories.length === 0)) ||
-              (cat.id !== "todos" && selected === cat.id);
+              (cat.id !== "todos" && selected === cat.name);
             return (
               <div
                 key={cat.id}
@@ -157,7 +150,7 @@ const CategoriesMenu: React.FC<{
                   className={`mb-1 transition-colors group-hover:text-[#FFC827] text-center ${isSelected ? "text-[#FFC827]" : "text-white"
                     }`}
                 >
-                  {categoryIcons[cat.id] || <FiGrid size={28} />}
+                  {categoryIcons[cat.name] || categoryIcons[cat.id] || <FiGrid size={28} />}
                 </span>
                 <span
                   className={`font-bold text-xs group-hover:text-[#FFC827] transition-colors text-center ${isSelected
