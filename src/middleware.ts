@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  res.cookies.set("X-domain", "valor-x", {
+  res.cookies.set("X-domain", hostname, {
     domain, // ej: .midominio.com (para todos los subdominios)
     path: "/", // disponible en todo el sitio
     httpOnly: true,

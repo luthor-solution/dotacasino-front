@@ -7,6 +7,7 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import BackgroundGlow from "./BackgroundGlow";
 import { GameErrorStatus } from "./Error";
+import { ipService } from "@/services/ipService";
 
 interface Props {
   params: Promise<{
@@ -19,26 +20,23 @@ interface Props {
  * sesion obligatoria para jugar
  */
 const GamePage: FC<Props> = async ({ params }) => {
-  const headersList = await headers();
-
-  const host =
-    headersList.get("x-forwarded-host") ?? headersList.get("host") ?? null;
-
   const { slug = "" } = await params;
   const co = await cookies();
   const token = co.get("auth_token")?.value;
+  const host = 'dotamx.com';
 
   if (!token) {
     return redirect("/sign-in");
   }
 
   try {
+    const ip = await ipService.getUserIp()
     const gameInfo = await axios
       .post<OpenGameApiResponse>(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/games/openGame/${slug}`,
         {
           domain: host,
-          ip: headersList.get("x-forwarded-for")?.split(',')[0] || headersList.get("x-real-ip") || "127.0.0.1",
+          ip,
         },
         {
           headers: {
