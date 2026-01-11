@@ -11,9 +11,14 @@ import JackpotLevels from "@/components/JackpotLevels";
 import { useTranslation } from "react-i18next";
 import { parseAsInteger, useQueryState } from "nuqs";
 import useSWR from "swr";
+import Link from "next/link";
+import { FiGrid, FiLayers } from "react-icons/fi";
 
 export default function GamesView() {
-  const [category, setCategory] = useQueryState("category", {
+   const [category, setCategory] = useQueryState("category", {
+    defaultValue: "",
+  });
+  const [provider, setProvider] = useQueryState("provider", {
     defaultValue: "",
   });
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
@@ -30,9 +35,15 @@ export default function GamesView() {
   const [filters, setFilters] = useState({
     search: "",
     category,
+    provider,
     device: "",
     sort: "order",
   });
+
+  // Sync filters with query params
+  useEffect(() => {
+    setFilters(prev => ({ ...prev, category: category || "", provider: provider || "" }));
+  }, [category, provider]);
 
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -50,6 +61,7 @@ export default function GamesView() {
         pageSize,
         search: filters.search || undefined,
         category: filters.category || undefined,
+        provider: filters.provider || undefined,
         device: filters.device || undefined,
         sort: filters.sort || undefined,
         domain: window.location.host,
@@ -165,23 +177,43 @@ export default function GamesView() {
           className="w-full max-w-6xl mx-auto px-4 mt-8 justify-center items-center flex flex-col"
           id="gamesStart"
         >
-          <GameFilters
-            filters={filters}
-            onChange={handleFiltersChange}
-            isMobile={isMobile}
-          />
+          <div className={`w-full flex ${isMobile ? "flex-col" : "flex-row"} gap-3 mb-6 items-start`}>
+            <div className="flex-1 w-full">
+              <GameFilters
+                filters={filters}
+                onChange={handleFiltersChange}
+              />
+            </div>
+            <div className={`flex gap-3 ${isMobile ? "w-full overflow-x-auto pb-2" : ""}`}>
+              <Link
+                href="/games/providers"
+                className="flex items-center gap-2 px-6 py-[14px] bg-[#181818] border border-[#FFC827]/40 text-white rounded-xl hover:bg-[#FFC827] hover:text-[#2e0327] transition-all duration-300 shadow-lg font-bold whitespace-nowrap"
+              >
+                <FiLayers size={20} />
+                {!isMobile && "Lista de Proveedores"}
+              </Link>
+              <Link
+                href="/games/categories"
+                className="flex items-center gap-2 px-6 py-[14px] bg-[#181818] border border-[#FFC827]/40 text-white rounded-xl hover:bg-[#FFC827] hover:text-[#2e0327] transition-all duration-300 shadow-lg font-bold whitespace-nowrap"
+              >
+                <FiGrid size={20} />
+                {!isMobile && "Todas las Categorías"}
+              </Link>
+            </div>
+          </div>
 
           <CategoriesMenu
             selected={filters.category}
             onSelect={(cat) => {
               setCategory(cat || "");
-              setFilters((prev) => ({ ...prev, category: cat || "" }));
+              setProvider(""); // Clear provider when selecting a category
               setPage(1);
             }}
           />
         </div>
 
         {((filters.category !== "" && filters.category !== "todos") ||
+          filters.provider !== "" ||
           filters.search.trim() !== "") && (
           <div>
             {/* Desktop: paginación arriba si page >= 2 */}
@@ -232,6 +264,7 @@ export default function GamesView() {
         )}
 
         {((filters.category !== "" && filters.category !== "todos") ||
+          filters.provider !== "" ||
           filters.search.trim() !== "") &&
           games.length === 0 &&
           !loading && <NoGames />}

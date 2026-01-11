@@ -115,4 +115,39 @@ export const gamesService = {
       throw error;
     }
   },
+
+  async getProviders(retry = true): Promise<{ providers: GameProvider[] }> {
+    const { token } = useAuthStore.getState();
+    try {
+      const response = await axios.post(`${API_BASE_URL}/games/providers`, {
+        domain: window.location.host,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return { providers: response.data as GameProvider[] };
+    } catch (error) {
+      if (
+        axios.isAxiosError(error) &&
+        error.response?.status === 401 &&
+        retry
+      ) {
+        const { refreshToken } = useAuthStore.getState();
+        if (refreshToken) {
+          await userService.refreshToken();
+          return gamesService.getProviders(false);
+        }
+      }
+      throw error;
+    }
+  },
+};
+
+export type GameProvider = {
+  id: string;
+  name: string;
+  game_count: number;
+  logo_url?: string;
 };

@@ -11,24 +11,11 @@ interface GameFiltersProps {
     sort: string;
   };
   onChange: (filters: Partial<GameFiltersProps["filters"]>) => void;
-  isMobile: boolean;
 }
-
-/* const devices = [
-  { value: "", label: "Dispositivo" },
-  { value: "DESKTOP", label: "Escritorio" },
-  { value: "MOBILE", label: "Móvil" },
-];
-const sorts = [
-  { value: "order", label: "Por defecto" },
-  { value: "alpha", label: "Alfabético" },
-  { value: "recent", label: "Recientes" },
-]; */
 
 const GameFilters: React.FC<GameFiltersProps> = ({
   filters,
   onChange,
-  isMobile,
 }) => {
   // Estado local para el input de búsqueda
   const [searchValue, setSearchValue] = useState(filters.search);
@@ -51,9 +38,7 @@ const GameFilters: React.FC<GameFiltersProps> = ({
 
   return (
     <form
-      className={`w-full mb-6 grid gap-3 ${
-        isMobile ? "grid-cols-1" : "grid-cols-3"
-      }`}
+      className="w-full"
       onSubmit={(e) => e.preventDefault()}
     >
       <FancyInput
@@ -63,27 +48,6 @@ const GameFilters: React.FC<GameFiltersProps> = ({
         value={searchValue}
         onChange={setSearchValue}
       />
-      {/*     <FancySelect
-        name="category"
-        icon={<FaLayerGroup />}
-        value={filters.category}
-        onChange={(v) => onChange({ category: v })}
-        options={categories}
-      /> */}
-      {/*   <FancySelect
-        name="device"
-        icon={<FaMobileAlt />}
-        value={filters.device}
-        onChange={(v) => onChange({ device: v })}
-        options={devices}
-      />
-      <FancySelect
-        name="sort"
-        icon={<FaSortAlphaDown />}
-        value={filters.sort}
-        onChange={(v) => onChange({ sort: v })}
-        options={sorts}
-      /> */}
     </form>
   );
 };
