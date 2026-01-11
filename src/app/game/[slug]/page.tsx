@@ -38,7 +38,7 @@ const GamePage: FC<Props> = async ({ params }) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/games/openGame/${slug}`,
         {
           domain: host,
-          userIp: headersList.get("x-forwarded-for")?.split(',')[0] || headersList.get("x-real-ip") || "127.0.0.1",
+          ip: headersList.get("x-forwarded-for")?.split(',')[0] || headersList.get("x-real-ip") || "127.0.0.1",
         },
         {
           headers: {
