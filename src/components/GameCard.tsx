@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Game } from "@/services/gamesService";
 import { useTranslation } from "react-i18next";
 import StartingGameLoader from "./StartingGameLoader";
 import Link from "next/link";
 
-const GameCard: React.FC<Game> = ({ title, thumbnailUrl, category, slug }) => {
+const GameCard: React.FC<Game> = ({ title, thumbnailUrl, category, slug, GameProvider }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 
@@ -62,10 +61,7 @@ const GameCard: React.FC<Game> = ({ title, thumbnailUrl, category, slug }) => {
             {title}
           </h2>
           <div className="text-center">
-            <div className="text-[#FFC827] text-sm mb-1 font-medium">
-              {t("category")}
-            </div>
-            <div className="text-white text-sm mb-4 uppercase">{category}</div>
+            <div className="text-white text-sm mb-4 uppercase">{GameProvider.name}</div>
           </div>
         </div>
       </Link>

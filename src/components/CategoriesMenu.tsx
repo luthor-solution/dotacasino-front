@@ -1,20 +1,25 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gamesService } from "@/services/gamesService";
-import { FiGrid, FiGlobe, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiGrid, FiGlobe, FiChevronLeft, FiChevronRight, FiZap, FiStar } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  /* fast_games: <FiZap size={28} />, */
-  /* arcade: <FiMonitor size={28} />, */
-  /*  roulette: <FiDisc size={28} />, */
-  crash_games: <img src="/categories/crash.png" className={"h-[28px]"} />,
-  sport: <img src="/categories/sport.png" className={"h-[28px]"} />,
-  live_dealers: <img src="/categories/livedealer.png" className={"h-[28px]"} />,
-  slots: <img src="/categories/slots.png" className={"h-[28px]"} />,
-  /*  lottery: <FiGift size={28} />, */
-  video_poker: <img src="/categories/videopoker.png" className={"h-[28px]"} />,
-  /*  card: <FiHeart size={28} />, */
+  // Jackpots
+  "fe5a59e4-d323-4a21-9087-2abdcb315aa3": <FiStar size={28} />,
+  // Slots
+  "15c85efc-f141-42ed-a85e-3fd8c7ea390d": <img src="/categories/slots.png" className={"h-[28px]"} alt="" />,
+  // Virtual Sports
+  "3f3bfa0f-0bb5-4b3a-af93-de00af018d74": <img src="/categories/sport.png" className={"h-[28px]"} alt="" />,
+  // Popular
+  "1837c755-751c-486e-8e00-3dc96ff991cd": <FiZap size={28} />,
+  // Crash Game
+  "603cc3a5-e292-43f5-ad85-0c28a23f3c7f": <img src="/categories/crash.png" className={"h-[28px]"} alt="" />,
+  // Live Dealers
+  "943ca3f0-e7ee-4562-96ef-91ccdde66b5c": <img src="/categories/livedealer.png" className={"h-[28px]"} alt="" />,
+  // Video Poker
+  "1722b66d-d10c-46b5-beb7-fb4bb68aefed": <img src="/categories/videopoker.png" className={"h-[28px]"} alt="" />,
+  // Fallbacks for named keys
   todos: <FiGlobe size={28} />,
 };
 

@@ -31,6 +31,11 @@ export interface Game {
   tags: string[];
   thumbnailUrl: string;
   order: number;
+  GameProvider: {
+    code: string;
+    name: string;
+    id: string;
+  }
 }
 
 export interface GamesResponse {
