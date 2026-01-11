@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useGameCloseListener } from "@/hooks/useGameCloseListener";
 import { useRouter } from "next/navigation";
-import { FC, useRef } from "react";
+import { FC, useRef, useEffect } from "react";
 import { BsFullscreen } from "react-icons/bs";
 import {
   useMobileViewportGuard,
@@ -14,7 +13,7 @@ import Ticker from "./ticker";
 import clsx from "clsx";
 
 type Props = {
-  url: string;
+  html: string;
   devices: string[];
 };
 
@@ -28,13 +27,12 @@ function toggleFullscreen() {
   }
 }
 
-const Iframe: FC<Props> = ({ url, devices }) => {
-  const iframeRef = useRef(null);
+const Iframe: FC<Props> = ({ html, devices }) => {
   const router = useRouter();
 
   const { isMobile } = useWindowSize();
 
-  const { isLandscape, iOSSafari } = useMobileViewportGuard({
+  const { iOSSafari } = useMobileViewportGuard({
     bodyHasMobileGameClass: true, // equivale a body.mobile-game
     bodyHasGameWithoutScrollcheck: false, // equivale a !body.game-without-scrollcheck
     deviceRotateSelector: ".device-rotate",
@@ -45,6 +43,16 @@ const Iframe: FC<Props> = ({ url, devices }) => {
       router.replace("/");
     },
   });
+
+  useEffect(() => {
+    const container = document.getElementById("render-here");
+    if (container && html) {
+      container.innerHTML = "";
+      const range = document.createRange();
+      const fragment = range.createContextualFragment(html);
+      container.appendChild(fragment);
+    }
+  }, [html, isMobile]);
 
   if (isMobile) {
     return (
@@ -59,7 +67,7 @@ const Iframe: FC<Props> = ({ url, devices }) => {
           }}
         />
         <div className="h-[48px] flex justify-between py-2 px-4 items-center">
-          <img src="/logo.svg" className="h-full w-auto" />
+          <img src="/logo.svg" className="h-full w-auto" alt="Dota Casino" />
           <FaTimes className="h-[30px]" onClick={() => router.push("/")} />
         </div>
         <Ticker />
@@ -77,15 +85,7 @@ const Iframe: FC<Props> = ({ url, devices }) => {
           </div>
         )}
         {iOSSafari && <DeviceRotateBanner />}
-        <iframe
-          className={clsx(
-            "w-full",
-            devices.includes("MOBILE") && "h-full",
-            !devices.includes("MOBILE") && "aspect-[16/9]"
-          )}
-          src={url}
-          ref={iframeRef}
-        />
+        <div id="render-here" className="flex-1"></div>
       </div>
     );
   }
@@ -192,7 +192,7 @@ const Iframe: FC<Props> = ({ url, devices }) => {
             >
               <div id="game-aspect" className="md:aspect-[16/9]">
                 <div
-                  id='egamings_container'
+                  id="render-here"
                   className="h-full w-full flex items-center justify-center relative"
                   style={{
                     background:
@@ -204,6 +204,8 @@ const Iframe: FC<Props> = ({ url, devices }) => {
               </div>
             </div>
           </div>
+
+          
 
           <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/5"></div>
         </div>

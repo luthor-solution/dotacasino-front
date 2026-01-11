@@ -38,6 +38,7 @@ const GamePage: FC<Props> = async ({ params }) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/games/openGame/${slug}`,
         {
           domain: host,
+          userIp: headersList.get("x-forwarded-for")?.split(',')[0] || headersList.get("x-real-ip") || "127.0.0.1",
         },
         {
           headers: {
@@ -49,27 +50,13 @@ const GamePage: FC<Props> = async ({ params }) => {
 
     console.log(gameInfo)
 
-    if (gameInfo.error === "hall_balance_less_100") {
-      console.error("NOT ENOUGHT BALANCE");
-      throw new Error("not_enoght_balance");
-    }
-
-    if (!gameInfo.content.game.url) {
-      console.error("URL NULL");
-      throw new Error(JSON.stringify(gameInfo));
-    }
-
     return (
       <div className="flex flex-col items-center bg-[#350b2d]">
         <BackgroundGlow />
 
         <Iframe
-          url={gameInfo.content.game.url.replace("http:", "https:")}
-          devices={
-            gameInfo.game.slug.startsWith("sport_betting")
-              ? ["DEKSTOP", "MOBILE"]
-              : gameInfo.game.devices
-          }
+          html={gameInfo.html.replace("1,", "")}
+          devices={gameInfo.game.devices}
         />
       </div>
     );
