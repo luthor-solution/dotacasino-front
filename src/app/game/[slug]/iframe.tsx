@@ -46,8 +46,9 @@ const Iframe: FC<Props> = ({ html, devices }) => {
 
   useEffect(() => {
     const container = document.getElementById("render-here");
-    if (container && html) {
-      container.innerHTML = "";
+    // Solo inyectar si el contenedor existe, hay HTML y está vacío
+    // Esto evita re-renderizados dobles en StrictMode o actualizaciones innecesarias
+    if (container && html && container.innerHTML === "") {
       const range = document.createRange();
       const fragment = range.createContextualFragment(html);
       container.appendChild(fragment);
