@@ -18,17 +18,12 @@ const categoryIcons: Record<string, React.ReactNode> = {
   todos: <FiGlobe size={28} />,
 };
 
-const formatCategoryName = (name: string) =>
-  name === "todos"
-    ? "Todos"
-    : name.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-
 const CategoriesMenu: React.FC<{
   selected?: string;
   onSelect?: (cat: string | undefined) => void;
 }> = ({ selected, onSelect }) => {
   const router = useRouter();
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<{ id: string, name: string }[]>([]);
   const [catLoading, setCatLoading] = useState(true);
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
@@ -39,21 +34,18 @@ const CategoriesMenu: React.FC<{
     gamesService
       .getCategories()
       .then((res) => {
-        const valid = Array.from(
-          new Set(
-            (res.categories || [])
-              // excluye "todos" de las dinámicas
-              .filter((c: string) => c && c !== "todos")
-              // solo las que tienen icono definido
-              .filter((c: string) =>
-                Object.prototype.hasOwnProperty.call(categoryIcons, c)
-              )
-          )
-        );
+        const categoriesData = res.categories || [];
+        const hasAll = categoriesData.some(c => c.id === 'todos' || c.id === 'all');
+        
+        let valid = categoriesData;
+        if (!hasAll) {
+          valid = [{ id: "todos", name: t("categories.todos") }, ...categoriesData];
+        }
+        
         setCategories(valid);
       })
       .finally(() => setCatLoading(false));
-  }, []);
+  }, [t]);
 
   // Detecta si hay overflow
   useEffect(() => {
@@ -87,9 +79,8 @@ const CategoriesMenu: React.FC<{
     <div className="relative w-full lg:w-fit">
       {/* Flecha izquierda (solo si hay overflow) */}
       <div
-        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 transition-opacity ${
-          showLeft ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 transition-opacity ${showLeft ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
       >
         <button
           className="bg-[#181818] rounded-full p-1 shadow-lg border border-[#FFC827] text-[#FFC827]"
@@ -101,9 +92,8 @@ const CategoriesMenu: React.FC<{
       </div>
       {/* Flecha derecha (solo si hay overflow) */}
       <div
-        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 transition-opacity ${
-          showRight ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 transition-opacity ${showRight ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
       >
         <button
           className="bg-[#181818] rounded-full p-1 shadow-lg border border-[#FFC827] text-[#FFC827]"
@@ -139,41 +129,38 @@ const CategoriesMenu: React.FC<{
         {catLoading ? (
           <span className="text-white">{t("loading")}</span>
         ) : (
-          ["todos", ...categories].map((cat) => {
+          categories.map((cat) => {
             const isSelected =
-              (cat === "todos" && (!selected || categories.length === 0)) ||
-              (cat !== "todos" && selected === cat);
+              (cat.id === "todos" && (!selected || categories.length === 0)) ||
+              (cat.id !== "todos" && selected === cat.id);
             return (
               <div
-                key={cat}
-                className={`flex flex-col items-center justify-center min-w-[64px] md:min-w-[80px] cursor-pointer group ${
-                  isSelected ? "text-[#FFC827]" : ""
-                }`}
+                key={cat.id}
+                className={`flex flex-col items-center justify-center min-w-[64px] md:min-w-[80px] cursor-pointer group ${isSelected ? "text-[#FFC827]" : ""
+                  }`}
                 onClick={() => {
-                  if (cat == "sport") {
+                  if (cat.id == "sport") {
                     router.push("/game/sport_betting-3002");
-                  } else if (isSelected || cat === "todos") {
+                  } else if (isSelected || cat.id === "todos") {
                     onSelect?.(undefined);
                   } else {
-                    onSelect?.(cat);
+                    onSelect?.(cat.id);
                   }
                 }}
               >
                 <span
-                  className={`mb-1 transition-colors group-hover:text-[#FFC827] text-center ${
-                    isSelected ? "text-[#FFC827]" : "text-white"
-                  }`}
+                  className={`mb-1 transition-colors group-hover:text-[#FFC827] text-center ${isSelected ? "text-[#FFC827]" : "text-white"
+                    }`}
                 >
-                  {categoryIcons[cat] || <FiGrid size={28} />}
+                  {categoryIcons[cat.id] || <FiGrid size={28} />}
                 </span>
                 <span
-                  className={`font-bold text-xs group-hover:text-[#FFC827] transition-colors text-center ${
-                    isSelected
+                  className={`font-bold text-xs group-hover:text-[#FFC827] transition-colors text-center ${isSelected
                       ? "text-[#FFC827] underline underline-offset-3"
                       : "text-white"
-                  }`}
+                    }`}
                 >
-                  {t(`categories.${cat}`)}
+                  {cat.name}
                 </span>
               </div>
             );

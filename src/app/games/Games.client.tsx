@@ -194,19 +194,19 @@ export default function GamesView() {
         {!filters.category && !filters.search && (
           <>
             <GamesCarousel
-              title={t(`categories.crash_games`)}
-              category="crash_games"
+              title={t(`categories.jackpots`)}
+              category="fe5a59e4-d323-4a21-9087-2abdcb315aa3"
               onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "crash_games" }));
+                setFilters((prev) => ({ ...prev, category: "fe5a59e4-d323-4a21-9087-2abdcb315aa3" }));
               }}
               auto
             />
 
             <GamesCarousel
               title={t(`categories.live_dealers`)}
-              category="live_dealers"
+              category="943ca3f0-e7ee-4562-96ef-91ccdde66b5c"
               onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "live_dealers" }));
+                setFilters((prev) => ({ ...prev, category: "943ca3f0-e7ee-4562-96ef-91ccdde66b5c" }));
               }}
               auto
             />
@@ -215,17 +215,17 @@ export default function GamesView() {
 
             <GamesCarousel
               title={t(`categories.slots`)}
-              category="slots"
+              category="15c85efc-f141-42ed-a85e-3fd8c7ea390d"
               onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "slots" }));
+                setFilters((prev) => ({ ...prev, category: "15c85efc-f141-42ed-a85e-3fd8c7ea390d" }));
               }}
             />
 
             <GamesCarousel
               title={t(`categories.video_poker`)}
-              category="video_poker"
+              category="1722b66d-d10c-46b5-beb7-fb4bb68aefed"
               onShowMore={() => {
-                setFilters((prev) => ({ ...prev, category: "video_poker" }));
+                setFilters((prev) => ({ ...prev, category: "1722b66d-d10c-46b5-beb7-fb4bb68aefed" }));
               }}
             />
           </>

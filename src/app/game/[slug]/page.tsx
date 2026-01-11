@@ -47,6 +47,8 @@ const GamePage: FC<Props> = async ({ params }) => {
       )
       .then((r) => r.data);
 
+    console.log(gameInfo)
+
     if (gameInfo.error === "hall_balance_less_100") {
       console.error("NOT ENOUGHT BALANCE");
       throw new Error("not_enoght_balance");

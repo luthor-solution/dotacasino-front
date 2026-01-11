@@ -524,7 +524,8 @@
     "live_dealers": "Ao vivo",
     "slots": "Slots",
     "video_poker": "Vídeo Pôquer",
-    "todos": "Todos"
+    "todos": "Todos",
+    "jackpots":"Jackpots"
   },
   "somethingWentWrong": "Ocorreu um erro",
   "cancelWithdrawTitle": "Cancelar saque",

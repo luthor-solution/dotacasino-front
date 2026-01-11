@@ -40,7 +40,10 @@ export interface GamesResponse {
   pageSize: number;
 }
 
-export type GameCategory = string;
+export type GameCategory = {
+  id: string;
+  name: string;
+};
 
 export interface GameCategoriesResponse {
   categories: GameCategory[];
