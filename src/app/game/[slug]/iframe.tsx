@@ -192,13 +192,14 @@ const Iframe: FC<Props> = ({ url, devices }) => {
             >
               <div id="game-aspect" className="md:aspect-[16/9]">
                 <div
+                  id='egamings_container'
                   className="h-full w-full flex items-center justify-center relative"
                   style={{
                     background:
                       "radial-gradient(ellipse at center, rgba(255,200,39,0.08), rgba(0,0,0,0.35))",
                   }}
                 >
-                  <iframe className="w-full h-full" src={url} ref={iframeRef} />
+                  
                 </div>
               </div>
             </div>
