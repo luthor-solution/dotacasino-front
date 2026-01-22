@@ -6,12 +6,6 @@ import { gamesService } from "@/services/gamesService";
 const Providers = () => {
   const [providers, setProviders] = useState([]);
 
-  useEffect(() => {
-    gamesService.getProviders().then((r) => {
-      setProviders(r);
-    });
-  }, []);
-
   return (
     <main
       className="relative min-h-screen flex flex-col pt-24"
