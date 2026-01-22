@@ -57,6 +57,8 @@ const GamePage: FC<Props> = async ({ params }) => {
       throw new Error(JSON.stringify(gameInfo));
     }
 
+    console.log(gameInfo)
+
     return (
       <div className="flex flex-col items-center bg-[#350b2d]">
         <BackgroundGlow />
