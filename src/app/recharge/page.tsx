@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
 // --- Tipos auxiliares ---
-type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
+type Network = "BSC" | "ETH" | "POLYGON";
 type Tab = "CRIPTO" | "SPEI";
 
 type CreateDepositRequest = {
@@ -449,7 +449,6 @@ export default function RecargaFichasPage() {
                   <option value="BSC">{t("form.networks.BSC")}</option>
                   <option value="ETH">{t("form.networks.ETH")}</option>
                   <option value="POLYGON">{t("form.networks.POLYGON")}</option>
-                  <option value="TRX">{t("form.networks.TRX")}</option>
                 </select>
               </div>
             </div>

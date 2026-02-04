@@ -20,8 +20,7 @@
     "networks": {
       "BSC": "BSC · BEP20",
       "ETH": "ETH · ERC20",
-      "POLYGON": "POLYGON · ERC20",
-      "TRX": "TRX · TRC20"
+      "POLYGON": "POLYGON · ERC20"
     },
     "submit": "Generar QR de depósito",
     "submitting": "Creando orden...",
@@ -176,8 +175,7 @@
       "networks": {
         "BSC": "BSC",
         "ETH": "ETH",
-        "POLYGON": "POLYGON",
-        "TRX": "TRX"
+        "POLYGON": "POLYGON"
       },
       "submit": "Solicitar retiro",
       "submitting": "Enviando...",

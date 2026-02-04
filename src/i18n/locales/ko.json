@@ -20,8 +20,7 @@
     "networks": {
       "BSC": "BSC · BEP20",
       "ETH": "ETH · ERC20",
-      "POLYGON": "POLYGON · ERC20",
-      "TRX": "TRX · TRC20"
+      "POLYGON": "POLYGON · ERC20"
     },
     "submit": "입금 QR 생성",
     "submitting": "주문 생성 중...",
@@ -176,8 +175,7 @@
       "networks": {
         "BSC": "BSC",
         "ETH": "ETH",
-        "POLYGON": "POLYGON",
-        "TRX": "TRX"
+        "POLYGON": "POLYGON"
       },
       "submit": "출금 요청",
       "submitting": "전송 중...",

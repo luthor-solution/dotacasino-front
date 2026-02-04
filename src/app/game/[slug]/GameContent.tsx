@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { FC, useEffect, useState, useRef } from "react";
@@ -43,8 +44,8 @@ const GameContent: FC<GameContentProps> = ({ slug, token }) => {
           }
         );
         setGameInfo(response.data);
-      } catch (err: unknown) {
-        console.error("Error opening game:", err);
+      } catch (err: any) {
+        console.error("Error opening game:", err?.response?.data);
         setError(err instanceof Error ? err.message : String(err));
         // Resetear en caso de error para permitir reintentos si el slug cambia o se recarga
         hasFetched.current = null;

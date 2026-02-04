@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 
 // --- Tipos auxiliares ---
-type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
+type Network = "BSC" | "ETH" | "POLYGON";
 type Tab = "CRIPTO" | "SPEI";
 
 type CreateWithdrawRequest = {
@@ -331,9 +331,6 @@ export default function RetiroFichasPage() {
                         </option>
                         <option value="POLYGON">
                           {t("withdraw.form.networks.POLYGON") || "POLYGON"}
-                        </option>
-                        <option value="TRX">
-                          {t("withdraw.form.networks.TRX") || "TRX"}
                         </option>
                       </select>
                     </div>

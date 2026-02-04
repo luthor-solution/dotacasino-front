@@ -6,7 +6,7 @@ import { userService } from "@/services/userService";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
 // Tipos existentes
-export type DepositNetwork = "BSC" | "TRX" | "ETH" | "POLYGON";
+export type DepositNetwork = "BSC" | "ETH" | "POLYGON";
 
 export interface CreateDepositQRPayload {
   amount: number;
@@ -19,7 +19,7 @@ export interface DepositQRResponse {
   expires_at: string; // ISO string
   address: string;
   qrcode_url: string;
-  network: "BSC" | "TRX" | "ETH" | "POLYGON";
+  network: "BSC" | "ETH" | "POLYGON";
   created_at: {
     _seconds: number;
     _nanoseconds: number;

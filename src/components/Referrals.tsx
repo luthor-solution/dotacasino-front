@@ -8,7 +8,6 @@ import MembershipCard from "./MembershipCard";
 import MembershipCardSkeleton from "./MembershipCardSkeleton";
 import { userService, MembershipQRResponse } from "@/services/userService";
 import { membershisService, Membership } from "@/services/membershipsService";
-import { depositService } from "@/services/depositsService";
 
 /* Tipos */
 type LocalQR = {
@@ -21,7 +20,7 @@ type LocalQR = {
   membership_type: string; // id de la membresía
 };
 
-type Network = "BSC" | "TRX" | "ETH" | "POLYGON";
+type Network = "BSC" | "ETH" | "POLYGON";
 
 /* Importante: memo para evitar re-render de ReferralInput y prevenir scroll jumps por focus */
 const ReferralInputMemo = React.memo(ReferralInput);
@@ -168,7 +167,7 @@ const Referrals: React.FC = () => {
   // Confirmación del modal: llama a la API con network incluido
   const handleConfirmNetwork = async () => {
     if (!pendingMembershipId || !selectedNetwork) {
-      setGlobalError("Debes seleccionar un network: BSC, TRX, ETH o POLYGON.");
+      setGlobalError("Debes seleccionar un network: BSC, ETH o POLYGON.");
       return;
     }
 
@@ -235,7 +234,7 @@ const Referrals: React.FC = () => {
     return memberships.find((m) => m.id === qrMembership.membership_type);
   }, [qrMembership, memberships]);
 
-  const networks: Network[] = ["BSC", "TRX", "ETH", "POLYGON"];
+  const networks: Network[] = ["BSC", "ETH", "POLYGON"];
 
   useEffect(() => {
     console.log(selectedNetwork);
