@@ -7,19 +7,19 @@ interface BannerProps {
 }
 
 const imagesDesktop = [
-  "/slider/dota1.png",
-  "/slider/dota2.png",
-  "/slider/dota3.png",
-  "/slider/dota4.png",
-  "/slider/dota5.png",
+  "/slider/Banner 1.png",
+  "/slider/Banner 2.png",
+  "/slider/Banner 3.png",
+  "/slider/Banner 4.png",
+  "/slider/Banner 5.png",
 ];
 
 const imagesMobile = [
-  "/slider/movil1.png",
-  "/slider/movil2.png",
-  "/slider/movil3.png",
-  "/slider/movil4.png",
-  "/slider/movil5.png",
+  "/slider/Banner 1.png",
+  "/slider/Banner 2.png",
+  "/slider/Banner 3.png",
+  "/slider/Banner 4.png",
+  "/slider/Banner 5.png",
 ];
 
 const AUTO_SLIDE_INTERVAL = 5000; // ms
