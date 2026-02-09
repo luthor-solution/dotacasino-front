@@ -9,6 +9,8 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
+const DISABLED_SPEI = true;
+
 // --- Tipos auxiliares ---
 type Network = "BSC" | "ETH" | "POLYGON";
 type Tab = "CRIPTO" | "SPEI";
@@ -367,7 +369,7 @@ export default function RecargaFichasPage() {
         </header>
 
         {/* Tabs */}
-        {user?.country === "MX" && (
+        {user?.country === "MX" && !DISABLED_SPEI && (
           <div className="mb-6">
             <div className="inline-flex rounded-xl border border-neutral-800 bg-neutral-900/60 p-1">
               <button
