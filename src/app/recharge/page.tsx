@@ -9,7 +9,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
-const DISABLED_SPEI = true;
+const DISABLED_SPEI = false;
 
 // --- Tipos auxiliares ---
 type Network = "BSC" | "ETH" | "POLYGON";
