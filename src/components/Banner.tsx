@@ -15,11 +15,11 @@ const imagesDesktop = [
 ];
 
 const imagesMobile = [
-  "/slider/Banner 1.png",
-  "/slider/Banner 2.png",
-  "/slider/Banner 3.png",
-  "/slider/Banner 4.png",
-  "/slider/Banner 5.png",
+  "/slider/movil1.png",
+  "/slider/movil2.png",
+  "/slider/movil3.png",
+  "/slider/movil4.png",
+  "/slider/movil5.png",
 ];
 
 const AUTO_SLIDE_INTERVAL = 5000; // ms
