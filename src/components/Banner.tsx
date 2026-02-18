@@ -118,6 +118,7 @@ const Banner: React.FC<BannerProps> = ({ title, subtitle }) => {
               fill
               className="object-cover object-center"
               priority={idx === 0}
+              quality={1}
               sizes="100vw"
               onLoadingComplete={(el) => {
                 if (idx === 0) {
@@ -155,11 +156,10 @@ const Banner: React.FC<BannerProps> = ({ title, subtitle }) => {
         {images.map((_, idx) => (
           <button
             key={idx}
-            className={`w-3 h-3 rounded-full transition-all duration-300 outline-none border-2 hover:scale-125 cursor-pointer ${
-              idx === current
+            className={`w-3 h-3 rounded-full transition-all duration-300 outline-none border-2 hover:scale-125 cursor-pointer ${idx === current
                 ? "bg-[#FFC827] border-[#FFC827] scale-125 shadow"
                 : "bg-white/40 border-transparent scale-80"
-            }`}
+              }`}
             onClick={() => goToSlide(idx)}
             aria-label={`Ir al slide ${idx + 1}`}
             disabled={animating}
