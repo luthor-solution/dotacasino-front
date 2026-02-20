@@ -28,7 +28,7 @@ type CreateWithdrawResult = {
 // --- Utilidades ---
 const formatCurrency = (n: number) =>
   new Intl.NumberFormat("es-MX", { style: "currency", currency: "USD" }).format(
-    n
+    n,
   );
 
 // --- Componente principal ---
@@ -68,7 +68,7 @@ export default function RetiroFichasPage() {
       } catch (e: any) {
         console.warn(
           "[wallet] error al obtener datos iniciales:",
-          e?.message || e
+          e?.message || e,
         );
       }
     })();
@@ -107,7 +107,7 @@ export default function RetiroFichasPage() {
       if (val > balance) {
         setError(
           t("withdraw.form.exceedsBalance") ||
-            "No puedes retirar más que tu balance disponible"
+            "No puedes retirar más que tu balance disponible",
         );
         return;
       }
@@ -116,7 +116,7 @@ export default function RetiroFichasPage() {
       if (val < 10) {
         setError(
           t("withdraw.form.minimumWithdrawAmount") ||
-            "El monto mínimo de retiro es de 5 dólares"
+            "El monto mínimo de retiro es de 5 dólares",
         );
         return;
       }
@@ -141,14 +141,14 @@ export default function RetiroFichasPage() {
       setWithdrawCreated(normalized);
       setUiMessage(
         t("withdraw.success.overlayMessage") ||
-          "Solicitud de retiro creada correctamente."
+          "Solicitud de retiro creada correctamente.",
       );
     } catch (e: any) {
       setError(
         e?.response?.data?.message ||
           e?.message ||
           t("withdraw.form.genericError") ||
-          "Ocurrió un error al crear el retiro"
+          "Ocurrió un error al crear el retiro",
       );
     } finally {
       setIsSubmitting(false);
@@ -158,7 +158,7 @@ export default function RetiroFichasPage() {
   // Simulación de submit SPEI (DESHABILITADO)
   function handleSpeiSubmit() {
     setUiMessage(
-      "Usa estos datos para realizar tu transferencia SPEI. Recuerda poner el concepto exactamente como 'PAGO'."
+      "Usa estos datos para realizar tu transferencia SPEI. Recuerda poner el concepto exactamente como 'PAGO'.",
     );
   }
 
@@ -171,7 +171,7 @@ export default function RetiroFichasPage() {
         e?.response?.data?.message ||
           e?.message ||
           t("withdraw.cancelError") ||
-          "No se pudo cancelar la solicitud"
+          "No se pudo cancelar la solicitud",
       );
     } finally {
       setWithdrawCreated(null);
@@ -199,7 +199,7 @@ export default function RetiroFichasPage() {
         </header>
 
         {/* Tabs (AQUÍ) */}
-        {user?.country === "MX" && (
+        {user?.country.toUpperCase() === "MX" && (
           <div className="mb-6">
             <div className="inline-flex rounded-xl border border-neutral-800 bg-neutral-900/60 p-1">
               <button
