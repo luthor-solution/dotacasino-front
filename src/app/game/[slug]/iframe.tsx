@@ -10,7 +10,6 @@ import {
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { FaTimes } from "react-icons/fa";
 import Ticker from "./ticker";
-import clsx from "clsx";
 
 type Props = {
   html: string;
@@ -44,20 +43,31 @@ const Iframe: FC<Props> = ({ html, devices }) => {
     },
   });
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const container = document.getElementById("render-here");
-    // Solo inyectar si el contenedor existe, hay HTML y está vacío
-    // Esto evita re-renderizados dobles en StrictMode o actualizaciones innecesarias
-    if (container && html && container.innerHTML === "") {
+    const container = containerRef.current;
+    if (!container || !html) return;
+
+    // Solo inyectar si el contenedor está vacío
+    // Usamos children.length para evitar duplicados si el efecto corre varias veces (StrictMode)
+    if (container.children.length === 0) {
       const range = document.createRange();
       const fragment = range.createContextualFragment(html);
       container.appendChild(fragment);
     }
+
+    return () => {
+      // Limpiar el contenedor al desmontar o antes de re-inyectar
+      if (container) {
+        container.innerHTML = "";
+      }
+    };
   }, [html, isMobile]);
 
   if (isMobile) {
     return (
-      <div className="absolute top-0 left-0 h-[100dvh] w-screen z-100 flex flex-col bg-[#350b2d]">
+      <div id="game-shell" className="absolute top-0 left-0 h-[100dvh] w-screen z-100 flex flex-col bg-[#350b2d]">
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -86,7 +96,7 @@ const Iframe: FC<Props> = ({ html, devices }) => {
           </div>
         )}
         {iOSSafari && <DeviceRotateBanner />}
-        <div id="render-here" className="flex-1"></div>
+        <div ref={containerRef} id="render-here" className="flex-1"></div>
       </div>
     );
   }
@@ -193,6 +203,7 @@ const Iframe: FC<Props> = ({ html, devices }) => {
             >
               <div id="game-aspect" className="md:aspect-[16/9]">
                 <div
+                  ref={containerRef}
                   id="render-here"
                   className="h-full w-full flex items-center justify-center relative"
                   style={{
@@ -200,13 +211,13 @@ const Iframe: FC<Props> = ({ html, devices }) => {
                       "radial-gradient(ellipse at center, rgba(255,200,39,0.08), rgba(0,0,0,0.35))",
                   }}
                 >
-                  
+
                 </div>
               </div>
             </div>
           </div>
 
-          
+
 
           <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/5"></div>
         </div>

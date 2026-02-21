@@ -9,8 +9,6 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
-const DISABLED_SPEI = false;
-
 // --- Tipos auxiliares ---
 type Network = "BSC" | "ETH" | "POLYGON";
 type Tab = "CRIPTO" | "SPEI";
@@ -283,8 +281,8 @@ export default function RecargaFichasPage() {
     } catch (e: any) {
       setError(
         e?.response?.data?.message ||
-          e?.message ||
-          "Ocurrió un error al crear el depósito"
+        e?.message ||
+        "Ocurrió un error al crear el depósito"
       );
     } finally {
       setIsSubmitting(false);
@@ -369,26 +367,24 @@ export default function RecargaFichasPage() {
         </header>
 
         {/* Tabs */}
-        {user?.country === "MX" && !DISABLED_SPEI && (
+        {user?.country === "MX" && (
           <div className="mb-6">
             <div className="inline-flex rounded-xl border border-neutral-800 bg-neutral-900/60 p-1">
               <button
                 onClick={() => setActiveTab("CRIPTO")}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
-                  activeTab === "CRIPTO"
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${activeTab === "CRIPTO"
                     ? "bg-emerald-600 text-white"
                     : "text-neutral-300 hover:bg-neutral-800"
-                }`}
+                  }`}
               >
                 Cripto
               </button>
               <button
                 onClick={() => setActiveTab("SPEI")}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
-                  activeTab === "SPEI"
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${activeTab === "SPEI"
                     ? "bg-emerald-600 text-white"
                     : "text-neutral-300 hover:bg-neutral-800"
-                }`}
+                  }`}
               >
                 SPEI
               </button>
@@ -507,9 +503,8 @@ export default function RecargaFichasPage() {
                   {t("payment.expiresIn")}
                 </span>
                 <div
-                  className={`text-2xl font-bold ${
-                    seconds === 0 ? "text-red-400" : "text-emerald-400"
-                  }`}
+                  className={`text-2xl font-bold ${seconds === 0 ? "text-red-400" : "text-emerald-400"
+                    }`}
                 >
                   {toMMSS(seconds)}
                 </div>
@@ -589,7 +584,7 @@ export default function RecargaFichasPage() {
                           try {
                             await depositService
                               .cancelCurrentQR()
-                              .catch(() => {});
+                              .catch(() => { });
                           } finally {
                             setDeposit(null);
                             setSeconds(0);
