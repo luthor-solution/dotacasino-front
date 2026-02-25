@@ -1,7 +1,7 @@
 "use client";
 import { useGameCloseListener } from "@/hooks/useGameCloseListener";
 import { useRouter } from "next/navigation";
-import { FC, useRef, useEffect } from "react";
+import { FC, useRef, useEffect, useState } from "react";
 import { BsFullscreen } from "react-icons/bs";
 import {
   useMobileViewportGuard,
@@ -44,10 +44,15 @@ const Iframe: FC<Props> = ({ html, devices }) => {
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || !html) return;
+    if (!mounted || !container || !html) return;
 
     const range = document.createRange();
     const fragment = range.createContextualFragment(html);
@@ -59,7 +64,7 @@ const Iframe: FC<Props> = ({ html, devices }) => {
         container.replaceChildren();
       }
     };
-  }, [html, isMobile]);
+  }, [html, isMobile, mounted]);
 
   if (isMobile) {
     return (
