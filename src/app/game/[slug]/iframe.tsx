@@ -49,18 +49,14 @@ const Iframe: FC<Props> = ({ html, devices }) => {
     const container = containerRef.current;
     if (!container || !html) return;
 
-    // Solo inyectar si el contenedor está vacío
-    // Usamos children.length para evitar duplicados si el efecto corre varias veces (StrictMode)
-    if (container.children.length === 0) {
-      const range = document.createRange();
-      const fragment = range.createContextualFragment(html);
-      container.appendChild(fragment);
-    }
+    const range = document.createRange();
+    const fragment = range.createContextualFragment(html);
+    container.replaceChildren(fragment);
 
     return () => {
       // Limpiar el contenedor al desmontar o antes de re-inyectar
       if (container) {
-        container.innerHTML = "";
+        container.replaceChildren();
       }
     };
   }, [html, isMobile]);
